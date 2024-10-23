@@ -2,10 +2,10 @@
 // Created by Ренат Асланов on 23.10.2024.
 //
 
-#include "headers/Camera.h"
+#include "../headers/Camera.h"
 
 Camera::Camera(
-    const Vector3D::Vector3D position,
+    const Vector3D position,
     const Vector3D target,
     const float fov,
     const float aspectRatio,

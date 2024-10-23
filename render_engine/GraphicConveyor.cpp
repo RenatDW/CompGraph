@@ -2,4 +2,4 @@
 // Created by Ренат Асланов on 23.10.2024.
 //
 
-#include "headers/GraphicConveyor.h"
+#include "../headers/GraphicConveyor.h"

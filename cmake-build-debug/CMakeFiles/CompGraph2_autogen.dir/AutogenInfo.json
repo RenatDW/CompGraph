@@ -1,5 +1,5 @@
 {
-	"BUILD_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen",
+	"BUILD_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph2_autogen",
 	"CMAKE_BINARY_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug",
 	"CMAKE_CURRENT_BINARY_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug",
 	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/renat/CLionProjects/CompGraph",
@@ -258,13 +258,57 @@
 	],
 	"CMAKE_SOURCE_DIR" : "/Users/renat/CLionProjects/CompGraph",
 	"CROSS_CONFIG" : false,
-	"DEP_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/deps",
-	"DEP_FILE_RULE_NAME" : "CompGraph_autogen/timestamp",
-	"HEADERS" : [],
+	"DEP_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph2_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "CompGraph2_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/Users/renat/CLionProjects/CompGraph/headers/Camera.h",
+			"MU",
+			"K6S233IZAZ/moc_Camera.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/headers/GraphicConveyor.h",
+			"MU",
+			"K6S233IZAZ/moc_GraphicConveyor.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/headers/RenderEngine.h",
+			"MU",
+			"K6S233IZAZ/moc_RenderEngine.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/headers/Vector2D.h",
+			"MU",
+			"K6S233IZAZ/moc_Vector2D.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/headers/Vector4D.h",
+			"MU",
+			"K6S233IZAZ/moc_Vector4D.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/model/Model.h",
+			"MU",
+			"NLOY5YBGEN/moc_Model.cpp",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/model/Polygon.h",
+			"MU",
+			"NLOY5YBGEN/moc_Polygon.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include",
-	"MOC_COMPILATION_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"INCLUDE_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph2_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph2_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -274,14 +318,6 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"/Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtCore.framework",
-		"/Applications/QT/6.8.0/macos/mkspecs/macx-clang",
-		"/Applications/QT/6.8.0/macos/include",
-		"/Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtGui.framework",
-		"/Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtWidgets.framework",
 		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1",
 		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include",
 		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include",
@@ -307,26 +343,34 @@
 		"-c",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph2_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
-	"MOC_SKIP" : [],
+	"MOC_SKIP" : 
+	[
+		"/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph1_autogen/mocs_compilation.cpp",
+		"/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp"
+	],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 8,
-	"PARSE_CACHE_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph2_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/Applications/QT/6.8.0/macos/libexec/moc",
 	"QT_UIC_EXECUTABLE" : "/Applications/QT/6.8.0/macos/libexec/uic",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 8,
-	"SETTINGS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph2_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/Users/renat/CLionProjects/CompGraph/main.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/model/Polygon.cpp", "MU", null ],
 		[
 			"/Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/render_engine/GraphicConveyor.cpp",
 			"MU",
 			null
 		],
@@ -338,7 +382,11 @@
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
-	"UIC_SKIP" : [],
+	"UIC_SKIP" : 
+	[
+		"/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph1_autogen/mocs_compilation.cpp",
+		"/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp"
+	],
 	"UIC_UI_FILES" : [],
 	"USE_BETTER_GRAPH" : true,
 	"VERBOSITY" : 0

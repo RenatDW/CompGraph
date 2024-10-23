@@ -65,21 +65,13 @@ build CMakeFiles/CompGraph.dir/main.cpp.o: CXX_COMPILER__CompGraph_unscanned_Deb
   OBJECT_DIR = CMakeFiles/CompGraph.dir
   OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir
 
-build CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp || cmake_object_order_depends_target_CompGraph
+build CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp || cmake_object_order_depends_target_CompGraph
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o.d
+  DEP_FILE = CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o.d
   FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
   OBJECT_DIR = CMakeFiles/CompGraph.dir
-  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/render_engine
-
-build CMakeFiles/CompGraph.dir/render_engine/GraphicConveyor.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/render_engine/GraphicConveyor.cpp || cmake_object_order_depends_target_CompGraph
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/CompGraph.dir/render_engine/GraphicConveyor.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
-  INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
-  OBJECT_DIR = CMakeFiles/CompGraph.dir
-  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/render_engine
+  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/math
 
 build CMakeFiles/CompGraph.dir/render_engine/RenderEngine.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/render_engine/RenderEngine.cpp || cmake_object_order_depends_target_CompGraph
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
@@ -89,9 +81,25 @@ build CMakeFiles/CompGraph.dir/render_engine/RenderEngine.cpp.o: CXX_COMPILER__C
   OBJECT_DIR = CMakeFiles/CompGraph.dir
   OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/render_engine
 
-build CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp || cmake_object_order_depends_target_CompGraph
+build CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp || cmake_object_order_depends_target_CompGraph
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o.d
+  DEP_FILE = CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
+  OBJECT_DIR = CMakeFiles/CompGraph.dir
+  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/render_engine
+
+build CMakeFiles/CompGraph.dir/model/Polygon.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/model/Polygon.cpp || cmake_object_order_depends_target_CompGraph
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/CompGraph.dir/model/Polygon.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
+  OBJECT_DIR = CMakeFiles/CompGraph.dir
+  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/model
+
+build CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp || cmake_object_order_depends_target_CompGraph
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o.d
   FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
   INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
   OBJECT_DIR = CMakeFiles/CompGraph.dir
@@ -105,22 +113,6 @@ build CMakeFiles/CompGraph.dir/math/Vector4D.cpp.o: CXX_COMPILER__CompGraph_unsc
   OBJECT_DIR = CMakeFiles/CompGraph.dir
   OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/math
 
-build CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp || cmake_object_order_depends_target_CompGraph
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
-  INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
-  OBJECT_DIR = CMakeFiles/CompGraph.dir
-  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/math
-
-build CMakeFiles/CompGraph.dir/model/Polygon.cpp.o: CXX_COMPILER__CompGraph_unscanned_Debug /Users/renat/CLionProjects/CompGraph/model/Polygon.cpp || cmake_object_order_depends_target_CompGraph
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/CompGraph.dir/model/Polygon.cpp.o.d
-  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
-  INCLUDES = -isystem /Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include -isystem /Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers -iframework /Applications/QT/6.8.0/macos/lib -isystem /Applications/QT/6.8.0/macos/mkspecs/macx-clang -isystem /Applications/QT/6.8.0/macos/include -isystem /Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers -isystem /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers
-  OBJECT_DIR = CMakeFiles/CompGraph.dir
-  OBJECT_FILE_DIR = CMakeFiles/CompGraph.dir/model
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CompGraph
@@ -129,7 +121,7 @@ build CMakeFiles/CompGraph.dir/model/Polygon.cpp.o: CXX_COMPILER__CompGraph_unsc
 #############################################
 # Link the executable CompGraph
 
-build CompGraph: CXX_EXECUTABLE_LINKER__CompGraph_Debug CMakeFiles/CompGraph.dir/CompGraph_autogen/mocs_compilation.cpp.o CMakeFiles/CompGraph.dir/main.cpp.o CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o CMakeFiles/CompGraph.dir/render_engine/GraphicConveyor.cpp.o CMakeFiles/CompGraph.dir/render_engine/RenderEngine.cpp.o CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o CMakeFiles/CompGraph.dir/math/Vector4D.cpp.o CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o CMakeFiles/CompGraph.dir/model/Polygon.cpp.o | /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Versions/A/QtWidgets /Applications/QT/6.8.0/macos/lib/QtGui.framework/Versions/A/QtGui /Applications/QT/6.8.0/macos/lib/QtCore.framework/Versions/A/QtCore || CompGraph_autogen CompGraph_autogen_timestamp_deps
+build CompGraph: CXX_EXECUTABLE_LINKER__CompGraph_Debug CMakeFiles/CompGraph.dir/CompGraph_autogen/mocs_compilation.cpp.o CMakeFiles/CompGraph.dir/main.cpp.o CMakeFiles/CompGraph.dir/math/Vector2D.cpp.o CMakeFiles/CompGraph.dir/render_engine/RenderEngine.cpp.o CMakeFiles/CompGraph.dir/render_engine/Camera.cpp.o CMakeFiles/CompGraph.dir/model/Polygon.cpp.o CMakeFiles/CompGraph.dir/math/Vector3D.cpp.o CMakeFiles/CompGraph.dir/math/Vector4D.cpp.o | /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Versions/A/QtWidgets /Applications/QT/6.8.0/macos/lib/QtGui.framework/Versions/A/QtGui /Applications/QT/6.8.0/macos/lib/QtCore.framework/Versions/A/QtCore || CompGraph_autogen CompGraph_autogen_timestamp_deps
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk
   LINK_LIBRARIES = -Wl,-rpath,/Applications/QT/6.8.0/macos/lib  /Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Versions/A/QtWidgets  /Applications/QT/6.8.0/macos/lib/QtGui.framework/Versions/A/QtGui  -framework OpenGL  -framework AGL  -framework AppKit  -framework ImageIO  -framework Metal  /Applications/QT/6.8.0/macos/lib/QtCore.framework/Versions/A/QtCore  -framework IOKit  -framework DiskArbitration  -framework UniformTypeIdentifiers
   LINK_PATH = -F/Applications/QT/6.8.0/macos/lib

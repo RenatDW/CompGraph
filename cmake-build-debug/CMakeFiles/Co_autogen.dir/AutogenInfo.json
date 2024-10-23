@@ -1,5 +1,5 @@
 {
-	"BUILD_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen",
+	"BUILD_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/Co_autogen",
 	"CMAKE_BINARY_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug",
 	"CMAKE_CURRENT_BINARY_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug",
 	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/renat/CLionProjects/CompGraph",
@@ -258,13 +258,13 @@
 	],
 	"CMAKE_SOURCE_DIR" : "/Users/renat/CLionProjects/CompGraph",
 	"CROSS_CONFIG" : false,
-	"DEP_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/deps",
-	"DEP_FILE_RULE_NAME" : "CompGraph_autogen/timestamp",
+	"DEP_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/Co_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "Co_autogen/timestamp",
 	"HEADERS" : [],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include",
-	"MOC_COMPILATION_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"INCLUDE_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/Co_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/Co_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -274,28 +274,12 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"/Applications/QT/6.8.0/macos/lib/QtCore.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtCore.framework",
-		"/Applications/QT/6.8.0/macos/mkspecs/macx-clang",
-		"/Applications/QT/6.8.0/macos/include",
-		"/Applications/QT/6.8.0/macos/lib/QtGui.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtGui.framework",
-		"/Applications/QT/6.8.0/macos/lib/QtWidgets.framework/Headers",
-		"/Applications/QT/6.8.0/macos/lib/QtWidgets.framework",
 		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1",
 		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include",
 		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include",
 		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
 	],
-	"MOC_MACRO_NAMES" : 
-	[
-		"Q_OBJECT",
-		"Q_GADGET",
-		"Q_NAMESPACE",
-		"Q_NAMESPACE_EXPORT",
-		"Q_GADGET_EXPORT",
-		"Q_ENUM_NS"
-	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
 	"MOC_OPTIONS" : [],
 	"MOC_PATH_PREFIX" : false,
 	"MOC_PREDEFS_CMD" : 
@@ -307,35 +291,18 @@
 		"-c",
 		"/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/Co_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 8,
-	"PARSE_CACHE_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/Co_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "/Applications/QT/6.8.0/macos/libexec/moc",
 	"QT_UIC_EXECUTABLE" : "/Applications/QT/6.8.0/macos/libexec/uic",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 8,
-	"SETTINGS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph_autogen.dir/AutogenUsed.txt",
-	"SOURCES" : 
-	[
-		[ "/Users/renat/CLionProjects/CompGraph/main.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/model/Polygon.cpp", "MU", null ],
-		[
-			"/Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/render_engine/RenderEngine.cpp",
-			"MU",
-			null
-		]
-	],
+	"SETTINGS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/Co_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : [],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : [],

@@ -6,6 +6,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+file(GLOB
+        CPPS "*.cpp"
+        HPP "*.h")
 
 find_package(Qt6 COMPONENTS
         Core
@@ -13,23 +16,15 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(CompGraph main.cpp
-        render_engine/Camera.cpp
-        headers/Camera.h
-        render_engine/GraphicConveyor.cpp
-        headers/GraphicConveyor.h
-        render_engine/RenderEngine.cpp
-        headers/RenderEngine.h
-        render_engine/Camera.cpp
-        headers/Camera.h
+add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/Vector2D.cpp
-        headers/Vector2D.h
-        headers/Vector4D.h
-        math/Vector4D.cpp
+        render_engine/RenderEngine.cpp
+        render_engine/Camera.cpp
+        model/Polygon.cpp
         math/Vector3D.cpp
-        headers/Camera.h
-        model/Model.h
-        model/Polygon.cpp)
+        math/Vector4D.cpp)
+
+
 target_link_libraries(CompGraph
         Qt6::Core
         Qt6::Gui
