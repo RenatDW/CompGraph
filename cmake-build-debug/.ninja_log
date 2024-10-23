@@ -1,0 +1,8 @@
+# ninja log v6
+1	129	1729697694423027003	CompGraph_autogen/timestamp	6e4d2736c445e382
+1	129	1729697694423027003	CompGraph_autogen/mocs_compilation.cpp	6e4d2736c445e382
+1	129	1729697694423027003	/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/timestamp	6e4d2736c445e382
+1	129	1729697694423027003	/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp	6e4d2736c445e382
+129	163	1729697694430547059	CMakeFiles/CompGraph.dir/CompGraph_autogen/mocs_compilation.cpp.o	aa38cb72a9c8bb2f
+130	1048	1729697694430747972	CMakeFiles/CompGraph.dir/main.cpp.o	bae2695224e49c5e
+1050	1218	1729697695351225785	CompGraph	d4894eeee3120139
