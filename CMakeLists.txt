@@ -15,7 +15,17 @@ find_package(Qt6 COMPONENTS
 
 add_executable(CompGraph main.cpp
         main.cpp
-        main.cpp)
+        main.cpp
+        render_engine/Camera.cpp
+        render_engine/Camera.h
+        render_engine/GraphicConveyor.cpp
+        render_engine/GraphicConveyor.h
+        render_engine/RenderEngine.cpp
+        render_engine/RenderEngine.h
+        render_engine/Camera.cpp
+        render_engine/Camera.h
+        math/Vector2D.cpp
+        math/Vector2D.h)
 target_link_libraries(CompGraph
         Qt6::Core
         Qt6::Gui
