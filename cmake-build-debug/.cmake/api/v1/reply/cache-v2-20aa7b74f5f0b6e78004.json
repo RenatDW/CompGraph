@@ -1506,6 +1506,18 @@
 			"value" : "/Applications/QT/6.8.0/macos/bin/macdeployqt"
 		},
 		{
+			"name" : "NAMES",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a library."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "NAMES-NOTFOUND"
+		},
+		{
 			"name" : "OPENGL_GLU_INCLUDE_DIR",
 			"properties" : 
 			[

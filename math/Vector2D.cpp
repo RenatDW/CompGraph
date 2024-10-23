@@ -1,5 +1,4 @@
-﻿#pragma once
-#include "Vector2D.h"
+﻿#include "headers/Vector2D.h"
 
 Vector2D::Vector2D() = default;
 

@@ -5,8 +5,9 @@
 #ifndef CAMERS_H
 #define CAMERS_H
 
-#include "math.Vector3D.h" // Include the Vector3D class header
-#include "math/Matrix4D.h" // Assuming you have a Matrix4f class
+#include "math/Vector2D.h" // Include the Vector3D class header
+#include "Vector3D.h" // Include the Vector3D class header
+#include "Matrix4D.h" // Assuming you have a Matrix4f class
 
 class Camera
 {
@@ -30,6 +31,19 @@ class Camera
 
     Matrix4D getProjectionMatrix();
 
+    Camera(const Vector3D position,
+            const Vector3D target,
+            const float fov,
+            const float aspectRatio,
+            const float nearPlane,
+            const float farPlane);
+    private:
+    Vector3D position;
+    Vector3D target;
+    float fov;
+    float aspectRatio;
+    float nearPlane;
+    float farPlane;
 
 };
 

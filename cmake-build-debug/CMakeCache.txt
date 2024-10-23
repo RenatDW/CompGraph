@@ -276,6 +276,9 @@ CompGraph_SOURCE_DIR:STATIC=/Users/renat/CLionProjects/CompGraph
 //Path to a program.
 MACDEPLOYQT_EXECUTABLE:FILEPATH=/Applications/QT/6.8.0/macos/bin/macdeployqt
 
+//Path to a library.
+NAMES:FILEPATH=NAMES-NOTFOUND
+
 //Include for the OpenGL GLU library
 OPENGL_GLU_INCLUDE_DIR:PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/OpenGL.framework
 
