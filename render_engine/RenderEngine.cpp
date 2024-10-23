@@ -3,3 +3,7 @@
 //
 
 #include "../headers/RenderEngine.h"
+
+void RenderEngine::render() {
+
+}

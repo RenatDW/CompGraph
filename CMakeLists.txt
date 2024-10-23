@@ -22,7 +22,9 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         render_engine/Camera.cpp
         model/Polygon.cpp
         math/Vector3D.cpp
-        math/Vector4D.cpp)
+        math/Vector4D.cpp
+        render_engine/GraphicConveyor.cpp
+        headers/Model.h)
 
 
 target_link_libraries(CompGraph

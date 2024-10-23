@@ -37,6 +37,7 @@ class Camera
             const float aspectRatio,
             const float nearPlane,
             const float farPlane);
+
     private:
     Vector3D position;
     Vector3D target;

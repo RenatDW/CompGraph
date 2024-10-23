@@ -5,24 +5,24 @@
 #ifndef GRAPHICCONVEYOR_H
 #define GRAPHICCONVEYOR_H
 
-#include "Vector3f.h"
+#include "Vector3D.h"
 
 class GraphicConveyor {
     public:
-    static Matrix4D rotateScaleTranslate();
-
-    static Matrix4D lookAt(Vector3D eye, Vector3D target);
-
-    static Matrix4D lookAt(Vector3D eye, Vector3D target, Vector3D up);
-
-    static Matrix4D perspective(const float fov,
-            const float aspectRatio,
-            const float nearPlane,
-            const float farPlane);
+    // static Matrix4D rotateScaleTranslate();
+    //
+    // static Matrix4D lookAt(Vector3D eye, Vector3D target);
+    //
+    // static Matrix4D lookAt(Vector3D eye, Vector3D target, Vector3D up);
+    //
+    // static Matrix4D perspective(const float fov,
+            // const float aspectRatio,
+            // const float nearPlane,
+            // const float farPlane);
 
     static Vector3D multiplyMatrix4ByVector3(с Matrix4f matrix, const Vector3D vertex);
-    static Point2D vertexToPoint(const Vector3D vertex, const int width, const int height);
 
+    // static Point2D vertexToPoint(const Vector3D vertex, const int width, const int height);
 };
 
 
