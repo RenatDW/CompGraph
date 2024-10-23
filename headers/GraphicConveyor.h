@@ -20,7 +20,7 @@ class GraphicConveyor {
             // const float nearPlane,
             // const float farPlane);
 
-    static Vector3D multiplyMatrix4ByVector3(с Matrix4f matrix, const Vector3D vertex);
+    // static Vector3D multiplyMatrix4ByVector3(const Matrix4f matrix, const Vector3D vertex);
 
     // static Point2D vertexToPoint(const Vector3D vertex, const int width, const int height);
 };

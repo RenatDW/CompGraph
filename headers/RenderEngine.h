@@ -18,8 +18,11 @@ class RenderEngine {
             const Model mesh,
             const int width,
             const int height,
-            const bool showTriangulation)
-    {;
+            const bool showTriangulation);
+    private:
+        // static void renderTriangle(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
+        // static void renderPolygons(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
+
 };
 
 
