@@ -1288,6 +1288,7 @@ CompGraph_autogen/timestamp: \
 	/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/moc_predefs.h \
 	/Users/renat/CLionProjects/CompGraph/forms/mainwindow.cpp \
 	/Users/renat/CLionProjects/CompGraph/headers/ObjReader.h \
+	/Users/renat/CLionProjects/CompGraph/headers/ObjReaderException.h \
 	/Users/renat/CLionProjects/CompGraph/headers/mainwindow.h \
 	/Users/renat/CLionProjects/CompGraph/main.cpp \
 	/Users/renat/CLionProjects/CompGraph/math/Matrix4D.cpp \
@@ -1296,6 +1297,8 @@ CompGraph_autogen/timestamp: \
 	/Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp \
 	/Users/renat/CLionProjects/CompGraph/model/Polygon.cpp \
 	/Users/renat/CLionProjects/CompGraph/objreader/ObjReader.cpp \
+	/Users/renat/CLionProjects/CompGraph/objreader/ObjReaderException.cpp \
+	/Users/renat/CLionProjects/CompGraph/objwriter/ObjWriter.cpp \
 	/Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp \
 	/Users/renat/CLionProjects/CompGraph/render_engine/GraphicConveyor.cpp \
 	/Users/renat/CLionProjects/CompGraph/render_engine/RenderEngine.cpp \

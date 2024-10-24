@@ -30,7 +30,10 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         forms/mainwindow.ui
         headers/mainwindow.h
         objreader/ObjReader.cpp
-        headers/ObjReader.h)
+        headers/ObjReader.h
+        objwriter/ObjWriter.cpp
+        objreader/ObjReaderException.cpp
+        headers/ObjReaderException.h)
 
 
 target_link_libraries(CompGraph

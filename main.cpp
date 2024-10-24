@@ -6,7 +6,9 @@
 #include "headers/ObjReader.h"
 
 int main(int argc, char *argv[]) {
-    std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapFemaleBodyPreview.png");
+    //todo Читает только до 41659 файла почему-то
+    std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapFemaleBody.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/CaracalCube/caracal_cube.obj");
     Model ans(ObjReader::read(filename));
 
     QApplication a(argc, argv);

@@ -269,6 +269,12 @@
 			null
 		],
 		[
+			"/Users/renat/CLionProjects/CompGraph/headers/ObjReaderException.h",
+			"MU",
+			"K6S233IZAZ/moc_ObjReaderException.cpp",
+			null
+		],
+		[
 			"/Users/renat/CLionProjects/CompGraph/headers/mainwindow.h",
 			"MU",
 			"K6S233IZAZ/moc_mainwindow.cpp",
@@ -347,6 +353,16 @@
 		[ "/Users/renat/CLionProjects/CompGraph/model/Polygon.cpp", "MU", null ],
 		[
 			"/Users/renat/CLionProjects/CompGraph/objreader/ObjReader.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/objreader/ObjReaderException.cpp",
+			"MU",
+			null
+		],
+		[
+			"/Users/renat/CLionProjects/CompGraph/objwriter/ObjWriter.cpp",
 			"MU",
 			null
 		],
