@@ -1089,8 +1089,8 @@
  uic:../ui_MainWindow.h
 /Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp
 /Users/renat/CLionProjects/CompGraph/headers/Vector2D.h
-/Users/renat/CLionProjects/CompGraph/objreader/ObjReader.cpp
 /Users/renat/CLionProjects/CompGraph/model/Model.h
+/Users/renat/CLionProjects/CompGraph/objreader/ObjReader.cpp
 /Users/renat/CLionProjects/CompGraph/headers/GraphicConveyor.h
 /Users/renat/CLionProjects/CompGraph/render_engine/GraphicConveyor.cpp
 /Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp

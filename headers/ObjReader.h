@@ -9,25 +9,25 @@ class ObjReader
 {
 public:
     static Model read(std::string& fileContent);
-private:
-    static const std::string OBJ_VERTEX_TOKEN = "v";
-    static const std::string OBJ_TEXTURE_TOKEN = "vt";
-    static const std::string OBJ_NORMAL_TOKEN = "vn";
-    static const std::string OBJ_FACE_TOKEN = "f";
+// private:
+//     static const std::string OBJ_VERTEX_TOKEN;
+//     static const std::string OBJ_TEXTURE_TOKEN;
+//     static const std::string OBJ_NORMAL_TOKEN;
+//     static const std::string OBJ_FACE_TOKEN;
 protected:
 
-    static Vector3D parseVertex(const std::vector<std::string>& wordsInLineWithoutToken, int lineInd&);
+    static Vector3D parse_vertex(const std::vector<std::string>& words_in_line_without_token, int lineInd);
 
-    static Vector2D parseTextureVertex(const std::vector<std::string>& wordsInLineWithoutToken, int lineInd&);
+    static Vector2D parseTextureVertex(const std::vector<std::string>& words_in_line_without_token, int lineInd);
 
-    static Vector3D parseNormal(const std::vector<std::string>& wordsInLineWithoutToken, int lineInd&) ;
+    static Vector3D parse_normal(const std::vector<std::string>& words_in_line_without_words_in_line_without_token, int lineInd) ;
 
-    static Polygon parseFace(const std::vector<std::string>& wordsInLineWithoutToken, int lineInd&);
+    static Polygon parse_face(const std::vector<std::string>& words_in_line_without_token, int lineInd);
 
-    static void parseFaceWord(std::string wordInLine,
-                std::vector<int> onePolygonVertexIndices,
-                std::vector<int> onePolygonTextureVertexIndices,
-                std::vector<int> onePolygonNormalIndices, int lineInd);
+    static void parseFaceWord(std::string word_in_line,
+                std::vector<int>& one_polygon_vertex_indices,
+                std::vector<int>& one_polygon_texture_vertex_indices,
+                std::vector<int>& one_polygon_normal_indices, int lineInd);
 
 };
 #endif
