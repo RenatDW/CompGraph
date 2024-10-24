@@ -19,6 +19,8 @@ public:
 
 	void setZ(double z);
 
+	Vector3D dot(Vector3D v);
+
 	~Vector3D();
 
 private:

@@ -24,7 +24,10 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/Vector3D.cpp
         math/Vector4D.cpp
         render_engine/GraphicConveyor.cpp
-        headers/Model.h)
+        headers/Model.h
+        math/Matrix4D.cpp
+        headers/Matrix4D.h
+        math/Matrix4D.cpp)
 
 
 target_link_libraries(CompGraph

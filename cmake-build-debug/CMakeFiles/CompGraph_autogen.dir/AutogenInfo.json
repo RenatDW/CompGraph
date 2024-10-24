@@ -263,6 +263,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/Users/renat/CLionProjects/CompGraph/headers/Matrix4D.h",
+			"MU",
+			"K6S233IZAZ/moc_Matrix4D.cpp",
+			null
+		],
+		[
 			"/Users/renat/CLionProjects/CompGraph/headers/Model.h",
 			"MU",
 			"K6S233IZAZ/moc_Model.cpp",
@@ -329,6 +335,7 @@
 	"SOURCES" : 
 	[
 		[ "/Users/renat/CLionProjects/CompGraph/main.cpp", "MU", null ],
+		[ "/Users/renat/CLionProjects/CompGraph/math/Matrix4D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp", "MU", null ],
 		[ "/Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp", "MU", null ],

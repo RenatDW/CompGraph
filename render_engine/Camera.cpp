@@ -3,6 +3,8 @@
 //
 
 #include "../headers/Camera.h"
+#include "../headers/GraphicConveyor.h"
+
 
 Camera::Camera(
     const Vector3D position,
@@ -20,3 +22,38 @@ Camera::Camera(
     this->farPlane = farPlane;
 };
 
+void Camera::setPosition(const Vector3D position): position(position){};
+
+void Camera::setTarget(const Vector3D target): target(target){};
+
+void Camera::setAspectRatio(const float aspectRatio): aspectRatio(aspectRatio) {};
+
+Vector3D Camera::getPosition()
+{
+    return this->position;
+}
+
+Vector3D Camera::getTarget()
+{
+    return this->target;
+}
+
+void Camera::movePosition(const Vector3D translation)
+{
+    this->position.add(translation);
+}
+
+void Camera::moveTarget(const Vector3D translation)
+{
+    this->target.add(translation);
+}
+
+Matrix4D Camera::getViewMatrix()
+{
+    return GraphicConveyor::lookAt(position, target);
+}
+
+Matrix4D Camera::getProjectionMatrix()
+{
+return GraphicConveyor::perspective(fov, aspectRatio, nearPlane, farPlane);
+};

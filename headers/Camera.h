@@ -5,15 +5,14 @@
 #ifndef CAMERS_H
 #define CAMERS_H
 
-#include "Vector2D.h" // Include the Vector3D class header
-#include "Vector3D.h" // Include the Vector3D class header
-// #include "Matrix4D.h" // Assuming you have a Matrix4f class
+#include "Vector3D.h"
+#include "../headers/Matrix4D.h"
 
 class Camera
 {
     public:
 
-    void setPosition(const Vector2D position);
+    void setPosition(const Vector3D position);
 
     void setTarget(const Vector3D target);
 
@@ -27,9 +26,9 @@ class Camera
 
     void moveTarget(const Vector3D translation);
 
-    // Matrix4D getViewMatrix();
+    Matrix4D getViewMatrix();
 
-    // Matrix4D getProjectionMatrix();
+    Matrix4D getProjectionMatrix();
 
     Camera(const Vector3D position,
             const Vector3D target,
@@ -47,7 +46,5 @@ class Camera
     float farPlane;
 
 };
-
-
 
 #endif //CAMERS_H
