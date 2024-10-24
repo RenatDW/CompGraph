@@ -6,10 +6,7 @@
 
 Matrix4D::Matrix4D() = default;
 
-Matrix4D::Matrix4D(float ar[4][4])
-{
-    matrix(ar);
-}
+// Matrix4D::Matrix4D(float ar[4][4]):matrix(ar){};
 
 void Matrix4D::set(int x, int y, float value)
 {

@@ -22,11 +22,20 @@ Camera::Camera(
     this->farPlane = farPlane;
 };
 
-void Camera::setPosition(const Vector3D position): position(position){};
+void Camera::setPosition(const Vector3D position)
+{
+    this->position= position;
+}
+void Camera::setTarget(const Vector3D target)
 
-void Camera::setTarget(const Vector3D target): target(target){};
+{
+    this->target= position;
+    }
 
-void Camera::setAspectRatio(const float aspectRatio): aspectRatio(aspectRatio) {};
+void Camera::setAspectRatio(const float aspectRatio)
+{
+    this->aspectRatio = aspectRatio;
+};
 
 Vector3D Camera::getPosition()
 {
@@ -40,12 +49,12 @@ Vector3D Camera::getTarget()
 
 void Camera::movePosition(const Vector3D translation)
 {
-    this->position.add(translation);
+    // this->position.add(translation);
 }
 
 void Camera::moveTarget(const Vector3D translation)
 {
-    this->target.add(translation);
+    // this->target.add(translation);
 }
 
 Matrix4D Camera::getViewMatrix()

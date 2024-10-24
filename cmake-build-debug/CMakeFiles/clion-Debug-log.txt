@@ -1,4 +1,4 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -DCMAKE_PREFIX_PATH=/Applications/QT/6.8.0/macos -G Ninja -S /Users/renat/CLionProjects/CompGraph -B /Users/renat/CLionProjects/CompGraph/cmake-build-debug
--- Configuring done (0.1s)
+-- Configuring done (0.2s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/renat/CLionProjects/CompGraph/cmake-build-debug
