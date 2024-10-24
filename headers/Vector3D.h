@@ -20,8 +20,6 @@ public:
 
 	void setZ(float z);
 
-	Vector3D dot(Vector3D v);
-
 	~Vector3D();
 
 private:
