@@ -8,12 +8,12 @@
 
 Matrix4D GraphicConveyor::rotateScaleTranslate()
 {
-    float matrix[4][4] = {
-        {1, 0, 0, 0},
-        {0, 1, 0, 0},
-        {0, 0, 1, 0},
-        {0, 0, 0, 1}};
-    return Matrix4D(matrix);
+    // float matrix[4][4] = {
+    //     {1, 0, 0, 0},
+    //     {0, 1, 0, 0},
+    //     {0, 0, 1, 0},
+    //     {0, 0, 0, 1}};
+    // return Matrix4D(matrix);
 }
 Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target)
 {
@@ -25,20 +25,20 @@ Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
     Vector3D resultY = Vector3D();
     Vector3D resultZ = Vector3D();
 
-    resultZ.sub(target, eye);
-    resultX.cross(up, resultZ);
-    resultY.cross(resultZ, resultX);
+    // resultZ.sub(target, eye);
+    // resultX.cross(up, resultZ);
+    // resultY.cross(resultZ, resultX);
+    //
+    // resultX.normalize();
+    // resultY.normalize();
+    // resultZ.normalize();
 
-    resultX.normalize();
-    resultY.normalize();
-    resultZ.normalize();
-
-    float matrix[] = {
-        resultX.getX(), resultY.getX(), resultZ.getX(), 0,
-        resultX.getY(), resultY.getY(), resultZ.getY(), 0,
-        resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0,
-        -resultX.dot(eye), -resultY.dot(eye), -resultZ.dot(eye), 1};
-    return Matrix4D(matrix);
+    // float matrix[] = {
+    //     resultX.getX(), resultY.getX(), resultZ.getX(), 0,
+    //     resultX.getY(), resultY.getY(), resultZ.getY(), 0,
+    //     resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0,
+    //     -resultX.dot(eye), -resultY.dot(eye), -resultZ.dot(eye), 1};
+    // return Matrix4D(matrix);
 }
 
 Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, const float nearPlane, const float farPlane)

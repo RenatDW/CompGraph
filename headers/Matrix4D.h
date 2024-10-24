@@ -12,8 +12,6 @@ public:
 
     Matrix4D(float ar[4][4]);
 
-    explicit Matrix4D(float arrs[4][]);
-
     void set(int x, int y, float value);
 
     float get(int x, int y) const;
