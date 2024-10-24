@@ -1,30 +1,33 @@
-#pragma once
+#ifndef VECTOR3D_H
+#define VECTOR3D_H
 
 class Vector3D
 {
 public:
 	Vector3D();
 
-	Vector3D(double x, double y, double z);
+	Vector3D(float x, float y, float z);
 
-	double getX() const;
+	float getX() const;
 
-	void setX(double x);
+	float getY() const;
 
-	double getY() const;
+	float getZ() const;
 
-	void setY(double y);
+	void setX(float x);
 
-	double getZ() const;
+	void setY(float y);
 
-	void setZ(double z);
+	void setZ(float z);
 
 	Vector3D dot(Vector3D v);
 
 	~Vector3D();
 
 private:
-	double x;
-	double y;
-	double z;
+	float x;
+	float y;
+	float z;
 };
+
+#endif

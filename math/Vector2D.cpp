@@ -2,24 +2,24 @@
 
 Vector2D::Vector2D() = default;
 
-Vector2D::Vector2D(double x, double y) : x(x), y(y) {};
+Vector2D::Vector2D(float x, float y) : x(x), y(y) {};
 
-double Vector2D::getX() const 
+float Vector2D::getX() const
 { 
 	return x; 
 }
 
-void Vector2D::setX(double x) 
-{ 
-	this->x = x; 
-}
-
-double Vector2D::getY() const 
+float Vector2D::getY() const
 { 
 	return y; 
 };
 
-void Vector2D::setY(double y) 
+void Vector2D::setX(float x)
+{
+	this->x = x;
+}
+
+void Vector2D::setY(float y)
 { 
 	this->y = y; 
 }

@@ -1,23 +1,26 @@
-#pragma once
+#ifndef VECTOR2D_H
+#define VECTOR2D_H
 
 class Vector2D
 {
 public:
 	Vector2D();
 
-	Vector2D(double x, double y);
+	Vector2D(float x, float y);
 
-	double getX() const;
+	float getX() const;
 
-	void setX(double x);
+	float getY() const;
 
-	double getY() const;
+	void setX(float x);
 
-	void setY(double y);
+	void setY(float y);
 
 	~Vector2D();
 
 private:
-	double x;
-	double y;
+	float x;
+	float y;
 };
+
+#endif

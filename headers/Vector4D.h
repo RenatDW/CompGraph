@@ -1,33 +1,36 @@
-#pragma once
+#ifndef VECTOR4D_H
+#define VECTOR4D_H
 
 class Vector4D
 {
 public:
 	Vector4D();
 
-	Vector4D(double x, double y, double z, double w);
+	Vector4D(float x, float y, float z, float w);
 
-	double getX() const;
+	float getX() const;
 
-	void setX(double x);
+	float getY() const;
 
-	double getY() const;
+	float getZ() const;
 
-	void setY(double y);
+	float getW() const;
+	
+	void setX(float x);
 
-	double getZ() const;
+	void setY(float y);
 
-	void setZ(double z);
+	void setZ(float z);
 
-	double getW() const;
-
-	void setW(double w);
+	void setW(float w);
 
 	~Vector4D();
 
 private:
-	double x;
-	double y;
-	double z;
-	double w;
+	float x;
+	float y;
+	float z;
+	float w;
 };
+
+#endif
