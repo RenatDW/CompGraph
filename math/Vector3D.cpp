@@ -2,35 +2,35 @@
 
 Vector3D::Vector3D() = default;
 
-Vector3D::Vector3D(double x, double y, double z) : 
+Vector3D::Vector3D(float x, float y, float z) :
 	x(x), y(y), z(z) {};
 
-double Vector3D::getX() const 
+float Vector3D::getX() const
 { 
 	return x;
 }
 
-void Vector3D::setX(double x) 
-{ 
-	this->x = x;
-}
-
-double Vector3D::getY() const 
+float Vector3D::getY() const
 { 
 	return y; 
 };
 
-void Vector3D::setY(double y) 
-{ 
-	this->y = y; 
-}
-
-double Vector3D::getZ() const
+float Vector3D::getZ() const
 {
 	return z;
 };
 
-void Vector3D::setZ(double z)
+void Vector3D::setX(float x)
+{
+	this->x = x;
+}
+
+void Vector3D::setY(float y)
+{ 
+	this->y = y; 
+}
+
+void Vector3D::setZ(float z)
 {
 	this->z = z;
 }
