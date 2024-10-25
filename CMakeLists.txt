@@ -17,25 +17,9 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
-        math/Vector2D.cpp
-        render_engine/RenderEngine.cpp
-        render_engine/Camera.cpp
-        model/Polygon.cpp
-        math/Vector3D.cpp
-        math/Vector4D.cpp
-        render_engine/GraphicConveyor.cpp
-        math/Matrix4D.cpp
-        math/Matrix4D.cpp
-        forms/mainwindow.cpp
-        forms/mainwindow.ui
-        headers/mainwindow.h
-        objreader/ObjReader.cpp
-        headers/ObjReader.h
-        objwriter/ObjWriter.cpp
-        objreader/ObjReaderException.cpp
-        headers/ObjReaderException.h)
-
-
+        main.cpp
+        main.cpp
+)
 target_link_libraries(CompGraph
         Qt6::Core
         Qt6::Gui

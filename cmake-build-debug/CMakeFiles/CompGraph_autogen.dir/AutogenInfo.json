@@ -260,27 +260,7 @@
 	"CROSS_CONFIG" : false,
 	"DEP_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "CompGraph_autogen/timestamp",
-	"HEADERS" : 
-	[
-		[
-			"/Users/renat/CLionProjects/CompGraph/headers/ObjReader.h",
-			"MU",
-			"K6S233IZAZ/moc_ObjReader.cpp",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/headers/ObjReaderException.h",
-			"MU",
-			"K6S233IZAZ/moc_ObjReaderException.cpp",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/headers/mainwindow.h",
-			"MU",
-			"K6S233IZAZ/moc_mainwindow.cpp",
-			null
-		]
-	],
+	"HEADERS" : [],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/include",
 	"MOC_COMPILATION_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp",
@@ -340,47 +320,7 @@
 	"SETTINGS_FILE" : "/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CMakeFiles/CompGraph_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[
-			"/Users/renat/CLionProjects/CompGraph/forms/mainwindow.cpp",
-			"MU",
-			null
-		],
-		[ "/Users/renat/CLionProjects/CompGraph/main.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Matrix4D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector2D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector3D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/math/Vector4D.cpp", "MU", null ],
-		[ "/Users/renat/CLionProjects/CompGraph/model/Polygon.cpp", "MU", null ],
-		[
-			"/Users/renat/CLionProjects/CompGraph/objreader/ObjReader.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/objreader/ObjReaderException.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/objwriter/ObjWriter.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/render_engine/Camera.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/render_engine/GraphicConveyor.cpp",
-			"MU",
-			null
-		],
-		[
-			"/Users/renat/CLionProjects/CompGraph/render_engine/RenderEngine.cpp",
-			"MU",
-			null
-		]
+		[ "/Users/renat/CLionProjects/CompGraph/main.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],

@@ -276,9 +276,6 @@ CompGraph_SOURCE_DIR:STATIC=/Users/renat/CLionProjects/CompGraph
 //Path to a program.
 MACDEPLOYQT_EXECUTABLE:FILEPATH=/Applications/QT/6.8.0/macos/bin/macdeployqt
 
-//Path to a library.
-NAMES:FILEPATH=NAMES-NOTFOUND
-
 //Include for the OpenGL GLU library
 OPENGL_GLU_INCLUDE_DIR:PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/OpenGL.framework
 
@@ -290,15 +287,6 @@ OPENGL_gl_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/
 
 //OpenGL GLU library
 OPENGL_glu_LIBRARY:FILEPATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/OpenGL.framework
-
-//Value Computed by CMake
-Project_BINARY_DIR:STATIC=/Users/renat/CLionProjects/CompGraph/cmake-build-debug
-
-//Value Computed by CMake
-Project_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-Project_SOURCE_DIR:STATIC=/Users/renat/CLionProjects/CompGraph
 
 //Additional directories where find(Qt6 ...) host Qt components
 // are searched
