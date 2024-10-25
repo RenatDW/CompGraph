@@ -6,9 +6,15 @@
 #include "headers/ObjReader.h"
 
 int main(int argc, char *argv[]) {
-    //todo Читает только до 41659 файла почему-то
-    std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapFemaleBody.obj");
-    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/CaracalCube/caracal_cube.obj");
+
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapBody.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapHand.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapHead.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapLowerTeeth.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapSkull.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapUpperTeeth.obj");
+    // std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/Faceform/WrapFemaleBody.obj");
+    std::string filename("/Users/renat/IdeaProjects/CompGraphProject/3DModels/CaracalCube/caracal_cube.obj");
     Model ans(ObjReader::read(filename));
 
     QApplication a(argc, argv);

@@ -16,8 +16,7 @@ static const std::string OBJ_FACE_TOKEN {"f"};
 Model ObjReader::read(std::string &fileContent) {
     Model result = Model();
 
-    std::ifstream in(fileContent);
-    if (in.is_open())
+    if (std::ifstream in(fileContent); in.is_open())
     {
         std::string line;
         int line_ind = 0;
@@ -49,7 +48,7 @@ Model ObjReader::read(std::string &fileContent) {
             }else if (token == OBJ_FACE_TOKEN) {
                 result.polygons.emplace_back(parse_face(words_in_line, line_ind));
             }
-            std::cout << line << std::endl;
+            // std::cout << line << std::endl;
         }
         in.close();
     }
@@ -120,23 +119,26 @@ void ObjReader::parseFaceWord(const std::string& word_in_line, std::vector<int> 
         std::istringstream stream(word_in_line);
         std::string word;
         while (std::getline(stream, word, '/')) {
-            word_indices.push_back(word);
+            word_indices.emplace_back(word);
         }
 
         switch (word_indices.size()) {
             case 1 :{
-                one_polygon_vertex_indices.push_back(std::stoi(word_indices[0]) - 1);
+                one_polygon_vertex_indices.emplace_back(std::stoi(word_indices[0]) - 1);
+                break;
             }
             case 2 : {
-                one_polygon_vertex_indices.push_back(std::stoi(word_indices[0]) - 1);
-                 one_polygon_texture_vertex_indices.push_back(std::stoi(word_indices[1]) - 1);
+                one_polygon_vertex_indices.emplace_back(std::stoi(word_indices[0]) - 1);
+                 one_polygon_texture_vertex_indices.emplace_back(std::stoi(word_indices[1]) - 1);
+                break;
             }
             case 3 : {
-                one_polygon_vertex_indices.push_back(std::stoi(word_indices[0]) - 1);
-                one_polygon_normal_indices.push_back(std::stoi(word_indices[2]) - 1);
+                one_polygon_vertex_indices.emplace_back(std::stoi(word_indices[0]) - 1);
+                one_polygon_normal_indices.emplace_back(std::stoi(word_indices[2]) - 1);
                 if (!word_indices[1].empty()) {
-                    one_polygon_texture_vertex_indices.push_back(std::stoi(word_indices[1]) - 1);
+                    one_polygon_texture_vertex_indices.emplace_back(std::stoi(word_indices[1]) - 1);
                 }
+                break;
             }
             default :{
                 // throw ObjReaderException("Invalid element size.", line_ind);

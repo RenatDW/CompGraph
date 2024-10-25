@@ -6,6 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+
 file(GLOB
         CPPS "*.cpp"
         HPP "*.h")
@@ -17,10 +18,10 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
-        math/Vector2D.cpp
         render_engine/RenderEngine.cpp
         render_engine/Camera.cpp
         model/Polygon.cpp
+        math/Vector2D.cpp
         math/Vector3D.cpp
         math/Vector4D.cpp
         render_engine/GraphicConveyor.cpp
@@ -33,7 +34,14 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         headers/ObjReader.h
         objwriter/ObjWriter.cpp
         objreader/ObjReaderException.cpp
-        headers/ObjReaderException.h)
+        headers/ObjReaderException.h
+        main.cpp
+        main.cpp
+        main.cpp
+        main.cpp
+        main.cpp
+        main.cpp
+        main.cpp)
 
 
 target_link_libraries(CompGraph
