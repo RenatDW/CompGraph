@@ -644,6 +644,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+### Ninja ###
+.ninja_deps
+.ninja_log
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
