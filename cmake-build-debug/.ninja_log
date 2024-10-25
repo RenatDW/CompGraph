@@ -38,3 +38,9 @@
 53	909	1729805446253449883	CMakeFiles/CompGraph.dir/objreader/ObjReader.cpp.o	7a08bdc42d9bf8f5
 53	1207	1729805446253212844	CMakeFiles/CompGraph.dir/main.cpp.o	bae2695224e49c5e
 1207	1378	1729805447407672577	CompGraph	e3236dbb4b2c506
+22	63	1729805957739087983	CompGraph_autogen/timestamp	6e4d2736c445e382
+22	63	1729805957739087983	CompGraph_autogen/mocs_compilation.cpp	6e4d2736c445e382
+22	63	1729805957739087983	/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/timestamp	6e4d2736c445e382
+22	63	1729805957739087983	/Users/renat/CLionProjects/CompGraph/cmake-build-debug/CompGraph_autogen/mocs_compilation.cpp	6e4d2736c445e382
+63	1384	1729805957780176508	CMakeFiles/CompGraph.dir/main.cpp.o	bae2695224e49c5e
+1384	1576	1729805959100947828	CompGraph	e3236dbb4b2c506
