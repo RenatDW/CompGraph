@@ -12,6 +12,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+CompGraph_autogen/
+
 # AWS User-specific
 .idea/**/aws.xml
 
