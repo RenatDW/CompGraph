@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPainter>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void paintEvent(QPaintEvent *event) override;
     ~MainWindow();
 private slots:
     void on_actionLoad_Model_triggered();

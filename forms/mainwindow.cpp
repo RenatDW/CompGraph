@@ -16,6 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
+void MainWindow::paintEvent(QPaintEvent *event) {
+    QMainWindow::paintEvent(event);
+    QPainter painter;
+    painter.drawLine(10,10,10,10);
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
