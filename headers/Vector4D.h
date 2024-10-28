@@ -30,7 +30,7 @@ public:
 
 	float operator * (const Vector4D& v);
 
-	float operator * (const float k);
+	Vector4D operator * (const float k);
 
 	float length() const;
 

@@ -7,6 +7,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
+set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64/lib/cmake")
+
 file(GLOB
         CPPS "*.cpp"
         HPP "*.h")
@@ -41,7 +43,11 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         main.cpp
         main.cpp
         main.cpp
-        main.cpp)
+        main.cpp
+        main.cpp
+        main.cpp
+        main.cpp
+        math/Matrix3D.cpp)
 
 
 target_link_libraries(CompGraph

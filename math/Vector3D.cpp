@@ -52,7 +52,7 @@ float Vector3D::operator * (const Vector3D& v)
 	return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ();
 }
 
-float Vector3D::operator * (const float k)
+Vector3D Vector3D::operator * (const float k)
 {
 	return Vector3D(this->x * k, this->y * k, this->z * k);
 }

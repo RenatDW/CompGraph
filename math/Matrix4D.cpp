@@ -1,43 +1,29 @@
 #include "../headers/Matrix4D.h"
-#include "../headers/Vector4D"
+#include "../headers/Vector4D.h"
 
 #include <vector>
 
 Matrix4D Matrix4D::create_zero_matrix()
 {
-    Matrix4D matrix;
-
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 4; ++j)
-        {
-            matrix[i][j] = 0;
-        }
-    }
-
-    return matrix;
+    std::vector<std::vector<float>> zero_matrix = {
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0}
+    };
+    return Matrix4D(zero_matrix);
 }
 
 Matrix4D Matrix4D::create_identity_matrix()
 {
-    Matrix4D matrix;
+    std::vector<std::vector<float>> identity_matrix = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
+    };
 
-    for (int i = 0; i < 4; ++i)
-    {
-        for (int j = 0; j < 4; ++j)
-        {
-            if (i == j)
-            {
-                matrix[i][j] = 1;
-            }
-            else
-            {
-                matrix[i][j] = 0;
-            }
-        }
-    }
-
-    return matrix;
+    return Matrix4D(identity_matrix);
 }
 
 std::vector<std::vector<float>> Matrix4D::get_matrix() const

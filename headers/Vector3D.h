@@ -26,7 +26,7 @@ public:
 
 	float operator * (const Vector3D& v);
 
-	float operator * (const float k);
+	Vector3D operator * (const float k);
 
 	float length() const;
 

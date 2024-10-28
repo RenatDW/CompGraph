@@ -6,39 +6,24 @@
 
 Matrix3D Matrix3D::create_zero_matrix()
 {
-    Matrix3D matrix;
+    std::vector<std::vector<float>> zero_matrix = {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    };
 
-    for (int i = 0; i < 3; ++i)
-    {
-		for (int j = 0; j < 3; ++j)
-		{
-			this->matrix[i][j] = 0;
-		}
-    }
-
-    return matrix;
+    return Matrix3D(zero_matrix);
 }
 
 Matrix3D Matrix3D::create_identity_matrix()
 {
-    Matrix3D matrix;
+    std::vector<std::vector<float>> identity_matrix = {
+        {1, 0, 0},
+        {0, 1, 0},
+        {0, 0, 1}
+    };
 
-    for (int i = 0; i < 3; ++i)
-    {
-        for (int j = 0; j < 3; ++j)
-        {
-            if (i == j)
-            {
-                this->matrix[i][j] = 1;
-            }
-            else
-            {
-                this->matrix[i][j] = 0;
-            }
-        }
-    }
-
-    return matrix;
+    return Matrix3D(identity_matrix);
 }
 
 std::vector<std::vector<float>> Matrix3D::get_matrix() const
