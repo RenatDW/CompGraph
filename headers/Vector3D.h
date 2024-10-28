@@ -24,13 +24,16 @@ public:
 
 	Vector3D operator - (const Vector3D& v);
 
-	float operator * (const Vector3D& v);
+	static Vector3D cross(const Vector3D &v1, const Vector3D &v2);
 
-	float operator * (const float k);
+	float operator*(const Vector3D &v);
+
+
+	Vector3D operator * (const float k);
 
 	float length() const;
 
-	Vector3D normalization();
+	Vector3D normalize();
 
 	~Vector3D();
 

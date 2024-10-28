@@ -19,7 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::paintEvent(QPaintEvent *event) {
     QMainWindow::paintEvent(event);
     QPainter painter;
-    painter.drawLine(10,10,10,10);
+    for(Model model : models) {
+        painter.drawLine(10,10,10,10);
+    }
 }
 
 MainWindow::~MainWindow()

@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QPainter>
 
+#include "Model.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
@@ -16,8 +18,12 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    
     void paintEvent(QPaintEvent *event) override;
     ~MainWindow();
+
+    std::vector<Model> models;
+
 private slots:
     void on_actionLoad_Model_triggered();
 

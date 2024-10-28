@@ -64,7 +64,7 @@ float Vector4D::operator * (const Vector4D& v)
 
 float Vector4D::operator * (const float k)
 {
-	return Vector4D(this->x * k, this->y * k, this->z * k, this->w * k);
+	return (this->x * k, this->y * k, this->z * k, this->w * k);
 }
 
 float Vector4D::length() const
