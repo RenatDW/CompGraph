@@ -12,13 +12,22 @@ public:
     Matrix3D(std::vector<std::vector<int>> matrix) :
         matrix(matrix) {}
 
-    Matrix3D operator * (const Matrix3D& m);
+    std::vector<std::vector<float>> get_matrix() const;
 
+    void set_matrix(std::vector<std::vector<float>> matrix);
+
+    Matrix3D operator * (const Matrix3D& m);
 
     Vector3D operator * (const Vector3D& v);
 
-    void printMatrix() const;
-    
+    Matrix3D operator + (const Matrix3D& m);
+
+	Matrix3D operator - (const Matrix3D& m);
+
+    Matrix3D transposition();
+
+    void print_matrix() const;
+
 private:
     std::vector<std::vector<float>> matrix;
 };

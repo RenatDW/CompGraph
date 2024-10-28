@@ -4,6 +4,7 @@
 #include "Vector4D.h"
 
 #include <vector>
+#include <iostream>
 
 class Matrix4D
 {
@@ -15,7 +16,20 @@ public:
 
     Vector4D operator * (const Vector4D& v);
 
-    
+    void print_matrix() const
+    {
+        for (const auto& row : matrix)
+        {
+            std::cout << "[ ";
+
+            for (const auto& element : row)
+            {
+                std::cout << element << " ";
+            }
+
+            std::cout << "]" << std::endl;
+        }
+    }
 
 private:
     std::vector<std::vector<float>> matrix;
