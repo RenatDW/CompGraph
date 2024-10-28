@@ -25,7 +25,7 @@ public:
 
     std::vector<Model> models;
     Camera camera;
-    const int TRANSLATION = 0.5F;
+    const int TRANSLATION = 50;
 
 private slots:
     void on_actionLoad_Model_triggered();

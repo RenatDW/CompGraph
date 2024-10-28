@@ -49,7 +49,11 @@ Vector3D Camera::getTarget()
 
 void Camera::movePosition(const Vector3D translation)
 {
-    this->position = position + translation;
+    this->setPosition({position.getX() + translation.getX(),position.getY() + translation.getY(),position.getZ() + translation.getZ()});
+    // this->position.setX(position.getX() + translation.getX() + 50);
+    // this->position.setY(position.getY() + translation.getY());
+    // this->position.setZ(position.getZ() + translation.getZ());
+    // this->position = position + translation;
 }
 
 void Camera::moveTarget(const Vector3D translation)

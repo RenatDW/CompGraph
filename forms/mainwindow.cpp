@@ -5,6 +5,9 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_MainWindow.h" resolved
 
 #include "../headers/mainwindow.h"
+
+#include <iostream>
+
 #include "../ui_MainWindow.h"
 #include "../headers/RenderEngine.h"
 #include <QMessageBox>
@@ -63,16 +66,24 @@ void MainWindow::on_actionDown_triggered()
 void MainWindow::on_actionLeft_triggered()
 {
     camera.movePosition(Vector3D(TRANSLATION, 0, 0));
+    repaint();
+
 }
 void MainWindow::on_actionRight_triggered()
 {
     camera.movePosition(Vector3D(-TRANSLATION, 0, 0));
+    repaint();
+
 }
 void MainWindow::on_actionForward_triggered()
 {
     camera.movePosition(Vector3D(0, 0, -TRANSLATION));
+    repaint();
+
 }
 void MainWindow::on_actionBack_triggered()
 {
     camera.movePosition(Vector3D(0, 0, TRANSLATION));
+    repaint();
+
 }
