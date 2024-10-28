@@ -4,6 +4,43 @@
 #include <iostream>
 #include <vector>
 
+Matrix3D Matrix3D::create_zero_matrix()
+{
+    Matrix3D matrix;
+
+    for (int i = 0; i < 3; ++i)
+    {
+		for (int j = 0; j < 3; ++j)
+		{
+			this->matrix[i][j] = 0;
+		}
+    }
+
+    return matrix;
+}
+
+Matrix3D Matrix3D::create_identity_matrix()
+{
+    Matrix3D matrix;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            if (i == j)
+            {
+                this->matrix[i][j] = 1;
+            }
+            else
+            {
+                this->matrix[i][j] = 0;
+            }
+        }
+    }
+
+    return matrix;
+}
+
 std::vector<std::vector<float>> Matrix3D::get_matrix() const
 {
     return matrix;
