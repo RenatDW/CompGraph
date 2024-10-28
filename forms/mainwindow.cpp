@@ -12,9 +12,10 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    : QMainWindow(parent),
+camera(Vector3D(0, 0, 100),Vector3D(0, 0, 0),
+    1.0F, 1, 0.01F, 100),
+ui(new Ui::MainWindow) {
     ui->setupUi(this);
 }
 
@@ -26,7 +27,7 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 
     // Здесь можно использовать painter для рисования на окне
     for(const Model &model : models) { // Используйте ссылку на модель
-        RenderEngine::render(painter, Camera(Vector3D(0, 0, 100), Vector3D(0,0,0), 1.0F, 1,0.01F, 100), model,this->width(), this->height(), 0); // Передаем painter по ссылке
+        RenderEngine::render(painter, camera, model,this->width(), this->height(), 0); // Передаем painter по ссылке
     }
 }
 
@@ -44,4 +45,34 @@ void MainWindow::on_actionLoad_Model_triggered()
 void MainWindow::on_actionSave_Model_triggered()
 {
     QMessageBox::information(this, "Save", "Coming soon...");
+}
+
+
+void MainWindow::on_actionUp_triggered()
+{
+    camera.movePosition(Vector3D(0, TRANSLATION, 0));
+    repaint();
+}
+
+void MainWindow::on_actionDown_triggered()
+{
+    camera.movePosition(Vector3D(0, -TRANSLATION, 0));
+    repaint();
+
+}
+void MainWindow::on_actionLeft_triggered()
+{
+    camera.movePosition(Vector3D(TRANSLATION, 0, 0));
+}
+void MainWindow::on_actionRight_triggered()
+{
+    camera.movePosition(Vector3D(-TRANSLATION, 0, 0));
+}
+void MainWindow::on_actionForward_triggered()
+{
+    camera.movePosition(Vector3D(0, 0, -TRANSLATION));
+}
+void MainWindow::on_actionBack_triggered()
+{
+    camera.movePosition(Vector3D(0, 0, TRANSLATION));
 }
