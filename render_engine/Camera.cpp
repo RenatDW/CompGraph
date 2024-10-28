@@ -49,12 +49,12 @@ Vector3D Camera::getTarget()
 
 void Camera::movePosition(const Vector3D translation)
 {
-    // this->position.add(translation);
+    this->position + translation;
 }
 
 void Camera::moveTarget(const Vector3D translation)
 {
-    // this->target.add(translation);
+    this->target + translation;
 }
 
 Matrix4D Camera::getViewMatrix()

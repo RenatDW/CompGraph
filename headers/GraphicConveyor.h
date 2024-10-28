@@ -11,7 +11,7 @@
 class GraphicConveyor
 {
     public:
-    static Matrix4D rotateScaleTranslate();
+    static Matrix4D rotate_scale_translate();
 
     static Matrix4D lookAt(Vector3D eye, Vector3D target);
 

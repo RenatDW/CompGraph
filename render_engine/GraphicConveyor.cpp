@@ -6,7 +6,7 @@
 #include "../headers/Vector3D.h"
 #include <cmath>
 
-Matrix4D GraphicConveyor::rotateScaleTranslate()
+Matrix4D GraphicConveyor::rotate_scale_translate()
 {
     std::vector<std::vector<float>> matrix = {
         {1, 0, 0, 0},
