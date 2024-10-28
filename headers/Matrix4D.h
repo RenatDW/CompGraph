@@ -22,7 +22,6 @@ public:
         return matrix;
     }
 
-private:
     std::vector<std::vector<float>> matrix;
 };
 

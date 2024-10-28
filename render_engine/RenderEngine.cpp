@@ -45,8 +45,7 @@ void RenderEngine::render(QPainter &painter,
     modelViewProjectionMatrix.mul(viewMatrix);
     modelViewProjectionMatrix.mul(projectionMatrix);
     
-    painter.drawLine(10, 10, 200, 200);
-    const int nPolygons = mesh.polygons.size();
+    int nPolygons = mesh.polygons.size();
     //Проходимся по каждому полигону
     for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
         //Получаем все вершины конкретного полигона

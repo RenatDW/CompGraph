@@ -3,13 +3,8 @@
 
 #include <vector>
 
-Matrix4D::Matrix4D():
-    matrix(std::vector<std::vector<float>>()) {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            matrix[i][j] = 0;
-        }
-    }
+Matrix4D::Matrix4D(){
+    matrix = std::vector<std::vector<float>>{{0, 0, 0 ,0},{0, 0, 0, 0},{0, 0, 0, 0},{0, 0, 0, 0,}};
 }
 
 Matrix4D Matrix4D::operator *(const Matrix4D &m) {
@@ -45,13 +40,14 @@ Vector4D Matrix4D::operator *(const Vector4D &v) {
 }
 
 void Matrix4D::mul(const Matrix4D &m1) {
-    for (int i = 0; i < this->matrix.size(); i++) {
-        for (int j = 0; j < this->matrix[0].size(); j++) {
-            this->matrix[i][j] =
-                    this->matrix[i][0] * m1.matrix1()[0][0] +
-                    this->matrix[i][1] * m1.matrix1()[1][0] +
-                    this->matrix[i][2] * m1.matrix1()[2][0] +
-                    this->matrix[i][3] * m1.matrix1()[3][0];
+    std::vector<std::vector<float>> result(4, std::vector<float>(4, 0.0f));
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            for (int k = 0; k < 4; ++k) {
+                result[i][j] += this->matrix[i][k] * m1.matrix[k][j];
+            }
         }
     }
+
+    this->matrix = result;
 }

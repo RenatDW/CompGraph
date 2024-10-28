@@ -46,11 +46,11 @@ Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, 
 {
     Matrix4D result = Matrix4D();
     float tangentMinusOnDegree = (float) (1.0F / (tan(fov * 0.5F)));
-    result.matrix1()[0][0] = tangentMinusOnDegree / aspectRatio;
-    result.matrix1()[1][1] = tangentMinusOnDegree;
-    result.matrix1()[2][2] = (farPlane + nearPlane) / (farPlane - nearPlane);
-    result.matrix1()[2][3] = 1.0F;
-    result.matrix1()[3][2] = 2 * (nearPlane * farPlane) / (nearPlane - farPlane);
+    result.matrix[0][0] = tangentMinusOnDegree / aspectRatio;
+    result.matrix[1][1] = tangentMinusOnDegree;
+    result.matrix[2][2] = (farPlane + nearPlane) / (farPlane - nearPlane);
+    result.matrix[2][3] = 1.0F;
+    result.matrix[3][2] = 2 * (nearPlane * farPlane) / (nearPlane - farPlane);
     return result;
 }
 

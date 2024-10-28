@@ -26,7 +26,7 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 
     // Здесь можно использовать painter для рисования на окне
     for(const Model &model : models) { // Используйте ссылку на модель
-        RenderEngine::render(painter, Camera(Vector3D(0, 0, 100), Vector3D(0,0,0), 1.0F, 1,0.01F, 100), model, 800, 600, 0); // Передаем painter по ссылке
+        RenderEngine::render(painter, Camera(Vector3D(0, 0, 100), Vector3D(0,0,0), 1.0F, 1,0.01F, 100), model,this->width(), this->height(), 0); // Передаем painter по ссылке
     }
 }
 
