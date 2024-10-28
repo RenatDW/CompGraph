@@ -53,3 +53,43 @@ Vector4D Matrix4D::operator * (const Vector4D& v)
     );
 }
 
+Matrix4D Matrix4D::operator + (const Matrix4D& m)
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            ans[i][j] += m.matrix[i][j];
+        }
+    }
+    return Matrix4D(ans);
+}
+
+Matrix4D Matrix4D::operator - (const Matrix4D& m)
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            ans[i][j] -= m.matrix[i][j];
+        }
+    }
+    return Matrix4D(ans);
+}
+
+Matrix4D Matrix4D::transposition()
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            ans[i][j] = this->matrix[j][i];
+        }
+    }
+    return Matrix4D(ans);
+}
+

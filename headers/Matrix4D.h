@@ -12,24 +12,21 @@ public:
     Matrix4D(std::vector<std::vector<float>> matrix) :
         matrix(matrix) {}
 
+    std::vector<std::vector<float>> get_matrix() const;
+
+    void set_matrix(std::vector<std::vector<float>> matrix);
+
     Matrix4D operator * (const Matrix4D& m);
 
     Vector4D operator * (const Vector4D& v);
 
-    void print_matrix() const
-    {
-        for (const auto& row : matrix)
-        {
-            std::cout << "[ ";
+    Matrix4D operator + (const Matrix4D& m);
 
-            for (const auto& element : row)
-            {
-                std::cout << element << " ";
-            }
+    Matrix4D operator - (const Matrix4D& m);
 
-            std::cout << "]" << std::endl;
-        }
-    }
+    Matrix4D transposition();
+
+    void print_matrix() const;
 
 private:
     std::vector<std::vector<float>> matrix;
