@@ -1,7 +1,7 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
 
-class Vector2D
+class Vector2D 
 {
 public:
 	Vector2D();
@@ -15,6 +15,12 @@ public:
 	void setX(float x);
 
 	void setY(float y);
+
+	Vector2D operator + (const Vector2D& v);
+
+	Vector2D operator - (const Vector2D& v);
+
+	Vector2D operator * (const Vector2D& v);
 
 	~Vector2D();
 

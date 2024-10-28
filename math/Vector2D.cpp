@@ -24,4 +24,19 @@ void Vector2D::setY(float y)
 	this->y = y; 
 }
 
+Vector2D Vector2D::operator + (const Vector2D& v)
+{
+	return Vector2D(this->x + v.getX(), this->y + v.getY());
+}
+
+Vector2D Vector2D::operator - (const Vector2D& v)
+{
+	return Vector2D(this->x - v.getX(), this->y - v.getY());
+}
+
+float Vector2D::operator * (const Vector2D& v)
+{
+	return this->x * v.getX() + this->y * v.getY();
+}
+
 Vector2D::~Vector2D() = default;
