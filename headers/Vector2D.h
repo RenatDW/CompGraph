@@ -20,8 +20,12 @@ public:
 
 	Vector2D operator - (const Vector2D& v);
 
-	Vector2D operator * (const Vector2D& v);
+	float operator * (const Vector2D& v);
 
+	float operator * (const float k);
+
+	float length() const;
+	
 	~Vector2D();
 
 private:
