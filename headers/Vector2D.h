@@ -25,6 +25,8 @@ public:
 	float operator * (const float k);
 
 	float length() const;
+
+	Vector2D normalization();
 	
 	~Vector2D();
 

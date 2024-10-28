@@ -20,6 +20,18 @@ public:
 
 	void setZ(float z);
 
+	Vector3D operator + (const Vector3D& v);
+
+	Vector3D operator - (const Vector3D& v);
+
+	float operator * (const Vector3D& v);
+
+	float operator * (const float k);
+
+	float length() const;
+
+	Vector3D normalization();
+
 	~Vector3D();
 
 private:
