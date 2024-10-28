@@ -43,7 +43,7 @@ float Vector2D::operator * (const Vector2D& v)
 
 float Vector2D::operator * (const float k)
 {
-	return (this->x * k + this->y * k);
+	return Vector2D(this->x * k, this->y * k);
 }
 
 float Vector2D::length() const
@@ -51,6 +51,9 @@ float Vector2D::length() const
 	return sqrt(this->x * this->x + this->y * this->y);
 }
 
-
+Vector2D Vector2D::normalization()
+{
+	return Vector2D(this->x / this->length(), this->y / this->length());
+}
 
 Vector2D::~Vector2D() = default;

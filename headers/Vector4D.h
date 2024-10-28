@@ -24,6 +24,18 @@ public:
 
 	void setW(float w);
 
+	Vector4D operator + (const Vector4D& v);
+
+	Vector4D operator - (const Vector4D& v);
+
+	float operator * (const Vector4D& v);
+
+	float operator * (const float k);
+
+	float length() const;
+
+	Vector4D normalization();
+
 	~Vector4D();
 
 private:

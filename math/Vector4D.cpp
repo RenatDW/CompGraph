@@ -1,5 +1,7 @@
 #include "../headers/Vector4D.h"
 
+#include <cmath>
+
 Vector4D::Vector4D() = default;
 
 Vector4D::Vector4D(float x, float y, float z, float w) :
@@ -43,6 +45,36 @@ void Vector4D::setZ(float z)
 void Vector4D::setW(float w)
 {
 	this->w = w;
+}
+
+Vector4D Vector4D::operator + (const Vector4D& v)
+{
+	return Vector4D(this->x + v.getX(), this->y + v.getY(), this->z + v.getZ(), this->w + v.getW());
+}
+
+Vector4D Vector4D::operator - (const Vector4D& v)
+{
+	return Vector4D(this->x - v.getX(), this->y - v.getY(), this->z - v.getZ(), this->w - v.getW());
+}
+
+float Vector4D::operator * (const Vector4D& v)
+{
+	return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ() + this->w * v.getW();
+}
+
+float Vector4D::operator * (const float k)
+{
+	return Vector4D(this->x * k, this->y * k, this->z * k, this->w * k);
+}
+
+float Vector4D::length() const
+{
+	return sqrt(this->x * this->x + this->y * this->y + this->z * this->z + this->w * this->w);
+}
+
+Vector4D Vector4D::normalization()
+{
+	return Vector4D(this->x / this->length(), this->y / this->length(), this->z / this->length(), this->w / this->length());
 }
 
 Vector4D::~Vector4D() = default;
