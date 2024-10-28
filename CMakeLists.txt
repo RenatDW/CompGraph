@@ -43,7 +43,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         main.cpp
         main.cpp
         headers/Matrix3D.h
-        math/Matrix3D.cpp)
+        math/Matrix3D.cpp
+        math/Point2D.cpp)
 
 
 target_link_libraries(CompGraph
