@@ -3,6 +3,43 @@
 
 #include <vector>
 
+Matrix4D Matrix4D::create_zero_matrix()
+{
+    Matrix4D matrix;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            matrix[i][j] = 0;
+        }
+    }
+
+    return matrix;
+}
+
+Matrix4D Matrix4D::create_identity_matrix()
+{
+    Matrix4D matrix;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            if (i == j)
+            {
+                matrix[i][j] = 1;
+            }
+            else
+            {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+
+    return matrix;
+}
+
 std::vector<std::vector<float>> Matrix4D::get_matrix() const
 {
     return matrix;
@@ -93,3 +130,15 @@ Matrix4D Matrix4D::transposition()
     return Matrix4D(ans);
 }
 
+void Matrix4D::print_matrix() const
+{
+    for (const auto& row : matrix)
+    {
+        std::cout << "[ ";
+        for (const auto& element : row)
+        {
+            std::cout << element << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
+}
