@@ -11,11 +11,14 @@ Matrix3D Matrix3D::operator * (const Matrix3D& m)
     int rowsB = m.matrix.size();
     int colsB = m.matrix.size();
 
-    std::vector<std::vector<int>> ans(rowsA, std::vector<int>(colsB, 0));
+    std::vector<std::vector<float>> ans(rowsA, std::vector<float>(colsB, 0));
 
-    for (int i = 0; i < rowsA; i++) {
-        for (int j = 0; j < colsB; j++) {
-            for (int k = 0; k < colsA; k++) {
+    for (int i = 0; i < rowsA; i++) 
+    {
+        for (int j = 0; j < colsB; j++) 
+        {
+            for (int k = 0; k < colsA; k++) 
+            {
                 ans[i][j] += this->matrix[i][k] * m.matrix[k][j];
             }
         }
@@ -32,10 +35,13 @@ Vector3D Matrix3D::operator * (const Vector3D& v)
     );
 }
 
-void Matrix3D::printMatrix() const {
-    for (const auto& row : matrix) {
+void Matrix3D::printMatrix() const 
+{
+    for (const auto& row : matrix) 
+    {
         std::cout << "[ ";
-        for (const auto& element : row) {
+        for (const auto& element : row) 
+        {
             std::cout << element << " ";
         }
         std::cout << "]" << std::endl;

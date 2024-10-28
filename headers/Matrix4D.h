@@ -1,23 +1,24 @@
-//
-// Created by Ренат Асланов on 24.10.2024.
-//
-
 #ifndef MATRIX4D_H
 #define MATRIX4D_H
+
+#include "Vector4D.h"
+
+#include <vector>
 
 class Matrix4D
 {
 public:
-    Matrix4D();
+    Matrix4D(std::vector<std::vector<float>> matrix) :
+        matrix(matrix) {}
 
-    Matrix4D(float ar[4][4]);
+    Matrix4D operator * (const Matrix4D& m);
 
-    void set(int x, int y, float value);
+    Vector4D operator * (const Vector4D& v);
 
-    float get(int x, int y) const;
+    
 
 private:
-    float matrix[4][4];
+    std::vector<std::vector<float>> matrix;
 };
 
 #endif //MATRIX4D_H
