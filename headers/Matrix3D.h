@@ -9,8 +9,10 @@
 class Matrix3D
 {
 public:
-    Matrix3D(std::vector<std::vector<int>> matrix) :
+    Matrix3D(std::vector<std::vector<float>> matrix) :
         matrix(matrix) {}
+    Matrix3D():
+        matrix(std::vector<std::vector<float>>()){}
 
     Matrix3D operator * (const Matrix3D& m);
 

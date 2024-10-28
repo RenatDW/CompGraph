@@ -11,7 +11,8 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-
+.cmake/
+.qt/
 CompGraph_autogen/
 
 # AWS User-specific

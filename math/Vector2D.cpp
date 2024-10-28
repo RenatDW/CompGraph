@@ -43,7 +43,7 @@ float Vector2D::operator * (const Vector2D& v)
 
 float Vector2D::operator * (const float k)
 {
-	return Vector(this->x * k + this->y * k);
+	return (this->x * k + this->y * k);
 }
 
 float Vector2D::length() const
