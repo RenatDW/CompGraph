@@ -2,28 +2,28 @@
 #include "../headers/Vector4D.h"
 
 #include <vector>
+#include <iostream>
 
-Matrix4D Matrix4D::create_zero_matrix()
+Matrix4D::Matrix4D()
 {
-    std::vector<std::vector<float>> zero_matrix = {
+    this->matrix = {
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 0, 0}
     };
-    return Matrix4D(zero_matrix);
 }
 
 Matrix4D Matrix4D::create_identity_matrix()
 {
-    std::vector<std::vector<float>> identity_matrix = {
+    const std::vector<std::vector<float>> identity_matrix = {
         {1, 0, 0, 0},
         {0, 1, 0, 0},
         {0, 0, 1, 0},
         {0, 0, 0, 1}
     };
 
-    return Matrix4D(identity_matrix);
+    return {identity_matrix};
 }
 
 std::vector<std::vector<float>> Matrix4D::get_matrix() const
@@ -31,7 +31,19 @@ std::vector<std::vector<float>> Matrix4D::get_matrix() const
     return matrix;
 }
 
-void Matrix4D::set_matrix(std::vector<std::vector<float>> matrix)
+float Matrix4D::get(const int row, const int col) const
+{
+    const int N = 4;
+
+    if (row >=0 && row < N && col >= 0 && col < N)
+    {
+        return matrix[row][col];
+    }
+
+    return -1;
+}
+
+void Matrix4D::set(const std::vector<std::vector<float>>& matrix)
 {
     if (matrix.size() != 4 &&
         matrix[0].size() != 4 &&
@@ -45,75 +57,91 @@ void Matrix4D::set_matrix(std::vector<std::vector<float>> matrix)
     this->matrix = matrix;
 }
 
-Matrix4D Matrix4D::operator * (const Matrix4D& m)
+void Matrix4D::set(const int row, const int col, const float value)
 {
-    int rowsA = this->matrix.size();
-    int colsA = this->matrix[0].size();
-    int colsB = m.matrix.size();
+    const int N = 4;
+
+    if (row >= 0 && row < N && col >= 0 && col < N)
+    {
+        matrix[row][col] = value;
+    }
+}
+
+Matrix4D Matrix4D::operator * (const Matrix4D& m) const
+{
+    const int ROWS_A = static_cast<int>(this->matrix.size());
+    const int COLS_A = static_cast<int>(this->matrix[0].size());
+    const int COLS_B = static_cast<int>(m.matrix.size());
 
     std::vector<std::vector<float>> ans = this->matrix;
 
-    for (int i = 0; i < rowsA; i++) 
+    for (int i = 0; i < ROWS_A; i++)
     {
-        for (int j = 0; j < colsB; j++) 
+        for (int j = 0; j < COLS_B; j++)
         {
-            for (int k = 0; k < colsA; k++) 
+            for (int k = 0; k < COLS_A; k++)
             {
                 ans[i][j] *= m.matrix[k][j];
             }
         }
     }
 
-    return Matrix4D(ans);
+    return {ans};
 }
 
-Vector4D Matrix4D::operator * (const Vector4D& v)
+Vector4D Matrix4D::operator * (const Vector4D& v) const
 {
-    return Vector4D(this->matrix[0][0] * v.getX() + this->matrix[0][1] * v.getY() + this->matrix[0][2] * v.getZ() + this->matrix[0][3] * v.getW(),
+    return {
+        this->matrix[0][0] * v.getX() + this->matrix[0][1] * v.getY() + this->matrix[0][2] * v.getZ() + this->matrix[0][3] * v.getW(),
         this->matrix[1][0] * v.getX() + this->matrix[1][1] * v.getY() + this->matrix[1][2] * v.getZ() + this->matrix[1][3] * v.getW(),
         this->matrix[2][0] * v.getX() + this->matrix[2][1] * v.getY() + this->matrix[2][2] * v.getZ() + this->matrix[2][3] * v.getW(),
         this->matrix[3][0] * v.getX() + this->matrix[3][1] * v.getY() + this->matrix[3][2] * v.getZ() + this->matrix[3][3] * v.getW()
-    );
+    };
 }
 
-Matrix4D Matrix4D::operator + (const Matrix4D& m)
+Matrix4D Matrix4D::operator + (const Matrix4D& m) const
 {
     std::vector<std::vector<float>> ans = this->matrix;
-    for (int i = 0; i < 4; ++i)
+    const int N = static_cast<int>(ans.size());
+
+    for (int i = 0; i < N; ++i)
     {
-        for (int j = 0; j < 4; ++j)
+        for (int j = 0; j < N; ++j)
         {
             ans[i][j] += m.matrix[i][j];
         }
     }
-    return Matrix4D(ans);
+    return {ans};
 }
 
-Matrix4D Matrix4D::operator - (const Matrix4D& m)
+Matrix4D Matrix4D::operator - (const Matrix4D& m) const
 {
     std::vector<std::vector<float>> ans = this->matrix;
-    for (int i = 0; i < 4; ++i)
+    const int N = static_cast<int>(ans.size());
+
+    for (int i = 0; i < N; ++i)
     {
-        for (int j = 0; j < 4; ++j)
+        for (int j = 0; j < N; ++j)
         {
             ans[i][j] -= m.matrix[i][j];
         }
     }
-    return Matrix4D(ans);
+    return{ans};
 }
 
-Matrix4D Matrix4D::transposition()
+Matrix4D Matrix4D::transposition() const
 {
     std::vector<std::vector<float>> ans = this->matrix;
+    const int N = static_cast<int>(ans.size());
 
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < N; ++i)
     {
-        for (int j = 0; j < 4; ++j)
+        for (int j = 0; j < N; ++j)
         {
             ans[i][j] = this->matrix[j][i];
         }
     }
-    return Matrix4D(ans);
+    return {ans};
 }
 
 void Matrix4D::print_matrix() const
@@ -128,12 +156,14 @@ void Matrix4D::print_matrix() const
         std::cout << "]" << std::endl;
     }
 }
-void Matrix4D::mul(const Matrix4D &m1) {
-    std::vector<std::vector<float>> result(4, std::vector<float>(4, 0.0f));
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 4; ++j) {
-            for (int k = 0; k < 4; ++k) {
-                result[i][j] += this->matrix[i][k] * m1.matrix[k][j];
+void Matrix4D::mul(const Matrix4D &m) {
+    const int N = static_cast<int>(this->matrix.size());
+
+    std::vector<std::vector<float>> result(N, std::vector<float>(N, 0.0f));
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            for (int k = 0; k < N; ++k) {
+                result[i][j] += this->matrix[i][k] * m.matrix[k][j];
             }
         }
     }

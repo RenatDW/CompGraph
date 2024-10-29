@@ -2,9 +2,9 @@
 
 #include <cmath>
 
-Vector3D::Vector3D() = default;
+Vector3D::Vector3D() : x(0.0f), y(0.0f), z(0.0f) {}
 
-Vector3D::Vector3D(float x, float y, float z) :
+Vector3D::Vector3D(const float x, const float y, const float z) :
 	x(x), y(y), z(z) {};
 
 float Vector3D::getX() const
@@ -22,32 +22,33 @@ float Vector3D::getZ() const
 	return z;
 };
 
-void Vector3D::setX(float x)
+void Vector3D::setX(const float x)
 {
 	this->x = x;
 }
 
-void Vector3D::setY(float y)
+void Vector3D::setY(const float y)
 { 
 	this->y = y; 
 }
 
-void Vector3D::setZ(float z)
+void Vector3D::setZ(const float z)
 {
 	this->z = z;
 }
 
-Vector3D Vector3D::operator + (const Vector3D& v)
+Vector3D Vector3D::operator + (const Vector3D& v) const
 {
-	return Vector3D(this->x + v.getX(), this->y + v.getY(), this->z + v.getZ());
+	return {this->x + v.getX(), this->y + v.getY(), this->z + v.getZ()};
 }
 
-Vector3D Vector3D::operator - (const Vector3D& v)
+Vector3D Vector3D::operator - (const Vector3D& v) const
 {
-	return Vector3D(this->x - v.getX(), this->y - v.getY(), this->z - v.getZ());
+	return {this->x - v.getX(), this->y - v.getY(), this->z - v.getZ()};
 }
 
-Vector3D Vector3D::cross(const Vector3D &v1, const Vector3D &v2) {
+Vector3D Vector3D::cross(const Vector3D &v1, const Vector3D &v2)
+{
 	float x = v1.y * v2.z - v1.z * v2.y;
 	float y = v2.x * v1.z - v2.z * v1.x;
 	float z = v1.x * v2.y - v1.y * v2.x;
@@ -56,24 +57,24 @@ Vector3D Vector3D::cross(const Vector3D &v1, const Vector3D &v2) {
 }
 
 
-float Vector3D::operator * (const Vector3D& v)
+float Vector3D::operator * (const Vector3D& v) const
 {
 	return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ();
 }
 
-Vector3D Vector3D::operator * (const float k)
+Vector3D Vector3D::operator * (const float k) const
 {
-	return Vector3D(this->x * k, this->y * k, this->z * k);
+	return {this->x * k, this->y * k, this->z * k};
 }
 
 float Vector3D::length() const
 {
-	return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+	return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
-Vector3D Vector3D::normalize()
+Vector3D Vector3D::normalize() const
 {
-	return Vector3D(this->x / this->length(), this->y / this->length(), this->z / this->length());
+	return {this->x / this->length(), this->y / this->length(), this->z / this->length()};
 }
 
 Vector3D::~Vector3D() = default;

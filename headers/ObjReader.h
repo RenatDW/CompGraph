@@ -1,6 +1,7 @@
 #ifndef OBJREADER_H
 #define OBJREADER_H
 #include <vector>
+#include <string>
 #include "Model.h"
 #include "Vector3D.h"
 #include "Vector2D.h"

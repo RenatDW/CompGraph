@@ -16,17 +16,17 @@ public:
 
 	void setY(float y);
 
-	Vector2D operator + (const Vector2D& v);
+	Vector2D operator + (const Vector2D& v) const;
 
-	Vector2D operator - (const Vector2D& v);
+	Vector2D operator - (const Vector2D& v) const;
 
-	float operator * (const Vector2D& v);
+	float operator * (const Vector2D& v) const;
 
-	Vector2D operator * (const float k);
+	Vector2D operator * (float k) const;
 
 	float length() const;
 
-	Vector2D normalization();
+	Vector2D normalization() const;
 	
 	~Vector2D();
 

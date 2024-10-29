@@ -9,36 +9,34 @@
 class Matrix3D
 {
 public:
-    Matrix3D(std::vector<std::vector<float>> matrix) :
-        matrix(matrix) {}
-    Matrix3D():
-        matrix(std::vector<std::vector<float>>()){}
+    Matrix3D();
 
-    Matrix3D create_zero_matrix();
-    
-    Matrix3D create_identity_matrix();
+    Matrix3D(const std::vector<std::vector<float>>& matrix);
+
+    static Matrix3D create_identity_matrix();
 
     std::vector<std::vector<float>> get_matrix() const;
 
-    void set_matrix(std::vector<std::vector<float>> matrix);
+    float get(int row, int col) const;
 
-    Matrix3D operator * (const Matrix3D& m);
+    void set(const std::vector<std::vector<float>>& matrix);
 
-    Vector3D operator * (const Vector3D& v);
+    void set(int row, int col, float value);
 
-    Matrix3D operator + (const Matrix3D& m);
+    Matrix3D operator * (const Matrix3D& m) const;
 
-	Matrix3D operator - (const Matrix3D& m);
+    Vector3D operator * (const Vector3D& v) const;
 
-    Matrix3D transposition();
+    Matrix3D operator + (const Matrix3D& m) const;
+
+	Matrix3D operator - (const Matrix3D& m) const;
+
+    Matrix3D transposition() const;
 
     void print_matrix() const;
 
 private:
     std::vector<std::vector<float>> matrix;
 };
-
-
-
 
 #endif

@@ -20,20 +20,19 @@ public:
 
 	void setZ(float z);
 
-	Vector3D operator + (const Vector3D& v);
+	Vector3D operator + (const Vector3D& v) const;
 
-	Vector3D operator - (const Vector3D& v);
+	Vector3D operator - (const Vector3D& v) const;
 
-	static Vector3D cross(const Vector3D &v1, const Vector3D &v2);
+	static Vector3D cross(const Vector3D& v1, const Vector3D& v2);
 
-	float operator * (const Vector3D& v);
+	float operator * (const Vector3D& v) const;
 
-
-	Vector3D operator * (const float k);
+	Vector3D operator * (float k) const;
 
 	float length() const;
 
-	Vector3D normalize();
+	Vector3D normalize() const;
 
 	~Vector3D();
 

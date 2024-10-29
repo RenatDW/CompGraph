@@ -44,7 +44,7 @@ Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
 
 Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, const float nearPlane, const float farPlane)
 {
-    Matrix4D result = Matrix4D();
+    Matrix4D result;
     float tangentMinusOnDegree = (float) (1.0F / (tan(fov * 0.5F)));
     result.matrix[0][0] = tangentMinusOnDegree / aspectRatio;
     result.matrix[1][1] = tangentMinusOnDegree;
@@ -56,9 +56,9 @@ Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, 
 
 Vector3D GraphicConveyor::multiplyMatrix4ByVector3(const Matrix4D matrix, const Vector3D vertex)
 {
-    const float x = (vertex.getX() * matrix.matrix1()[0][0] + (vertex.getY() * matrix.matrix1()[1][0]) + (vertex.getZ() * matrix.matrix1() [2][0]) + matrix.matrix1()[3][0]);
-    const float y = (vertex.getX() * matrix.matrix1()[0][1] + (vertex.getY() * matrix.matrix1()[1][1]) + (vertex.getZ() * matrix.matrix1() [2][1]) + matrix.matrix1()[3][1]);
-    const float z = (vertex.getX() * matrix.matrix1()[0][2] + (vertex.getY() * matrix.matrix1()[1][2]) + (vertex.getZ() * matrix.matrix1() [2][2]) + matrix.matrix1()[3][2]);
+    const float x = (vertex.getX() * matrix[0][0] + (vertex.getY() * matrix.matrix1()[1][0]) + (vertex.getZ() * matrix.matrix1() [2][0]) + matrix.matrix1()[3][0]);
+    const float y = (vertex.getX() * matrix[0][1] + (vertex.getY() * matrix.matrix1()[1][1]) + (vertex.getZ() * matrix.matrix1() [2][1]) + matrix.matrix1()[3][1]);
+    const float z = (vertex.getX() * matrix[0][2] + (vertex.getY() * matrix.matrix1()[1][2]) + (vertex.getZ() * matrix.matrix1() [2][2]) + matrix.matrix1()[3][2]);
     const float w = (vertex.getX() * matrix.matrix1()[0][3] + (vertex.getY() * matrix.matrix1()[1][3]) + (vertex.getZ() * matrix.matrix1() [2][2]) + matrix.matrix1()[3][3]);
     return Vector3D(x / w, y / w, z / w);
 }
