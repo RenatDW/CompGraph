@@ -7,13 +7,14 @@
 
 
 
-class Point2D {
-    public:
-    static Point2D vertexToPoint(const Vector3D vertex, const int width, const int height);
-
-    Point2D() = default;
+class Point2D
+{
+public:
+    Point2D();
 
     Point2D(float x, float y);
+
+    static Point2D vertexToPoint(Vector3D vertex, int width, int height);
 
     float x1() const {
         return x;

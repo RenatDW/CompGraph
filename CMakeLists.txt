@@ -48,7 +48,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         main.cpp
         main.cpp
         math/Matrix3D.cpp
-        headers/ObjReaderTest.h)
+        headers/ObjReaderTest.h
+        math/Point2D.cpp)
 
 
 target_link_libraries(CompGraph
