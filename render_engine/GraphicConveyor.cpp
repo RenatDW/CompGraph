@@ -1,12 +1,12 @@
 #include "../headers/GraphicConveyor.h"
 #include "../headers/Vector3D.h"
-#include <cmath>
 
-Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target)
+Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target)
 {
-    return lookAt(eye, target,  Vector3D(0, 1.0F, 0)); // здесь у каждой переменной был F
+    return look_at(eye, target, Vector3D(0, 1.0F, 0)); // здесь у каждой переменной был F
 }
-Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
+
+Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, const Vector3D &up)
 {
     Vector3D resultX = Vector3D();
     Vector3D resultY = Vector3D();
@@ -20,7 +20,7 @@ Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
     resultY = resultY.normalize();
     resultZ = resultZ.normalize();
 
-    std::vector<std::vector<float>> matrix = {
+    std::vector<std::vector<float> > matrix = {
         {resultX.getX(), resultY.getX(), resultZ.getX(), 0},
         {resultX.getY(), resultY.getY(), resultZ.getY(), 0},
         {resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0},
@@ -29,15 +29,15 @@ Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
     return Matrix4D(matrix);
 }
 
-Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, const float nearPlane, const float farPlane)
+Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_ratio, const float &near_plane,
+                                      const float &far_plane)
 {
     Matrix4D result;
-    float tangentMinusOnDegree = (float) (1.0F / (tan(fov * 0.5F)));
-    result.set(0, 0, tangentMinusOnDegree / aspectRatio);
-    result.set(1, 1, tangentMinusOnDegree);
-    result.set(2, 2, (farPlane + nearPlane) / (farPlane - nearPlane));
+    const auto tangent_minus_on_degree = (float) (1.0F / (tan(fov * 0.5F)));
+    result.set(0, 0, tangent_minus_on_degree / aspect_ratio);
+    result.set(1, 1, tangent_minus_on_degree);
+    result.set(2, 2, (far_plane + near_plane) / (far_plane - near_plane));
     result.set(2, 3, 1.0F);
-    result.set(3, 2, 2 * (nearPlane * farPlane) / (nearPlane - farPlane));
+    result.set(3, 2, 2 * (near_plane * far_plane) / (near_plane - far_plane));
     return result;
 }
-

@@ -1,18 +1,13 @@
-//
-// Created by Ренат Асланов on 23.10.2024.
-//
-
 #include "../headers/Camera.h"
 #include "../headers/GraphicConveyor.h"
 
-
 Camera::Camera(
-    const Vector3D position,
-    const Vector3D target,
-    const float fov,
-    const float aspectRatio,
-    const float nearPlane,
-    const float farPlane)
+    const Vector3D &position,
+    const Vector3D &target,
+    float fov,
+    float aspectRatio,
+    float nearPlane,
+    float farPlane)
 {
     this->position = position;
     this->target = target;
@@ -22,17 +17,18 @@ Camera::Camera(
     this->farPlane = farPlane;
 };
 
-void Camera::setPosition(const Vector3D position)
+void Camera::setPosition(const Vector3D &position)
 {
-    this->position= position;
+    this->position = position;
 }
-void Camera::setTarget(const Vector3D target)
+
+void Camera::setTarget(const Vector3D &target)
 
 {
-    this->target= position;
-    }
+    this->target = position;
+}
 
-void Camera::setAspectRatio(const float aspectRatio)
+void Camera::setAspectRatio(const float &aspectRatio)
 {
     this->aspectRatio = aspectRatio;
 };
@@ -47,26 +43,24 @@ Vector3D Camera::getTarget()
     return this->target;
 }
 
-void Camera::movePosition(const Vector3D translation)
+void Camera::movePosition(const Vector3D &translation)
 {
-    this->setPosition({position.getX() + translation.getX(),position.getY() + translation.getY(),position.getZ() + translation.getZ()});
-    // this->position.setX(position.getX() + translation.getX() + 50);
-    // this->position.setY(position.getY() + translation.getY());
-    // this->position.setZ(position.getZ() + translation.getZ());
-    // this->position = position + translation;
+    this->setPosition({
+        position.getX() + translation.getX(), position.getY() + translation.getY(), position.getZ() + translation.getZ()
+    });
 }
 
-void Camera::moveTarget(const Vector3D translation)
+void Camera::moveTarget(const Vector3D &translation)
 {
     this->target = target + translation;
 }
 
 Matrix4D Camera::getViewMatrix()
 {
-    return GraphicConveyor::lookAt(position, target);
+    return GraphicConveyor::look_at(position, target);
 }
 
-Matrix4D Camera::getProjectionMatrix()
+Matrix4D Camera::getProjectionMatrix() const
 {
-return GraphicConveyor::perspective(fov, aspectRatio, nearPlane, farPlane);
+    return GraphicConveyor::perspective(fov, aspectRatio, nearPlane, farPlane);
 };

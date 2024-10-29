@@ -34,7 +34,6 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         objreader/ObjReader.cpp
         headers/ObjReader.h
         objwriter/ObjWriter.cpp
-        objreader/ObjReaderException.cpp
         headers/ObjReaderException.h
         main.cpp
         main.cpp

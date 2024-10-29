@@ -1,11 +1,8 @@
-//
-// Created by Ренат Асланов on 23.10.2024.
-//
 #include "../headers/RenderEngine.h"
-
 #include "../headers/GraphicConveyor.h"
 #include "../headers/mainwindow.h"
 #include "../headers/Point2D.h"
+
 // #include <QPainter>
 // void RenderEngine::render(QPainter& painter){
 // const Camera camera,
@@ -32,11 +29,12 @@
 // }
 
 void RenderEngine::render(QPainter &painter,
-                          Camera camera,
-                          const Model mesh,
-                          const int width,
-                          const int height,
-                          const bool showTriangulation) {
+                          Camera &camera,
+                          const Model &mesh,
+                          const int &width,
+                          const int &height,
+                          const bool &showTriangulation)
+{
     Matrix4D modelMatrix = Matrix4D::create_identity_matrix();
     Matrix4D viewMatrix = camera.getViewMatrix();
     Matrix4D projectionMatrix = camera.getProjectionMatrix();
@@ -44,12 +42,12 @@ void RenderEngine::render(QPainter &painter,
     Matrix4D modelViewProjectionMatrix(modelMatrix);
     modelViewProjectionMatrix.mul(viewMatrix);
     modelViewProjectionMatrix.mul(projectionMatrix);
-    
-    int nPolygons = mesh.polygons.size();
+
+    int nPolygons = (int) mesh.polygons.size();
     //Проходимся по каждому полигону
     for (int polygonInd = 0; polygonInd < nPolygons; ++polygonInd) {
         //Получаем все вершины конкретного полигона
-        const int nVerticesInPolygon = mesh.polygons[polygonInd].get_vertex_indices().size();
+        const int nVerticesInPolygon = (int) mesh.polygons[polygonInd].get_vertex_indices().size();
         //Создаем лист содрежащий все точки полигона
         std::vector<Point2D> resultPoints;
         //Проходимся по всем вершинам полигона
@@ -67,17 +65,17 @@ void RenderEngine::render(QPainter &painter,
 
         for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
             painter.drawLine(
-                resultPoints[vertexInPolygonInd - 1].getX(),
-                resultPoints[vertexInPolygonInd - 1].getY(),
-                resultPoints[vertexInPolygonInd].getX(),
-                resultPoints[vertexInPolygonInd].getY());
+                (int) resultPoints[vertexInPolygonInd - 1].getX(),
+                (int) resultPoints[vertexInPolygonInd - 1].getY(),
+                (int) resultPoints[vertexInPolygonInd].getX(),
+                (int) resultPoints[vertexInPolygonInd].getY());
         }
 
         if (nVerticesInPolygon > 0)
             painter.drawLine(
-                resultPoints[nVerticesInPolygon - 1].getX(),
-                resultPoints[nVerticesInPolygon - 1].getY(),
-                resultPoints[0].getX(),
-                resultPoints[0].getY());
+                (int) resultPoints[nVerticesInPolygon - 1].getX(),
+                (int) resultPoints[nVerticesInPolygon - 1].getY(),
+                (int) resultPoints[0].getX(),
+                (int) resultPoints[0].getY());
     }
 }

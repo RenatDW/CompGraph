@@ -13,14 +13,14 @@ class GraphicConveyor
 public:
     static Matrix4D rotate_scale_translate();
 
-    static Matrix4D lookAt(Vector3D eye, Vector3D target);
+    static Matrix4D look_at(const Vector3D &eye, const Vector3D &target);
 
-    static Matrix4D lookAt(Vector3D eye, Vector3D target, Vector3D up);
+    static Matrix4D look_at(const Vector3D &eye, const Vector3D &target, const Vector3D &up);
 
-    static Matrix4D perspective(const float fov,
-            const float aspectRatio,
-            const float nearPlane,
-            const float farPlane);
+    static Matrix4D perspective(const float &fov,
+                                const float &aspect_ratio,
+                                const float &near_plane,
+                                const float &far_plane);
 };
 
 #endif //GRAPHICCONVEYOR_H
