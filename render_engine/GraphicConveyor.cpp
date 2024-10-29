@@ -33,7 +33,7 @@ Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_rati
                                       const float &far_plane)
 {
     Matrix4D result;
-    const auto tangent_minus_on_degree = (1.0F / (tan(fov * 0.5F)));
+    const auto tangent_minus_on_degree = (1.0F / (std::tan(fov * 0.5F)));
     result.set(0, 0, tangent_minus_on_degree / aspect_ratio);
     result.set(1, 1, tangent_minus_on_degree);
     result.set(2, 2, (far_plane + near_plane) / (far_plane - near_plane));

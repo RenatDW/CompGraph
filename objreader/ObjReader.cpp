@@ -114,6 +114,7 @@ Polygon ObjReader::parse_face(const std::vector<std::string> &words_in_line_with
     result.set_vertex_indices(one_polygon_vertex_indices);
     result.set_texture_indices(one_polygon_texture_vertex_indices);
     result.set_normal_indices(one_polygon_normal_indices);
+    std::vector<Triangle> result2;
     // result.triangulation();
     return result;
 }
