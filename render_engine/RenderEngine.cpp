@@ -37,7 +37,7 @@ void RenderEngine::render(QPainter &painter,
                           const int width,
                           const int height,
                           const bool showTriangulation) {
-    Matrix4D modelMatrix = GraphicConveyor::rotate_scale_translate();
+    Matrix4D modelMatrix = Matrix4D::create_identity_matrix();
     Matrix4D viewMatrix = camera.getViewMatrix();
     Matrix4D projectionMatrix = camera.getProjectionMatrix();
 
@@ -60,24 +60,24 @@ void RenderEngine::render(QPainter &painter,
             Vector3D vertexVecmath(vertex.getX(), vertex.getY(), vertex.getZ());
             //Получаем точку на экране путем перемножения матриц
             Point2D resultPoint = Point2D::vertexToPoint(
-                GraphicConveyor::multiplyMatrix4ByVector3(modelViewProjectionMatrix, vertexVecmath), width, height);
+                Matrix4D::multiply_matrix4d_by_vector3d(modelViewProjectionMatrix, vertexVecmath), width, height);
             //Добавляем точку в итоговый массив для вывода
             resultPoints.emplace_back(resultPoint);
         }
 
         for (int vertexInPolygonInd = 1; vertexInPolygonInd < nVerticesInPolygon; ++vertexInPolygonInd) {
             painter.drawLine(
-                resultPoints[vertexInPolygonInd - 1].x1(),
-                resultPoints[vertexInPolygonInd - 1].y1(),
-                resultPoints[vertexInPolygonInd].x1(),
-                resultPoints[vertexInPolygonInd].y1());
+                resultPoints[vertexInPolygonInd - 1].getX(),
+                resultPoints[vertexInPolygonInd - 1].getY(),
+                resultPoints[vertexInPolygonInd].getX(),
+                resultPoints[vertexInPolygonInd].getY());
         }
 
         if (nVerticesInPolygon > 0)
             painter.drawLine(
-                resultPoints[nVerticesInPolygon - 1].x1(),
-                resultPoints[nVerticesInPolygon - 1].y1(),
-                resultPoints[0].x1(),
-                resultPoints[0].y1());
+                resultPoints[nVerticesInPolygon - 1].getX(),
+                resultPoints[nVerticesInPolygon - 1].getY(),
+                resultPoints[0].getX(),
+                resultPoints[0].getY());
     }
 }

@@ -10,7 +10,7 @@
 
 class GraphicConveyor
 {
-    public:
+public:
     static Matrix4D rotate_scale_translate();
 
     static Matrix4D lookAt(Vector3D eye, Vector3D target);
@@ -21,10 +21,6 @@ class GraphicConveyor
             const float aspectRatio,
             const float nearPlane,
             const float farPlane);
-
-    static Vector3D multiplyMatrix4ByVector3(const Matrix4D matrix, const Vector3D vertex);
-
-    // static Point2D vertexToPoint(const Vector3D vertex, const int width, const int height);
 };
 
 #endif //GRAPHICCONVEYOR_H

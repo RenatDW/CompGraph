@@ -69,6 +69,16 @@ void Matrix4D::set(const int row, const int col, const float value)
     }
 }
 
+Vector3D Matrix4D::multiply_matrix4d_by_vector3d(const Matrix4D &matrix, const Vector3D &vertex)
+{
+    const float x = vertex.getX() * matrix.get(0, 0) + vertex.getY() * matrix.get(1, 0) + vertex.getZ() * matrix.get(2, 0) + matrix.get(3, 0);
+    const float y = vertex.getX() * matrix.get(0, 1) + vertex.getY() * matrix.get(1, 1) + vertex.getZ() * matrix.get(2, 1) + matrix.get(3, 1);
+    const float z = vertex.getX() * matrix.get(0, 2) + vertex.getY() * matrix.get(1, 2) + vertex.getZ() * matrix.get(2, 2) + matrix.get(3, 2);
+    const float w = vertex.getX() * matrix.get(0, 3) + vertex.getY() * matrix.get(1, 3) + vertex.getZ() * matrix.get(2, 3) + matrix.get(3, 3);
+    return {x / w, y / w, z / w};
+}
+
+
 Matrix4D Matrix4D::operator * (const Matrix4D& m) const
 {
     const int ROWS_A = static_cast<int>(this->matrix.size());

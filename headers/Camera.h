@@ -47,4 +47,4 @@ class Camera
 
 };
 
-#endif //CAMERS_H
+#endif
