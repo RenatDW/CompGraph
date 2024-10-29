@@ -55,12 +55,12 @@ void Camera::moveTarget(const Vector3D &translation)
     this->target = target + translation;
 }
 
-Matrix4D Camera::getViewMatrix()
+Matrix4D Camera::get_view_matrix()
 {
     return GraphicConveyor::look_at(position, target);
 }
 
-Matrix4D Camera::getProjectionMatrix() const
+Matrix4D Camera::get_projection_matrix() const
 {
     return GraphicConveyor::perspective(fov, aspectRatio, nearPlane, farPlane);
 };

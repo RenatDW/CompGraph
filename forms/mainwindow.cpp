@@ -51,36 +51,36 @@ void MainWindow::on_actionSave_Model_triggered()
 
 void MainWindow::on_actionUp_triggered()
 {
-    camera.movePosition(Vector3D(0, float TRANSLATION, 0));
+    camera.movePosition(Vector3D(0, (float) TRANSLATION, 0));
     repaint();
 }
 
 void MainWindow::on_actionDown_triggered()
 {
-    camera.movePosition(Vector3D(0, float -TRANSLATION, 0));
+    camera.movePosition(Vector3D(0, (float) -TRANSLATION, 0));
     repaint();
 }
 
 void MainWindow::on_actionLeft_triggered()
 {
-    camera.movePosition(Vector3D(float TRANSLATION, 0, 0));
+    camera.movePosition(Vector3D((float) TRANSLATION, 0, 0));
     repaint();
 }
 
 void MainWindow::on_actionRight_triggered()
 {
-    camera.movePosition(Vector3D(float -TRANSLATION, 0, 0));
+    camera.movePosition(Vector3D((float) -TRANSLATION, 0, 0));
     repaint();
 }
 
 void MainWindow::on_actionForward_triggered()
 {
-    camera.movePosition(Vector3D(0, 0, float -TRANSLATION));
+    camera.movePosition(Vector3D(0, 0, (float) -TRANSLATION));
     repaint();
 }
 
 void MainWindow::on_actionBack_triggered()
 {
-    camera.movePosition(Vector3D(0, 0, float TRANSLATION));
+    camera.movePosition(Vector3D(0, 0, (float) TRANSLATION));
     repaint();
 }

@@ -21,9 +21,9 @@ public:
 
     void moveTarget(const Vector3D &translation);
 
-    Matrix4D getViewMatrix();
+    Matrix4D get_view_matrix();
 
-    Matrix4D getProjectionMatrix() const;
+    Matrix4D get_projection_matrix() const;
 
     Camera(const Vector3D &position,
            const Vector3D &target,
