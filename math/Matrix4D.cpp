@@ -14,9 +14,11 @@ Matrix4D::Matrix4D()
     };
 }
 
+Matrix4D::Matrix4D(const std::vector<std::vector<float>>& matrix) : matrix(matrix) {}
+
 Matrix4D Matrix4D::create_identity_matrix()
 {
-    const std::vector<std::vector<float>> identity_matrix = {
+    std::vector<std::vector<float>> identity_matrix = {
         {1, 0, 0, 0},
         {0, 1, 0, 0},
         {0, 0, 1, 0},
