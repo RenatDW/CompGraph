@@ -4,6 +4,7 @@
 #include "Vector4D.h"
 
 #include <vector>
+#include <iostream>
 
 class Matrix4D
 {
@@ -12,16 +13,27 @@ public:
         matrix(matrix) {}
     Matrix4D();
 
+    Matrix4D create_zero_matrix();
+
+    Matrix4D create_identity_matrix();
+
+    std::vector<std::vector<float>> get_matrix() const;
+
+    void set_matrix(std::vector<std::vector<float>> matrix);
+
     Matrix4D operator * (const Matrix4D& m);
 
     Vector4D operator * (const Vector4D& v);
 
-    void mul(const Matrix4D &m1);
+    Matrix4D operator + (const Matrix4D& m);
 
-    std::vector<std::vector<float>> matrix1() const {
-        return matrix;
-    }
+    Matrix4D operator - (const Matrix4D& m);
 
+    Matrix4D transposition();
+
+    void print_matrix() const;
+
+private:
     std::vector<std::vector<float>> matrix;
 };
 

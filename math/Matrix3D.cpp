@@ -4,22 +4,61 @@
 #include <iostream>
 #include <vector>
 
+Matrix3D Matrix3D::create_zero_matrix()
+{
+    std::vector<std::vector<float>> zero_matrix = {
+        {0, 0, 0},
+        {0, 0, 0},
+        {0, 0, 0}
+    };
+
+    return Matrix3D(zero_matrix);
+}
+
+Matrix3D Matrix3D::create_identity_matrix()
+{
+    std::vector<std::vector<float>> identity_matrix = {
+        {1, 0, 0},
+        {0, 1, 0},
+        {0, 0, 1}
+    };
+
+    return Matrix3D(identity_matrix);
+}
+
+std::vector<std::vector<float>> Matrix3D::get_matrix() const
+{
+    return matrix;
+}
+
+void Matrix3D::set_matrix(std::vector<std::vector<float>> matrix)
+{
+    if (matrix.size() != 3 &&
+        matrix[0].size() != 3 &&
+        matrix[1].size() != 3 &&
+        matrix[2].size() != 3)
+    {
+        return;
+    }
+
+    this->matrix = matrix;
+}
+
 Matrix3D Matrix3D::operator * (const Matrix3D& m)
 {
     int rowsA = this->matrix.size();
     int colsA = this->matrix[0].size();
-    int rowsB = m.matrix.size();
     int colsB = m.matrix.size();
 
-    std::vector<std::vector<float>> ans(rowsA, std::vector<float>(colsB, 0));
+    std::vector<std::vector<float>> ans = this->matrix;
 
-    for (int i = 0; i < rowsA; i++) 
+    for (int i = 0; i < rowsA; ++i) 
     {
-        for (int j = 0; j < colsB; j++) 
+        for (int j = 0; j < colsB; ++j) 
         {
-            for (int k = 0; k < colsA; k++) 
+            for (int k = 0; k < colsA; ++k) 
             {
-                ans[i][j] += this->matrix[i][k] * m.matrix[k][j];
+                ans[i][j] *= m.matrix[k][j];
             }
         }
     }
@@ -35,7 +74,48 @@ Vector3D Matrix3D::operator * (const Vector3D& v)
     );
 }
 
-void Matrix3D::printMatrix() const 
+Matrix3D Matrix3D::operator + (const Matrix3D& m)
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			ans[i][j] += m.matrix[i][j];
+		}
+	}
+	return Matrix3D(ans);
+}
+
+Matrix3D Matrix3D::operator - (const Matrix3D& m)
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            ans[i][j] -= m.matrix[i][j];
+        }
+    }
+    return Matrix3D(ans);
+}
+
+Matrix3D Matrix3D::transposition()
+{
+    std::vector<std::vector<float>> ans = this->matrix;
+
+	    for (int i = 0; i < 3; ++i)
+	    {
+		    for (int j = 0; j < 3; ++j)
+		    {
+			    ans[i][j] = this->matrix[j][i];
+		    }
+	    }
+	return Matrix3D(ans);
+}
+
+
+void Matrix3D::print_matrix() const 
 {
     for (const auto& row : matrix) 
     {

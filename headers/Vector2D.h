@@ -22,7 +22,7 @@ public:
 
 	float operator * (const Vector2D& v);
 
-	float operator * (const float k);
+	Vector2D operator * (const float k);
 
 	float length() const;
 

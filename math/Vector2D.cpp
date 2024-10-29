@@ -41,7 +41,7 @@ float Vector2D::operator * (const Vector2D& v)
 	return this->x * v.getX() + this->y * v.getY();
 }
 
-float Vector2D::operator * (const float k)
+Vector2D Vector2D::operator * (const float k)
 {
 	return (this->x * k, this->y * k);
 }

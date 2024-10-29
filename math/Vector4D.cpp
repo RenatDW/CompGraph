@@ -62,7 +62,7 @@ float Vector4D::operator * (const Vector4D& v)
 	return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ() + this->w * v.getW();
 }
 
-float Vector4D::operator * (const float k)
+Vector4D Vector4D::operator * (const float k)
 {
 	return (this->x * k, this->y * k, this->z * k, this->w * k);
 }

@@ -26,7 +26,7 @@ public:
 
 	static Vector3D cross(const Vector3D &v1, const Vector3D &v2);
 
-	float operator*(const Vector3D &v);
+	float operator * (const Vector3D& v);
 
 
 	Vector3D operator * (const float k);

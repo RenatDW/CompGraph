@@ -14,13 +14,26 @@ public:
     Matrix3D():
         matrix(std::vector<std::vector<float>>()){}
 
-    Matrix3D operator * (const Matrix3D& m);
+    Matrix3D create_zero_matrix();
+    
+    Matrix3D create_identity_matrix();
 
+    std::vector<std::vector<float>> get_matrix() const;
+
+    void set_matrix(std::vector<std::vector<float>> matrix);
+
+    Matrix3D operator * (const Matrix3D& m);
 
     Vector3D operator * (const Vector3D& v);
 
-    void printMatrix() const;
-    
+    Matrix3D operator + (const Matrix3D& m);
+
+	Matrix3D operator - (const Matrix3D& m);
+
+    Matrix3D transposition();
+
+    void print_matrix() const;
+
 private:
     std::vector<std::vector<float>> matrix;
 };
