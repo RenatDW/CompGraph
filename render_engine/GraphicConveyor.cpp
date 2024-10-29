@@ -46,19 +46,19 @@ Matrix4D GraphicConveyor::perspective(const float fov, const float aspectRatio, 
 {
     Matrix4D result;
     float tangentMinusOnDegree = (float) (1.0F / (tan(fov * 0.5F)));
-    result.matrix[0][0] = tangentMinusOnDegree / aspectRatio;
-    result.matrix[1][1] = tangentMinusOnDegree;
-    result.matrix[2][2] = (farPlane + nearPlane) / (farPlane - nearPlane);
-    result.matrix[2][3] = 1.0F;
-    result.matrix[3][2] = 2 * (nearPlane * farPlane) / (nearPlane - farPlane);
+    result.set(0, 0, tangentMinusOnDegree / aspectRatio);
+    result.set(1, 1, tangentMinusOnDegree);
+    result.set(2, 2, (farPlane + nearPlane) / (farPlane - nearPlane));
+    result.set(2, 3, 1.0F);
+    result.set(3, 2, 2 * (nearPlane * farPlane) / (nearPlane - farPlane));
     return result;
 }
 
 Vector3D GraphicConveyor::multiplyMatrix4ByVector3(const Matrix4D matrix, const Vector3D vertex)
 {
-    const float x = (vertex.getX() * matrix[0][0] + (vertex.getY() * matrix.matrix1()[1][0]) + (vertex.getZ() * matrix.matrix1() [2][0]) + matrix.matrix1()[3][0]);
-    const float y = (vertex.getX() * matrix[0][1] + (vertex.getY() * matrix.matrix1()[1][1]) + (vertex.getZ() * matrix.matrix1() [2][1]) + matrix.matrix1()[3][1]);
-    const float z = (vertex.getX() * matrix[0][2] + (vertex.getY() * matrix.matrix1()[1][2]) + (vertex.getZ() * matrix.matrix1() [2][2]) + matrix.matrix1()[3][2]);
-    const float w = (vertex.getX() * matrix.matrix1()[0][3] + (vertex.getY() * matrix.matrix1()[1][3]) + (vertex.getZ() * matrix.matrix1() [2][2]) + matrix.matrix1()[3][3]);
+    const float x = vertex.getX() * matrix.get(0, 0) + vertex.getY() * matrix.get(1, 0) + vertex.getZ() * matrix.get(2, 0) + matrix.get(3, 0);
+    const float y = vertex.getX() * matrix.get(0, 1) + vertex.getY() * matrix.get(1, 1) + vertex.getZ() * matrix.get(2, 1) + matrix.get(3, 1);
+    const float z = vertex.getX() * matrix.get(0, 2) + vertex.getY() * matrix.get(1, 2) + vertex.getZ() * matrix.get(2, 2) + matrix.get(3, 2);
+    const float w = vertex.getX() * matrix.get(0, 3) + vertex.getY() * matrix.get(1, 3) + vertex.getZ() * matrix.get(2, 3) + matrix.get(3, 3);
     return Vector3D(x / w, y / w, z / w);
 }
