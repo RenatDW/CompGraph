@@ -28,6 +28,8 @@ void MainWindow::paintEvent(QPaintEvent *event) {
 
     QPainter painter(this); // Создаем объект QPainter
 
+    camera.setAspectRatio((float) (this->width())/(this->height()));
+
     // Здесь можно использовать painter для рисования на окне
     for(const Model &model : models) { // Используйте ссылку на модель
         RenderEngine::render(painter, camera, model,this->width(), this->height(), 0); // Передаем painter по ссылке

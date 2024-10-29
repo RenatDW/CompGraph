@@ -29,9 +29,9 @@ Matrix4D GraphicConveyor::lookAt(Vector3D eye, Vector3D target, Vector3D up)
     resultX = Vector3D::cross(up, resultZ);
     resultY = Vector3D::cross(resultZ, resultX);
 
-    resultX.normalize();
-    resultY.normalize();
-    resultZ.normalize();
+    resultX = resultX.normalize();
+    resultY = resultY.normalize();
+    resultZ = resultZ.normalize();
 
     std::vector<std::vector<float>> matrix = {
         {resultX.getX(), resultY.getX(), resultZ.getX(), 0},
