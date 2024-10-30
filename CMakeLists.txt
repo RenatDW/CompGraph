@@ -45,11 +45,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/Matrix3D.h
         math/headers/Matrix4D.h
         math/headers/Point2D.h
-        Google_tests/dummytest.cpp
-        objwriter/dummyWriter.cpp
-        objwriter/dummyWriter.cpp
 )
-
 
 target_link_libraries(CompGraph
         Qt6::Core
@@ -87,5 +83,3 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
-
-
