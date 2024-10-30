@@ -26,9 +26,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
     camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
 
     // Здесь можно использовать painter для рисования на окне
+    std::cout << triangulation << std::endl;
     for (const Model &model: models) {
         // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, model, this->width(), this->height(), true);
+        RenderEngine::render(painter, camera, model, this->width(), this->height(), triangulation);
         // Передаем painter по ссылке
     }
 }
@@ -82,5 +83,11 @@ void MainWindow::on_actionForward_triggered()
 void MainWindow::on_actionBack_triggered()
 {
     camera.movePosition(Vector3D(0, 0, (float) TRANSLATION));
+    repaint();
+}
+
+void MainWindow::on_actionTriangulation_changed()
+{
+    triangulation = !triangulation;
     repaint();
 }

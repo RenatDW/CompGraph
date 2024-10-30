@@ -48,7 +48,10 @@ private slots:
 
     void on_actionBack_triggered();
 
+    void on_actionTriangulation_changed();
+
 private:
     Ui::MainWindow *ui;
+    bool triangulation = false;
 };
 #endif // MAINWINDOW_H

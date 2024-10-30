@@ -23,14 +23,15 @@
                     <height>24</height>
                 </rect>
             </property>
-            <widget class="QMenu" name="menuwqqwe">
+            <widget class="QMenu" name="fileMenu">
                 <property name="title">
                     <string>File</string>
                 </property>
                 <addaction name="actionLoad_model"/>
                 <addaction name="actionSave_Model"/>
+                <addaction name="actionTriangulation"/>
             </widget>
-            <widget class="QMenu" name="menuMove">
+            <widget class="QMenu" name="moveMenu">
                 <property name="title">
                     <string>Move</string>
                 </property>
@@ -41,10 +42,21 @@
                 <addaction name="actionBack"/>
                 <addaction name="actionForward"/>
             </widget>
-            <addaction name="menuwqqwe"/>
-            <addaction name="menuMove"/>
+            <addaction name="fileMenu"/>
+            <addaction name="moveMenu"/>
         </widget>
         <widget class="QStatusBar" name="statusbar"/>
+        <action name="actionTriangulation">
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="text">
+                <string>Triangulation</string>
+            </property>
+            <property name="toolTip">
+                <string>triangulation</string>
+            </property>
+        </action>
         <action name="actionLoad_Model">
             <property name="text">
                 <string>Load Model</string>
