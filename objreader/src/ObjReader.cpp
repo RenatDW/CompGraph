@@ -21,15 +21,41 @@ std::vector<Triangle> ObjReader::triangulation(const Model &result)
     for (const Polygon &element: result.polygons) {
         for (int i = 0; i < element.get_vertex_indices().size() - 2; ++i) {
             std::vector<int> vertices;
+            std::vector<int> normale;
+            std::vector<int> texture;
             vertices.emplace_back(element.get_vertex_indices()[0]);
+            normale.emplace_back(element.get_normal_indices()[0]);
+            texture.emplace_back(element.get_texture_indices()[0]);
             for (int j = 1; j < 3; ++j) {
                 vertices.emplace_back(element.get_vertex_indices()[i + j]);
+                normale.emplace_back(element.get_normal_indices()[i+j]);
+                texture.emplace_back(element.get_texture_indices()[i+j]);
             }
             add.set_vertex_indices(vertices);
+            add.set_normal_indices(normale);
+            add.set_texture_indices(texture);
             triangles.emplace_back(add);
         }
     }
     return triangles;
+}
+
+void ObjReader::normale_recalculate(Model &result)
+{
+    int cnt = 0;
+    for (Polygon &element: result.polygons) {
+        std::vector<int> normale;
+        result.normals.emplace_back(Vector3D::cross(result.vertices[element.get_vertex_indices().front()], result.vertices[element.get_vertex_indices().back()]));
+        normale.emplace_back(cnt);
+        cnt++;
+        for (int i = 1; i < element.get_vertex_indices().size(); i++) {
+            result.normals.emplace_back(Vector3D::cross(result.vertices[element.get_vertex_indices()[i - 1]], result.vertices[element.get_vertex_indices()[i]]));
+            normale.emplace_back(cnt);
+            cnt++;
+        }
+        element.set_normal_indices(normale);
+    }
+
 }
 
 Model ObjReader::read(std::string &fileContent)
@@ -67,6 +93,7 @@ Model ObjReader::read(std::string &fileContent)
             }
         }
     }
+    normale_recalculate(result);
     result.triangles = triangulation(result);
     return result;
 }
@@ -187,4 +214,9 @@ void ObjReader::parse_face_word(const std::string &word_in_line, std::vector<int
     } catch (const std::out_of_range &) {
         throw ObjReaderException("Too few vertex arguments.", line_ind);
     }
+}
+
+std::vector<int> ObjReader::normale_recalculate()
+{
+
 }
