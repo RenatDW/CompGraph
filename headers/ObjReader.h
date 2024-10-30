@@ -10,6 +10,8 @@
 class ObjReader
 {
 public:
+    static std::vector<Triangle> triangulation(const Model &result);
+
     static Model read(std::string &fileContent);
 
 protected:

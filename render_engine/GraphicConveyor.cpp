@@ -3,7 +3,7 @@
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target)
 {
-    return look_at(eye, target, Vector3D(0, 1.0F, 0)); // здесь у каждой переменной был F
+    return look_at(eye, target, Vector3D(0, 1.0f, 0)); // здесь у каждой переменной был F
 }
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, const Vector3D &up)
@@ -33,11 +33,11 @@ Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_rati
                                       const float &far_plane)
 {
     Matrix4D result;
-    const auto tangent_minus_on_degree = (1.0F / (std::tan(fov * 0.5F)));
+    const auto tangent_minus_on_degree = (1.0f / (std::tan(fov * 0.5f)));
     result.set(0, 0, tangent_minus_on_degree / aspect_ratio);
     result.set(1, 1, tangent_minus_on_degree);
     result.set(2, 2, (far_plane + near_plane) / (far_plane - near_plane));
-    result.set(2, 3, 1.0F);
+    result.set(2, 3, 1.0f);
     result.set(3, 2, 2 * (near_plane * far_plane) / (near_plane - far_plane));
     return result;
 }

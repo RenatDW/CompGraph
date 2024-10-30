@@ -10,7 +10,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       camera(Vector3D(0, 0, 100), Vector3D(0, 0, 0),
-             1.0F, 1, 0.01F, 100),
+             1.0f, 1, 0.01f, 100),
       ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -28,7 +28,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     // Здесь можно использовать painter для рисования на окне
     for (const Model &model: models) {
         // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, model, this->width(), this->height(), false);
+        RenderEngine::render(painter, camera, model, this->width(), this->height(), true);
         // Передаем painter по ссылке
     }
 }

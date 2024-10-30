@@ -13,6 +13,24 @@ static const std::string OBJ_TEXTURE_TOKEN{"vt"};
 static const std::string OBJ_NORMAL_TOKEN{"vn"};
 static const std::string OBJ_FACE_TOKEN{"f"};
 
+std::vector<Triangle> ObjReader::triangulation(const Model &result)
+{
+    std::vector<Triangle> triangles;
+    Triangle add;
+    for (const Polygon &element: result.polygons) {
+        for (int i = 0; i < element.get_vertex_indices().size() - 2; ++i) {
+            std::vector<int> vertices;
+            vertices.emplace_back(element.get_vertex_indices()[0]);
+            for (int j = 1; j < 3; ++j) {
+                vertices.emplace_back(element.get_vertex_indices()[i + j]);
+            }
+            add.set_vertex_indices(vertices);
+            triangles.emplace_back(add);
+        }
+    }
+    return triangles;
+}
+
 Model ObjReader::read(std::string &fileContent)
 {
     Model result = Model();
@@ -48,23 +66,7 @@ Model ObjReader::read(std::string &fileContent)
             }
         }
     }
-    std::vector<Triangle> triangles;
-    Triangle add;
-    for (Polygon element: result.polygons) {
-        std::vector<int> vertices;
-        vertices.emplace_back(element.get_vertex_indices()[0]);
-        for (int i = 0; i < element.get_vertex_indices().size(); ++i) {
-            for (int j = 1; j < 3; ++j) {
-                if (element.get_vertex_indices().size() < 2 + i) {
-                    break;
-                }
-                vertices.emplace_back(element.get_vertex_indices()[i + j]);
-            }
-        }
-        add.set_vertex_indices(vertices);
-        triangles.emplace_back(add);
-    }
-    result.triangles = triangles;
+    result.triangles = triangulation(result);
     return result;
 }
 
@@ -133,12 +135,9 @@ Polygon ObjReader::parse_face(const std::vector<std::string> &words_in_line_with
 
 
     Polygon result = Polygon();
-    std::vector<Triangle> triangles();
     result.set_vertex_indices(one_polygon_vertex_indices);
     result.set_texture_indices(one_polygon_texture_vertex_indices);
     result.set_normal_indices(one_polygon_normal_indices);
-    std::vector<Triangle> result2;
-    // result.triangulation();
     return result;
 }
 
