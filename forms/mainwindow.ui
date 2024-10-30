@@ -27,7 +27,7 @@
                 <property name="title">
                     <string>File</string>
                 </property>
-                <addaction name="actionLoad_model"/>
+                <addaction name="actionLoad_Model"/>
                 <addaction name="actionSave_Model"/>
                 <addaction name="actionTriangulation"/>
             </widget>

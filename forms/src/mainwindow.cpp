@@ -2,8 +2,11 @@
 #include "../ui_MainWindow.h"
 #include "../../render_engine/headers/RenderEngine.h"
 #include "../../math/headers/Vector3D.h"
+#include "../../objreader/headers/ObjReader.h"
+#include "../../objwriter/headers/ObjWriter.h"
 
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -40,12 +43,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionLoad_Model_triggered()
 {
-    QMessageBox::information(this, "Load model", "Coming soon...");
+    // std::string file_name = QFileDialog::getOpenFileName(this,
+    //                                                      tr("Open Object"), ":/",
+    //                                                      tr("Object Files (*.obj)")).toStdString();
+    // models.emplace_back(ObjReader::read(file_name));
 }
 
 void MainWindow::on_actionSave_Model_triggered()
 {
-    QMessageBox::information(this, "Save", "Coming soon...");
+    // if(models.empty()) {
+    //     QMessageBox::information(this, "Sace model", "You haven't selected a model");
+    //     return;
+    // }
+    // std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
+    //                                                      ":/",
+    //                                                      tr("Objects (*.obj)")).toStdString();
+    // ObjWriter writer(file_name);
+    // writer.write(models[0]);
 }
 
 void MainWindow::on_actionUp_triggered()
