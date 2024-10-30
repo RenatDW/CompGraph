@@ -45,6 +45,9 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/Matrix3D.h
         math/headers/Matrix4D.h
         math/headers/Point2D.h
+        Google_tests/dummytest.cpp
+        objwriter/dummyWriter.cpp
+        objwriter/dummyWriter.cpp
 )
 
 

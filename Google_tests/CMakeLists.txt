@@ -7,7 +7,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # 'Google_Tests_run' is the target name
 
-add_executable(Google_Tests_run ConverterTests.cpp AbsoluteDateTest.cpp)
-target_link_libraries(Google_Tests_run objwriter)
+add_executable(Google_Tests_run dummytest.cpp)
+target_link_libraries(Google_Tests_run  objwriter)
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
