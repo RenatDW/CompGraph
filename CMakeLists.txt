@@ -44,14 +44,16 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         model/headers/Model.h
         math/headers/Matrix3D.h
         math/headers/Matrix4D.h
-        math/headers/Point2D.h)
-
+        math/headers/Point2D.h
+)
 
 target_link_libraries(CompGraph
         Qt6::Core
         Qt6::Gui
         Qt6::Widgets
 )
+
+add_subdirectory(Google_tests)
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
@@ -81,4 +83,3 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()
-
