@@ -15,9 +15,9 @@ public:
 
     static Matrix4D create_identity_matrix();
 
-    std::vector<std::vector<float>> get_matrix() const;
+    [[nodiscard]] std::vector<std::vector<float>> get_matrix() const;
 
-    float get(int row, int col) const;
+    [[nodiscard]] float get(int row, int col) const;
 
     void set(const std::vector<std::vector<float>>& matrix);
 
@@ -33,7 +33,7 @@ public:
 
     Matrix4D operator - (const Matrix4D& m) const;
 
-    Matrix4D transposition() const;
+    [[nodiscard]] Matrix4D transposition() const;
 
     void print_matrix() const;
 

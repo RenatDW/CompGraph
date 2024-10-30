@@ -23,7 +23,7 @@ public:
 
     Matrix4D get_view_matrix();
 
-    Matrix4D get_projection_matrix() const;
+    [[nodiscard]] Matrix4D get_projection_matrix() const;
 
     Camera(const Vector3D &position,
            const Vector3D &target,

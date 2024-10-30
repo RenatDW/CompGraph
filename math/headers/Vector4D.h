@@ -8,13 +8,13 @@ public:
 
 	Vector4D(float x, float y, float z, float w);
 
-	float getX() const;
+	[[nodiscard]] float getX() const;
 
-	float getY() const;
+	[[nodiscard]] float getY() const;
 
-	float getZ() const;
+	[[nodiscard]] float getZ() const;
 
-	float getW() const;
+	[[nodiscard]] float getW() const;
 	
 	void setX(float x);
 
@@ -32,9 +32,9 @@ public:
 
 	Vector4D operator * (float k) const;
 
-	float length() const;
+	[[nodiscard]] float length() const;
 
-	Vector4D normalization() const;
+	[[nodiscard]] Vector4D normalization() const;
 
 	~Vector4D();
 

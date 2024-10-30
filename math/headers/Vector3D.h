@@ -8,11 +8,11 @@ public:
 
 	Vector3D(float x, float y, float z);
 
-	float getX() const;
+	[[nodiscard]] float getX() const;
 
-	float getY() const;
+	[[nodiscard]] float getY() const;
 
-	float getZ() const;
+	[[nodiscard]] float getZ() const;
 
 	void setX(float x);
 
@@ -30,9 +30,9 @@ public:
 
 	Vector3D operator * (float k) const;
 
-	float length() const;
+	[[nodiscard]] float length() const;
 
-	Vector3D normalize() const;
+	[[nodiscard]] Vector3D normalize() const;
 
 	~Vector3D();
 

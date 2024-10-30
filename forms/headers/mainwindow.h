@@ -1,11 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QPainter>
-
 #include "../../render_engine/headers/Camera.h"
 #include "../../model/headers/Model.h"
+
+#include <QMainWindow>
+#include <QPainter>
 
 QT_BEGIN_NAMESPACE
 

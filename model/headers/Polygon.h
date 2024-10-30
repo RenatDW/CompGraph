@@ -14,11 +14,11 @@ public:
 
 	void set_texture_indices(const std::vector<int> &t_texture_indices);
 
-	std::vector<int> get_vertex_indices() const;
+	[[nodiscard]] std::vector<int> get_vertex_indices() const;
 
-	std::vector<int> get_normal_indices() const;
+	[[nodiscard]] std::vector<int> get_normal_indices() const;
 
-	std::vector<int> get_texture_indices() const;
+	[[nodiscard]] std::vector<int> get_texture_indices() const;
 
 	~Polygon();
 

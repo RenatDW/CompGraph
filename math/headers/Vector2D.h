@@ -8,9 +8,9 @@ public:
 
 	Vector2D(float x, float y);
 
-	float getX() const;
+	[[nodiscard]] float getX() const;
 
-	float getY() const;
+	[[nodiscard]] float getY() const;
 
 	void setX(float x);
 
@@ -24,9 +24,9 @@ public:
 
 	Vector2D operator * (float k) const;
 
-	float length() const;
+	[[nodiscard]] float length() const;
 
-	Vector2D normalization() const;
+	[[nodiscard]] Vector2D normalization() const;
 	
 	~Vector2D();
 

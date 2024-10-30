@@ -10,9 +10,9 @@ public:
 
     Point2D(float x, float y);
 
-    float getX() const;
+    [[nodiscard]] float getX() const;
 
-    float getY() const;
+    [[nodiscard]] float getY() const;
 
     static Point2D vertexToPoint(Vector3D vertex, int width, int height);
 
