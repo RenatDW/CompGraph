@@ -12,7 +12,11 @@ class ObjReader
 public:
     static std::vector<Triangle> triangulation(const Model &result);
 
+    static void normale_recalculate(Model &result);
+
     static Model read(std::string &fileContent);
+
+
 
 protected:
     static Vector3D parse_vertex(const std::vector<std::string> &words_in_line_without_token, const int &line_ind);
@@ -29,5 +33,7 @@ protected:
                                 std::vector<int> &one_polygon_vertex_indices,
                                 std::vector<int> &one_polygon_texture_vertex_indices,
                                 std::vector<int> &one_polygon_normal_indices, const int &line_ind);
+
+    static std::vector<int> normale_recalculate();
 };
 #endif
