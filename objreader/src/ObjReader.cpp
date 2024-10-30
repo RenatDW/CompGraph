@@ -5,7 +5,6 @@
 #include "../headers/ObjReaderException.h"
 
 #include <fstream>
-#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -36,8 +35,6 @@ std::vector<Triangle> ObjReader::triangulation(const Model &result)
             add.set_normal_indices(normale);
             add.set_texture_indices(texture);
             triangles.emplace_back(add);
-
-            std::cout << i << std::endl;
         }
     }
     return triangles;
