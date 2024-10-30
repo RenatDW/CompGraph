@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-ObjWriter::ObjWriter(const std::string& filename) : 
+ObjWriter::ObjWriter(const std::string& filename) :
     file(filename, std::ios::binary | std::ios::out | std::ios::trunc)
 {
     if (!file.is_open())

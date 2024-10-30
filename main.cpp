@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 {
     std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
 
+    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
     //std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
 
     // std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
@@ -19,16 +20,12 @@ int main(int argc, char *argv[])
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapUpperTeeth.obj");
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapFemaleBody.obj");
     // std::string filename( "/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
-    Model ans(ObjReader::read(filename));
+    // Model ans(ObjReader::read(filename));
 
     QApplication a(argc, argv);
     MainWindow w;
-    w.models.emplace_back(ans);
+    // w.models.emplace_back(ans);
     w.show();
-    // QPushButton button(nullptr);
-    // button.resize(200, 100);
-    // button.resize(200, 100);∂
-    // button.show();
 
     return a.exec();
 }
