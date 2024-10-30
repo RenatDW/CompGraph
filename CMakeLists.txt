@@ -35,20 +35,9 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         headers/ObjReader.h
         objwriter/ObjWriter.cpp
         headers/ObjReaderException.h
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
-        main.cpp
         math/Matrix3D.cpp
         headers/ObjReaderTest.h
         math/Point2D.cpp
-        main.cpp
         model/Triangle.cpp
         headers/Triangle.h
         model/Model.cpp)

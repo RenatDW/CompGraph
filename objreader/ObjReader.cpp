@@ -47,13 +47,31 @@ Model ObjReader::read(std::string &fileContent)
                 result.polygons.emplace_back(parse_face(words_in_line, line_ind));
             }
         }
-        in.close();
     }
+    std::vector<Triangle> triangles;
+    Triangle add;
+    for (Polygon element: result.polygons) {
+        std::vector<int> vertices;
+        vertices.emplace_back(element.get_vertex_indices()[0]);
+        for (int i = 0; i < element.get_vertex_indices().size(); ++i) {
+            for (int j = 1; j < 3; ++j) {
+                if (element.get_vertex_indices().size() < 2 + i) {
+                    break;
+                }
+                vertices.emplace_back(element.get_vertex_indices()[i + j]);
+            }
+        }
+        add.set_vertex_indices(vertices);
+        triangles.emplace_back(add);
+    }
+    result.triangles = triangles;
     return result;
 }
 
+
 //TODO Понять как сюда добавить указатели
-Vector3D ObjReader::parse_vertex(const std::vector<std::string> &words_in_line_without_token, const int &line_ind)
+Vector3D ObjReader::parse_vertex(const std::vector<std::string> &words_in_line_without_token,
+                                 const int &line_ind)
 {
     try {
         return {
@@ -83,8 +101,9 @@ Vector2D ObjReader::parse_texture_vertex(const std::vector<std::string> &words_i
     }
 }
 
-Vector3D ObjReader::parse_normal(const std::vector<std::string> &words_in_line_without_words_in_line_without_token,
-                                 const int &line_ind)
+Vector3D ObjReader::parse_normal(
+    const std::vector<std::string> &words_in_line_without_words_in_line_without_token,
+    const int &line_ind)
 {
     try {
         return {
@@ -99,18 +118,22 @@ Vector3D ObjReader::parse_normal(const std::vector<std::string> &words_in_line_w
     }
 }
 
-Polygon ObjReader::parse_face(const std::vector<std::string> &words_in_line_without_token, const int &line_ind)
+Polygon ObjReader::parse_face(const std::vector<std::string> &words_in_line_without_token,
+                              const int &line_ind)
 {
     std::vector<int> one_polygon_vertex_indices = std::vector<int>();
     std::vector<int> one_polygon_texture_vertex_indices = std::vector<int>();
     std::vector<int> one_polygon_normal_indices = std::vector<int>();
 
     for (const std::string &s: words_in_line_without_token) {
-        parse_face_word(s, one_polygon_vertex_indices, one_polygon_texture_vertex_indices, one_polygon_normal_indices,
+        parse_face_word(s, one_polygon_vertex_indices, one_polygon_texture_vertex_indices,
+                        one_polygon_normal_indices,
                         line_ind);
     }
 
+
     Polygon result = Polygon();
+    std::vector<Triangle> triangles();
     result.set_vertex_indices(one_polygon_vertex_indices);
     result.set_texture_indices(one_polygon_texture_vertex_indices);
     result.set_normal_indices(one_polygon_normal_indices);
