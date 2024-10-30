@@ -19,28 +19,32 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
-        render_engine/RenderEngine.cpp
-        render_engine/Camera.cpp
-        model/Polygon.cpp
-        math/Vector2D.cpp
-        math/Vector3D.cpp
-        math/Vector4D.cpp
-        render_engine/GraphicConveyor.cpp
-        math/Matrix4D.cpp
-        math/Matrix4D.cpp
-        forms/mainwindow.cpp
+        render_engine/src/RenderEngine.cpp
+        render_engine/src/Camera.cpp
+        model/src/Polygon.cpp
+        math/src/Vector2D.cpp
+        math/src/Vector3D.cpp
+        math/src/Vector4D.cpp
+        render_engine/src/GraphicConveyor.cpp
+        math/src/Matrix4D.cpp
+        math/src/Matrix4D.cpp
+        forms/src/mainwindow.cpp
         forms/mainwindow.ui
-        headers/mainwindow.h
-        objreader/ObjReader.cpp
-        headers/ObjReader.h
-        objwriter/ObjWriter.cpp
-        headers/ObjReaderException.h
-        math/Matrix3D.cpp
-        headers/ObjReaderTest.h
-        math/Point2D.cpp
-        model/Triangle.cpp
-        headers/Triangle.h
-        model/Model.cpp)
+        forms/headers/mainwindow.h
+        objreader/src/ObjReader.cpp
+        objreader/headers/ObjReader.h
+        objwriter/src/ObjWriter.cpp
+        objreader/headers/ObjReaderException.h
+        math/src/Matrix3D.cpp
+        math/src/Point2D.cpp
+        model/src/Triangle.cpp
+        model/headers/Triangle.h
+        objwriter/headers/ObjWriter.h
+        render_engine/headers/Camera.h
+        model/headers/Model.h
+        math/headers/Matrix3D.h
+        math/headers/Matrix4D.h
+        math/headers/Point2D.h)
 
 
 target_link_libraries(CompGraph

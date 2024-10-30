@@ -1,14 +1,17 @@
+#include "math/headers/Vector2D.h"
+#include "forms/headers/mainwindow.h"
+#include "objreader/headers/ObjReader.h"
+
 #include <iostream>
 #include <QApplication>
 #include <QPushButton>
-#include "headers/Vector2D.h"
-#include "headers/mainwindow.h"
-#include "headers/ObjReader.h"
 
 int main(int argc, char *argv[])
 {
-    // std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
-    std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
+    std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
+
+    //std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
+
     // std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHead.obj");
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapLowerTeeth.obj");
