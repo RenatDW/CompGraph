@@ -43,23 +43,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionLoad_Model_triggered()
 {
-    // std::string file_name = QFileDialog::getOpenFileName(this,
-    //                                                      tr("Open Object"), ":/",
-    //                                                      tr("Object Files (*.obj)")).toStdString();
-    // models.emplace_back(ObjReader::read(file_name));
+    std::string file_name = QFileDialog::getOpenFileName(this,
+                                                         tr("Open Object"), ":/",
+                                                         tr("Object Files (*.obj)")).toStdString();
+    models.emplace_back(ObjReader::read(file_name));
 }
 
 void MainWindow::on_actionSave_Model_triggered()
 {
-    // if(models.empty()) {
-    //     QMessageBox::information(this, "Sace model", "You haven't selected a model");
-    //     return;
-    // }
-    // std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
-    //                                                      ":/",
-    //                                                      tr("Objects (*.obj)")).toStdString();
-    // ObjWriter writer(file_name);
-    // writer.write(models[0]);
+    if(models.empty()) {
+        QMessageBox::information(this, "Sace model", "You haven't selected a model");
+        return;
+    }
+    std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
+                                                         ":/",
+                                                         tr("Objects (*.obj)")).toStdString();
+    ObjWriter writer(file_name);
+    writer.write(models[0]);
 }
 
 void MainWindow::on_actionUp_triggered()

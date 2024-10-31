@@ -6,6 +6,21 @@
 
 class Camera
 {
+    friend bool operator==(const Camera &lhs, const Camera &rhs)
+    {
+        return lhs.position == rhs.position
+               && lhs.target == rhs.target
+               && lhs.fov == rhs.fov
+               && lhs.aspectRatio == rhs.aspectRatio
+               && lhs.nearPlane == rhs.nearPlane
+               && lhs.farPlane == rhs.farPlane;
+    }
+
+    friend bool operator!=(const Camera &lhs, const Camera &rhs)
+    {
+        return !(lhs == rhs);
+    }
+
 public:
     void setPosition(const Vector3D &position);
 

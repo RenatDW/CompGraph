@@ -1,9 +1,11 @@
 #include "../headers/GraphicConveyor.h"
 #include "../../math/headers/Vector3D.h"
-
+#include "../../math/headers/Matrix4D.h"
+#include "../../math/headers/Vector4D.h"
+#include <iostream>
 #include <cmath>
 
-Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target)
+Matrix4D GraphicConveyor::  look_at(const Vector3D &eye, const Vector3D &target)
 {
     return look_at(eye, target, Vector3D(0, 1.0f, 0)); // здесь у каждой переменной был F
 }
@@ -15,6 +17,7 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
     Vector3D resultZ = Vector3D();
 
     resultZ = target - eye;
+
     resultX = Vector3D::cross(up, resultZ);
     resultY = Vector3D::cross(resultZ, resultX);
 
