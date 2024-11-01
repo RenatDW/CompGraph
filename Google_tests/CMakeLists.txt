@@ -9,6 +9,6 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(Google_Tests_run
         math_tests/Vector2DTest.cpp
-        dummytest.cpp)
+)
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
