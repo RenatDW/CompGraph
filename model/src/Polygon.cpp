@@ -26,17 +26,17 @@ void Polygon::set_texture_indices(const std::vector<int>& t_texture_indices)
 	}
 }
 
-std::vector<int> Polygon::get_vertex_indices() const
+std::vector<int> Polygon::get_vertex_indices()
 {
 	return vertex_indices;
 }
 
-std::vector<int> Polygon::get_normal_indices() const
+std::vector<int> Polygon::get_normal_indices()
 {
 	return normal_indices;
 }
 
-std::vector<int> Polygon::get_texture_indices() const
+std::vector<int> Polygon::get_texture_indices()
 {
 	return texture_indices;
 }

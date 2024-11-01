@@ -17,7 +17,6 @@ public:
 	std::vector<Vector3D> normals;
 	std::vector<Polygon> polygons;
 	std::vector<Triangle> triangles;
-	void triangulation();
 };
 
 #endif

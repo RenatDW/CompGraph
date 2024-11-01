@@ -92,10 +92,13 @@ Model ObjReader::read(std::string &fileContent)
                 result.polygons.emplace_back(parse_face(words_in_line, line_ind));
             }
         }
+        normale_recalculate(result);
+        result.triangles = triangulation(result);
+        return result;
+    }else {
+        throw ObjReaderException("Не удалось открыть файл", 0);
     }
-    normale_recalculate(result);
-    result.triangles = triangulation(result);
-    return result;
+
 }
 
 
@@ -214,9 +217,4 @@ void ObjReader::parse_face_word(const std::string &word_in_line, std::vector<int
     } catch (const std::out_of_range &) {
         throw ObjReaderException("Too few vertex arguments.", line_ind);
     }
-}
-
-std::vector<int> ObjReader::normale_recalculate()
-{
-
 }

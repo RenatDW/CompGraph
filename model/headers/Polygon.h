@@ -12,13 +12,40 @@ public:
 
 	void set_normal_indices(const std::vector<int> &t_normal_indices);
 
+	friend bool operator==(const Polygon &lhs, const Polygon &rhs)
+	{
+		return lhs.vertex_indices == rhs.vertex_indices
+		       && lhs.normal_indices == rhs.normal_indices
+		       && lhs.texture_indices == rhs.texture_indices;
+	}
+
+	friend bool operator!=(const Polygon &lhs, const Polygon &rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+	 std::vector<int> get_vertex_indices() const
+	{
+		return vertex_indices;
+	}
+
+	 std::vector<int> get_normal_indices() const
+	{
+		return normal_indices;
+	}
+
+	 std::vector<int> get_texture_indices() const
+	{
+		return texture_indices;
+	}
+
 	void set_texture_indices(const std::vector<int> &t_texture_indices);
 
-	[[nodiscard]] std::vector<int> get_vertex_indices() const;
+	std::vector<int> get_vertex_indices();
 
-	[[nodiscard]] std::vector<int> get_normal_indices() const;
+	std::vector<int> get_normal_indices();
 
-	[[nodiscard]] std::vector<int> get_texture_indices() const;
+	std::vector<int> get_texture_indices();
 
 	~Polygon();
 

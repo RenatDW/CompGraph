@@ -3,6 +3,17 @@
 
 class Vector2D 
 {
+	friend bool operator==(const Vector2D &lhs, const Vector2D &rhs)
+	{
+		return lhs.x == rhs.x
+		       && lhs.y == rhs.y;
+	}
+
+	friend bool operator!=(const Vector2D &lhs, const Vector2D &rhs)
+	{
+		return !(lhs == rhs);
+	}
+
 public:
 	Vector2D();
 
