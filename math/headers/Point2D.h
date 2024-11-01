@@ -14,7 +14,7 @@ public:
 
     [[nodiscard]] float getY() const;
 
-    static Point2D vertexToPoint(Vector3D vertex, int width, int height);
+    static Point2D vertexToPoint(const Vector3D& vertex, int width, int height);
 
     friend bool operator==(const Point2D &lhs, const Point2D &rhs)
     {
