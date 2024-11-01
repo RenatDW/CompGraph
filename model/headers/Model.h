@@ -9,15 +9,13 @@
 
 #include <vector>
 
-class Model
+struct Model
 {
-public:
-	std::vector<Vector3D> vertices;
-	std::vector<Vector2D> textureVertices;
-	std::vector<Vector3D> normals;
-	std::vector<Polygon> polygons;
-	std::vector<Triangle> triangles;
-	void triangulation();
+    std::vector<Vector3D> vertices;
+    std::vector<Vector2D> textureVertices;
+    std::vector<Vector3D> normals;
+    std::vector<Polygon> polygons;
+    std::vector<Triangle> triangles;
 };
 
 #endif
