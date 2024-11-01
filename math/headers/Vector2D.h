@@ -28,13 +28,12 @@ public:
 
 	[[nodiscard]] Vector2D normalization() const;
 
-	friend bool operator==(const Vector2D &lhs, const Vector2D &rhs)
+	friend bool operator==(const Vector2D& lhs, const Vector2D& rhs)
 	{
-		return lhs.x == rhs.x
-		       && lhs.y == rhs.y;
+		return lhs.x == rhs.x && lhs.y == rhs.y;
 	}
 
-	friend bool operator!=(const Vector2D &lhs, const Vector2D &rhs)
+	friend bool operator!=(const Vector2D& lhs, const Vector2D& rhs)
 	{
 		return !(lhs == rhs);
 	}
