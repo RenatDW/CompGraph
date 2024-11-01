@@ -34,6 +34,16 @@ public:
 
     void print_matrix() const;
 
+    friend bool operator == (const Matrix3D& lhs, const Matrix3D& rhs)
+    {
+        return lhs.matrix == rhs.matrix;
+    }
+
+    friend bool operator!=(const Matrix3D &lhs, const Matrix3D &rhs)
+    {
+        return !(lhs == rhs);
+    }
+
 private:
     std::vector<std::vector<float>> matrix;
 };

@@ -16,6 +16,17 @@ public:
 
     static Point2D vertexToPoint(Vector3D vertex, int width, int height);
 
+    friend bool operator==(const Point2D &lhs, const Point2D &rhs)
+    {
+        return lhs.x == rhs.x
+               && lhs.y == rhs.y;
+    }
+
+    friend bool operator!=(const Point2D &lhs, const Point2D &rhs)
+    {
+        return !(lhs == rhs);
+    }
+
 private:
     float x;
     float y;

@@ -27,7 +27,18 @@ public:
 	[[nodiscard]] float length() const;
 
 	[[nodiscard]] Vector2D normalization() const;
-	
+
+	friend bool operator==(const Vector2D &lhs, const Vector2D &rhs)
+	{
+		return lhs.x == rhs.x
+		       && lhs.y == rhs.y;
+	}
+
+	friend bool operator!=(const Vector2D &lhs, const Vector2D &rhs)
+	{
+		return !(lhs == rhs);
+	}
+
 	~Vector2D();
 
 private:
