@@ -8,13 +8,14 @@
 
 int main(int argc, char *argv[])
 {
-    std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
+    // std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
+    //std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
 
-<<<<<<< HEAD
-    //std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
-=======
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
->>>>>>> b60e0cedec5ce56ff23c63bbd4d896d8fe65eae5
+<<<<<<< HEAD
+=======
+    //std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
+>>>>>>> origin/main
 
     // std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHead.obj");
