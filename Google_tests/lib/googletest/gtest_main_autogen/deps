@@ -1,0 +1,17 @@
+gtest_main_autogen/timestamp: \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CMakePackageConfigHelpers.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CheckIncludeFile.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/CheckLibraryExists.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/FindPackageMessage.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/FindThreads.cmake \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.29/Modules/WriteBasicConfigVersionFile.cmake \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/CMakeLists.txt \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/cmake/Config.cmake.in \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/cmake/gtest.pc.in \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/cmake/gtest_main.pc.in \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/cmake/internal_utils.cmake \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/lib/googletest/src/gtest_main.cc \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake

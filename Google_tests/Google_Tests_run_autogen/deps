@@ -1,0 +1,6 @@
+Google_Tests_run_autogen/timestamp: \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/CMakeLists.txt \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/math_tests/Vector2DTest.cpp \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/obj_reader/ObjReaderTest.cpp \
+	/Users/renat/CLionProjects/CompGraph/Google_tests/render_engine/CameraTest.cpp \
+	/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake
