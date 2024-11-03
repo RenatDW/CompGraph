@@ -20,6 +20,9 @@ public:
 
     void set(int x, int y, float depth);
 
+    int getWidth() const;
+    int getHeight() const;
+
 private:
     int width;
     int height;

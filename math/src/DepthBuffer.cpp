@@ -19,3 +19,13 @@ void DepthBuffer::set(int x, int y, float depth)
 {
     buffer[y * width + x] = depth;
 }
+
+int DepthBuffer::getWidth() const
+{
+    return width;
+}
+
+int DepthBuffer::getHeight() const
+{
+    return height;
+}

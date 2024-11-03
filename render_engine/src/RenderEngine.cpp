@@ -92,26 +92,31 @@ void RenderEngine::rasterization(QPainter &painter,
     Point3D C = result_points[2];
     Point3D P;
 
-    float x_left = std::min({A.getX(), B.getX(), C.getX()});
-    float x_right = std::max({A.getX(), B.getX(), C.getX()});
-    float y_down = std::min({A.getY(), B.getY(), C.getY()});
-    float y_up = std::max({A.getY(), B.getY(), C.getY()});
+    const int x_left = static_cast<int>(std::min({
+        A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
+    }));
+    const int x_right = static_cast<int>(std::max({A.getX(), B.getX(), C.getX(), 0.0f}));
+    const int y_down = static_cast<int>(std::min({
+        A.getY(), B.getY(), C.getY(), static_cast<float>(depth_buffer.getHeight())
+    }));
+    const int y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f}));
 
     for (int y = y_down; y < y_up; y++) {
         for (int x = x_left; x < x_right; x++) {
-            if (x < 0 || x * y > depth_buffer.size() || y < 0) {
+            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) {
                 break;
             }
             P.set(x, y, 0);
-            const float ABC = edgeFunction(A, B, C);
             const float ABP = edgeFunction(A, B, P);
             const float BCP = edgeFunction(B, C, P);
             const float CAP = edgeFunction(C, A, P);
-            const float weightA = BCP / ABC;
-            const float weightB = CAP / ABC;
-            const float weightC = ABP / ABC;
+
             if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
-                float z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
+                const float ABC = edgeFunction(A, B, C);
+                const float weightA = BCP / ABC;
+                const float weightB = CAP / ABC;
+                const float weightC = ABP / ABC;
+                int z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
                 painter.setPen(QColor(-z * 10, -z * 10, -z * 10));
                 if (depth_buffer.get(x, y) > z) {
                     depth_buffer.set(x, y, z);
@@ -130,10 +135,10 @@ void RenderEngine::show_mesh(QPainter &painter, std::vector<Point3D> &result_poi
     };
 
     for (int i = 1; i < result_points.size(); ++i) {
-        RenderEngine::draw_line(painter, result_points[i-1],result_points[i]);
+        RenderEngine::draw_line(painter, result_points[i - 1], result_points[i]);
     }
     if (result_points.size() > 0) {
-        RenderEngine::draw_line(painter, result_points[result_points.size() - 1],result_points[0]);
+        RenderEngine::draw_line(painter, result_points[result_points.size() - 1], result_points[0]);
     }
 
     // float x_left = std::min({A.getX(), B.getX(), C.getX()});
@@ -168,7 +173,7 @@ void RenderEngine::show_mesh(QPainter &painter, std::vector<Point3D> &result_poi
 
 void RenderEngine::draw_line(QPainter &painter, Point3D &A, Point3D &B)
 {
-    painter.setPen(QColor(0, 0, 0));
+    // painter.setPen(QColor(0, 0, 0));
     float x1 = B.getX();
     float y1 = B.getY();
     float x0 = A.getX();
@@ -185,15 +190,14 @@ void RenderEngine::draw_line(QPainter &painter, Point3D &A, Point3D &B)
         if (x0 == x1 && y0 == y1) break;
         float e2 = 2 * error;
         if (e2 >= dy) {
-            error = error + dy;
-            x0 = x0 + sx;
+            error += dy;
+            x0 += sx;
         }
         if (e2 <= dx) {
-            error = error + dx;
-            y0 = y0 + sy;
+            error += dx;
+            y0 += sy;
         }
     }
-
 }
 
 void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const int &width, const int &height,
@@ -217,8 +221,8 @@ void RenderEngine::render_triangles(QPainter &painter, const Model &mesh, const 
         std::vector<Point3D> result_points;
         add_triangles_vertex(mesh, width, height, model_view_projection_matrix, triangle_ind, n_vertices_in_triangle,
                              result_points, depth_buffer);
-        // rasterization(painter, result_points, depth_buffer);
-        show_mesh(painter, result_points, depth_buffer);
+        rasterization(painter, result_points, depth_buffer);
+        // show_mesh(painter, result_points, depth_buffer);
     }
     painter.end();
 }
