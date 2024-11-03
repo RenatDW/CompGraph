@@ -7,6 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64/lib/cmake")
+set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 
 file(GLOB
         CPPS "*.cpp"
@@ -17,6 +18,8 @@ find_package(Qt6 COMPONENTS
         Gui
         Widgets
         REQUIRED)
+
+
 
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         render_engine/src/RenderEngine.cpp
@@ -45,6 +48,9 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/Matrix3D.h
         math/headers/Matrix4D.h
         math/headers/Point2D.h
+        math/src/Point3D.cpp
+        math/src/DepthBuffer.cpp
+        math/headers/DepthBuffer.h
 )
 
 target_link_libraries(CompGraph

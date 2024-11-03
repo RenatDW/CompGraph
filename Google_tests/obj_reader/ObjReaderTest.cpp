@@ -5,7 +5,7 @@
 
 TEST(ObjReader, parse_vertex)
 {
-    std::string file_path = "obj_reader/TestCase/test1.obj";
+    std::string file_path = "/Users/renat/CLionProjects/CompGraph/Google_tests/obj_reader/TestCase/test1.obj";
     Model a(ObjReader::read(file_path));
     std::vector<Vector3D> vertices{
         {-1, -1, -1}, {1, -1, -1}, {1, 1, -1}, {-1, 1, -1}, {-1, -1, 1}, {1, -1, 1}, {1, 1, 1}, {-1, 1, 1}

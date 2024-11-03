@@ -14,6 +14,13 @@ public:
 
     [[nodiscard]] float getY() const;
 
+
+    void setX(float x);
+
+    void setY(float y);
+
+    void set(float x, float y);
+
     static Point2D vertexToPoint(Vector3D vertex, int width, int height);
 
 private:

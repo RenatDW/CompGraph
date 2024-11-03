@@ -49,6 +49,9 @@ public:
 
     void mul(const Matrix4D& m);
 
+
+    static Matrix4D max_value();
+
 private:
     std::vector<std::vector<float>> matrix;
 };

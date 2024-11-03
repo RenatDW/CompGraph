@@ -46,13 +46,20 @@ void MainWindow::on_actionLoad_Model_triggered()
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toStdString();
-    models.emplace_back(ObjReader::read(file_name));
+    //TODO Переделать когда нужно будет делать сценку
+    if(models.size() ==1) {
+        models[0] =(ObjReader::read(file_name));
+
+    }else {
+        models.emplace_back(ObjReader::read(file_name));
+
+    }
 }
 
 void MainWindow::on_actionSave_Model_triggered()
 {
     if(models.empty()) {
-        QMessageBox::information(this, "Sace model", "You haven't selected a model");
+        QMessageBox::information(this, "Save model", "You haven't selected a model");
         return;
     }
     std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
