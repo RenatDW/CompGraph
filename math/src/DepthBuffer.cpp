@@ -9,6 +9,11 @@ float DepthBuffer::get(int x, int y) const
     return buffer[y * width + x];
 }
 
+int DepthBuffer::size() const
+{
+    return width * height;
+}
+
 void DepthBuffer::set(int x, int y, float depth)
 
 {

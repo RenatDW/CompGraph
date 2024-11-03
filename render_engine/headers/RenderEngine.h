@@ -25,7 +25,7 @@ public:
     static void add_triangles_vertex(const Model &mesh, const int &width, const int &height,
                                      const Matrix4D &model_view_projection_matrix, int triangle_ind,
                                      int n_vertices_in_polygon,
-                                     std::vector<Point3D> &result_points, std::vector<Vector3D> &src_vectors, DepthBuffer &depth_buffer);
+                                     std::vector<Point3D> &result_points, DepthBuffer &depth_buffer);
 
     static void draw_points(QPainter &painter, int point_count, const std::vector<Point2D> &result_points);
 
@@ -35,8 +35,8 @@ public:
     static void render_triangles(QPainter &painter, const Model &mesh, const int &width, const int &height,
                                  const Matrix4D &model_view_projection_matrix, int n_triangles, DepthBuffer &depth_buffer);
 
-    static void rasterization(QPainter &painter, int point_count, const std::vector<Point3D> &result_points,
-                              const std::vector<Vector3D> &src_vectors, DepthBuffer &depth_buffer);
+    static void rasterization(QPainter &painter, const std::vector<Point3D> &result_points,
+                              DepthBuffer &depth_buffer);
 
     static void render(
         QPainter &painter,

@@ -16,6 +16,8 @@ public:
 
     float get(int x, int y) const;
 
+    int size() const;
+
     void set(int x, int y, float depth);
 
 private:
