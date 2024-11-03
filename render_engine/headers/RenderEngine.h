@@ -37,7 +37,9 @@ public:
 
     static void rasterization(QPainter &painter, const std::vector<Point3D> &result_points,
                               DepthBuffer &depth_buffer);
+    static void show_mesh(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer);
 
+    static void draw_line(QPainter &painter, Point3D &A, Point3D &B);
     static void render(
         QPainter &painter,
         Camera &camera,

@@ -11,7 +11,6 @@ void RenderEngine::render(QPainter &painter,
                           const int &height,
                           const bool &show_triangulation)
 {
-    // painter.fillRect(0, 0, width, height, Qt::white);
     DepthBuffer depth_buffer(width, height);
     const Matrix4D model_matrix = Matrix4D::create_identity_matrix();
     const Matrix4D view_matrix = camera.get_view_matrix();
@@ -54,8 +53,6 @@ void RenderEngine::add_triangles_vertex(const Model &mesh, const int &width, con
         Point3D result_point = Point3D::vertex_to_point(
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height,
             vertex.getZ());
-        // Point2D result_point = Point2D::vertexToPoint(
-        //     Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height);
         result_points.emplace_back(result_point);
     }
 }
@@ -115,7 +112,7 @@ void RenderEngine::rasterization(QPainter &painter,
             const float weightC = ABP / ABC;
             if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
                 float z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
-                painter.setPen(QColor(-z*10, -z*10, -z*10));
+                painter.setPen(QColor(-z * 10, -z * 10, -z * 10));
                 if (depth_buffer.get(x, y) > z) {
                     depth_buffer.set(x, y, z);
                     painter.drawPoint(P.getX(), P.getY());
@@ -123,6 +120,80 @@ void RenderEngine::rasterization(QPainter &painter,
             }
         }
     }
+}
+
+void RenderEngine::show_mesh(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer)
+{
+    auto edgeFunction = [](Point3D a, Point3D b, Point3D c)
+    {
+        return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
+    };
+
+    for (int i = 1; i < result_points.size(); ++i) {
+        RenderEngine::draw_line(painter, result_points[i-1],result_points[i]);
+    }
+    if (result_points.size() > 0) {
+        RenderEngine::draw_line(painter, result_points[result_points.size() - 1],result_points[0]);
+    }
+
+    // float x_left = std::min({A.getX(), B.getX(), C.getX()});
+    // float x_right = std::max({A.getX(), B.getX(), C.getX()});
+    // float y_down = std::min({A.getY(), B.getY(), C.getY()});
+    // float y_up = std::max({A.getY(), B.getY(), C.getY()});
+
+    // for (int y = y_down; y < y_up; y++) {
+    //     for (int x = x_left; x < x_right; x++) {
+    //         if (x < 0 || x * y > depth_buffer.size() || y < 0) {
+    //             break;
+    //         }
+    //         P.set(x, y, 0);
+    //         const float ABC = edgeFunction(A, B, C);
+    //         const float ABP = edgeFunction(A, B, P);
+    //         const float BCP = edgeFunction(B, C, P);
+    //         const float CAP = edgeFunction(C, A, P);
+    //         const float weightA = BCP / ABC;
+    //         const float weightB = CAP / ABC;
+    //         const float weightC = ABP / ABC;
+    //         if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
+    //             float z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
+    //             painter.setPen(QColor(-z * 10, -z * 10, -z * 10));
+    //             if (depth_buffer.get(x, y) > z) {
+    //                 depth_buffer.set(x, y, z);
+    //                 painter.drawPoint(P.getX(), P.getY());
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+void RenderEngine::draw_line(QPainter &painter, Point3D &A, Point3D &B)
+{
+    painter.setPen(QColor(0, 0, 0));
+    float x1 = B.getX();
+    float y1 = B.getY();
+    float x0 = A.getX();
+    float y0 = A.getY();
+
+    float dx = abs(x1 - x0);
+    float sx = x0 < x1 ? 1 : -1;
+    float dy = -abs(y1 - y0);
+    float sy = y0 < y1 ? 1 : -1;
+    float error = dx + dy;
+
+    while (true) {
+        painter.drawPoint(x0, y0);
+        if (x0 == x1 && y0 == y1) break;
+        float e2 = 2 * error;
+        if (e2 >= dy) {
+            error = error + dy;
+            x0 = x0 + sx;
+        }
+        if (e2 <= dx) {
+            error = error + dx;
+            y0 = y0 + sy;
+        }
+    }
+
 }
 
 void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const int &width, const int &height,
@@ -146,7 +217,8 @@ void RenderEngine::render_triangles(QPainter &painter, const Model &mesh, const 
         std::vector<Point3D> result_points;
         add_triangles_vertex(mesh, width, height, model_view_projection_matrix, triangle_ind, n_vertices_in_triangle,
                              result_points, depth_buffer);
-        rasterization(painter, result_points, depth_buffer);
+        // rasterization(painter, result_points, depth_buffer);
+        show_mesh(painter, result_points, depth_buffer);
     }
     painter.end();
 }
