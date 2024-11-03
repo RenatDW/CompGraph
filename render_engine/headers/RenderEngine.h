@@ -25,7 +25,11 @@ public:
     static void add_triangles_vertex(const Model &mesh, const int &width, const int &height,
                                      const Matrix4D &model_view_projection_matrix, int triangle_ind,
                                      int n_vertices_in_polygon,
-                                     std::vector<Point3D> &result_points, DepthBuffer &depth_buffer);
+                                     std::vector<Point3D> &result_points);
+    static void add_texture_vertex(const Model &mesh, const int &width, const int &height,
+                                   int triangle_ind,
+                                   int n_vertices_in_polygon,
+                                   std::vector<Point2D> &texture_vectors);
 
     static void draw_points(QPainter &painter, int point_count, const std::vector<Point2D> &result_points);
 
@@ -39,6 +43,7 @@ public:
                               DepthBuffer &depth_buffer);
     static void show_mesh(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer);
 
+    static void render_texture(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer, std::vector<Point2D> &textures);
     static void draw_line(QPainter &painter, Point3D &A, Point3D &B);
     static void render(
         QPainter &painter,

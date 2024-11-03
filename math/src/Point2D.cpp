@@ -35,7 +35,13 @@ void Point2D::set(float x, float y)
 }
 
 
-Point2D Point2D::vertexToPoint(const Vector3D vertex, const int width, const int height) {
+Point2D Point2D::vertex_to_point(const Vector3D vertex, const int width, const int height) {
     return Point2D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F);
+}
+
+Point2D Point2D::vertex_to_point(Vector2D vertex, int width, int height)
+{
+    return Point2D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F);
+
 }
 

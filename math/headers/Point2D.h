@@ -2,6 +2,7 @@
 #define POINT2D_H
 
 #include "Vector3D.h"
+#include "Vector2D.h"
 
 class Point2D
 {
@@ -21,7 +22,8 @@ public:
 
     void set(float x, float y);
 
-    static Point2D vertexToPoint(Vector3D vertex, int width, int height);
+    static Point2D vertex_to_point(Vector3D vertex, int width, int height);
+    static Point2D vertex_to_point(Vector2D vertex, int width, int height);
 
 private:
     float x;
