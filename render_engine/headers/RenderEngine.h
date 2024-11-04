@@ -29,7 +29,7 @@ public:
     static void add_normal_vertex(const Model &mesh,
                                   int triangle_ind,
                                   int n_vertices_in_polygon,
-                                  std::vector<Point2D> &normal_points);
+                                  std::vector<Point3D> &normal_points);
     static void add_texture_vertex(const Model &mesh,
                                    int triangle_ind,
                                    int n_vertices_in_polygon,
@@ -41,15 +41,18 @@ public:
                                 const Matrix4D &model_view_projection_matrix, int n_polygons);
 
     static void render_triangles(QPainter &painter, const Model &mesh, const int &width, const int &height,
-                                 const Matrix4D &model_view_projection_matrix, int n_triangles, DepthBuffer &depth_buffer);
+                                 const Matrix4D &model_view_projection_matrix, int n_triangles, DepthBuffer &depth_buffer, Camera &camera);
 
     static void rasterization(QPainter &painter, const std::vector<Point3D> &result_points,
                               DepthBuffer &depth_buffer);
     static void show_mesh(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer);
 
     static void render_texture(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer, std::vector<Point2D> &textures);
+
+    static float edgeFunction(Point3D a, Point3D b, Point3D c);
+
     static void render_illumination(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer, std::vector<Point2D> textures, std::
-                                    vector<Point2D> &illumination);
+                                    vector<Point3D> &illumination, Camera &camera);
     static void draw_line(QPainter &painter, Point3D &A, Point3D &B);
     static void render(
         QPainter &painter,

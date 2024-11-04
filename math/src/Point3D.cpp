@@ -48,6 +48,39 @@ void Point3D::set(float x, float y, float z)
     this->z = z;
 }
 
+Point3D Point3D::operator*(const float a) const
+{
+    return {this->x * a, this->y * a, this->z * a};
+}
+
+Point3D Point3D::operator+(Point3D &v2) const
+{
+    return {this->x + v2.x, this->y + v2.y, this->z + v2.z};
+}
+
+Point3D Point3D::normalize()
+{
+    float len = sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+    return  {this->x / len, this->y / len, this->z / len};
+}
+
+Point3D Point3D::operator-(const Point3D &point_3d) const
+{
+    return {this->x - point_3d.x, this->y - point_3d.y, this->z - point_3d.z};
+}
+
+float Point3D::dot(Point3D &v)
+{
+    return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ();
+
+}
+
+Point3D Point3D::operator*(const Point3D &cam) const
+{
+
+}
+
+
 Point3D Point3D::vertex_to_point(Vector3D vertex, int width, int height, float z)
 {
     return Point3D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F, z);

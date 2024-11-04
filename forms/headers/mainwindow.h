@@ -52,6 +52,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    bool triangulation = false;
+    bool triangulation = true;
 };
 #endif // MAINWINDOW_H
