@@ -29,7 +29,7 @@ public:
 
     std::vector<Model> models;
     Camera camera;
-    const int TRANSLATION = 50;
+    const int TRANSLATION = 5;
 
 private slots:
     void on_actionLoad_Model_triggered();
