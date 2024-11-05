@@ -51,6 +51,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/src/Point3D.cpp
         math/src/DepthBuffer.cpp
         math/headers/DepthBuffer.h
+        render_engine/headers/TypeOfRender.h
 )
 
 target_link_libraries(CompGraph

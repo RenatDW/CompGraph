@@ -6,9 +6,11 @@
 #include "../../forms/headers/mainwindow.h"
 #include "../../math/headers/DepthBuffer.h"
 #include "../../math/headers/Point2D.h"
+#include "../headers/TypeOfRender.h"
 
 void RenderEngine::render(QPainter &painter,
                           Camera &camera,
+                          std::string &filename,
                           const Model &mesh,
                           const int &width,
                           const int &height,
@@ -23,8 +25,8 @@ void RenderEngine::render(QPainter &painter,
     model_view_projection_matrix.mul(view_matrix);
     model_view_projection_matrix.mul(projection_matrix);
     if (show_triangulation) {
-        render_triangles(painter, mesh, width, height, model_view_projection_matrix,
-                         static_cast<int>(mesh.triangles.size()), depth_buffer, camera);
+        render_triangles(painter, mesh, width, height,
+                         model_view_projection_matrix, static_cast<int>(mesh.triangles.size()), depth_buffer, filename, camera);
     } else {
         render_polygons(painter, mesh, width, height, model_view_projection_matrix,
                         static_cast<int>(mesh.polygons.size()));
@@ -244,9 +246,8 @@ float RenderEngine::edgeFunction(Point3D a, Point3D b, Point3D c)
 }
 
 void RenderEngine::render_illumination(QPainter &painter, std::vector<Point3D> &result_points,
-                                       DepthBuffer &depth_buffer, std::vector<Point2D> textures,
-                                       std::vector<Point3D> &illumination, Camera &camera,
-                                       std::vector<Point3D> &world_vector)
+                                       DepthBuffer &depth_buffer,
+                                       std::vector<Point3D> &illumination, Camera &camera)
 {
     // P в локальных координатах, необходимо перевести в мировые
     Point3D A = result_points[0], B = result_points[1], C = result_points[2], P;
@@ -351,9 +352,103 @@ void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const i
     }
 }
 
-void RenderEngine::render_triangles(QPainter &painter, const Model &mesh, const int &width, const int &height,
+void RenderEngine::initialize_loop_varibles(DepthBuffer &depth_buffer, Point3D &A, Point3D &B, Point3D &C,
+                                            int &x_left, int &x_right, int &y_down, int &y_up)
+{
+    x_left = static_cast<int>(std::min({
+        A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
+    }));
+    x_right = static_cast<int>(std::max({A.getX(), B.getX(), C.getX(), 0.0f}));
+    y_down = static_cast<int>(std::min({
+        A.getY(), B.getY(), C.getY(), static_cast<float>(depth_buffer.getHeight())
+    }));
+    y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f}));
+}
+
+float RenderEngine::calculate_parametr_of_illumination(std::vector<Point3D> &normal_vectors, Camera &camera, Point3D P,
+                                                       const float weightA, const float weightB, const float weightC)
+{
+    Vector3D normal_A = Point3D::point_to_vector(normal_vectors[0]).normalize(), normal_B =
+            Point3D::point_to_vector(normal_vectors[1]).normalize(), normal_C = Point3D::point_to_vector(
+                normal_vectors[2]).
+            normalize();
+    Vector3D vn = (normal_A * weightA + normal_B * weightB + normal_C * weightC).normalize();
+    Vector3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};
+    Vector3D ray = (cam - Vector3D{P.getX(), P.getY(), P.getZ()}).normalize();
+    ray = ray.normalize();
+    float l = -(ray * vn);
+    if (l < 0.0f) {
+        l = 0.0f;
+    }
+    return l;
+}
+
+QColor RenderEngine::do_work(std::vector<Point2D> &texture_vectors, QImage &image, const float &weightA,
+                             const float &weightB, const float &weightC)
+{
+    // std::cout << image << std::endl;
+
+    float u = weightA * texture_vectors[0].getX() + weightB * texture_vectors[1].getX() + weightC * texture_vectors[2].
+              getX();
+    float v = weightA * texture_vectors[0].getY() + weightB * texture_vectors[1].getY() + weightC * texture_vectors[2].
+              getY();
+    int texX = static_cast<int>((image.width() - 1) - u * (image.width() - 1));
+    int texY = static_cast<int>((image.height() - 1) - v * (image.height() - 1));
+    // std::cout << "texX: " << texX << " texY: " << texY << std::endl;
+    texX = std::clamp(texX, 0, image.width() - 1);
+    texY = std::clamp(texY, 0, image.height() - 1);
+
+    return image.pixel(texX, texY);
+}
+
+void RenderEngine::universal_render(QPainter &painter, std::vector<Point3D> &result_points,
+                                    std::vector<Point3D> &normal_vectors,
+                                    std::vector<Point2D> &texture_vectors, DepthBuffer &depth_buffer,std::string &filename ,QColor &fill_color,
+                                    Camera &camera)
+{
+    QImage image((filename.data()));
+    Point3D A = result_points[0], B = result_points[1], C = result_points[2], P;
+
+    int x_left, x_right, y_down, y_up;
+    initialize_loop_varibles(depth_buffer, A, B, C, x_left, x_right, y_down, y_up);
+
+    for (int y = y_down; y < y_up; y++) {
+        for (int x = x_left; x < x_right; x++) {
+            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) {break;}
+            P.set(x, y, 0);
+            const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
+            if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
+                const float ABC = edgeFunction(A, B, C);
+                const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
+
+                int z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
+
+                if (depth_buffer.get(x, y) > z) {
+                    int r = fill_color.red(), g = fill_color.green(), b = fill_color.blue();
+                    if (!texture_vectors.empty()) {
+                        QColor texColor = do_work(texture_vectors, image, weightA, weightB, weightC);
+                        r = texColor.red(), g = texColor.green(), b = texColor.blue();
+                    }
+                    //TODOПересчет нормалей выключен
+
+                    if (!normal_vectors.empty()) {
+                        float k = 0.4;
+                        float l = calculate_parametr_of_illumination(normal_vectors, camera, P, weightA, weightB, weightC);
+                        r *= (1 - k + k * l), g *= (1 - k + k * l), b *= (1 - k + k * l);
+                    }
+                    painter.setPen(QColor(r, g, b));
+                    depth_buffer.set(x, y, z);
+                    painter.drawPoint(P.getX(), P.getY());
+                }
+            }
+        }
+    }
+}
+
+void RenderEngine::render_triangles(QPainter &painter, const Model &mesh,
+                                    const int &width, const int &height,
                                     const Matrix4D &model_view_projection_matrix, int n_triangles,
-                                    DepthBuffer &depth_buffer, Camera &camera)
+                                    DepthBuffer &depth_buffer, std::string &filename,Camera &camera)
 {
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
         const int n_vertices_in_triangle = static_cast<int>(mesh.triangles[triangle_ind].get_vertex_indices().size());
@@ -365,11 +460,13 @@ void RenderEngine::render_triangles(QPainter &painter, const Model &mesh, const 
                              result_points, world_vector);
         add_texture_vertex(mesh, triangle_ind, n_vertices_in_triangle, texture_vectors);
         add_normal_vertex(mesh, triangle_ind, n_vertices_in_triangle, normal_vectors);
+        // Варианты рендеринга
         // render_texture(painter, result_points, depth_buffer, texture_vectors);
         // rasterization(painter, result_points, depth_buffer);
         // show_mesh(painter, result_points, depth_buffer);
-        render_illumination(painter, result_points, depth_buffer, texture_vectors, normal_vectors, camera,
-                            world_vector);
+        // render_illumination(painter, result_points, depth_buffer, normal_vectors, camera);
+        QColor clr(50,10,0);
+        universal_render(painter, result_points, normal_vectors, texture_vectors, depth_buffer, filename,clr, camera);
     }
     painter.end();
 }

@@ -108,11 +108,7 @@ Model ObjReader::read(std::string &fileContent)
             } else if (token == OBJ_FACE_TOKEN) {
                 result.polygons.emplace_back(parse_face(words_in_line, line_ind));
             }
-            else if (token == OBJ_NORMAL_TOKEN) {
-                result.normals.emplace_back(parse_normal(words_in_line, line_ind));
-            }
         }
-        result.normals = std::vector<Vector3D>();
         normale_recalculate(result);
         result.triangles = triangulation(result);
         return result;

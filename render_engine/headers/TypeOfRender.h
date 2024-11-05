@@ -6,11 +6,12 @@
 #define TYPEOFRENDER_H
 
 
-
-class TypeOfRender {
-
+enum TypeOfRender
+{
+    mesh,
+    normal_vectors,
+    texture
 };
-
 
 
 #endif //TYPEOFRENDER_H

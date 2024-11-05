@@ -26,11 +26,15 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainter painter(this); // Создаем объект QPainter
 
     camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
+    std::vector<TypeOfRender> settings;
+    settings.emplace_back(TypeOfRender::texture);
+    settings.emplace_back(TypeOfRender::normal_vectors);
+    std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_texture.png");
+            // Здесь можно использовать painter для рисования на окне
 
-    // Здесь можно использовать painter для рисования на окне
     for (const Model &model: models) {
         // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, model, this->width(), this->height(), triangulation);
+        RenderEngine::render(painter, camera, filename, model, this->width(), this->height(), triangulation);
         // Передаем painter по ссылке
     }
 }
@@ -47,18 +51,16 @@ void MainWindow::on_actionLoad_Model_triggered()
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toStdString();
     //TODO Переделать когда нужно будет делать сценку
-    if(models.size() ==1) {
-        models[0] =(ObjReader::read(file_name));
-
-    }else {
+    if (models.size() == 1) {
+        models[0] = (ObjReader::read(file_name));
+    } else {
         models.emplace_back(ObjReader::read(file_name));
-
     }
 }
 
 void MainWindow::on_actionSave_Model_triggered()
 {
-    if(models.empty()) {
+    if (models.empty()) {
         QMessageBox::information(this, "Save model", "You haven't selected a model");
         return;
     }
