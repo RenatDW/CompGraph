@@ -26,15 +26,13 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainter painter(this); // Создаем объект QPainter
 
     camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
-    std::vector<TypeOfRender> settings;
-    settings.emplace_back(TypeOfRender::texture);
-    settings.emplace_back(TypeOfRender::normal_vectors);
+
     std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_texture.png");
-            // Здесь можно использовать painter для рисования на окне
+    QColor clr = QColor::fromRgb(200, 100, 0);
 
     for (const Model &model: models) {
         // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, filename, model, this->width(), this->height(), triangulation);
+        RenderEngine::render(painter, camera, filename, clr, model, this->width(), this->height(), triangulation);
         // Передаем painter по ссылке
     }
 }
