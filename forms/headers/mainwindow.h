@@ -28,6 +28,8 @@ public:
     ~MainWindow();
 
     std::vector<Model> models;
+    std::string model_texture_path;
+    QColor fill_model_color;
     Camera camera;
     const int TRANSLATION = 5;
 
@@ -47,6 +49,10 @@ private slots:
     void on_actionForward_triggered();
 
     void on_actionBack_triggered();
+
+    void on_actionLoad_Texture_triggered();
+
+    void on_actionChose_Color_triggered();
 
     void on_actionTriangulation_changed();
 

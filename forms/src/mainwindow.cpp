@@ -7,6 +7,7 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QColorDialog>
 #include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,12 +28,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
 
-    std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_texture.png");
-    QColor clr = QColor::fromRgb(200, 100, 0);
 
     for (const Model &model: models) {
         // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, filename, clr, model, this->width(), this->height(), triangulation);
+        RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
         // Передаем painter по ссылке
     }
 }
@@ -103,6 +102,27 @@ void MainWindow::on_actionBack_triggered()
 {
     camera.movePosition(Vector3D(0, 0, (float) TRANSLATION));
     repaint();
+}
+void MainWindow::on_actionLoad_Texture_triggered()
+{
+    std::string file_name = QFileDialog::getOpenFileName(this,
+                                                         tr("Open Texture"), ":/",
+                                                         tr("Object Image (*.png *.jpg *.bmp)")).toStdString();
+       //TODO Переделать когда нужно будет делать сценку
+    model_texture_path = file_name;
+
+
+}
+void MainWindow::on_actionChose_Color_triggered()
+{
+    QColor color = QColorDialog::getColor(QColor(255,100,200,255));
+    fill_model_color = color;
+    repaint();
+    // if (!color.isValid()) {
+        // Cancel
+    // }
+    // QMessageBox::information(this, "Choose Color", "Cooming soon...");
+
 }
 
 void MainWindow::on_actionTriangulation_changed()
