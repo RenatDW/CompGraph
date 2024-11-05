@@ -27,7 +27,7 @@ public:
     static void add_triangles_vertex(const Model &mesh, const int &width, const int &height,
                                      const Matrix4D &model_view_projection_matrix, int triangle_ind,
                                      int n_vertices_in_polygon,
-                                     std::vector<Point3D> &result_points, std::vector<Point3D> &world_vertex);
+                                     std::vector<Point3D> &result_points);
     static void add_normal_vertex(const Model &mesh,
                                   int triangle_ind,
                                   int n_vertices_in_polygon,
@@ -51,6 +51,12 @@ public:
 
     static QColor do_work(const std::vector<Point2D> &texture_vectors, const QImage &image,
                           const float &weightA, const float &weightB, const float &weightC);
+
+    static void texturation(const std::vector<Point2D> &texture_vectors, const QImage &image, float weightA, float weightB,
+                            float weightC, int &r, int &g, int &b);
+
+    static void illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P, float weightA,
+                             float weightB, float weightC, int &r, int &g, int &b);
 
     static void universal_render(QPainter &painter, const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors, const std::vector<Point2D>
                                  &texture_vectors, DepthBuffer &depth_buffer, const std::string &filename, const QColor &fill_color, Camera &camera);
