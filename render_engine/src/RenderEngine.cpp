@@ -48,11 +48,12 @@ void RenderEngine::add_polygons_vertex(const Model &mesh, const int &width, cons
 void RenderEngine::add_triangles_vertex(const Model &mesh, const int &width, const int &height,
                                         const Matrix4D &model_view_projection_matrix, int triangle_ind,
                                         int n_vertices_in_polygon,
-                                        std::vector<Point3D> &result_points)
+                                        std::vector<Point3D> &result_points, std::vector<Point3D> &world_vertex)
 {
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
+        world_vertex.emplace_back(Point3D(vertex.getX(), vertex.getY(), vertex.getZ()));
         Point3D result_point = Point3D::vertex_to_point(
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height,
             vertex.getZ());
@@ -66,7 +67,8 @@ void RenderEngine::add_normal_vertex(const Model &mesh, int triangle_ind, int n_
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
         int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
         Point3D result_point = {
-            mesh.normals[texture_vertex_ind].getX(), mesh.normals[texture_vertex_ind].getY(),  mesh.normals[texture_vertex_ind].getZ()
+            mesh.normals[texture_vertex_ind].getX(), mesh.normals[texture_vertex_ind].getY(),
+            mesh.normals[texture_vertex_ind].getZ()
         };
         normal_points.emplace_back(result_point);
     }
@@ -147,7 +149,6 @@ void RenderEngine::rasterization(QPainter &painter,
 
 void RenderEngine::show_mesh(QPainter &painter, std::vector<Point3D> &result_points, DepthBuffer &depth_buffer)
 {
-
     for (int i = 1; i < result_points.size(); ++i) {
         RenderEngine::draw_line(painter, result_points[i - 1], result_points[i]);
     }
@@ -213,10 +214,10 @@ void RenderEngine::render_texture(QPainter &painter, std::vector<Point3D> &resul
                 const float ABC = edgeFunction(A, B, C);
                 const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
 
-                float u = weightA * (textures[0].getX()) + (weightB * textures[1].getX()) + weightC * (textures[2].
-                              getX());
-                float v = weightA * (textures[0].getY()) + (weightB * textures[1].getY()) + weightC * (textures[2].
-                              getY());
+                float u = weightA * textures[0].getX() + weightB * textures[1].getX() + weightC * textures[2].
+                          getX();
+                float v = weightA * textures[0].getY() + weightB * textures[1].getY() + weightC * textures[2].
+                          getY();
                 float z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
 
                 if (depth_buffer.get(x, y) > z) {
@@ -244,10 +245,15 @@ float RenderEngine::edgeFunction(Point3D a, Point3D b, Point3D c)
 
 void RenderEngine::render_illumination(QPainter &painter, std::vector<Point3D> &result_points,
                                        DepthBuffer &depth_buffer, std::vector<Point2D> textures,
-                                       std::vector<Point3D> &illumination, Camera &camera)
+                                       std::vector<Point3D> &illumination, Camera &camera,
+                                       std::vector<Point3D> &world_vector)
 {
+    // P в локальных координатах, необходимо перевести в мировые
     Point3D A = result_points[0], B = result_points[1], C = result_points[2], P;
-    Point3D normal_A = result_points[0], normal_B = result_points[1], normal_C = result_points[2], P;
+    // Инициализация вектора нормали
+    Vector3D normal_A = Point3D::point_to_vector(illumination[0]).normalize(), normal_B =
+            Point3D::point_to_vector(illumination[1]).normalize(), normal_C = Point3D::point_to_vector(illumination[2]).
+            normalize();
 
     const int x_left = static_cast<int>(std::min({
         A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
@@ -264,24 +270,37 @@ void RenderEngine::render_illumination(QPainter &painter, std::vector<Point3D> &
                 break;
             }
             P.set(x, y, 0);
-            const float ABP = edgeFunction(A, B, P);
-            const float BCP = edgeFunction(B, C, P);
-            const float CAP = edgeFunction(C, A, P);
+            const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
 
             if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
                 const float ABC = edgeFunction(A, B, C);
-                const float weightA = BCP / ABC;
-                const float weightB = CAP / ABC;
-                const float weightC = ABP / ABC;
+                const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
+
                 int z = A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC;
-                Point3D va = normal_A * weightA;
-                Point3D vb = normal_B * weightB;
-                Point3D vc = normal_C * weightC;
-                Point3D vn =  va+vb+vc;
-                Point3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};
-                Point3D luch = P - cam;
-                float l = dot(vn * cam);
-                painter.setPen(QColor(255, 140, 0));
+                //Вычисление общего веткора по барецентрической формуле
+
+                Vector3D vn = (normal_A * weightA + normal_B * weightB + normal_C * weightC).normalize();
+
+                Vector3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};
+                Vector3D ray = (cam - Vector3D{P.getX(), P.getY(), P.getZ()}).normalize();
+
+                //Луч
+                // Vector3D ray(1, 1, 0);
+                ray = ray.normalize();
+
+                float k = 0.4;
+                // Вычисление нормированного коэфицента
+                float l = -(ray * vn);
+                if (l < 0.0f) {
+                    l = 0.0f;
+                }
+                float r = 255.0f;
+                float g = 140.0f;
+                float b = 0.0f;
+                // float a1 = r*(1 - k + k*l);
+                // float a2 = g*(1 - k + k*l);
+                // float a3 = b*(1 - k + k*l);
+                painter.setPen(QColor(r * (1 - k + k * l), g * (1 - k + k * l), b * (1 - k + k * l)));
                 if (depth_buffer.get(x, y) > z) {
                     depth_buffer.set(x, y, z);
                     painter.drawPoint(P.getX(), P.getY());
@@ -341,14 +360,16 @@ void RenderEngine::render_triangles(QPainter &painter, const Model &mesh, const 
         std::vector<Point3D> result_points;
         std::vector<Point3D> normal_vectors;
         std::vector<Point2D> texture_vectors;
+        std::vector<Point3D> world_vector;
         add_triangles_vertex(mesh, width, height, model_view_projection_matrix, triangle_ind, n_vertices_in_triangle,
-                             result_points);
+                             result_points, world_vector);
         add_texture_vertex(mesh, triangle_ind, n_vertices_in_triangle, texture_vectors);
         add_normal_vertex(mesh, triangle_ind, n_vertices_in_triangle, normal_vectors);
         // render_texture(painter, result_points, depth_buffer, texture_vectors);
         // rasterization(painter, result_points, depth_buffer);
         // show_mesh(painter, result_points, depth_buffer);
-        render_illumination(painter, result_points, depth_buffer, texture_vectors, normal_vectors, camera);
+        render_illumination(painter, result_points, depth_buffer, texture_vectors, normal_vectors, camera,
+                            world_vector);
     }
     painter.end();
 }

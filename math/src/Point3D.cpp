@@ -85,3 +85,8 @@ Point3D Point3D::vertex_to_point(Vector3D vertex, int width, int height, float z
 {
     return Point3D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F, z);
 }
+
+Vector3D Point3D::point_to_vector(Point3D point)
+{
+    return Vector3D(point.getX(), point.getY(), point.getZ());
+}

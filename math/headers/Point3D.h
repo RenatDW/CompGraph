@@ -45,6 +45,8 @@ public:
 
     static Point3D vertex_to_point(Vector3D vertex, int width, int height, float z);
 
+    static Vector3D point_to_vector(Point3D point);
+
 private:
     float x;
     float y;

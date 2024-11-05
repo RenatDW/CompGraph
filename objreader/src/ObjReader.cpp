@@ -45,13 +45,32 @@ void ObjReader::normale_recalculate(Model &result)
     int cnt = 0;
     for (Polygon &element: result.polygons) {
         std::vector<int> normale;
-        result.normals.emplace_back(Vector3D::cross(result.vertices[element.get_vertex_indices().front()], result.vertices[element.get_vertex_indices().back()]));
+        Vector3D v1(result.vertices[element.get_vertex_indices()[1]] - result.vertices[element.get_vertex_indices()[0]]);
+        Vector3D v2(result.vertices[element.get_vertex_indices().back()] - result.vertices[element.get_vertex_indices()[0]]);
+        Vector3D last_ans = Vector3D::cross(v1, v2).normalize();
+        Vector3D ans;
+        result.normals.emplace_back(last_ans);
         normale.emplace_back(cnt);
         cnt++;
-        for (int i = 1; i < element.get_vertex_indices().size(); i++) {
-            result.normals.emplace_back(Vector3D::cross(result.vertices[element.get_vertex_indices()[i - 1]], result.vertices[element.get_vertex_indices()[i]]));
+        for (int i = 1; i < element.get_vertex_indices().size() - 1; i++) {
+            v1 = result.vertices[element.get_vertex_indices()[i + 1]] - result.vertices[element.get_vertex_indices()[i]];
+            v2 = result.vertices[element.get_vertex_indices()[i - 1]] - result.vertices[element.get_vertex_indices()[i]];
+            ans = Vector3D::cross(v1, v2).normalize();
+            if (last_ans != ans) {
+                result.normals.emplace_back(Vector3D::cross(v1, v2).normalize());
+                normale.emplace_back(cnt);
+                cnt++;
+                last_ans = ans;
+            }
+        }
+        v1 = result.vertices[element.get_vertex_indices()[0]] - result.vertices[element.get_vertex_indices().back()];
+        v2 = result.vertices[element.get_vertex_indices()[element.get_vertex_indices().size() - 2]] - result.vertices[element.get_vertex_indices().back()];
+        ans = Vector3D::cross(v1, v2).normalize();
+        if (last_ans != ans) {
+            result.normals.emplace_back(Vector3D::cross(v1, v2).normalize());
             normale.emplace_back(cnt);
             cnt++;
+            last_ans = ans;
         }
         element.set_normal_indices(normale);
     }
@@ -86,12 +105,14 @@ Model ObjReader::read(std::string &fileContent)
                 result.vertices.emplace_back(parse_vertex(words_in_line, line_ind));
             } else if (token == OBJ_TEXTURE_TOKEN) {
                 result.textureVertices.emplace_back(parse_texture_vertex(words_in_line, line_ind));
-            } else if (token == OBJ_NORMAL_TOKEN) {
-                result.normals.emplace_back(parse_normal(words_in_line, line_ind));
             } else if (token == OBJ_FACE_TOKEN) {
                 result.polygons.emplace_back(parse_face(words_in_line, line_ind));
             }
+            else if (token == OBJ_NORMAL_TOKEN) {
+                result.normals.emplace_back(parse_normal(words_in_line, line_ind));
+            }
         }
+        result.normals = std::vector<Vector3D>();
         normale_recalculate(result);
         result.triangles = triangulation(result);
         return result;
