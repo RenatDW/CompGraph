@@ -1,13 +1,7 @@
-//
-// Created by Ренат Асланов on 03.11.2024.
-//
-
 #ifndef POINT3D_H
 #define POINT3D_H
-#include <string>
 
 #include "Vector3D.h"
-
 
 class Point3D
 {
@@ -16,11 +10,11 @@ public:
 
     Point3D(float x, float y, float z);
 
-    float getX();
+    [[nodiscard]] float getX() const;
 
-    float getY();
+    [[nodiscard]] float getY() const;
 
-    float getZ();
+    [[nodiscard]] float getZ() const;
 
     void setX(float x);
 
@@ -29,20 +23,20 @@ public:
     void setZ(float z);
 
     void set(float x, float y, float z);
+
     Point3D operator * (float a) const;
 
-    Point3D operator+(Point3D &v2) const;
+    Point3D operator + (const Point3D &v2) const;
 
-    Point3D normalize();
+    Point3D operator - (const Point3D & point_3d) const;
 
-    Point3D operator-(const Point3D & point_3d) const;
-
-    float dot(Point3D &v);
+    float dot(const Point3D &v) const;
 
     Point3D operator*(const Point3D & cam) const;
 
+    [[nodiscard]] Point3D normalize() const;
 
-    static Point3D vertex_to_point(Vector3D vertex, int width, int height);
+    static Point3D vertex_to_point(const Vector3D& vertex, int width, int height);
 
     static Vector3D point_to_vector(Point3D point);
 
@@ -52,5 +46,4 @@ private:
     float z;
 };
 
-
-#endif //POINT3D_H
+#endif
