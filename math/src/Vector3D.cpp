@@ -74,6 +74,7 @@ float Vector3D::length() const
 
 Vector3D Vector3D::normalize() const
 {
+	if(this->length() == 0) return {0,0,0};
 	return {this->x / this->length(), this->y / this->length(), this->z / this->length()};
 }
 

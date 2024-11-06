@@ -46,14 +46,14 @@ public:
            float aspectRatio,
            float nearPlane,
            float farPlane);
-
+    float nearPlane;
+    float farPlane;
 private:
     Vector3D position;
     Vector3D target;
     float fov;
     float aspectRatio;
-    float nearPlane;
-    float farPlane;
+
 };
 
 #endif

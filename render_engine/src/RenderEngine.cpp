@@ -25,15 +25,15 @@ void RenderEngine::render(const bool &show_triangulation)
     }
 }
 
-RenderEngine::RenderEngine(QPainter &painter, const Camera &camera, std::string &string, QColor color,
-                           const Model &model, int width, int height): depth_buffer(width, height), painter(painter),
-                                                                       camera(camera), mesh(model),
-                                                                       width(width), height(height),
-                                                                       fill_model_color(color), filename(string) {}
+RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color,
+                           Model &model, int width, int height): depth_buffer(width, height), painter(painter),
+                                                                 camera(camera), mesh(model), width(width),
+                                                                 height(height), fill_model_color(color),
+                                                                 filename(string) {}
 
 void RenderEngine::add_polygons_vertex(const Matrix4D &model_view_projection_matrix, const int polygon_ind,
                                        const int n_vertices_in_polygon,
-                                       std::vector<Point2D> &result_points)
+                                       std::vector<Point2D> &result_points) const
 {
     for (int vertex_in_polygon_ind = 0; vertex_in_polygon_ind < n_vertices_in_polygon; ++vertex_in_polygon_ind) {
         Vector3D vertex = mesh.vertices[mesh.polygons[polygon_ind].get_vertex_indices()[vertex_in_polygon_ind]];
@@ -45,21 +45,20 @@ void RenderEngine::add_polygons_vertex(const Matrix4D &model_view_projection_mat
 }
 
 std::vector<Point3D> RenderEngine::get_triangles_vertex(const Matrix4D &model_view_projection_matrix, int triangle_ind,
-                                                        int n_vertices_in_polygon)
+                                                        int n_vertices_in_polygon) const
 {
     std::vector<Point3D> result_points;
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
         Point3D result_point = Point3D::vertex_to_point(
-            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height,
-            vertex.getZ());
+            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height, camera.farPlane, camera.nearPlane);
         result_points.emplace_back(result_point);
     }
     return result_points;
 }
 
-std::vector<Point3D> RenderEngine::get_triangle_normal_vertex(int triangle_ind, int n_vertices_in_polygon)
+std::vector<Point3D> RenderEngine::get_triangle_normal_vertex(int triangle_ind, int n_vertices_in_polygon) const
 {
     std::vector<Point3D> normal_points;
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
@@ -73,7 +72,7 @@ std::vector<Point3D> RenderEngine::get_triangle_normal_vertex(int triangle_ind, 
     return normal_points;
 }
 
-std::vector<Point2D> RenderEngine::get_triangle_texture_vertex(int triangle_ind, int n_vertices_in_polygon)
+std::vector<Point2D> RenderEngine::get_triangle_texture_vertex(int triangle_ind, int n_vertices_in_polygon) const
 {
     std::vector<Point2D> texture_vectors;
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
@@ -112,7 +111,7 @@ float RenderEngine::edgeFunction(Point3D a, Point3D b, Point3D c)
 }
 
 void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const int &width, const int &height,
-                                   const Matrix4D &model_view_projection_matrix, const int n_polygons)
+                                   const Matrix4D &model_view_projection_matrix, const int n_polygons) const
 {
     for (int polygon_ind = 0; polygon_ind < n_polygons; ++polygon_ind) {
         const int n_vertices_in_polygon = static_cast<int>(mesh.polygons[polygon_ind].get_vertex_indices().size());
@@ -123,7 +122,7 @@ void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const i
 }
 
 void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
-                                            int &x_left, int &x_right, int &y_down, int &y_up)
+                                            int &x_left, int &x_right, int &y_down, int &y_up) const
 {
     x_left = static_cast<int>(std::min({
         A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
@@ -170,7 +169,8 @@ QColor RenderEngine::get_suitable_pixel(const std::vector<Point2D> &texture_vect
     return image.pixel(texX, texY);
 }
 
-void RenderEngine::texturation(const std::vector<Point2D> &texture_vectors, const QImage &image, const float weightA,
+void RenderEngine::texturation(const std::vector<Point2D> &texture_vectors, const QImage &image,
+                               const float weightA,
                                const float weightB, const float weightC, int &r, int &g, int &b)
 {
     if (texture_vectors.empty() || image.isNull()) {
@@ -180,8 +180,10 @@ void RenderEngine::texturation(const std::vector<Point2D> &texture_vectors, cons
     r = texColor.red(), g = texColor.green(), b = texColor.blue();
 }
 
+
 void RenderEngine::illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P,
-                                const float weightA, const float weightB, const float weightC, int &r, int &g, int &b)
+                                const float weightA, const float weightB, const float weightC, int &r, int &g,
+                                int &b) const
 {
     if (normal_vectors.empty()) {
         return;
@@ -195,7 +197,7 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
                                     const std::vector<Point3D> &normal_vectors,
                                     const std::vector<Point2D> &texture_vectors)
 {
-    QImage image(filename.data());
+    QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
     Point3D A = result_points[0], B = result_points[1], C = result_points[2], P;
 
     int x_left, x_right, y_down, y_up;
@@ -203,31 +205,30 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
 
     for (int y = y_down; y < y_up; y++) {
         for (int x = x_left; x < x_right; x++) {
-            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) {
-                break;
-            }
+            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             P.set(static_cast<float>(x), static_cast<float>(y), 0);
             const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
-            if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
-                const float ABC = edgeFunction(A, B, C);
-                const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
+            if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-                int z = static_cast<int>(A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
+            const float ABC = edgeFunction(A, B, C);
+            const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
 
-                if (depth_buffer.get(x, y) > static_cast<float>(z)) {
-                    int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
-                    texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
-                    //TODO освещение почему-то не динамичное...
-                    illumination(normal_vectors, P, weightA, weightB, weightC, r, g, b);
+            int z = static_cast<int>(A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
 
-                    painter.setPen(QColor(r, g, b));
-                    depth_buffer.set(x, y, z);
-                    painter.drawPoint(P.getX(), P.getY());
-                }
-            }
+            if (depth_buffer.get(x, y) <= static_cast<float>(z)) continue;
+
+            //TODO освещение почему-то не динамичное...
+            int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
+            texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+            illumination(normal_vectors, P, weightA, weightB, weightC, r, g, b);
+
+            painter.setPen(QColor(r, g, b));
+            depth_buffer.set(x, y, z);
+            painter.drawPoint(P.getX(), P.getY());
         }
     }
 }
+
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {

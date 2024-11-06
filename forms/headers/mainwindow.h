@@ -5,7 +5,6 @@
 #include "../../model/headers/Model.h"
 
 #include <QMainWindow>
-#include <QPainter>
 
 QT_BEGIN_NAMESPACE
 

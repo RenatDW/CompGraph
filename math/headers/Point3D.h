@@ -4,7 +4,6 @@
 
 #ifndef POINT3D_H
 #define POINT3D_H
-#include <qstringconverter_base.h>
 #include <string>
 
 #include "Vector3D.h"
@@ -43,7 +42,7 @@ public:
     Point3D operator*(const Point3D & cam) const;
 
 
-    static Point3D vertex_to_point(Vector3D vertex, int width, int height, float z);
+    static Point3D vertex_to_point(Vector3D vertex, int width, int height, float near, float far);
 
     static Vector3D point_to_vector(Point3D point);
 

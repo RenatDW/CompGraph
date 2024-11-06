@@ -81,9 +81,9 @@ Point3D Point3D::operator*(const Point3D &cam) const
 }
 
 
-Point3D Point3D::vertex_to_point(Vector3D vertex, int width, int height, float z)
+Point3D Point3D::vertex_to_point(Vector3D vertex, int width, int height, float near, float far)
 {
-    return Point3D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F, z);
+    return Point3D(vertex.getX() * width + width / 2.0F, -vertex.getY() * height + height / 2.0F, (vertex.getZ() - near) / (far - near));
 }
 
 Vector3D Point3D::point_to_vector(Point3D point)
