@@ -36,6 +36,19 @@ public:
 
 	[[nodiscard]] Vector4D normalization() const;
 
+	friend bool operator==(const Vector4D &lhs, const Vector4D &rhs)
+	{
+		return lhs.x == rhs.x
+		       && lhs.y == rhs.y
+		       && lhs.z == rhs.z
+		       && lhs.w == rhs.w;
+	}
+
+	friend bool operator!=(const Vector4D &lhs, const Vector4D &rhs)
+	{
+		return !(lhs == rhs);
+	}
+
 	~Vector4D();
 
 private:

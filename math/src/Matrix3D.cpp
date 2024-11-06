@@ -45,13 +45,13 @@ float Matrix3D::get(const int row, const int col) const
 
 void Matrix3D::set(const std::vector<std::vector<float>>& matrix)
 {
-    if (matrix.size() != 3 &&
+    /*if (matrix.size() != 3 &&
         matrix[0].size() != 3 &&
         matrix[1].size() != 3 &&
         matrix[2].size() != 3)
     {
         return;
-    }
+    }*/
 
     this->matrix = matrix;
 }
@@ -68,19 +68,19 @@ void Matrix3D::set(const int row, const int col, const float value)
 
 Matrix3D Matrix3D::operator * (const Matrix3D& m) const
 {
-    const int rowsA = static_cast<int>(this->matrix.size());
-    const int colsA = static_cast<int>(this->matrix[0].size());
-    const int colsB = static_cast<int>(m.matrix.size());
+    const int rows_A = static_cast<int>(this->matrix.size());
+    const int cols_A = static_cast<int>(this->matrix[0].size());
+    const int cols_B = static_cast<int>(m.matrix.size());
 
-    std::vector<std::vector<float>> ans = this->matrix;
+    std::vector ans(rows_A, std::vector(cols_B, 0.0f));
 
-    for (int i = 0; i < rowsA; ++i) 
+    for (int i = 0; i < rows_A; ++i)
     {
-        for (int j = 0; j < colsB; ++j) 
+        for (int j = 0; j < cols_B; ++j)
         {
-            for (int k = 0; k < colsA; ++k) 
+            for (int k = 0; k < cols_A; ++k)
             {
-                ans[i][j] *= m.matrix[k][j];
+                ans[i][j] += this->matrix[i][k] * m.matrix[k][j];
             }
         }
     }

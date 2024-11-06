@@ -52,6 +52,16 @@ public:
 
     static Matrix4D max_value();
 
+    friend bool operator==(const Matrix4D &lhs, const Matrix4D &rhs)
+    {
+        return lhs.matrix == rhs.matrix;
+    }
+
+    friend bool operator!=(const Matrix4D &lhs, const Matrix4D &rhs)
+    {
+        return !(lhs == rhs);
+    }
+
 private:
     std::vector<std::vector<float>> matrix;
 };

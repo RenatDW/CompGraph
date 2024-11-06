@@ -52,6 +52,7 @@ void MainWindow::on_actionLoad_Model_triggered()
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toStdString();
+
     //TODO Переделать когда нужно будет делать сценку
     if (models.size() == 1) {
         models[0] = (ObjReader::read(file_name));
