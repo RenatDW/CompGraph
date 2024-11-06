@@ -52,8 +52,7 @@ std::vector<Point3D> RenderEngine::get_triangles_vertex(const Matrix4D &model_vi
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
         Point3D result_point = Point3D::vertex_to_point(
-            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height,
-            vertex.getZ());
+            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height, camera.farPlane, camera.nearPlane);
         result_points.emplace_back(result_point);
     }
     return result_points;
@@ -206,31 +205,30 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
 
     for (int y = y_down; y < y_up; y++) {
         for (int x = x_left; x < x_right; x++) {
-            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) {
-                break;
-            }
+            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             P.set(static_cast<float>(x), static_cast<float>(y), 0);
             const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
-            if (ABP >= 0 && BCP >= 0 && CAP >= 0) {
-                const float ABC = edgeFunction(A, B, C);
-                const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
+            if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-                int z = static_cast<int>(A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
+            const float ABC = edgeFunction(A, B, C);
+            const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
 
-                if (depth_buffer.get(x, y) > static_cast<float>(z)) {
-                    int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
-                    texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
-                    //TODO освещение почему-то не динамичное...
-                    illumination(normal_vectors, P, weightA, weightB, weightC, r, g, b);
+            int z = static_cast<int>(A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
 
-                    painter.setPen(QColor(r, g, b));
-                    depth_buffer.set(x, y, z);
-                    painter.drawPoint(P.getX(), P.getY());
-                }
-            }
+            if (depth_buffer.get(x, y) <= static_cast<float>(z)) continue;
+
+            //TODO освещение почему-то не динамичное...
+            int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
+            texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+            illumination(normal_vectors, P, weightA, weightB, weightC, r, g, b);
+
+            painter.setPen(QColor(r, g, b));
+            depth_buffer.set(x, y, z);
+            painter.drawPoint(P.getX(), P.getY());
         }
     }
 }
+
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {

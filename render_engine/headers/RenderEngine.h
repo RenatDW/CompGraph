@@ -2,17 +2,16 @@
 #define RENDERENGINE_H
 
 #include <iosfwd>
+#include <QPainter>
 
 #include "Camera.h"
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
 
-#include <QPainter>
 
 #include "TypeOfRender.h"
 #include "../../math/headers/DepthBuffer.h"
-
 
 
 class RenderEngine
