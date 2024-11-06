@@ -39,7 +39,7 @@ public:
         return lhs.matrix == rhs.matrix;
     }
 
-    friend bool operator!=(const Matrix3D &lhs, const Matrix3D &rhs)
+    friend bool operator != (const Matrix3D &lhs, const Matrix3D &rhs)
     {
         return !(lhs == rhs);
     }
