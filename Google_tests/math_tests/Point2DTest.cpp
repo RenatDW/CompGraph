@@ -26,7 +26,7 @@ TEST(Point2DTest, Getters)
 TEST(Point2D, VertexToPoint)
 {
     const Vector3D vertex(1.0f, 2.0f, -1.0f);
-    const Point2D point = Point2D::vertexToPoint(vertex, 4, 5);
+    const Point2D point = Point2D::vertex_to_point(vertex, 4, 5);
     EXPECT_FLOAT_EQ(point.getX(), 6.0f);
     EXPECT_FLOAT_EQ(point.getY(), -7.5f);
 }

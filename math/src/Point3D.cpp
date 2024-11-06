@@ -79,7 +79,6 @@ Point3D Point3D::operator*(const Point3D &cam) const
 
 }
 
-
 Point3D Point3D::vertex_to_point(const Vector3D& vertex, const int width, const int height, const float near, const float far)
 {
     return {vertex.getX() * static_cast<float>(width) + static_cast<float>(width) / 2.0f, -vertex.getY() * static_cast<float>(height) + static_cast<float>(height) / 2.0f, (vertex.getZ() - near) / (far - near)};
