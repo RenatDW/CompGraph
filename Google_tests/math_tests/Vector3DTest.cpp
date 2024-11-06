@@ -9,7 +9,7 @@ TEST(Vector3DTest, DefaultConstructor)
     EXPECT_FLOAT_EQ(v.getZ(), 0.0f);
 }
 
-TEST(Vector3DTest, ConstructorWithXY)
+TEST(Vector3DTest, ConstructorWithXYZ)
 {
     const Vector3D v(1.0f, 2.0f, 0.5f);
     EXPECT_FLOAT_EQ(v.getX(), 1.0f);
