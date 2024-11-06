@@ -42,14 +42,14 @@ std::vector<Triangle> ObjReader::triangulation(const Model &result)
     return triangles;
 }
 
-std::vector<Vector3D>::value_type ObjReader::get_vertex(Model &result, Polygon element, int i, int j)
+std::vector<Vector3D>::value_type ObjReader::get_vertex(Model &result, Polygon &element, int i, int j)
 {
     Vector3D vertex1 = result.vertices[element.get_vertex_indices()[i]];
     Vector3D vertex2 = result.vertices[element.get_vertex_indices()[j]];
-    return  vertex1 - vertex2;
+    return vertex1 - vertex2;
 }
 
-Vector3D ObjReader::calculate_normal_vector(Model &result, Polygon element, int max_vector_size, int main_vertex,
+Vector3D ObjReader::calculate_normal_vector(Model &result, Polygon &element, int main_vertex,
                                             int next_vertex, int prev_vertex)
 {
     Vector3D v1 = get_vertex(result, element, next_vertex, main_vertex);
@@ -63,32 +63,31 @@ void ObjReader::normale_recalculate(Model &result)
     //TODO не забыть изменить
 
     for (Polygon &element: result.polygons) {
-    // for (int k = 0; k < result.polygons.size(); k++) {
-    //     Polygon element = result.polygons[k];
+
         const int max_vector_size = element.get_vertex_indices().size() - 1;
-        Vector3D last_ans = calculate_normal_vector(result, element, max_vector_size, 0, 1, max_vector_size);
+        Vector3D last_ans = calculate_normal_vector(result, element, 0, 1, max_vector_size);
         Vector3D ans;
         std::vector<int> normale;
         result.normals.emplace_back(last_ans);
         normale.emplace_back(cnt);
         for (int i = 1; i < element.get_vertex_indices().size() - 1; i++) {
-            ans = calculate_normal_vector(result, element, max_vector_size, i, i + 1, i - 1);
+            ans = calculate_normal_vector(result, element, i, i + 1, i - 1);
             if (last_ans != ans) {
                 cnt++;
                 result.normals.emplace_back(ans);
                 normale.emplace_back(cnt);
                 last_ans = ans;
-            }else {
+            } else {
                 normale.emplace_back(cnt);
             }
         }
-        ans = calculate_normal_vector(result, element, max_vector_size, max_vector_size, 0, max_vector_size - 1);
+        ans = calculate_normal_vector(result, element, max_vector_size, 0, max_vector_size - 1);
         if (last_ans != ans) {
+            cnt++;
             result.normals.emplace_back(ans);
             normale.emplace_back(cnt);
-        }else {
+        } else {
             normale.emplace_back(cnt);
-
         }
         cnt++;
         element.set_normal_indices(normale);
