@@ -12,6 +12,10 @@ class ObjReader
 public:
     static std::vector<Triangle> triangulation(const Model &result);
 
+    static std::vector<Vector3D>::value_type get_vertex(Model &result, Polygon element, int i, int j);
+
+    static Vector3D calculate_normal_vector(Model &result, Polygon element, int max_vector_size, int main_vertex, int next_vertex, int prev_vertex);
+
     static void normale_recalculate(Model &result);
 
     static Model read(std::string &fileContent);

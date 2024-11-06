@@ -26,14 +26,15 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     QPainter painter(this); // Создаем объект QPainter
 
-    camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
+    camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
     int width = this->width();
     int height = this->height();
 
 
-    for (const Model &model: models) {
+    for (Model &model: models) {
+        QColor basic_color = QColor(255,255,255);
         //При цвете 0,0,0 все ломается
-        RenderEngine renderEngine(painter, camera, model_texture_path, QColor(255,255,255), model,width,
+        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model,width,
                                   height);
         renderEngine.render(TypeOfRender::normal_vectors);
         //Добавить варианты отрисовки
@@ -75,37 +76,37 @@ void MainWindow::on_actionSave_Model_triggered()
 
 void MainWindow::on_actionUp_triggered()
 {
-    camera.movePosition(Vector3D(0, (float) TRANSLATION, 0));
+    camera.movePosition(Vector3D(0, static_cast<float>(TRANSLATION), 0));
     repaint();
 }
 
 void MainWindow::on_actionDown_triggered()
 {
-    camera.movePosition(Vector3D(0, (float) -TRANSLATION, 0));
+    camera.movePosition(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
     repaint();
 }
 
 void MainWindow::on_actionLeft_triggered()
 {
-    camera.movePosition(Vector3D((float) TRANSLATION, 0, 0));
+    camera.movePosition(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
     repaint();
 }
 
 void MainWindow::on_actionRight_triggered()
 {
-    camera.movePosition(Vector3D((float) -TRANSLATION, 0, 0));
+    camera.movePosition(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
     repaint();
 }
 
 void MainWindow::on_actionForward_triggered()
 {
-    camera.movePosition(Vector3D(0, 0, (float) -TRANSLATION));
+    camera.movePosition(Vector3D(0, 0, static_cast<float>(-TRANSLATION)));
     repaint();
 }
 
 void MainWindow::on_actionBack_triggered()
 {
-    camera.movePosition(Vector3D(0, 0, (float) TRANSLATION));
+    camera.movePosition(Vector3D(0, 0, static_cast<float>(TRANSLATION)));
     repaint();
 }
 void MainWindow::on_actionLoad_Texture_triggered()
