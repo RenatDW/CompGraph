@@ -81,19 +81,19 @@ Vector3D Matrix4D::multiply_matrix4d_by_vector3d(const Matrix4D &matrix, const V
 
 Matrix4D Matrix4D::operator * (const Matrix4D& m) const
 {
-    const int row_A = static_cast<int>(this->matrix.size());
+    const int rows_A = static_cast<int>(this->matrix.size());
     const int cols_A = static_cast<int>(this->matrix[0].size());
     const int cols_B = static_cast<int>(m.matrix.size());
 
-    std::vector<std::vector<float>> ans = this->matrix;
+    std::vector ans(rows_A, std::vector(cols_B, 0.0f));
 
-    for (int i = 0; i < row_A; i++)
+    for (int i = 0; i < rows_A; i++)
     {
         for (int j = 0; j < cols_B; j++)
         {
             for (int k = 0; k < cols_A; k++)
             {
-                ans[i][j] *= m.matrix[k][j];
+                ans[i][j] += this->matrix[i][k] * m.matrix[k][j];
             }
         }
     }
