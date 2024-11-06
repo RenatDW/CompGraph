@@ -27,12 +27,17 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainter painter(this); // Создаем объект QPainter
 
     camera.setAspectRatio((float) (this->width()) / (float) (this->height()));
+    int width = this->width();
+    int height = this->height();
 
 
     for (const Model &model: models) {
-        // Используйте ссылку на модель
-        RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
-        // Передаем painter по ссылке
+        //При цвете 0,0,0 все ломается
+        RenderEngine renderEngine(painter, camera, model_texture_path, QColor(255,255,255), model,width,
+                                  height);
+        renderEngine.render(TypeOfRender::normal_vectors);
+        //Добавить варианты отрисовки
+        // RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
     }
 }
 

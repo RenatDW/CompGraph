@@ -163,7 +163,7 @@ void Matrix4D::print_matrix() const
     }
 }
 
-void Matrix4D::mul(const Matrix4D &m)
+Matrix4D Matrix4D::mul(const Matrix4D &m)
 {
     const int N = static_cast<int>(this->matrix.size());
 
@@ -176,7 +176,7 @@ void Matrix4D::mul(const Matrix4D &m)
         }
     }
 
-    this->matrix = result;
+    return result;
 }
 
 Matrix4D Matrix4D::max_value()

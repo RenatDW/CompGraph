@@ -47,7 +47,7 @@ public:
 
     void print_matrix() const;
 
-    void mul(const Matrix4D& m);
+    Matrix4D mul(const Matrix4D &m);
 
 
     static Matrix4D max_value();
