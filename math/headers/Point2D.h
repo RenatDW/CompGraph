@@ -22,9 +22,8 @@ public:
 
     void set(float x, float y);
 
-    static Point2D vertex_to_point(Vector3D vertex, int width, int height);
-    static Point2D vertex_to_point(Vector2D vertex, int width, int height);
-    static Point2D vertexToPoint(const Vector3D& vertex, int width, int height);
+    //static Point2D vertex_to_point(Vector2D vertex, int width, int height);
+    static Point2D vertex_to_point(const Vector3D& vertex, int width, int height);
 
     friend bool operator==(const Point2D &lhs, const Point2D &rhs)
     {

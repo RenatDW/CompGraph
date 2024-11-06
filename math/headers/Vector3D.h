@@ -36,18 +36,6 @@ public:
 
 	[[nodiscard]] Vector3D normalize() const;
 
-	friend bool operator==(const Vector3D &lhs, const Vector3D &rhs)
-	{
-		return lhs.x == rhs.x
-		       && lhs.y == rhs.y
-		       && lhs.z == rhs.z;
-	}
-
-	friend bool operator!=(const Vector3D &lhs, const Vector3D &rhs)
-	{
-		return !(lhs == rhs);
-	}
-
 	~Vector3D();
 
 private:

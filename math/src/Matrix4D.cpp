@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <limits>
 
 Matrix4D::Matrix4D()
 {
@@ -85,14 +86,6 @@ Matrix4D Matrix4D::operator *(const Matrix4D &m) const
     const int rows_A = static_cast<int>(this->matrix.size());
     const int cols_A = static_cast<int>(this->matrix[0].size());
     const int cols_B = static_cast<int>(m.matrix.size());
-
-
-
-
-
-
-
-
 
     std::vector ans(rows_A, std::vector(cols_B, 0.0f));
 
