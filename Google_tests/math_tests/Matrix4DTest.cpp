@@ -3,20 +3,20 @@
 #include "../../math/headers/Vector4D.h"
 #include "../../math/src/Vector4D.cpp"
 
-TEST(Matrix4DTest, Getter)
+TEST(Matrix4DTest, GetterMatrix4D)
 {
     const Matrix4D matrix = Matrix4D::create_identity_matrix();
     EXPECT_FLOAT_EQ(matrix.get(3, 3), 1.0f);
 }
 
-TEST(Matrix4DTest, ElementSetter)
+TEST(Matrix4DTest, ElementSetterMatrix4D)
 {
     Matrix4D matrix = Matrix4D::create_identity_matrix();
     matrix.set(2,3, -10.0f);
     EXPECT_FLOAT_EQ(matrix.get(2, 3), -10.0f);
 }
 
-TEST(Matrix4DTest, MatrixSetter)
+TEST(Matrix4DTest, MatrixSetterMatrix4D)
 {
     Matrix4D matrix1 = Matrix4D::create_identity_matrix();
     const Matrix4D matrix2;
@@ -24,7 +24,7 @@ TEST(Matrix4DTest, MatrixSetter)
     EXPECT_FLOAT_EQ(matrix1.get(0, 0), 0.0f);
 }
 
-TEST(Matrix4DTest, EqualsMatrix)
+TEST(Matrix4DTest, EqualsMatrixMatrix4D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3, 1},
@@ -49,7 +49,7 @@ TEST(Matrix4DTest, EqualsMatrix)
     EXPECT_TRUE(matrix1 != matrix3);
 }
 
-TEST(Matrix4DTest, SumOperator)
+TEST(Matrix4DTest, SumOperatorMatrix4D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3, 1},
@@ -80,7 +80,7 @@ TEST(Matrix4DTest, SumOperator)
     EXPECT_TRUE((m1 + m2).get_matrix() == answer);
 }
 
-TEST(Matrix4DTest, SubOperator)
+TEST(Matrix4DTest, SubOperatorMatrix4D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3, 1},
@@ -111,7 +111,7 @@ TEST(Matrix4DTest, SubOperator)
     EXPECT_TRUE((m1 - m2).get_matrix() == answer);
 }
 
-TEST(Matrix4DTest, Matrix4DByMatrixProduct)
+TEST(Matrix4DTest, Matrix4DByMatrixProductMatrix4D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3, 1},
@@ -142,7 +142,7 @@ TEST(Matrix4DTest, Matrix4DByMatrixProduct)
     EXPECT_TRUE((m1 * m2).get_matrix() == answer);
 }
 
-TEST(Matrix4DTest, Matrix4DByVectorProduct)
+TEST(Matrix4DTest, Matrix4DByVectorProductMatrix4D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3, 1},
@@ -176,7 +176,7 @@ TEST(Matrix4DTest, TranspositionMatrix4D)
         {3, 6, 9, 3},
         {1, 2, 3, 4}
     };
-    const Matrix4D m1(matrix1);
 
+    const Matrix4D m1(matrix1);
     EXPECT_TRUE(m1.transposition().get_matrix() == matrix2);
 }

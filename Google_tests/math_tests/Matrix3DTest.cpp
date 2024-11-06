@@ -1,20 +1,20 @@
 #include "gtest/gtest.h"
 #include "../../math/src/Matrix3D.cpp"
 
-TEST(Matrix3DTest, Getter)
+TEST(Matrix3DTest, GetterMatrix3D)
 {
     const Matrix3D matrix = Matrix3D::create_identity_matrix();
     EXPECT_FLOAT_EQ(matrix.get(0, 0), 1.0f);
 }
 
-TEST(Matrix3DTest, ElementSetter)
+TEST(Matrix3DTest, ElementSetterMatrix3D)
 {
     Matrix3D matrix = Matrix3D::create_identity_matrix();
     matrix.set(0,0, -10.0f);
     EXPECT_FLOAT_EQ(matrix.get(0, 0), -10.0f);
 }
 
-TEST(Matrix3DTest, MatrixSetter)
+TEST(Matrix3DTest, MatrixSetterMatrix3D)
 {
     Matrix3D matrix1 = Matrix3D::create_identity_matrix();
     const Matrix3D matrix2;
@@ -22,7 +22,7 @@ TEST(Matrix3DTest, MatrixSetter)
     EXPECT_FLOAT_EQ(matrix1.get(0, 0), 0.0f);
 }
 
-TEST(Matrix3DTest, EqualsMatrix)
+TEST(Matrix3DTest, EqualsMatrixMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -44,7 +44,7 @@ TEST(Matrix3DTest, EqualsMatrix)
     EXPECT_TRUE(matrix1 != matrix3);
 }
 
-TEST(Matrix3DTest, SumOperator)
+TEST(Matrix3DTest, SumOperatorMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -73,7 +73,7 @@ TEST(Matrix3DTest, SumOperator)
     EXPECT_TRUE((m1 + m2).get_matrix() == answer);
 }
 
-TEST(Matrix3DTest, SubOperator)
+TEST(Matrix3DTest, SubOperatorMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -101,7 +101,7 @@ TEST(Matrix3DTest, SubOperator)
     EXPECT_TRUE((m1 - m2).get_matrix() == answer);
 }
 
-TEST(Matrix3DTest, MatrixByMatrixProduct)
+TEST(Matrix3DTest, MatrixByMatrixProductMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -129,7 +129,7 @@ TEST(Matrix3DTest, MatrixByMatrixProduct)
     EXPECT_TRUE((m1 * m2).get_matrix() == answer);
 }
 
-TEST(Matrix3DTest, MatrixByVectorProduct)
+TEST(Matrix3DTest, MatrixByVectorProductMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -146,7 +146,7 @@ TEST(Matrix3DTest, MatrixByVectorProduct)
     EXPECT_FLOAT_EQ((m * v).getZ(), 138);
 }
 
-TEST(Matrix3DTest, Transposition)
+TEST(Matrix3DTest, TranspositionMatrix3D)
 {
     const std::vector<std::vector<float>> matrix1 = {
         {1, 2, 3},
@@ -161,6 +161,5 @@ TEST(Matrix3DTest, Transposition)
     };
 
     const Matrix3D m1(matrix1);
-
     EXPECT_TRUE(m1.transposition().get_matrix() == matrix2);
 }

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "../../math/src/Vector3D.cpp"
 
-TEST(Vector3DTest, DefaultConstructor)
+TEST(Vector3DTest, DefaultConstructorVector3D)
 {
     const Vector3D v;
     EXPECT_FLOAT_EQ(v.getX(), 0.0f);
@@ -9,7 +9,7 @@ TEST(Vector3DTest, DefaultConstructor)
     EXPECT_FLOAT_EQ(v.getZ(), 0.0f);
 }
 
-TEST(Vector3DTest, ConstructorWithXYZ)
+TEST(Vector3DTest, ConstructorWithXYZVector3D)
 {
     const Vector3D v(1.0f, 2.0f, 0.5f);
     EXPECT_FLOAT_EQ(v.getX(), 1.0f);
@@ -17,7 +17,7 @@ TEST(Vector3DTest, ConstructorWithXYZ)
     EXPECT_FLOAT_EQ(v.getZ(), 0.5f);
 }
 
-TEST(Vector3DTest, Getters)
+TEST(Vector3DTest, GettersVector3D)
 {
     const Vector3D v(1.2f, 2.5f, -4.0f);
     EXPECT_FLOAT_EQ(v.getX(), 1.2f);
@@ -25,7 +25,7 @@ TEST(Vector3DTest, Getters)
     EXPECT_FLOAT_EQ(v.getZ(), -4.0f);
 }
 
-TEST(Vector3DTest, Setters)
+TEST(Vector3DTest, SettersVector3D)
 {
     Vector3D v(2.8f, 2.1f, 0.0f);
     v.setX(5.5f);
@@ -36,7 +36,7 @@ TEST(Vector3DTest, Setters)
     EXPECT_FLOAT_EQ(v.getZ(), 3.1f);
 }
 
-TEST(Vector3DTest, SumOperator)
+TEST(Vector3DTest, SumOperatorVector3D)
 {
     const Vector3D v1(1.4f, -3.8f, 0.2f);
     const Vector3D v2(0.2f, 92.2f, 3.1f);
@@ -45,7 +45,7 @@ TEST(Vector3DTest, SumOperator)
     EXPECT_FLOAT_EQ((v1 + v2).getZ(), 3.3f);
 }
 
-TEST(Vector3DTest, SubOperator)
+TEST(Vector3DTest, SubOperatorVector3D)
 {
     const Vector3D v1(-1.4f, -3.8f, 5.0f);
     const Vector3D v2(-0.2f, 2.2f, 1.0f);
@@ -54,7 +54,7 @@ TEST(Vector3DTest, SubOperator)
     EXPECT_FLOAT_EQ((v1 - v2).getZ(), 4.0f);
 }
 
-TEST(Vector3DTest, VectorByConstProduct)
+TEST(Vector3DTest, VectorByConstProductVector3D)
 {
     const Vector3D v1(-1.4f, 0.0f, 1.3f);
     EXPECT_FLOAT_EQ((v1 * 2.0f).getX(), -2.8f);
@@ -62,20 +62,20 @@ TEST(Vector3DTest, VectorByConstProduct)
     EXPECT_FLOAT_EQ((v1 * 2.0f).getZ(), 2.6f);
 }
 
-TEST(Vector3DTest, ScalarProduct)
+TEST(Vector3DTest, ScalarProductVector3D)
 {
     const Vector3D v1(1.0f, 2.0f, 0.9f);
     const Vector3D v2(-2.3f, 0.0f, 0.0f);
     EXPECT_FLOAT_EQ(v1 * v2, -2.3f);
 }
 
-TEST(Vector3DTest, Length)
+TEST(Vector3DTest, LengthVector3D)
 {
     const Vector3D v(200.0f, -200.0f, 100.0f);
     EXPECT_FLOAT_EQ(v.length(), 300.f);
 }
 
-TEST(Vector3DTest, Normalization)
+TEST(Vector3DTest, NormalizationVector3D)
 {
     const Vector3D v(4.0f, -3.0f, 0.0f);
     EXPECT_FLOAT_EQ(v.normalize().getX(), 0.8f);

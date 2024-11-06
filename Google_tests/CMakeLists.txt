@@ -13,6 +13,7 @@ add_executable(Google_Tests_run
         math_tests/Point2DTest.cpp
         math_tests/Matrix3DTest.cpp
         math_tests/Matrix4DTest.cpp
+        math_tests/Vector4DTest.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)

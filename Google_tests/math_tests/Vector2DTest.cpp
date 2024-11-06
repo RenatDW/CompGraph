@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "../../math/src/Vector2D.cpp"
 
-TEST(Vector2DTest, DefaultConstructor)
+TEST(Vector2DTest, DefaultConstructorVector2D)
 {
     const Vector2D v;
     EXPECT_FLOAT_EQ(v.getX(), 0.0f);
