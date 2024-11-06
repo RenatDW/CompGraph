@@ -42,7 +42,7 @@ public:
     Point3D operator*(const Point3D & cam) const;
 
 
-    static Point3D vertex_to_point(Vector3D vertex, int width, int height, float near, float far);
+    static Point3D vertex_to_point(Vector3D vertex, int width, int height);
 
     static Vector3D point_to_vector(Point3D point);
 
