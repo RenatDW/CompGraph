@@ -65,17 +65,11 @@ void GraphicConveyor::translate(Model& mesh, const float tx, const float ty, con
 
     for (auto& vertex : mesh.vertices)
     {
-        Vector4D v4d;
-        v4d.setX(vertex.getX());
-        v4d.setY(vertex.getY());
-        v4d.setZ(vertex.getZ());
-        v4d.setW(1);
+        Vector4D v4d = Vector4D::transition(vertex);
 
         v4d = translation * v4d;
 
-        vertex.setX(v4d.getX());
-        vertex.setY(v4d.getY());
-        vertex.setZ(v4d.getZ());
+        vertex = Vector3D::transition(v4d);
     }
 }
 

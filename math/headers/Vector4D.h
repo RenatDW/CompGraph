@@ -3,8 +3,6 @@
 
 #include "Vector3D.h"
 
-class Vector3D;
-
 class Vector4D
 {
 public:
@@ -53,7 +51,7 @@ public:
 		return !(lhs == rhs);
 	}
 
-	static Vector4D transitionVect(Vector3D v);
+	static Vector4D transition(const Vector3D& v);
 
 	~Vector4D();
 

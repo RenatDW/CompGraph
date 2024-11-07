@@ -78,4 +78,9 @@ Vector4D Vector4D::normalization() const
 	return {this->x / this->length(), this->y / this->length(), this->z / this->length(), this->w / this->length()};
 }
 
+Vector4D Vector4D::transition(const Vector3D& v)
+{
+	return {v.getX(), v.getY(), v.getZ(), 1};
+}
+
 Vector4D::~Vector4D() = default;
