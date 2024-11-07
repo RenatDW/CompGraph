@@ -150,3 +150,10 @@ void MainWindow::on_actionScale_triggered()
 
     repaint();
 }
+
+void MainWindow::on_actionRotate_triggered()
+{
+    GraphicConveyor::rotate(models[0], 2, 1, 1);
+
+    repaint();
+}

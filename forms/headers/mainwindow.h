@@ -58,6 +58,8 @@ private slots:
 
     void on_actionScale_triggered();
 
+    void on_actionRotate_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool triangulation = true;

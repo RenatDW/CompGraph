@@ -33,6 +33,7 @@
     <addaction name="actionSave_Model"/>
     <addaction name="actionTriangulation"/>
     <addaction name="actionScale"/>
+    <addaction name="actionRotate"/>
    </widget>
    <widget class="QMenu" name="moveMenu">
     <property name="title">
@@ -131,6 +132,11 @@
   <action name="actionScale">
    <property name="text">
     <string>Scale</string>
+   </property>
+  </action>
+  <action name="actionRotate">
+   <property name="text">
+    <string>Rotate</string>
    </property>
   </action>
  </widget>

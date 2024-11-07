@@ -10,7 +10,7 @@ class GraphicConveyor
 public:
     static void scale(Model& mesh, float sx, float sy, float sz);
 
-    static Matrix4D rotate();
+    static void rotate(Model& mesh, float phi, float psi, float theta);
 
     static Matrix4D translate();
 

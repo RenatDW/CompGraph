@@ -19,6 +19,39 @@ void GraphicConveyor::scale(Model& mesh, const float sx, const float sy, const f
     }
 }
 
+void GraphicConveyor::rotate(Model &mesh, const float phi, const float psi, const float theta)
+{
+    const std::vector<std::vector<float>> rz_matrix = {
+        {std::cos(phi), std::sin(phi), 0},
+        {-std::sin(phi), std::cos(phi), 0},
+        {0, 0, 1}
+    };
+
+    const std::vector<std::vector<float>> ry_matrix = {
+        {std::cos(psi), 0, std::sin(psi)},
+        {0, 1, 0},
+        {-std::sin(psi), 0, std::cos(psi)}
+    };
+
+    const std::vector<std::vector<float>> rx_matrix = {
+        {1, 0, 0},
+        {0, std::cos(theta), std::sin(theta)},
+        {0, -std::sin(theta), std::cos(theta)}
+    };
+
+    const Matrix3D rz(rz_matrix);
+    const Matrix3D ry(ry_matrix);
+    const Matrix3D rx(rx_matrix);
+
+
+    for (auto& vertex : mesh.vertices)
+    {
+        vertex = rz * vertex;
+        vertex = ry * vertex;
+        vertex = rx * vertex;
+    }
+}
+
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye,const Vector3D &target)
 {
