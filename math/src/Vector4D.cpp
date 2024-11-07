@@ -83,4 +83,9 @@ Vector4D Vector4D::transition(const Vector3D& v)
 	return {v.getX(), v.getY(), v.getZ(), 1};
 }
 
+Vector3D Vector4D::transition(const Vector4D& v)
+{
+	return {v.getX() / v.getW(), v.getY() / v.getW(), v.getZ() / v.getW()};
+}
+
 Vector4D::~Vector4D() = default;

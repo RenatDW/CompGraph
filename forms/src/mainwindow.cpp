@@ -144,23 +144,8 @@ void MainWindow::on_actionTriangulation_changed()
 }
 
 
-void MainWindow::on_actionScale_triggered()
+void MainWindow::on_actionRotate_Scale_Translate_triggered()
 {
-    GraphicConveyor::scale(models[0], 1, 1, 10);
-
-    repaint();
-}
-
-void MainWindow::on_actionRotate_triggered()
-{
-    GraphicConveyor::rotate(models[0], 2, 1, 1);
-
-    repaint();
-}
-
-void MainWindow::on_actionTranslate_triggered()
-{
-    GraphicConveyor::translate(models[0], 10, 10, 10);
-
+    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
     repaint();
 }

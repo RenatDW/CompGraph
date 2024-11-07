@@ -56,11 +56,7 @@ private slots:
     void on_actionTriangulation_changed();
 
 
-    void on_actionScale_triggered();
-
-    void on_actionRotate_triggered();
-
-    void on_actionTranslate_triggered();
+    void on_actionRotate_Scale_Translate_triggered();
 
 private:
     Ui::MainWindow *ui;

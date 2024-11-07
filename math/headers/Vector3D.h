@@ -1,7 +1,7 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
-#include "Vector4D.h"
+//#include "Vector4D.h"
 
 class Vector3D
 {
@@ -38,7 +38,7 @@ public:
 
 	[[nodiscard]] Vector3D normalize() const;
 
-	static Vector3D transition(const Vector4D& v);
+	//static Vector3D transition(const Vector4D& v);
 
 	~Vector3D();
 

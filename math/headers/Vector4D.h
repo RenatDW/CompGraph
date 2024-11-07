@@ -38,7 +38,7 @@ public:
 
 	[[nodiscard]] Vector4D normalization() const;
 
-	friend bool operator==(const Vector4D &lhs, const Vector4D &rhs)
+	friend bool operator == (const Vector4D &lhs, const Vector4D &rhs)
 	{
 		return lhs.x == rhs.x
 		       && lhs.y == rhs.y
@@ -52,6 +52,8 @@ public:
 	}
 
 	static Vector4D transition(const Vector3D& v);
+
+	static Vector3D transition(const Vector4D& v);
 
 	~Vector4D();
 

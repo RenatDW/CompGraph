@@ -6,54 +6,39 @@
 #include <iostream>
 #include <cmath>
 
-void GraphicConveyor::scale(Model& mesh, const float sx, const float sy, const float sz)
+void GraphicConveyor::rotate_scale_translate(Model &mesh, float sx, float sy, float sz,
+    float phi, float psi, float theta, float tx, float ty, float tz)
 {
-    Matrix3D matrix;
-    matrix.set(0, 0, sx);
-    matrix.set(1, 1, sy);
-    matrix.set(2, 2, sz);
+    const float w = 1.0f;
 
-    for (auto& vertex : mesh.vertices)
-    {
-        vertex = matrix * vertex;
-    }
-}
+    const std::vector<std::vector<float>> scale_matrix = {
+        {sx, 0, 0, 0},
+        {0, sy, 0, 0},
+        {0, 0, sz, 0},
+        {0, 0, 0, w}
+    };
 
-void GraphicConveyor::rotate(Model &mesh, const float phi, const float psi, const float theta)
-{
     const std::vector<std::vector<float>> rz_matrix = {
-        {std::cos(phi), std::sin(phi), 0},
-        {-std::sin(phi), std::cos(phi), 0},
-        {0, 0, 1}
+        {std::cos(phi), std::sin(phi), 0, 0},
+        {-std::sin(phi), std::cos(phi), 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}
     };
 
     const std::vector<std::vector<float>> ry_matrix = {
-        {std::cos(psi), 0, std::sin(psi)},
-        {0, 1, 0},
-        {-std::sin(psi), 0, std::cos(psi)}
+        {std::cos(psi), 0, std::sin(psi), 0},
+        {0, 1, 0, 0},
+        {-std::sin(psi), 0, std::cos(psi), 0},
+        {0, 0, 0, 1}
     };
 
     const std::vector<std::vector<float>> rx_matrix = {
-        {1, 0, 0},
-        {0, std::cos(theta), std::sin(theta)},
-        {0, -std::sin(theta), std::cos(theta)}
+        {1, 0, 0, 0},
+        {0, std::cos(theta), std::sin(theta), 0},
+        {0, -std::sin(theta), std::cos(theta), 0},
+        {0, 0, 0, 1}
     };
 
-    const Matrix3D rz(rz_matrix);
-    const Matrix3D ry(ry_matrix);
-    const Matrix3D rx(rx_matrix);
-
-
-    for (auto& vertex : mesh.vertices)
-    {
-        vertex = rz * vertex;
-        vertex = ry * vertex;
-        vertex = rx * vertex;
-    }
-}
-
-void GraphicConveyor::translate(Model& mesh, const float tx, const float ty, const float tz)
-{
     const std::vector<std::vector<float>> translation_matrix = {
         {1, 0, 0, tx},
         {0, 1, 0, ty},
@@ -61,19 +46,21 @@ void GraphicConveyor::translate(Model& mesh, const float tx, const float ty, con
         {0, 0, 0, 1}
     };
 
-    const Matrix4D translation(translation_matrix);
+    const Matrix4D s(scale_matrix);
+    const Matrix4D rz(rz_matrix);
+    const Matrix4D ry(ry_matrix);
+    const Matrix4D rx(rx_matrix);
+    const Matrix4D t(translation_matrix);
+
+    const Matrix4D r = rz * ry * rx; //TODO надо придумать нормальную r
 
     for (auto& vertex : mesh.vertices)
     {
-        Vector4D v4d = Vector4D::transition(vertex);
-
-        v4d = translation * v4d;
-
-        vertex = Vector3D::transition(v4d);
+        Vector4D vertex4D = Vector4D::transition(vertex);
+        vertex4D = t * r * s * vertex4D;
+        vertex = Vector4D::transition(vertex4D);
     }
 }
-
-
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye,const Vector3D &target)
 {

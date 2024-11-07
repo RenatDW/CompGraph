@@ -8,11 +8,8 @@
 class GraphicConveyor
 {
 public:
-    static void scale(Model& mesh, float sx, float sy, float sz);
-
-    static void rotate(Model& mesh, float phi, float psi, float theta);
-
-    static void translate(Model& mesh, float tx, float ty, float tz);
+    static void rotate_scale_translate(Model& mesh, float sx, float sy, float sz,
+        float phi, float psi, float theta, float tx, float ty, float tz);
 
     static Matrix4D look_at(const Vector3D &eye, const Vector3D &target);
 

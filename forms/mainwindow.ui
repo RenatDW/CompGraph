@@ -32,9 +32,7 @@
     <addaction name="actionChose_Color"/>
     <addaction name="actionSave_Model"/>
     <addaction name="actionTriangulation"/>
-    <addaction name="actionScale"/>
-    <addaction name="actionRotate"/>
-    <addaction name="actionTranslate"/>
+    <addaction name="actionRotate_Scale_Translate"/>
    </widget>
    <widget class="QMenu" name="moveMenu">
     <property name="title">
@@ -130,19 +128,9 @@
     <string>W</string>
    </property>
   </action>
-  <action name="actionScale">
+  <action name="actionRotate_Scale_Translate">
    <property name="text">
-    <string>Scale</string>
-   </property>
-  </action>
-  <action name="actionRotate">
-   <property name="text">
-    <string>Rotate</string>
-   </property>
-  </action>
-  <action name="actionTranslate">
-   <property name="text">
-    <string>Translate</string>
+    <string>Rotate_Scale_Translate</string>
    </property>
   </action>
  </widget>
