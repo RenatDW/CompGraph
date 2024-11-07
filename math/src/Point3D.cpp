@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+Point3D::Point3D() : x(0.0f), y(0.0f), z(0.0f) {}
+
 Point3D::Point3D(const float x, const float y, const float z)
 {
     this->x = x;
@@ -52,6 +54,11 @@ Point3D Point3D::operator * (const float a) const
     return {this->x * a, this->y * a, this->z * a};
 }
 
+float Point3D::operator * (const Point3D& cam) const
+{
+    return this->x * cam.getX() + this->y * cam.getY() + this->z * cam.getZ();
+}
+
 Point3D Point3D::operator + (const Point3D &v2) const
 {
     return {this->x + v2.x, this->y + v2.y, this->z + v2.z};
@@ -68,20 +75,11 @@ Point3D Point3D::operator - (const Point3D &point_3d) const
     return {this->x - point_3d.x, this->y - point_3d.y, this->z - point_3d.z};
 }
 
-float Point3D::dot(const Point3D &v) const
-{
-    return this->x * v.getX() + this->y * v.getY() + this->z * v.getZ();
-
-}
-
-Point3D Point3D::operator*(const Point3D &cam) const
-{
-
-}
-
 Point3D Point3D::vertex_to_point(const Vector3D& vertex, const int width, const int height)
 {
-    return {vertex.getX() * static_cast<float>(width) + static_cast<float>(width) / 2.0f, -vertex.getY() * static_cast<float>(height) + static_cast<float>(height) / 2.0f, vertex.getZ()};
+    return {vertex.getX() * static_cast<float>(width) + static_cast<float>(width) / 2.0f,
+        -vertex.getY() * static_cast<float>(height) + static_cast<float>(height) / 2.0f,
+        vertex.getZ()};
 }
 
 Vector3D Point3D::point_to_vector(const Point3D point)

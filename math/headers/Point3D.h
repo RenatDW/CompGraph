@@ -6,7 +6,7 @@
 class Point3D
 {
 public:
-    Point3D() = default;
+    Point3D();
 
     Point3D(float x, float y, float z);
 
@@ -26,13 +26,11 @@ public:
 
     Point3D operator * (float a) const;
 
+    float operator * (const Point3D & cam) const;
+
     Point3D operator + (const Point3D &v2) const;
 
     Point3D operator - (const Point3D & point_3d) const;
-
-    float dot(const Point3D &v) const;
-
-    Point3D operator*(const Point3D & cam) const;
 
     [[nodiscard]] Point3D normalize() const;
 

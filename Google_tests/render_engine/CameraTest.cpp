@@ -1,9 +1,8 @@
 #include "gtest/gtest.h"
 #include "../../render_engine/src/Camera.cpp"
 #include "../../render_engine/src/GraphicConveyor.cpp"
-#include "../../math/src/Matrix4D.cpp"
-#include "../../math/src/Vector4D.cpp"
-#include "../../math/src/Vector3D.cpp"
+#include "../../math/headers/Matrix4D.h"
+#include "../../math/headers/Vector3D.h"
 
 TEST(CameraTest, set_position_test)
 {
