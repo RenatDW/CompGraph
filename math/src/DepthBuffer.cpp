@@ -4,7 +4,7 @@
 
 #include "../headers/DepthBuffer.h"
 
-float DepthBuffer::get(int x, int y) const
+float DepthBuffer::get(const int x, const int y) const
 {
     return buffer[y * width + x];
 }
@@ -14,7 +14,7 @@ int DepthBuffer::size() const
     return width * height;
 }
 
-void DepthBuffer::set(int x, int y, float depth)
+void DepthBuffer::set(const int x, const int y, const float depth)
 
 {
     buffer[y * width + x] = depth;
