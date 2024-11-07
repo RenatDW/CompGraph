@@ -16,14 +16,11 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
     Vector3D resultY = Vector3D();
     Vector3D resultZ = Vector3D();
 
-    resultZ = target - eye;
+    resultZ = (target - eye).normalize();
 
-    resultX = Vector3D::cross(up, resultZ);
-    resultY = Vector3D::cross(resultZ, resultX);
+    resultX = Vector3D::cross(up, resultZ).normalize();
+    resultY = Vector3D::cross(resultZ, resultX).normalize();
 
-    resultX = resultX.normalize();
-    resultY = resultY.normalize();
-    resultZ = resultZ.normalize();
 
     std::vector<std::vector<float> > matrix = {
         {resultX.getX(), resultY.getX(), resultZ.getX(), 0},

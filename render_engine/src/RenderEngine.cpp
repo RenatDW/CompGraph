@@ -15,7 +15,7 @@ void RenderEngine::render(const bool &show_triangulation)
     const Matrix4D projection_matrix = camera.get_projection_matrix();
 
     Matrix4D model_view_projection_matrix(model_matrix);
-    model_view_projection_matrix = model_view_projection_matrix.mul(view_matrix).mul(projection_matrix);
+    model_view_projection_matrix = model_view_projection_matrix * view_matrix * projection_matrix;
 
     if (show_triangulation) {
         render_triangles(model_view_projection_matrix, static_cast<int>(mesh.triangles.size()));
@@ -52,7 +52,7 @@ std::vector<Point3D> RenderEngine::get_triangles_vertex(const Matrix4D &model_vi
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
         Point3D result_point = Point3D::vertex_to_point(
-            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height, camera.farPlane, camera.nearPlane);
+            Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height);
         result_points.emplace_back(result_point);
     }
     return result_points;
@@ -213,9 +213,9 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
             const float ABC = edgeFunction(A, B, C);
             const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
 
-            int z = static_cast<int>(A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
+            float z = (A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
 
-            if (depth_buffer.get(x, y) <= static_cast<float>(z)) continue;
+            if (depth_buffer.get(x, y) <= z) continue;
 
             //TODO освещение почему-то не динамичное...
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
