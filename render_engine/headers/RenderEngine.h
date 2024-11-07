@@ -68,7 +68,7 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
+    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
                                                   float &weightB, float &weightC, float &z);
 
     static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P,
@@ -76,9 +76,6 @@ private:
 
     static QColor get_suitable_pixel(const std::vector<Point2D> &texture_vectors, const QImage &image,
                                      const float &weightA, const float &weightB, const float &weightC);
-
-    static void texturation(const std::vector<Point2D> &texture_vectors, const QImage &image, float weightA, float weightB,
-                            float weightC, int &r, int &g, int &b);
 
     void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, float weightA,
                       float weightB, float weightC, int &r, int &g, int &b) const;

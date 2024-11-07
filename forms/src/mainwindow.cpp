@@ -75,8 +75,7 @@ void MainWindow::on_actionSave_Model_triggered()
     std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
                                                          ":/",
                                                          tr("Objects (*.obj)")).toStdString();
-    ObjWriter writer(file_name);
-    writer.write(models[0]);
+    ObjWriter::write(models[0], file_name);
 }
 
 void MainWindow::on_actionUp_triggered()
