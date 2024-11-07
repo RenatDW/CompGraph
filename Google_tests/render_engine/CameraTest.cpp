@@ -2,7 +2,7 @@
 #include "../../render_engine/src/Camera.cpp"
 #include "../../render_engine/src/GraphicConveyor.cpp"
 #include "../../math/headers/Matrix4D.h"
-#include "../../math/headers/Vector4D.h"
+#include "../../math/headers/Vector3D.h"
 
 TEST(CameraTest, set_position_test)
 {
