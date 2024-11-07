@@ -1,4 +1,5 @@
 ﻿#include "../headers/Vector3D.h"
+#include "../headers/Vector4D.h"
 
 #include <cmath>
 
@@ -76,6 +77,11 @@ Vector3D Vector3D::normalize() const
 {
 	if(this->length() == 0) return {0,0,0};
 	return {this->x / this->length(), this->y / this->length(), this->z / this->length()};
+}
+
+Vector3D Vector3D::transition(const Vector4D& v)
+{
+	return {v.getX()/v.getW(), v.getY()/v.getW(), v.getZ()/v.getW()};
 }
 
 Vector3D::~Vector3D() = default;

@@ -45,6 +45,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/Matrix3D.h
         math/headers/Matrix4D.h
         math/headers/Point2D.h
+        math/headers/Vector3D.h
+        math/headers/Vector4D.h
         math/src/Point3D.cpp
         math/src/DepthBuffer.cpp
         math/headers/DepthBuffer.h

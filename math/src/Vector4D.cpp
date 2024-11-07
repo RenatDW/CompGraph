@@ -1,4 +1,5 @@
 #include "../headers/Vector4D.h"
+#include "../headers/Vector3D.h"
 
 #include <cmath>
 

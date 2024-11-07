@@ -1,6 +1,10 @@
 #ifndef VECTOR4D_H
 #define VECTOR4D_H
 
+#include "Vector3D.h"
+
+class Vector3D;
+
 class Vector4D
 {
 public:
@@ -48,6 +52,8 @@ public:
 	{
 		return !(lhs == rhs);
 	}
+
+	static Vector4D transitionVect(Vector3D v);
 
 	~Vector4D();
 
