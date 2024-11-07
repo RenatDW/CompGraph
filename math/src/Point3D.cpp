@@ -74,10 +74,10 @@ float Point3D::dot(const Point3D &v) const
 
 }
 
-Point3D Point3D::operator*(const Point3D &cam) const
-{
-
-}
+// Point3D Point3D::operator*(const Point3D &cam) const
+// {
+//
+// }
 
 Point3D Point3D::vertex_to_point(const Vector3D& vertex, const int width, const int height, const float near, const float far)
 {

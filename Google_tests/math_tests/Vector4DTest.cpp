@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../math/headers/Vector4D.h"
+#include "../../math/src/Vector4D.cpp"
 
 TEST(Vector4DTest, DefaultConstructorVector4D)
 {
@@ -91,4 +91,5 @@ TEST(Vector4DTest, NormalizationVector4D)
     EXPECT_FLOAT_EQ(v.normalization().getZ(), 0.0f);
     EXPECT_FLOAT_EQ(v.normalization().getW(), 0.0f);
 }
+
 

@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "../../math/src/Matrix4D.cpp"
 #include "../../math/headers/Vector4D.h"
-#include "../../math/src/Vector4D.cpp"
 
 TEST(Matrix4DTest, GetterMatrix4D)
 {

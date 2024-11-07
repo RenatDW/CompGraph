@@ -9,3 +9,5 @@ TEST(Point3DTest, GettersPoint3D)
     EXPECT_FLOAT_EQ(point.getZ(), -3.0f);
 }
 
+
+
