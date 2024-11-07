@@ -17,6 +17,7 @@ add_executable(Google_Tests_run
         math_tests/Matrix4DTest.cpp
         math_tests/Point3DTest.cpp
         math_tests/Vector4DTest.cpp
+        render_engine/GraphicConveyorTest.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)

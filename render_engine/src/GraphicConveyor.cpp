@@ -6,8 +6,8 @@
 #include <iostream>
 #include <cmath>
 
-void GraphicConveyor::rotate_scale_translate(Model &mesh, float sx, float sy, float sz,
-    float phi, float psi, float theta, float tx, float ty, float tz)
+void GraphicConveyor::rotate_scale_translate(Model &mesh, const float sx, const float sy, const float sz,
+                                             const float phi, const float psi, const float theta, const float tx, const float ty, const float tz)
 {
     const float w = 1.0f;
 
@@ -22,28 +22,28 @@ void GraphicConveyor::rotate_scale_translate(Model &mesh, float sx, float sy, fl
         {std::cos(phi), std::sin(phi), 0, 0},
         {-std::sin(phi), std::cos(phi), 0, 0},
         {0, 0, 1, 0},
-        {0, 0, 0, 1}
+        {0, 0, 0, w}
     };
 
     const std::vector<std::vector<float>> ry_matrix = {
         {std::cos(psi), 0, std::sin(psi), 0},
         {0, 1, 0, 0},
         {-std::sin(psi), 0, std::cos(psi), 0},
-        {0, 0, 0, 1}
+        {0, 0, 0, w}
     };
 
     const std::vector<std::vector<float>> rx_matrix = {
         {1, 0, 0, 0},
         {0, std::cos(theta), std::sin(theta), 0},
         {0, -std::sin(theta), std::cos(theta), 0},
-        {0, 0, 0, 1}
+        {0, 0, 0, w}
     };
 
     const std::vector<std::vector<float>> translation_matrix = {
         {1, 0, 0, tx},
         {0, 1, 0, ty},
         {0, 0, 1, tz},
-        {0, 0, 0, 1}
+        {0, 0, 0, w}
     };
 
     const Matrix4D s(scale_matrix);
@@ -56,6 +56,8 @@ void GraphicConveyor::rotate_scale_translate(Model &mesh, float sx, float sy, fl
 
     for (auto& vertex : mesh.vertices)
     {
+        Vector4D vertex4D = (Vector4D) vertex;
+
         Vector4D vertex4D = Vector4D::transition(vertex);
         vertex4D = t * r * s * vertex4D;
         vertex = Vector4D::transition(vertex4D);
