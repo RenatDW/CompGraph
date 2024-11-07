@@ -1,9 +1,24 @@
 #include "../headers/GraphicConveyor.h"
 #include "../../math/headers/Vector3D.h"
 #include "../../math/headers/Matrix4D.h"
+#include "../../math/headers/Matrix3D.h"
 #include "../../math/headers/Vector4D.h"
 #include <iostream>
 #include <cmath>
+
+void GraphicConveyor::scale(Model& mesh, const float sx, const float sy, const float sz)
+{
+    Matrix3D matrix;
+    matrix.set(0, 0, sx);
+    matrix.set(1, 1, sy);
+    matrix.set(2, 2, sz);
+
+    for (auto& vertex : mesh.vertices)
+    {
+        vertex = matrix * vertex;
+    }
+}
+
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye,const Vector3D &target)
 {

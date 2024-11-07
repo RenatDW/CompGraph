@@ -10,6 +10,8 @@
 #include <QColorDialog>
 #include <QPainter>
 
+#include "../../render_engine/headers/GraphicConveyor.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       camera(Vector3D(0, 0, 100), Vector3D(0, 0, 0),
@@ -138,5 +140,13 @@ void MainWindow::on_actionChose_Color_triggered()
 void MainWindow::on_actionTriangulation_changed()
 {
     triangulation = !triangulation;
+    repaint();
+}
+
+
+void MainWindow::on_actionScale_triggered()
+{
+    GraphicConveyor::scale(models[0], 1, 1, 10);
+
     repaint();
 }

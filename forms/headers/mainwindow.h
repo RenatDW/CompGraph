@@ -55,8 +55,11 @@ private slots:
 
     void on_actionTriangulation_changed();
 
+
+    void on_actionScale_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool triangulation = true;
 };
-#endif // MAINWINDOW_H
+#endif

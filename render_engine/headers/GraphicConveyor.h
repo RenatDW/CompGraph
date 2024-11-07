@@ -3,11 +3,16 @@
 
 #include "../../math/headers/Vector3D.h"
 #include "../../math/headers/Matrix4D.h"
+#include "../../model/headers/Model.h"
 
 class GraphicConveyor
 {
 public:
-    static Matrix4D rotate_scale_translate();
+    static void scale(Model& mesh, float sx, float sy, float sz);
+
+    static Matrix4D rotate();
+
+    static Matrix4D translate();
 
     static Matrix4D look_at(const Vector3D &eye, const Vector3D &target);
 
