@@ -29,6 +29,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
     camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
     int width = this->width();
     int height = this->height();
+    std::vector<TypeOfRender> render_types;
+    // render_types.emplace_back(TypeOfRender::mesh);
+    render_types.emplace_back(TypeOfRender::normal_vectors);
+    render_types.emplace_back(TypeOfRender::texture);
 
 
     for (Model &model: models) {
@@ -36,7 +40,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
         //При цвете 0,0,0 все ломается
         RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model,width,
                                   height);
-        renderEngine.render(TypeOfRender::normal_vectors);
+        renderEngine.render(render_types);
         //Добавить варианты отрисовки
         // RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
     }

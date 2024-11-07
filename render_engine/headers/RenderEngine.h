@@ -2,9 +2,11 @@
 #define RENDERENGINE_H
 
 #include <iosfwd>
+#include <iosfwd>
 #include <QPainter>
 
 #include "Camera.h"
+#include "Renderable.h"
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
@@ -17,7 +19,7 @@
 class RenderEngine
 {
 public:
-    void render(const bool &show_triangulation);
+    void render(const std::vector<TypeOfRender> &show_triangulation);
 
     RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color, Model &model,
                  int width,
@@ -66,7 +68,10 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, Point3D P,
+    static static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
+                                                  float &weightB, float &weightC, float &z);
+
+    static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P,
                                                     float weightA, float weightB, float weightC);
 
     static QColor get_suitable_pixel(const std::vector<Point2D> &texture_vectors, const QImage &image,
@@ -78,8 +83,8 @@ private:
     void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, float weightA,
                       float weightB, float weightC, int &r, int &g, int &b) const;
 
-    void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors, const std::vector<Point2D>
-                          &texture_vectors);
+    void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors, const std::vector<Point2D> &
+                          texture_vectors);
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);

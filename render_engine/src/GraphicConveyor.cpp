@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cmath>
 
-Matrix4D GraphicConveyor::  look_at(const Vector3D &eye, const Vector3D &target)
+Matrix4D GraphicConveyor::look_at(const Vector3D &eye,const Vector3D &target)
 {
     return look_at(eye, target, Vector3D(0, 1.0f, 0)); // здесь у каждой переменной был F
 }
@@ -18,7 +18,13 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
 
     resultZ = (target - eye).normalize();
 
-    resultX = Vector3D::cross(up, resultZ).normalize();
+    //TODO это типо фикс только если смотреть перемещать по оY модель разворачивает во все стороны
+    Vector3D adjustedUp = up;
+    if (std::abs(resultZ * up) > 0.99f) {
+        // Если вектор up слишком близок по направлению к resultZ, используем другой вектор для up
+        adjustedUp = (resultZ.getX() ==  0.0f) ? Vector3D(0, 0, 1): Vector3D(1, 0, 0);
+    }
+    resultX = Vector3D::cross(adjustedUp, resultZ).normalize();
     resultY = Vector3D::cross(resultZ, resultX).normalize();
 
 

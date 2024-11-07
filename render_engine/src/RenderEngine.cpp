@@ -6,9 +6,12 @@
 #include "../../forms/headers/mainwindow.h"
 #include "../../math/headers/DepthBuffer.h"
 #include "../../math/headers/Point2D.h"
+#include "../headers/Illumination.h"
+#include "../headers/Renderable.h"
+#include "../headers/Texturezation.h"
 
 
-void RenderEngine::render(const bool &show_triangulation)
+void RenderEngine::render(const std::vector<TypeOfRender> &show_triangulation)
 {
     const Matrix4D model_matrix = Matrix4D::create_identity_matrix();
     const Matrix4D view_matrix = camera.get_view_matrix();
@@ -17,12 +20,12 @@ void RenderEngine::render(const bool &show_triangulation)
     Matrix4D model_view_projection_matrix(model_matrix);
     model_view_projection_matrix = model_view_projection_matrix * view_matrix * projection_matrix;
 
-    if (show_triangulation) {
-        render_triangles(model_view_projection_matrix, static_cast<int>(mesh.triangles.size()));
-    } else {
-        render_polygons(painter, mesh, width, height, model_view_projection_matrix,
-                        static_cast<int>(mesh.polygons.size()));
-    }
+    // if (show_triangulation) {
+    render_triangles(model_view_projection_matrix, static_cast<int>(mesh.triangles.size()));
+    // } else {
+    //     render_polygons(painter, mesh, width, height, model_view_projection_matrix,
+    //                     static_cast<int>(mesh.polygons.size()));
+    // }
 }
 
 RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color,
@@ -134,63 +137,13 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f})) + 1;
 }
 
-float RenderEngine::calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,
-                                                       Point3D P,
-                                                       const float weightA, const float weightB, const float weightC)
-{
-    Vector3D normal_A = Point3D::point_to_vector(normal_vectors[0]).normalize(), normal_B =
-            Point3D::point_to_vector(normal_vectors[1]).normalize(), normal_C = Point3D::point_to_vector(
-                normal_vectors[2]).
-            normalize();
-    Vector3D vn = (normal_A * weightA + normal_B * weightB + normal_C * weightC).normalize();
-    Vector3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};
-    Vector3D ray = (cam - Vector3D{P.getX(), P.getY(), P.getZ()}).normalize();
-    ray = ray.normalize();
-    float l = -(ray * vn);
-    if (l < 0.0f) {
-        l = 0.0f;
-    }
-    return l;
-}
+void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA, float &weightB, float &weightC, float &z) {
+    const float ABC = edgeFunction(A, B, C);
+    weightA = BCP / ABC;
+    weightB = CAP / ABC;
+    weightC = ABP / ABC;
 
-QColor RenderEngine::get_suitable_pixel(const std::vector<Point2D> &texture_vectors, const QImage &image,
-                                        const float &weightA,
-                                        const float &weightB, const float &weightC)
-{
-    float u = weightA * texture_vectors[0].getX() + weightB * texture_vectors[1].getX() + weightC * texture_vectors[2].
-              getX();
-    float v = weightA * texture_vectors[0].getY() + weightB * texture_vectors[1].getY() + weightC * texture_vectors[2].
-              getY();
-    int texX = static_cast<int>(static_cast<float>(image.width() - 1) - u * static_cast<float>(image.width() - 1));
-    int texY = static_cast<int>(static_cast<float>(image.height() - 1) - v * static_cast<float>(image.height() - 1));
-    texX = std::clamp(texX, 0, image.width() - 1);
-    texY = std::clamp(texY, 0, image.height() - 1);
-
-    return image.pixel(texX, texY);
-}
-
-void RenderEngine::texturation(const std::vector<Point2D> &texture_vectors, const QImage &image,
-                               const float weightA,
-                               const float weightB, const float weightC, int &r, int &g, int &b)
-{
-    if (texture_vectors.empty() || image.isNull()) {
-        return;
-    }
-    QColor texColor = get_suitable_pixel(texture_vectors, image, weightA, weightB, weightC);
-    r = texColor.red(), g = texColor.green(), b = texColor.blue();
-}
-
-
-void RenderEngine::illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P,
-                                const float weightA, const float weightB, const float weightC, int &r, int &g,
-                                int &b) const
-{
-    if (normal_vectors.empty()) {
-        return;
-    }
-    float k = 0.4;
-    float l = calculate_parametr_of_illumination(normal_vectors, camera, P, weightA, weightB, weightC);
-    r *= (1 - k + k * l), g *= (1 - k + k * l), b *= (1 - k + k * l);
+    z = (A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
 }
 
 void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
@@ -199,7 +152,6 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
     Point3D A = result_points[0], B = result_points[1], C = result_points[2], P;
-
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
 
@@ -207,20 +159,20 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
         for (int x = x_left; x < x_right; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             P.set(static_cast<float>(x), static_cast<float>(y), 0);
+
             const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-            const float ABC = edgeFunction(A, B, C);
-            const float weightA = BCP / ABC, weightB = CAP / ABC, weightC = ABP / ABC;
-
-            float z = (A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
+            float weightA, weightB, weightC, z;
+            calculate_baricentric_coeficients(A, B, C, ABP, BCP, CAP, weightA, weightB, weightC, z);
 
             if (depth_buffer.get(x, y) <= z) continue;
 
             //TODO освещение почему-то не динамичное...
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
-            texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
-            illumination(normal_vectors, P, weightA, weightB, weightC, r, g, b);
+
+            Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
+            Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
 
             painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);
@@ -229,11 +181,11 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
     }
 }
 
-
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
-        const int n_vertices_in_triangle = static_cast<int>(mesh.triangles[triangle_ind].get_vertex_indices().size());
+        const int n_vertices_in_triangle = static_cast<int>(mesh.triangles[triangle_ind].get_vertex_indices().
+            size());
         std::vector<Point3D> result_points = get_triangles_vertex(model_view_projection_matrix, triangle_ind,
                                                                   n_vertices_in_triangle);
         std::vector<Point3D> normal_vectors = get_triangle_normal_vertex(triangle_ind, n_vertices_in_triangle);

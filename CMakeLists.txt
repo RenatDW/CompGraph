@@ -50,6 +50,13 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/src/DepthBuffer.cpp
         math/headers/DepthBuffer.h
         render_engine/headers/TypeOfRender.h
+        render_engine/headers/Renderable.h
+        render_engine/src/Illumination.cpp
+        render_engine/src/Illumination.cpp
+        render_engine/src/Texturezation.cpp
+        render_engine/headers/Texturezation.h
+        render_engine/src/Rasterization.cpp
+        render_engine/headers/Rasterization.h
 )
 
 target_link_libraries(CompGraph
