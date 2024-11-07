@@ -60,6 +60,8 @@ private slots:
 
     void on_actionRotate_triggered();
 
+    void on_actionTranslate_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool triangulation = true;

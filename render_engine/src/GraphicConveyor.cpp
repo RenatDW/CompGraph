@@ -52,6 +52,34 @@ void GraphicConveyor::rotate(Model &mesh, const float phi, const float psi, cons
     }
 }
 
+void GraphicConveyor::translate(Model& mesh, const float tx, const float ty, const float tz)
+{
+    const std::vector<std::vector<float>> translation_matrix = {
+        {1, 0, 0, tx},
+        {0, 1, 0, ty},
+        {0, 0, 1, tz},
+        {0, 0, 0, 1}
+    };
+
+    const Matrix4D translation(translation_matrix);
+
+    for (auto& vertex : mesh.vertices)
+    {
+        Vector4D v4d;
+        v4d.setX(vertex.getX());
+        v4d.setY(vertex.getY());
+        v4d.setZ(vertex.getZ());
+        v4d.setW(1);
+
+        v4d = translation * v4d;
+
+        vertex.setX(v4d.getX());
+        vertex.setY(v4d.getY());
+        vertex.setZ(v4d.getZ());
+    }
+}
+
+
 
 Matrix4D GraphicConveyor::look_at(const Vector3D &eye,const Vector3D &target)
 {

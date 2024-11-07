@@ -12,7 +12,7 @@ public:
 
     static void rotate(Model& mesh, float phi, float psi, float theta);
 
-    static Matrix4D translate();
+    static void translate(Model& mesh, float tx, float ty, float tz);
 
     static Matrix4D look_at(const Vector3D &eye, const Vector3D &target);
 

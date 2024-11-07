@@ -157,3 +157,10 @@ void MainWindow::on_actionRotate_triggered()
 
     repaint();
 }
+
+void MainWindow::on_actionTranslate_triggered()
+{
+    GraphicConveyor::translate(models[0], 10, 10, 10);
+
+    repaint();
+}
