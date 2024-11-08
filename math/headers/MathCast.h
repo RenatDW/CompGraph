@@ -11,7 +11,7 @@
 class MathCast
 {
 public:
-    static Point2D to_Point2D(const Vector2D& v);
+    static Point2D to_Point2D(const Vector3D& v, int width, int height);
 
     static Point3D to_Point3D(const Vector3D& v);
 

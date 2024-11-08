@@ -9,7 +9,7 @@
 #include "../headers/Illumination.h"
 #include "../headers/Renderable.h"
 #include "../headers/Texturezation.h"
-
+#include "../../math/headers/MathCast.h"
 
 void RenderEngine::render(const std::vector<TypeOfRender> &show_triangulation)
 {
@@ -41,7 +41,7 @@ void RenderEngine::add_polygons_vertex(const Matrix4D &model_view_projection_mat
     for (int vertex_in_polygon_ind = 0; vertex_in_polygon_ind < n_vertices_in_polygon; ++vertex_in_polygon_ind) {
         Vector3D vertex = mesh.vertices[mesh.polygons[polygon_ind].get_vertex_indices()[vertex_in_polygon_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
-        Point2D result_point = Point2D::vertex_to_point(
+        Point2D result_point = MathCast::to_Point2D(
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height);
         result_points.emplace_back(result_point);
     }

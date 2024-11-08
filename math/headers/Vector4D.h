@@ -51,10 +51,6 @@ public:
 		return !(lhs == rhs);
 	}
 
-	static Vector4D transition(const Vector3D& v);
-
-	static Vector3D transition(const Vector4D& v);
-
 	~Vector4D();
 
 private:

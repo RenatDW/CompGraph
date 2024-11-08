@@ -3,6 +3,7 @@
 #include "../../math/headers/Matrix4D.h"
 #include "../../math/headers/Matrix3D.h"
 #include "../../math/headers/Vector4D.h"
+#include "../../math/headers/MathCast.h"
 #include <iostream>
 #include <cmath>
 
@@ -56,11 +57,9 @@ void GraphicConveyor::rotate_scale_translate(Model &mesh, const float sx, const 
 
     for (auto& vertex : mesh.vertices)
     {
-        Vector4D vertex4D = (Vector4D) vertex;
-
-        Vector4D vertex4D = Vector4D::transition(vertex);
+        Vector4D vertex4D = MathCast::to_Vector4D(vertex);
         vertex4D = t * r * s * vertex4D;
-        vertex = Vector4D::transition(vertex4D);
+        vertex = MathCast::to_Vector3D(vertex4D);
     }
 }
 
