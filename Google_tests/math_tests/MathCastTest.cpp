@@ -18,11 +18,28 @@ TEST(MathCastTest, Vector3DtoPoint3D)
     EXPECT_FLOAT_EQ(point.getZ(), 3.0f);
 }
 
-TEST(MathCastTests, Point3DtoVector3D)
+TEST(MathCastTest, Point3DtoVector3D)
 {
     const Point3D point(1.0f, 2.0f, -3.0f);
     const Vector3D vector = MathCast::to_Vector3D(point);
     EXPECT_FLOAT_EQ(vector.getX(), 1.0f);
     EXPECT_FLOAT_EQ(vector.getY(), 2.0f);
     EXPECT_FLOAT_EQ(vector.getZ(), -3.0f);
+}
+
+TEST(MathCastTest, Vector4DtoVector3D)
+{
+    const Vector4D v(1.0f, 2.0f, 3.0f, 4.0f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector3D(v).getX(), 0.25f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector3D(v).getY(), 0.5f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector3D(v).getZ(), 0.75f);
+}
+
+TEST(MathCastTest, Vector3DtoVector4D)
+{
+    const Vector3D v(1.0f, 2.0f, 3.0f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector4D(v).getX(), 1.0f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector4D(v).getY(), 2.0f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector4D(v).getZ(), 3.0f);
+    EXPECT_FLOAT_EQ(MathCast::to_Vector4D(v).getW(), 1.0f);
 }
