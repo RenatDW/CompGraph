@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../../math/src/Point3D.cpp"
 #include "../../math/headers/Vector3D.h"
+#include "../../math/headers/MathCast.h"
 
 TEST(Point3DTest, GettersPoint3D)
 {
@@ -57,24 +58,6 @@ TEST(Point3DTest, normalizePoint3D)
     EXPECT_FLOAT_EQ(point.normalize().getX(), 0.6f);
     EXPECT_FLOAT_EQ(point.normalize().getY(), 0.8f);
     EXPECT_FLOAT_EQ(point.normalize().getZ(), 0.0f);
-}
-
-TEST(Point3DTest, VertexToPoint3D)
-{
-    const Vector3D vertex(1.0f, 2.0f, 3.0f);
-    const Point3D point = Point3D::vertex_to_point(vertex, 5, 10);
-    EXPECT_FLOAT_EQ(point.getX(), 7.5f);
-    EXPECT_FLOAT_EQ(point.getY(), -15.0f);
-    EXPECT_FLOAT_EQ(point.getZ(), 3.0f);
-}
-
-TEST(Point3DTest, PointToVector)
-{
-    const Point3D point(1.0f, 2.0f, -3.0f);
-    const Vector3D vector = Point3D::point_to_vector(point);
-    EXPECT_FLOAT_EQ(vector.getX(), 1.0f);
-    EXPECT_FLOAT_EQ(vector.getY(), 2.0f);
-    EXPECT_FLOAT_EQ(vector.getZ(), -3.0f);
 }
 
 TEST(Point3DTest, Point3DbyPoint3DProduct)
