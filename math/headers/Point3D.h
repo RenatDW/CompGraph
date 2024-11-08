@@ -34,10 +34,6 @@ public:
 
     [[nodiscard]] Point3D normalize() const;
 
-    static Point3D vertex_to_point(const Vector3D& vertex, int width, int height);
-
-    static Vector3D point_to_vector(Point3D point);
-
 private:
     float x;
     float y;

@@ -12,14 +12,16 @@ Point2D MathCast::to_Point2D(const Vector3D& vertex, const int width, const int 
         -vertex.getY() * static_cast<float>(height) + static_cast<float>(height) / 2.0f};
 }
 
-Point3D MathCast::to_Point3D(const Vector3D& v)
+Point3D MathCast::to_Point3D(const Vector3D& vertex, const int width, const int height)
 {
-
+    return {vertex.getX() * static_cast<float>(width) + static_cast<float>(width) / 2.0f,
+        -vertex.getY() * static_cast<float>(height) + static_cast<float>(height) / 2.0f,
+        vertex.getZ()};
 }
 
-Vector3D MathCast::to_Vector3D(const Point3D& p)
+Vector3D MathCast::to_Vector3D(const Point3D& point)
 {
-
+    return {point.getX(), point.getY(), point.getZ()};
 }
 
 Vector3D MathCast::to_Vector3D(const Vector4D& v)

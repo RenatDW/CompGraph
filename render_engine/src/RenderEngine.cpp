@@ -54,7 +54,7 @@ std::vector<Point3D> RenderEngine::get_triangles_vertex(const Matrix4D &model_vi
     for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_polygon; ++vertex_in_triangle_ind) {
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
-        Point3D result_point = Point3D::vertex_to_point(
+        Point3D result_point = MathCast::to_Point3D(
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex_vecmath), width, height);
         result_points.emplace_back(result_point);
     }

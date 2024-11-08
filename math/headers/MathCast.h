@@ -13,9 +13,9 @@ class MathCast
 public:
     static Point2D to_Point2D(const Vector3D& v, int width, int height);
 
-    static Point3D to_Point3D(const Vector3D& v);
+    static Point3D to_Point3D(const Vector3D& v, int width, int height);
 
-    static Vector3D to_Vector3D(const Point3D& p);
+    static Vector3D to_Vector3D(const Point3D& point);
 
     static Vector3D to_Vector3D(const Vector4D& v);
 
