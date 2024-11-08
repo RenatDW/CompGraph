@@ -4,7 +4,7 @@
 #include "../../math/headers/Matrix3D.h"
 #include "../../math/headers/Vector4D.h"
 #include "../../math/headers/MathCast.h"
-#include <iostream>
+
 #include <cmath>
 
 void GraphicConveyor::rotate_scale_translate(Model &mesh, const float sx, const float sy, const float sz,
