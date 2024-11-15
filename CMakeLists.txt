@@ -56,6 +56,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         render_engine/headers/Texturezation.h
         render_engine/src/Rasterization.cpp
         render_engine/headers/Rasterization.h
+        render_engine/headers/Mesh.h
+        render_engine/src/Mesh.cpp
 )
 
 target_link_libraries(CompGraph

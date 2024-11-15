@@ -68,8 +68,9 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
+    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
                                                   float &weightB, float &weightC, float &z);
+
 
     static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P,
                                                     float weightA, float weightB, float weightC);
@@ -89,7 +90,7 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
-    static float edgeFunction(Point3D a, Point3D b, Point3D c);
+    static float edge_function(Point3D a, Point3D b, Point3D c);
     // static void renderTriangle(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
     // static void renderPolygons(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
 };

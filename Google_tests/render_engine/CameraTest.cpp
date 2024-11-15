@@ -1,8 +1,11 @@
 #include "gtest/gtest.h"
 #include "../../render_engine/src/Camera.cpp"
+// #include <QPainter>
 #include "../../render_engine/src/GraphicConveyor.cpp"
 #include "../../math/headers/Matrix4D.h"
+#include "../../math/headers/Point3D.h"
 #include "../../math/headers/Vector3D.h"
+// #include "../../render_engine/headers/RenderEngine.h"
 
 TEST(CameraTest, set_position_test)
 {
@@ -45,4 +48,14 @@ TEST(CameraTest, get_projection_matrix_test)
 
         }
     }
+}
+
+TEST(EngineTest, edge_function)
+{
+    Point3D d(1,0,0);
+    Point3D b(0,1,0);
+    Point3D a(0,0,1);
+    Point3D c(1/2,0,1/2);
+    ASSERT_EQ ((b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX()), 0);
+
 }

@@ -8,6 +8,7 @@
 #include "../../math/headers/Point2D.h"
 #include "../headers/Illumination.h"
 #include "../headers/Renderable.h"
+#include "../headers/Mesh.h"
 #include "../headers/Texturezation.h"
 
 
@@ -108,7 +109,7 @@ void RenderEngine::draw_points(QPainter &painter, const int point_count,
             static_cast<int>(result_points[0].getY()));
 }
 
-float RenderEngine::edgeFunction(Point3D a, Point3D b, Point3D c)
+float RenderEngine::edge_function(Point3D a, Point3D b, Point3D c)
 {
     return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
 }
@@ -137,14 +138,18 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f})) + 1;
 }
 
-void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA, float &weightB, float &weightC, float &z) {
-    const float ABC = edgeFunction(A, B, C);
+void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP,
+                                                     float &weightA, float &weightB, float &weightC, float &z)
+{
+    const float ABC = edge_function(A, B, C);
     weightA = BCP / ABC;
     weightB = CAP / ABC;
     weightC = ABP / ABC;
 
     z = (A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
 }
+
+
 
 void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
                                     const std::vector<Point3D> &normal_vectors,
@@ -159,8 +164,7 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
         for (int x = x_left; x < x_right; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             P.set(static_cast<float>(x), static_cast<float>(y), 0);
-
-            const float ABP = edgeFunction(A, B, P), BCP = edgeFunction(B, C, P), CAP = edgeFunction(C, A, P);
+            float ABP = edge_function(A, B, P), BCP = edge_function(B, C, P), CAP = edge_function(C, A, P);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             float weightA, weightB, weightC, z;
@@ -171,8 +175,15 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
             //TODO освещение почему-то не динамичное...
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
 
-            Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
-            Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+            // if (Mesh::show_mesh(weightA, weightB, weightC, r, g, b)) continue;
+            //TODO не все я просчитал, увелечение по x на 1 не соответсвует увелечению y по kx + b, в локальных хоординатах
+
+            painter.setPen(QColor(1, 1, 1));
+            Mesh::show_mesh_by_points(painter, result_points[0], result_points[1]);
+            Mesh::show_mesh_by_points(painter, result_points[1], result_points[2]);
+            Mesh::show_mesh_by_points(painter, result_points[2], result_points[0]);
+            // Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
+            // Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
 
             painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);
