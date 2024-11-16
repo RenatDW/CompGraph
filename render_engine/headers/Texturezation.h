@@ -4,11 +4,11 @@
 
 #ifndef TEXTUREZATION_H
 #define TEXTUREZATION_H
+
 #include <QImage>
 #include <vector>
 
 #include "Renderable.h"
-
 
 class Texturezation
 

@@ -10,6 +10,8 @@
 #include <QColorDialog>
 #include <QPainter>
 
+#include "../../render_engine/headers/GraphicConveyor.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       camera(Vector3D(0, 0, 100), Vector3D(0, 0, 0),
@@ -75,8 +77,7 @@ void MainWindow::on_actionSave_Model_triggered()
     std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
                                                          ":/",
                                                          tr("Objects (*.obj)")).toStdString();
-    ObjWriter writer(file_name);
-    writer.write(models[0]);
+    ObjWriter::write(models[0], file_name);
 }
 
 void MainWindow::on_actionUp_triggered()
@@ -141,6 +142,12 @@ void MainWindow::on_actionTriangulation_changed()
     repaint();
 }
 
+
+void MainWindow::on_actionRotate_Scale_Translate_triggered()
+{
+    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    repaint();
+}
 void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
 {
     show_mesh = !show_mesh;
@@ -161,6 +168,6 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
 {
     show_illumination = !show_illumination;
     repaint();
-
+    
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }

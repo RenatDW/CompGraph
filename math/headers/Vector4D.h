@@ -1,6 +1,8 @@
 #ifndef VECTOR4D_H
 #define VECTOR4D_H
 
+#include "Vector3D.h"
+
 class Vector4D
 {
 public:
@@ -36,7 +38,7 @@ public:
 
 	[[nodiscard]] Vector4D normalization() const;
 
-	friend bool operator==(const Vector4D &lhs, const Vector4D &rhs)
+	friend bool operator == (const Vector4D &lhs, const Vector4D &rhs)
 	{
 		return lhs.x == rhs.x
 		       && lhs.y == rhs.y

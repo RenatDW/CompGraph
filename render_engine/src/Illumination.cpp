@@ -1,7 +1,8 @@
 //
-// Created by Ренат Асланов on 07.11.2024.
+// Created by Ренат Асланов on 07.11.2024. Я СЛЕЖУ ЗА ТОБОЙ
 //
 #include "../headers/Illumination.h"
+#include "../../math//headers/MathCast.h"
 
 void Illumination::render()
 {
@@ -37,8 +38,8 @@ void Illumination::illumination(const std::vector<Point3D> &normal_vectors, cons
 float Illumination::calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,
     const Point3D &P, const float weightA, const float weightB, const float weightC)
 {
-    Vector3D normal_A = Point3D::point_to_vector(normal_vectors[0]).normalize(), normal_B =
-            Point3D::point_to_vector(normal_vectors[1]).normalize(), normal_C = Point3D::point_to_vector(
+    Vector3D normal_A = MathCast::to_Vector3D(normal_vectors[0]).normalize(), normal_B =
+            MathCast::to_Vector3D(normal_vectors[1]).normalize(), normal_C = MathCast::to_Vector3D(
                 normal_vectors[2]).normalize();
     Vector3D vn = (normal_A * weightA + normal_B * weightB + normal_C * weightC).normalize();
     Vector3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};

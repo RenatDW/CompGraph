@@ -9,14 +9,8 @@
 class ObjWriter
 {
 public:
-	ObjWriter(const std::string& filename);
+	static void write(const Model& model, const std::string& filename);
 
-	void write(const Model& model);
-
-	~ObjWriter();
-	
-private:
-	std::ofstream file;
 };
 
 #endif

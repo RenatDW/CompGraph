@@ -58,14 +58,19 @@ private slots:
 
     void on_actionTriangulation_changed();
 
+
+    void on_actionRotate_Scale_Translate_triggered();
+    
     void on_checkBox_show_mesh_toggled(bool checked);
-
+    
     void on_checkBox_show_texture_toggled(bool checked);
-
+    
     void on_checkBox_show_illumination_toggled(bool checked);
+    
+
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui;q
     bool triangulation = true;
 };
-#endif // MAINWINDOW_H
+#endif

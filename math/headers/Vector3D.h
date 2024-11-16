@@ -1,6 +1,8 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
+//#include "Vector4D.h"
+
 class Vector3D
 {
 public:
@@ -24,7 +26,7 @@ public:
 
 	Vector3D operator - (const Vector3D& v) const;
 
-	bool operator==(const Vector3D & position) const = default;
+	bool operator == (const Vector3D & position) const = default;
 
 	static Vector3D cross(const Vector3D& v1, const Vector3D& v2);
 
@@ -35,6 +37,8 @@ public:
 	[[nodiscard]] float length() const;
 
 	[[nodiscard]] Vector3D normalize() const;
+
+	//static Vector3D transition(const Vector4D& v);
 
 	~Vector3D();
 
