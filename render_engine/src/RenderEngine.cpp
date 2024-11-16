@@ -142,20 +142,20 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
 }
 
 void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP,
-                                                     float &weightA, float &weightB, float &weightC, float &z)
+                                                     float &weight_a, float &weight_b, float &weight_c, float &z)
 {
     const float ABC = edge_function(A, B, C);
-    weightA = BCP / ABC;
-    weightB = CAP / ABC;
-    weightC = ABP / ABC;
+    weight_a = BCP / ABC;
+    weight_b = CAP / ABC;
+    weight_c = ABP / ABC;
 
-    z = (A.getZ() * weightA + B.getZ() * weightB + C.getZ() * weightC);
+    z = (A.getZ() * weight_a + B.getZ() * weight_b + C.getZ() * weight_c);
 }
 
 
-bool RenderEngine::show_mesh(float weightA, float weightB, float weightC, int r, int g, int b)
+bool RenderEngine::show_mesh(float weight_a, float weight_b, float weight_c, int r, int g, int b)
 {
-    if (Mesh::show_mesh(weightA, weightB, weightC, r, g, b)) return true;
+    if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) return true;
     painter.setPen(QColor(1, 1, 1));
     return false;
 }
@@ -176,8 +176,8 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
             float ABP = edge_function(A, B, P), BCP = edge_function(B, C, P), CAP = edge_function(C, A, P);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-            float weightA, weightB, weightC, z;
-            calculate_baricentric_coeficients(A, B, C, ABP, BCP, CAP, weightA, weightB, weightC, z);
+            float weight_a, weight_b, weight_c, z;
+            calculate_baricentric_coeficients(A, B, C, ABP, BCP, CAP, weight_a, weight_b, weight_c, z);
 
             if (depth_buffer.get(x, y) <= z) continue;
 
@@ -190,14 +190,13 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
             // Mesh::show_mesh_by_points(painter, result_points[1], result_points[2]);
             // Mesh::show_mesh_by_points(painter, result_points[2], result_points[0]);
             if(show_mesh_param) {
-                if (show_mesh(weightA, weightB, weightC, r, g, b)) continue;
+                if (show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
             }
-
             if(show_illumination_param) {
-                Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
+                Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             }
             if(show_texture_param) {
-                Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+                Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
             }
 
             painter.setPen(QColor(r, g, b));

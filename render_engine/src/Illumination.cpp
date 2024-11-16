@@ -23,14 +23,14 @@ void Illumination::add_vertex(Model &mesh, const Matrix4D &model_view_projection
     this->normal_points = normal_points;
 }
 
-void Illumination::illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, Camera &camera, const float weightA,
-                                const float weightB, const float weightC, int &r, int &g, int &b)
+void Illumination::illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, Camera &camera, const float weight_a,
+                                const float weight_b, const float weight_c, int &r, int &g, int &b)
 {
     if (normal_vectors.empty()) {
         return;
     }
     float k = 0.4;
-    float l = calculate_parametr_of_illumination(normal_vectors, camera, P, weightA, weightB, weightC);
+    float l = calculate_parametr_of_illumination(normal_vectors, camera, P, weight_a, weight_b, weight_c);
     r *= (1 - k + k * l), g *= (1 - k + k * l), b *= (1 - k + k * l);
 }
 

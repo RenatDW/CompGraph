@@ -9,9 +9,9 @@
 
 #include "../../math/headers/Point3D.h"
 
-bool Mesh::show_mesh(float weightA, float weightB, float weightC, int &r, int &g, int &b)
+bool Mesh::show_mesh(float weight_a, float weight_b, float weight_c, int &r, int &g, int &b)
 {
-    if (weightA <= 0.01f || weightB <= 0.01f || weightC <= 0.01f) {
+    if (weight_a <= 0.01f || weight_b <= 0.01f || weight_c <= 0.01f) {
         r = 1, g = 1, b = 1;
     }else return true;
     return false;

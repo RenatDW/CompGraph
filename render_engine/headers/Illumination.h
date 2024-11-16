@@ -27,7 +27,7 @@ public:
         int n_vertices_in_triangle, int width, int height);
 
     static void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P,
-                             Camera &camera, float weightA, float weightB, float weightC, int &r,
+                             Camera &camera, float weight_a, float weight_b, float weight_c, int &r,
                              int &g, int &b);
 
     static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,

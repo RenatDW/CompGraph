@@ -72,10 +72,10 @@ private:
                                   int &y_down, int &y_up) const;
 
     static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP,
-                                                  float &weightA,
-                                                  float &weightB, float &weightC, float &z);
+                                                  float &weight_a,
+                                                  float &weight_b, float &weight_c, float &z);
 
-    bool show_mesh(float weightA, float weightB, float weightC, int r, int g, int b);
+    bool show_mesh(float weight_a, float weight_b, float weight_c, int r, int g, int b);
 
 
     static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,

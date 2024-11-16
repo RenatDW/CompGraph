@@ -26,11 +26,11 @@ public:
                     height);
 
     static void texturation(const std::vector<Point2D> &texture_vectors, const QImage &image,
-                     const float weightA,
-                     const float weightB, const float weightC, int &r, int &g, int &b);
+                     const float weight_a,
+                     const float weight_b, const float weight_c, int &r, int &g, int &b);
     static QColor get_suitable_pixel(const std::vector<Point2D> &texture_vectors, const QImage &image,
-                                     float weightA,
-                                     float weightB, float weightC);
+                                     float weight_a,
+                                     float weight_b, float weight_c);
 };
 
 
