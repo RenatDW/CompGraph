@@ -142,12 +142,7 @@ void MainWindow::on_actionTriangulation_changed()
     repaint();
 }
 
-
-void MainWindow::on_actionRotate_Scale_Translate_triggered()
-{
-    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
-    repaint();
-}
+<<<<<<< HEAD
 void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
 {
     show_mesh = !show_mesh;
@@ -159,7 +154,7 @@ void MainWindow::on_checkBox_show_texture_toggled(bool checked)
 {
     if(model_texture_path.empty() ) {
         QMessageBox::information(this, "OSHIBKA", "Elki palki, shachalo model' zagruzi, yo, 52");
-        // ui->checkBox_show_texture->toggled(false);
+        ui->checkBox_show_texture->toggled(false);
     }
     show_texture = !show_texture;
 }
@@ -168,6 +163,14 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
 {
     show_illumination = !show_illumination;
     repaint();
-    
+
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
+=======
+
+void MainWindow::on_actionRotate_Scale_Translate_triggered()
+{
+    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    repaint();
+}
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2

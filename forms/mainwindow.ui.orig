@@ -13,6 +13,7 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+<<<<<<< HEAD
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="verticalGroupBox">
     <property name="geometry">
@@ -55,13 +56,20 @@
     </layout>
    </widget>
   </widget>
+=======
+  <widget class="QWidget" name="centralwidget"/>
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
+<<<<<<< HEAD
      <height>24</height>
+=======
+     <height>22</height>
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -73,8 +81,10 @@
     <addaction name="actionChose_Color"/>
     <addaction name="actionSave_Model"/>
     <addaction name="actionTriangulation"/>
+<<<<<<< HEAD
+=======
     <addaction name="actionRotate_Scale_Translate"/>
-
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
    </widget>
    <widget class="QMenu" name="moveMenu">
     <property name="title">
@@ -159,7 +169,11 @@
     <string>Back</string>
    </property>
    <property name="shortcut">
+<<<<<<< HEAD
     <string>s</string>
+=======
+    <string>S</string>
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
    </property>
   </action>
   <action name="actionForward">
@@ -167,12 +181,16 @@
     <string>Forward</string>
    </property>
    <property name="shortcut">
+<<<<<<< HEAD
     <string>w</string>
+=======
+    <string>W</string>
    </property>
   </action>
   <action name="actionRotate_Scale_Translate">
    <property name="text">
     <string>Rotate_Scale_Translate</string>
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
    </property>
   </action>
  </widget>

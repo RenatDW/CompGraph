@@ -58,9 +58,13 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         render_engine/headers/Texturezation.h
         render_engine/src/Rasterization.cpp
         render_engine/headers/Rasterization.h
+<<<<<<< HEAD
+        render_engine/headers/Mesh.h
+        render_engine/src/Mesh.cpp
+=======
         math/headers/MathCast.h
         math/src/MathCast.cpp
-        render_engine/src/Mesh.cpp
+>>>>>>> fabaa71d15625811a362cb9c9dfe611c1db46de2
 )
 
 target_link_libraries(CompGraph
