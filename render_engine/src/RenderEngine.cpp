@@ -30,10 +30,13 @@ void RenderEngine::render(const std::vector<TypeOfRender> &show_triangulation)
 }
 
 RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color,
-                           Model &model, int width, int height): depth_buffer(width, height), painter(painter),
-                                                                 camera(camera), mesh(model), width(width),
-                                                                 height(height), fill_model_color(color),
-                                                                 filename(string) {}
+                           Model &model, int width, int height,  bool show_mesh_param, bool show_texture_param, bool show_illumination_param): depth_buffer(width, height), painter(painter),
+                                                                 mesh(model), camera(camera), filename(string),
+                                                                 width(width), height(height),
+                                                                 show_texture_param(show_texture_param),
+                                                                 show_mesh_param(show_mesh_param),
+                                                                 show_illumination_param(show_illumination_param),
+                                                                 fill_model_color(color) {}
 
 void RenderEngine::add_polygons_vertex(const Matrix4D &model_view_projection_matrix, const int polygon_ind,
                                        const int n_vertices_in_polygon,
@@ -131,11 +134,11 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     x_left = static_cast<int>(std::min({
         A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
     }));
-    x_right = static_cast<int>(std::max({A.getX(), B.getX(), C.getX(), 0.0f})) + 1;
+    x_right = static_cast<int>(std::max({A.getX(), B.getX(), C.getX(), 0.0f}));
     y_down = static_cast<int>(std::min({
         A.getY(), B.getY(), C.getY(), static_cast<float>(depth_buffer.getHeight())
     }));
-    y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f})) + 1;
+    y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f}));
 }
 
 void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP,
@@ -150,6 +153,12 @@ void RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point
 }
 
 
+bool RenderEngine::show_mesh(float weightA, float weightB, float weightC, int r, int g, int b)
+{
+    if (Mesh::show_mesh(weightA, weightB, weightC, r, g, b)) return true;
+    painter.setPen(QColor(1, 1, 1));
+    return false;
+}
 
 void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
                                     const std::vector<Point3D> &normal_vectors,
@@ -160,8 +169,8 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
 
-    for (int y = y_down; y < y_up; y++) {
-        for (int x = x_left; x < x_right; x++) {
+    for (int y = y_down; y < y_up + 1; y++) {
+        for (int x = x_left; x < x_right + 1; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             P.set(static_cast<float>(x), static_cast<float>(y), 0);
             float ABP = edge_function(A, B, P), BCP = edge_function(B, C, P), CAP = edge_function(C, A, P);
@@ -175,15 +184,21 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
             //TODO освещение почему-то не динамичное...
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
 
-            // if (Mesh::show_mesh(weightA, weightB, weightC, r, g, b)) continue;
-            //TODO не все я просчитал, увелечение по x на 1 не соответсвует увелечению y по kx + b, в локальных хоординатах
 
-            painter.setPen(QColor(1, 1, 1));
-            Mesh::show_mesh_by_points(painter, result_points[0], result_points[1]);
-            Mesh::show_mesh_by_points(painter, result_points[1], result_points[2]);
-            Mesh::show_mesh_by_points(painter, result_points[2], result_points[0]);
-            // Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
-            // Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+            //TODO не все я просчитал, увелечение по x на 1 не соответсвует увелечению y по kx + b, в локальных хоординатах
+            // Mesh::show_mesh_by_points(painter, result_points[0], result_points[1]);
+            // Mesh::show_mesh_by_points(painter, result_points[1], result_points[2]);
+            // Mesh::show_mesh_by_points(painter, result_points[2], result_points[0]);
+            if(show_mesh_param) {
+                if (show_mesh(weightA, weightB, weightC, r, g, b)) continue;
+            }
+
+            if(show_illumination_param) {
+                Illumination::illumination(normal_vectors, P, camera, weightA, weightB, weightC, r, g, b);
+            }
+            if(show_texture_param) {
+                Texturezation::texturation(texture_vectors, image, weightA, weightB, weightC, r, g, b);
+            }
 
             painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);

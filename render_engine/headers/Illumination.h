@@ -14,6 +14,7 @@
 class Illumination
 {
 public:
+    //TODO исправить камел кейсы
     std::vector<Point3D> normal_points;
 
     void render();

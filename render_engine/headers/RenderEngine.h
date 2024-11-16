@@ -21,13 +21,13 @@ class RenderEngine
 public:
     void render(const std::vector<TypeOfRender> &show_triangulation);
 
+
     RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color, Model &model,
                  int width,
-                 int height);
+                 int height, bool show_mesh_param, bool show_texture_param,bool show_illumination_param);
 
 
     ~RenderEngine() = default;
-
 
 private:
     DepthBuffer depth_buffer;
@@ -37,6 +37,9 @@ private:
     std::string &filename;
     int width;
     int height;
+    bool show_texture_param;
+    bool show_mesh_param;
+    bool show_illumination_param;
     QColor &fill_model_color;
 
     static void draw_line(QPainter &painter, Point3D &A, Point3D &B);
@@ -68,29 +71,36 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
+    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP,
+                                                  float &weightA,
                                                   float &weightB, float &weightC, float &z);
 
+    bool show_mesh(float weightA, float weightB, float weightC, int r, int g, int b);
 
-    static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P,
+
+    static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,
+                                                    const Point3D &P,
                                                     float weightA, float weightB, float weightC);
 
     static QColor get_suitable_pixel(const std::vector<Point2D> &texture_vectors, const QImage &image,
                                      const float &weightA, const float &weightB, const float &weightC);
 
-    static void texturation(const std::vector<Point2D> &texture_vectors, const QImage &image, float weightA, float weightB,
+    static void texturation(const std::vector<Point2D> &texture_vectors, const QImage &image, float weightA,
+                            float weightB,
                             float weightC, int &r, int &g, int &b);
 
     void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, float weightA,
                       float weightB, float weightC, int &r, int &g, int &b) const;
 
-    void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors, const std::vector<Point2D> &
+    void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors,
+                          const std::vector<Point2D> &
                           texture_vectors);
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
     static float edge_function(Point3D a, Point3D b, Point3D c);
+
     // static void renderTriangle(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
     // static void renderPolygons(GraphicsContext graphicsContext, Model mesh, int width, int height, Matrix4f modelViewProjectionMatrix);
 };

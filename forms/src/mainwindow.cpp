@@ -36,10 +36,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 
     for (Model &model: models) {
-        QColor basic_color = QColor(255,255,255);
+        QColor basic_color = QColor(255, 255, 255);
         //При цвете 0,0,0 все ломается
-        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model,width,
-                                  height);
+        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
+                                  height, show_mesh, show_texture, show_illumination);
         renderEngine.render(render_types);
         //Добавить варианты отрисовки
         // RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
@@ -114,30 +114,53 @@ void MainWindow::on_actionBack_triggered()
     camera.movePosition(Vector3D(0, 0, static_cast<float>(TRANSLATION)));
     repaint();
 }
+
 void MainWindow::on_actionLoad_Texture_triggered()
 {
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Texture"), ":/",
                                                          tr("Object Image (*.png *.jpg *.bmp)")).toStdString();
-       //TODO Переделать когда нужно будет делать сценку
+    //TODO Переделать когда нужно будет делать сценку
     model_texture_path = file_name;
-
-
 }
+
 void MainWindow::on_actionChose_Color_triggered()
 {
-    QColor color = QColorDialog::getColor(QColor(255,100,200,255));
+    QColor color = QColorDialog::getColor(QColor(255, 100, 200, 255));
     fill_model_color = color;
     repaint();
     // if (!color.isValid()) {
-        // Cancel
+    // Cancel
     // }
     // QMessageBox::information(this, "Choose Color", "Cooming soon...");
-
 }
 
 void MainWindow::on_actionTriangulation_changed()
 {
     triangulation = !triangulation;
     repaint();
+}
+
+void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
+{
+    show_mesh = !show_mesh;
+    repaint();
+    // QMessageBox::information(this, "Save model", "Today is monday");
+}
+
+void MainWindow::on_checkBox_show_texture_toggled(bool checked)
+{
+    if(model_texture_path.empty() ) {
+        QMessageBox::information(this, "OSHIBKA", "Elki palki, shachalo model' zagruzi, yo, 52");
+        ui->checkBox_show_texture->toggled(false);
+    }
+    show_texture = !show_texture;
+}
+
+void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
+{
+    show_illumination = !show_illumination;
+    repaint();
+
+    // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
