@@ -38,7 +38,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 
     for (Model &model: models) {
-        QColor basic_color = QColor(255, 255, 255);
+        QColor basic_color = QColor(1, 1, 1);
         //При цвете 0,0,0 все ломается
         RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
                                   height, show_mesh, show_texture, show_illumination);
