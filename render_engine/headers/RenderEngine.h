@@ -88,7 +88,7 @@ private:
                           texture_vectors);
 
     void get_triangles_vectors(std::vector<Point3D> &result_points, std::vector<Point3D> &normal_vectors, std::vector<Point2D> &texture_vectors, const
-                               Matrix4D &model_view_projection_matrix, int triangle_ind, int n_vertices_in_triangle);
+                               Matrix4D &model_view_projection_matrix, int triangle_ind);
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);

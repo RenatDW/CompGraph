@@ -20,7 +20,7 @@ void RenderEngine::render()
     Matrix4D model_view_projection_matrix(model_matrix);
     model_view_projection_matrix = model_view_projection_matrix * view_matrix * projection_matrix;
 
-    render_triangles(model_view_projection_matrix, static_cast<int>(mesh.triangles.size()));
+    render_triangles(model_view_projection_matrix, mesh.triangles.size());
 }
 
 RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color,
@@ -161,10 +161,10 @@ void RenderEngine::universal_render(const std::vector<Point3D> &result_points,
 }
 
 void RenderEngine::get_triangles_vectors(std::vector<Point3D> &result_points, std::vector<Point3D> &normal_vectors,
-    std::vector<Point2D> &texture_vectors, const Matrix4D &model_view_projection_matrix, int triangle_ind,
-    int n_vertices_in_triangle)
+                                         std::vector<Point2D> &texture_vectors,
+                                         const Matrix4D &model_view_projection_matrix, int triangle_ind)
 {
-    for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_triangle; ++vertex_in_triangle_ind) {
+    for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < 3; ++vertex_in_triangle_ind) {
         Vector3D vertex = mesh.vertices[mesh.triangles[triangle_ind].get_vertex_indices()[vertex_in_triangle_ind]];
         Vector3D vertex_vecmath(vertex.getX(), vertex.getY(), vertex.getZ());
         Point3D result_point = MathCast::to_Point3D(
@@ -172,7 +172,7 @@ void RenderEngine::get_triangles_vectors(std::vector<Point3D> &result_points, st
         result_points.emplace_back(result_point);
         int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
 
-        Point3D normal_point= {
+        Point3D normal_point = {
             mesh.normals[texture_vertex_ind].getX(), mesh.normals[texture_vertex_ind].getY(),
             mesh.normals[texture_vertex_ind].getZ()
         };
@@ -183,24 +183,15 @@ void RenderEngine::get_triangles_vectors(std::vector<Point3D> &result_points, st
         };
         texture_vectors.emplace_back(texture_point);
     }
-
-
 }
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
-        const int n_vertices_in_triangle = static_cast<int>(mesh.triangles[triangle_ind].get_vertex_indices().
-            size());
         std::vector<Point3D> result_points, normal_vectors;
         std::vector<Point2D> texture_vectors;
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
-                              triangle_ind, n_vertices_in_triangle);
-        // std::vector<Point3D> result_points = get_triangles_vertex(model_view_projection_matrix, triangle_ind,
-        //                                                           n_vertices_in_triangle);
-        // std::vector<Point3D> normal_vectors = get_triangle_normal_vertex(triangle_ind, n_vertices_in_triangle);
-        // std::vector<Point2D> texture_vectors = get_triangle_texture_vertex(triangle_ind, n_vertices_in_triangle);
-
+                              triangle_ind);
         universal_render(result_points, normal_vectors, texture_vectors);
     }
     painter.end();
