@@ -114,7 +114,7 @@ void RenderEngine::draw_points(QPainter &painter, const int point_count,
 
 float RenderEngine::edge_function(Point3D a, Point3D b, Point3D c)
 {
-    return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
+    return (ceil(b.getX()) - ceil(a.getX())) * (ceil(c.getY()) - ceil(a.getY())) - (ceil(b.getY()) - ceil(a.getY())) * (ceil(c.getX()) - ceil(a.getX()));
 }
 
 void RenderEngine::render_polygons(QPainter &painter, const Model &mesh, const int &width, const int &height,
