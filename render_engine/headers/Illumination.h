@@ -26,11 +26,11 @@ public:
     void add_vertex(Model &mesh, const Matrix4D &model_view_projection_matrix, int triangle_ind,
         int n_vertices_in_triangle, int width, int height);
 
-    static void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P,
+    static void illumination(const std::array<Point3D, 3> &normal_vectors, const Point3D &P,
                              Camera &camera, float weight_a, float weight_b, float weight_c, int &r,
                              int &g, int &b);
 
-    static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,
+    static float calculate_parametr_of_illumination(const std::array<Point3D, 3> &normal_vectors, Camera &camera,
                                              const Point3D &P,
                                              const float weightA, const float weightB, const float weightC);
 };

@@ -24,7 +24,7 @@ void Illumination::add_vertex(Model &mesh, const Matrix4D &model_view_projection
     this->normal_points = normal_points;
 }
 
-void Illumination::illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, Camera &camera, const float weight_a,
+void Illumination::illumination(const std::array<Point3D, 3> &normal_vectors, const Point3D &P, Camera &camera, const float weight_a,
                                 const float weight_b, const float weight_c, int &r, int &g, int &b)
 {
     if (normal_vectors.empty()) {
@@ -35,7 +35,7 @@ void Illumination::illumination(const std::vector<Point3D> &normal_vectors, cons
     r *= (1 - k + k * l), g *= (1 - k + k * l), b *= (1 - k + k * l);
 }
 
-float Illumination::calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera,
+float Illumination::calculate_parametr_of_illumination(const std::array<Point3D, 3> &normal_vectors, Camera &camera,
     const Point3D &P, const float weightA, const float weightB, const float weightC)
 {
     Vector3D normal_A = MathCast::to_Vector3D(normal_vectors[0]).normalize(), normal_B =

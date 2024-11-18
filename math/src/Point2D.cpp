@@ -2,6 +2,7 @@
 #include "../headers/Point2D.h"
 
 Point2D::Point2D() : x(0.0f), y(0.0f) {}
+Point2D::Point2D(const Vector2D &a): x(a.getX()), y(a.getY()){}
 
 Point2D::Point2D(const float x, const float y) {
     this->x = x;

@@ -69,8 +69,8 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC, float ABP, float BCP, float CAP,
-                                                  float &weight_a, float &weight_b, float &weight_c, float &z);
+    static std::array<float, 4> calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC,
+                                                                  float ABP, float BCP, float CAP);
 
     static bool show_mesh(float weight_a, float weight_b, float weight_c, int &r, int &g, int &b);
 
@@ -83,12 +83,13 @@ private:
     void illumination(const std::vector<Point3D> &normal_vectors, const Point3D &P, float weightA,
                       float weightB, float weightC, int &r, int &g, int &b) const;
 
-    void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors,
-                          const std::vector<Point2D> &
-                          texture_vectors);
+    std::array<float, 3> calculate_edge_functions(Point3D &A, Point3D &B, Point3D &C, Point3D &P);
 
-    void get_triangles_vectors(std::vector<Point3D> &result_points, std::vector<Point3D> &normal_vectors, std::vector<Point2D> &texture_vectors, const
-                               Matrix4D &model_view_projection_matrix, int triangle_ind);
+    void universal_render(const std::array<Point3D, 3> &result_points, const std::array<Point3D, 3> &normal_vectors,
+                          const std::array<Point2D, 3> &texture_vectors);
+
+    void get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors, std::array<Point2D, 3> &texture_vectors, const
+                               Matrix4D &model_view_projection_matrix, int triangle_ind) const;
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
