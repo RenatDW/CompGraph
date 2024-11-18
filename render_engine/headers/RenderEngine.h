@@ -2,7 +2,6 @@
 #define RENDERENGINE_H
 
 #include <iosfwd>
-#include <iosfwd>
 #include <QPainter>
 
 #include "Camera.h"
@@ -12,14 +11,13 @@
 #include "../../math/headers/Point3D.h"
 
 
-#include "TypeOfRender.h"
 #include "../../math/headers/DepthBuffer.h"
 
 
 class RenderEngine
 {
 public:
-    void render(const std::vector<TypeOfRender> &show_triangulation);
+    void render();
 
 
     RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color, Model &model,
@@ -71,10 +69,10 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float ABP, float BCP, float CAP, float &weightA,
-                                                  float &weightB, float &weightC, float &z);
+    static void calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC, float ABP, float BCP, float CAP,
+                                                  float &weight_a, float &weight_b, float &weight_c, float &z);
 
-    bool show_mesh(float weight_a, float weight_b, float weight_c, int r, int g, int b);
+    static bool show_mesh(float weight_a, float weight_b, float weight_c, int &r, int &g, int &b);
 
     static float calculate_parametr_of_illumination(const std::vector<Point3D> &normal_vectors, Camera &camera, const Point3D &P,
                                                     float weightA, float weightB, float weightC);
@@ -88,6 +86,9 @@ private:
     void universal_render(const std::vector<Point3D> &result_points, const std::vector<Point3D> &normal_vectors,
                           const std::vector<Point2D> &
                           texture_vectors);
+
+    void get_triangles_vectors(std::vector<Point3D> &result_points, std::vector<Point3D> &normal_vectors, std::vector<Point2D> &texture_vectors, const
+                               Matrix4D &model_view_projection_matrix, int triangle_ind, int n_vertices_in_triangle);
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);

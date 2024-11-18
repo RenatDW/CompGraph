@@ -31,20 +31,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
     camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
     int width = this->width();
     int height = this->height();
-    std::vector<TypeOfRender> render_types;
-    // render_types.emplace_back(TypeOfRender::mesh);
-    render_types.emplace_back(TypeOfRender::normal_vectors);
-    render_types.emplace_back(TypeOfRender::texture);
 
 
     for (Model &model: models) {
-        QColor basic_color = QColor(1, 1, 1);
-        //При цвете 0,0,0 все ломается
+        QColor basic_color = QColor(255, 255, 255);
+        //При низких значениях rgb, перестает рабоать (цвете 0,0,0 все ломается)
         RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
                                   height, show_mesh, show_texture, show_illumination);
-        renderEngine.render(render_types);
-        //Добавить варианты отрисовки
-        // RenderEngine::render(painter, camera, model_texture_path, fill_model_color, model, this->width(), this->height(), triangulation);
+        renderEngine.render();
     }
 }
 
@@ -162,6 +156,7 @@ void MainWindow::on_checkBox_show_texture_toggled(bool checked)
         // ui->checkBox_show_texture->toggled(false);
     }
     show_texture = !show_texture;
+    repaint();
 }
 
 void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
