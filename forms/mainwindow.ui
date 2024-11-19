@@ -74,7 +74,7 @@
     <addaction name="actionSave_Model"/>
     <addaction name="actionTriangulation"/>
     <addaction name="actionRotate_Scale_Translate"/>
-
+    <addaction name="actiondsad"/>
    </widget>
    <widget class="QMenu" name="moveMenu">
     <property name="title">
@@ -159,7 +159,7 @@
     <string>Back</string>
    </property>
    <property name="shortcut">
-    <string>s</string>
+    <string>S</string>
    </property>
   </action>
   <action name="actionForward">
@@ -167,12 +167,17 @@
     <string>Forward</string>
    </property>
    <property name="shortcut">
-    <string>w</string>
+    <string>W</string>
    </property>
   </action>
   <action name="actionRotate_Scale_Translate">
    <property name="text">
     <string>Rotate_Scale_Translate</string>
+   </property>
+  </action>
+  <action name="actiondsad">
+   <property name="text">
+    <string>dsad</string>
    </property>
   </action>
  </widget>
