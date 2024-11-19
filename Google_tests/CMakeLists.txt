@@ -1,5 +1,6 @@
 # 'Google_test' is the subproject name
 project(Google_tests)
+#set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 
 # 'lib' is the folder with Google Test sources
 add_subdirectory(lib)
@@ -18,6 +19,7 @@ add_executable(Google_Tests_run
         math_tests/Point3DTest.cpp
         math_tests/Vector4DTest.cpp
         math_tests/MathCastTest.cpp
+        render_engine/RasterMethods.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)

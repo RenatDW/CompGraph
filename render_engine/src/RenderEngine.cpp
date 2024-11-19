@@ -10,6 +10,7 @@
 #include "../headers/Mesh.h"
 #include "../headers/Texturezation.h"
 #include "../../math/headers/MathCast.h"
+#include "../headers/Rasterization.h"
 
 void RenderEngine::render()
 {
@@ -33,11 +34,8 @@ RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &strin
                                                           show_illumination_param(show_illumination_param),
                                                           fill_model_color(color) {}
 
-float RenderEngine::edge_function(Point3D a, Point3D b, Point3D c)
-{
-    return (floor(b.getX()) - floor(a.getX())) * (floor(c.getY()) - floor(a.getY())) - (
-               floor(b.getY()) - floor(a.getY())) * (floor(c.getX()) - floor(a.getX()));
-}
+
+
 
 void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
                                             int &x_left, int &x_right, int &y_down, int &y_up) const
@@ -45,41 +43,11 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     x_left = static_cast<int>(std::min({
         A.getX(), B.getX(), C.getX(), static_cast<float>(depth_buffer.getWidth())
     }));
-    x_right = static_cast<int>(std::max({A.getX(), B.getX(), C.getX(), 0.0f}));
+    x_right = static_cast<int>(std::max({A.getX() + 1, B.getX() + 1, C.getX() + 1, 0.0f}));
     y_down = static_cast<int>(std::min({
         A.getY(), B.getY(), C.getY(), static_cast<float>(depth_buffer.getHeight())
     }));
-    y_up = static_cast<int>(std::max({A.getY(), B.getY(), C.getY(), 0.0f}));
-}
-
-std::array<float, 4> RenderEngine::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC,
-                                                                     float ABP, float BCP,
-                                                                     float CAP)
-{
-    std::array<float, 4> ar;
-    ar[0] = BCP / ABC;
-    ar[1] = CAP / ABC;
-    ar[2] = ABP / ABC;
-
-    ar[3] = (A.getZ() * ar[0] + B.getZ() * ar[1] + C.getZ() * ar[2]);
-    return ar;
-}
-
-
-bool RenderEngine::show_mesh(float weight_a, float weight_b, float weight_c, int &r, int &g, int &b)
-{
-    if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) return true;
-    r = 1, g = 1, b = 1;
-    return false;
-}
-
-std::array<float, 3> RenderEngine::calculate_edge_functions(Point3D &A, Point3D &B, Point3D &C, Point3D &P)
-{
-    std::array<float, 3> ar;
-    ar[0] = edge_function(A, B, P);
-    ar[1] = edge_function(B, C, P);
-    ar[2] = edge_function(C, A, P);
-    return ar;
+    y_up = static_cast<int>(std::max({A.getY() + 1, B.getY() + 1, C.getY() + 1, 0.0f}));
 }
 
 void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
@@ -90,34 +58,32 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
     auto [A, B, C] = result_points;
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
+    float ABC;
+    ABC = Rasterization::get_triangle_area_float(A, B, C);
 
-    float ABC = edge_function(A, B, C);
 
     for (int y = y_down; y < y_up + 1; y++) {
         for (int x = x_left; x < x_right + 1; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
-            auto [ABP, BCP, CAP] = calculate_edge_functions(A, B, C, P);
+            auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A, B, C, P, show_mesh_param);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-            auto [weight_a, weight_b, weight_c, z] = calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
+            auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
 
             if (depth_buffer.get(x, y) <= z) continue;
 
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
 
             if (show_mesh_param)
-                if (show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
+                if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
             if (show_illumination_param)
-                //TODO освещение почему-то не динамичное...
-
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
 
             painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);
-            //TODO подумать в какую сторону лучше округлять
             painter.drawPoint(x, y);
         }
     }

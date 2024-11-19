@@ -30,7 +30,7 @@ public:
     std::string model_texture_path;
     QColor fill_model_color;
     Camera camera;
-    bool show_mesh = false;
+    bool show_mesh = true;
     bool show_texture = false;
     bool show_illumination = false;
     const int TRANSLATION = 5;
