@@ -7,6 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64/lib/cmake")
+#set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 
 file(GLOB
         CPPS "*.cpp"

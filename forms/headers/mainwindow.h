@@ -32,7 +32,7 @@ public:
     Camera camera;
     bool show_mesh = false;
     bool show_texture = false;
-    bool show_illumination = false;
+    bool show_illumination = true;
     const int TRANSLATION = 5;
 
 private slots:

@@ -1,5 +1,6 @@
 # 'Google_test' is the subproject name
 project(Google_tests)
+#set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 
 # 'lib' is the folder with Google Test sources
 add_subdirectory(lib)
