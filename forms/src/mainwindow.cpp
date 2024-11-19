@@ -52,7 +52,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 {
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
-                                                         tr("Object Files (*.obj)")).toStdString();
+                                                         tr("Object Files (*.obj)")).toUtf8().constData();
 
     //TODO Переделать когда нужно будет делать сценку
     if (models.size() == 1) {
@@ -70,7 +70,7 @@ void MainWindow::on_actionSave_Model_triggered()
     }
     std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
                                                          ":/",
-                                                         tr("Objects (*.obj)")).toStdString();
+                                                         tr("Objects (*.obj)")).toUtf8().constData();
     ObjWriter::write(models[0], file_name);
 }
 
@@ -114,7 +114,7 @@ void MainWindow::on_actionLoad_Texture_triggered()
 {
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Texture"), ":/",
-                                                         tr("Object Image (*.png *.jpg *.bmp)")).toStdString();
+                                                         tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
     //TODO Переделать когда нужно будет делать сценку
     model_texture_path = file_name;
 }

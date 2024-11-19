@@ -3,6 +3,7 @@
 //
 #include "../headers/Illumination.h"
 #include "../../math//headers/MathCast.h"
+#include <array>
 
 void Illumination::render()
 {

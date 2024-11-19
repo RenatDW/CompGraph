@@ -26,8 +26,8 @@ public:
 
     ~MainWindow();
 
-    std::vector<Model> models;
-    std::string model_texture_path;
+    std::vector<Model> models{};
+    std::string model_texture_path{};
     QColor fill_model_color;
     Camera camera;
     bool show_mesh = true;

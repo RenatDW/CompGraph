@@ -3,6 +3,9 @@
 //
 
 #include "../headers/Rasterization.h"
+
+#include <array>
+#include <cmath>
 #include <iostream>
 
 // float Rasterization::edgeFunction(Point3D a, Point3D b, Point3D c) {
