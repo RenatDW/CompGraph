@@ -20,8 +20,6 @@ public:
 
     virtual ~Texturezation() = default;
 
-    void render();
-
     void add_vertex(Model &mesh, Matrix4D &model_view_projection_matrix, int triangle_ind, int n_vertices_in_triangle, int width, int
                     height);
 

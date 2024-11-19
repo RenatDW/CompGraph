@@ -10,13 +10,7 @@
 class Rasterization
 {
 public:
-    std::vector<Point3D> result_points;
-
     Rasterization() = default;
-
-    void render();
-
-    static float edgeFunction(Point3D a, Point3D b, Point3D c);
 
     static float get_triangle_area_float(Point3D &a, Point3D &b, Point3D &c);
 

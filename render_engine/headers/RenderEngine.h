@@ -55,8 +55,6 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
-
-
 };
 
 #endif //RENDERENGINE_H

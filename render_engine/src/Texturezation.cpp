@@ -4,11 +4,6 @@
 
 #include "../headers/Texturezation.h"
 
-void Texturezation::render()
-{
-    // texturation();
-}
-
 void Texturezation::add_vertex(Model &mesh, Matrix4D &model_view_projection_matrix, int triangle_ind,
                                int n_vertices_in_triangle, int width, int height)
 {
