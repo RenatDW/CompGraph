@@ -1,7 +1,7 @@
 #include "../headers/RenderEngine.h"
 
 #include <iostream>
-
+#include <omp.h>
 #include "../headers/GraphicConveyor.h"
 #include "../../forms/headers/mainwindow.h"
 #include "../../math/headers/DepthBuffer.h"
@@ -50,6 +50,7 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     y_up = static_cast<int>(std::max({A.getY() + 1, B.getY() + 1, C.getY() + 1, 0.0f}));
 }
 
+
 void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
                                     const std::array<Point3D, 3> &normal_vectors,
                                     const std::array<Point2D, 3> &texture_vectors)
@@ -61,7 +62,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
 
-
     for (int y = y_down; y < y_up + 1; y++) {
         for (int x = x_left; x < x_right + 1; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
@@ -70,7 +70,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
-
             if (depth_buffer.get(x, y) <= z) continue;
 
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
@@ -81,7 +80,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-
             painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);
             painter.drawPoint(x, y);

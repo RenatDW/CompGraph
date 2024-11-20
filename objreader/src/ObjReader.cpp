@@ -63,7 +63,6 @@ void ObjReader::normale_recalculate(Model &result)
     //TODO не забыть изменить
 
     for (Polygon &element: result.polygons) {
-
         const int max_vector_size = element.get_vertex_indices().size() - 1;
         Vector3D last_ans = calculate_normal_vector(result, element, 0, 1, max_vector_size);
         Vector3D ans;

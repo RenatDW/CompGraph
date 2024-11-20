@@ -75,7 +75,10 @@ float Vector4D::length() const
 
 Vector4D Vector4D::normalization() const
 {
-	return {this->x / this->length(), this->y / this->length(), this->z / this->length(), this->w / this->length()};
+	float len = this->length();
+	if (len == 0) return {0, 0, 0, 0};
+	len = 1 / len;
+	return {this->x*len, this->y *len, this->z *len, this->w *len};
 }
 
 Vector4D::~Vector4D() = default;
