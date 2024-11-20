@@ -7,9 +7,9 @@
 
 
 
-class МатематическийКласс {
+class MathClass {
   public:
-    static float Вычисление_корня(float номер);
+    static float quick_reverse_square(float number);
 };
 
 
