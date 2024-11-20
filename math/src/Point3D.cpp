@@ -67,8 +67,9 @@ Point3D Point3D::operator + (const Point3D &v2) const
 
 Point3D Point3D::normalize() const
 {
-    const float len = std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
-    return  {this->x / len, this->y / len, this->z / len};
+
+    const float len = 1/std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+    return  {this->x * len, this->y * len, this->z * len};
 }
 
 Point3D Point3D::operator - (const Point3D &point_3d) const

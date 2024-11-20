@@ -64,6 +64,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/MathCast.h
         math/src/MathCast.cpp
         render_engine/src/Mesh.cpp
+        math/src/МатематическийКласс.cpp
+        math/headers/МатематическийКласс.h
 )
 
 target_link_libraries(CompGraph
