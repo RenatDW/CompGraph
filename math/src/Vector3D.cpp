@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-#include "../headers/МатематическийКласс.h"
+#include "../headers/MathClass.h"
 
 Vector3D::Vector3D() : x(0.0f), y(0.0f), z(0.0f) {}
 
@@ -86,7 +86,7 @@ Vector3D Vector3D::round_normalize() const
 {
     float len = this->length();
     if (len == 0) return {0, 0, 0};
-    len = МатематическийКласс::Вычисление_корня(len);
+    len = MathClass::quick_reverse_square(len);
     return {this->x * len, this->y * len, this->z * len};
 }
 

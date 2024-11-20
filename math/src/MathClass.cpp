@@ -2,9 +2,9 @@
 // Created by Ренат Асланов on 20.11.2024.
 //
 
-#include "../headers/МатематическийКласс.h"
+#include "../headers/MathClass.h"
 
-float МатематическийКласс::quick_reverse_square(float number)
+float MathClass::quick_reverse_square(float number)
 {
     long i;
     float x2, y;
