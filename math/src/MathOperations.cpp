@@ -1,10 +1,6 @@
-//
-// Created by Ренат Асланов on 20.11.2024.
-//
+#include "../headers/MathOperations.h"
 
-#include "../headers/МатематическийКласс.h"
-
-float МатематическийКласс::quick_reverse_square(float number)
+float MathOperations::calculate_reverse_square(const float number)
 {
     long i;
     float x2, y;

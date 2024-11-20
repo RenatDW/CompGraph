@@ -1,13 +1,10 @@
 #ifndef МАТЕМАТИЧЕСКИЙКЛАСС_H
 #define МАТЕМАТИЧЕСКИЙКЛАСС_H
 
-
-
-class MathClass {
-  public:
-    static float quick_reverse_square(float number);
+class MathOperations
+{
+public:
+    static float calculate_reverse_square(float number);
 };
-
-
 
 #endif

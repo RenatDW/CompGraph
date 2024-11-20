@@ -20,6 +20,7 @@ add_executable(Google_Tests_run
         math_tests/Vector4DTest.cpp
         math_tests/MathCastTest.cpp
         render_engine/RasterMethods.cpp
+        render_engine/GraphicConveyorTest.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
