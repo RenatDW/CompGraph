@@ -52,7 +52,7 @@ void MainWindow::update_scene()
 	int height = ui->graphicsView->viewport()->height();
 
 	QPixmap pixmap(width, height);
-	pixmap.fill(Qt::black);
+	pixmap.fill(QColor(45, 45, 45));
 	QPainter painter(&pixmap);
 
 	camera.setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
