@@ -82,13 +82,13 @@ Vector3D Vector3D::normalize() const
     return {this->x *len, this->y *len, this->z *len};
 }
 
-Vector3D Vector3D::round_normalize() const
-{
-    float len = this->length();
-    if (len == 0) return {0, 0, 0};
-    len = MathOperations::calculate_reverse_square(len);
-    return {this->x * len, this->y * len, this->z * len};
-}
+//Vector3D Vector3D::round_normalize() const
+//{
+//    float len = this->length();
+//    if (len == 0) return {0, 0, 0};
+//    len = MathOperations::calculate_reverse_square(len);
+//    return {this->x * len, this->y * len, this->z * len};
+//}
 
 // Vector3D Vector3D::transition(const Vector4D& v)
 // {
