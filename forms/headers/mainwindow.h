@@ -5,6 +5,8 @@
 #include "../../model/headers/Model.h"
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 
@@ -22,7 +24,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
-    void paintEvent(QPaintEvent *event) override;
+    //void paintEvent(QPaintEvent *event) override;
+
+	void update_scene();
 
     ~MainWindow();
 
@@ -37,40 +41,24 @@ public:
 
 private slots:
     void on_actionLoad_Model_triggered();
-
     void on_actionSave_Model_triggered();
-
     void on_actionUp_triggered();
-
     void on_actionDown_triggered();
-
     void on_actionLeft_triggered();
-
     void on_actionRight_triggered();
-
     void on_actionForward_triggered();
-
     void on_actionBack_triggered();
-
     void on_actionLoad_Texture_triggered();
-
     void on_actionChose_Color_triggered();
-
     void on_actionTriangulation_changed();
-
-
     void on_actionRotate_Scale_Translate_triggered();
-    
     void on_checkBox_show_mesh_toggled(bool checked);
-    
     void on_checkBox_show_texture_toggled(bool checked);
-    
     void on_checkBox_show_illumination_toggled(bool checked);
-    
-
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
     bool triangulation = true;
+	std::unique_ptr<QGraphicsScene> scene;
 };
 #endif
