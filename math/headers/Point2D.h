@@ -8,6 +8,7 @@ class Point2D
 {
 public:
     Point2D();
+
     Point2D(const Vector2D &a);
 
     Point2D(float x, float y);

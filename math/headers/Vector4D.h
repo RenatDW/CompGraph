@@ -36,7 +36,7 @@ public:
 
 	[[nodiscard]] float length() const;
 
-	[[nodiscard]] Vector4D normalization() const;
+	[[nodiscard]] Vector4D normalize() const;
 
 	friend bool operator == (const Vector4D &lhs, const Vector4D &rhs)
 	{

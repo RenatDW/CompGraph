@@ -51,7 +51,7 @@ float Vector2D::length() const
     return std::sqrt(this->x * this->x + this->y * this->y);
 }
 
-Vector2D Vector2D::normalization() const
+Vector2D Vector2D::normalize() const
 {
     float len = this->length();
     if (len == 0) return {0, 0};

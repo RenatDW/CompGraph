@@ -73,7 +73,7 @@ float Vector4D::length() const
 	return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z + this->w * this->w);
 }
 
-Vector4D Vector4D::normalization() const
+Vector4D Vector4D::normalize() const
 {
 	float len = this->length();
 	if (len == 0) return {0, 0, 0, 0};

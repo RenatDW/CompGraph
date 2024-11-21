@@ -86,10 +86,10 @@ TEST(Vector4DTest, LengthVector4D)
 TEST(Vector4DTest, NormalizationVector4D)
 {
     const Vector4D v(4.0f, -3.0f, 0.0f, 0.0f);
-    EXPECT_FLOAT_EQ(v.normalization().getX(), 0.8f);
-    EXPECT_FLOAT_EQ(v.normalization().getY(), -0.6f);
-    EXPECT_FLOAT_EQ(v.normalization().getZ(), 0.0f);
-    EXPECT_FLOAT_EQ(v.normalization().getW(), 0.0f);
+    EXPECT_FLOAT_EQ(v.normalize().getX(), 0.8f);
+    EXPECT_FLOAT_EQ(v.normalize().getY(), -0.6f);
+    EXPECT_FLOAT_EQ(v.normalize().getZ(), 0.0f);
+    EXPECT_FLOAT_EQ(v.normalize().getW(), 0.0f);
 }
 
 

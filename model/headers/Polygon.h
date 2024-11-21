@@ -24,17 +24,17 @@ public:
 		return !(lhs == rhs);
 	}
 
-	 std::vector<int> get_vertex_indices() const
+	[[nodiscard]] std::vector<int> get_vertex_indices() const
 	{
 		return vertex_indices;
 	}
 
-	 std::vector<int> get_normal_indices() const
+	[[nodiscard]] std::vector<int> get_normal_indices() const
 	{
 		return normal_indices;
 	}
 
-	 std::vector<int> get_texture_indices() const
+	[[nodiscard]] std::vector<int> get_texture_indices() const
 	{
 		return texture_indices;
 	}

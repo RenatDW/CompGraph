@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-
 void ObjWriter::write(const Model &model, const std::string &filename)
 {
     std::ofstream file(filename, std::ios::binary | std::ios::out | std::ios::trunc);

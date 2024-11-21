@@ -1,11 +1,12 @@
 #ifndef OBJREADER_H
 #define OBJREADER_H
 
-#include <vector>
-#include <string>
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Vector3D.h"
 #include "../../math/headers/Vector2D.h"
+
+#include <vector>
+#include <string>
 
 class ObjReader
 {
@@ -19,8 +20,6 @@ public:
     static void normale_recalculate(Model &result);
 
     static Model read(std::string &fileContent);
-
-
 
 protected:
     static Vector3D parse_vertex(const std::vector<std::string> &words_in_line_without_token, const int &line_ind);

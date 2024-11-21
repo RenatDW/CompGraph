@@ -1,8 +1,6 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
-//#include "Vector4D.h"
-
 class Vector3D
 {
 public:

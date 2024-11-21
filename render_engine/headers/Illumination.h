@@ -1,15 +1,11 @@
-//
-// Created by Ренат Асланов on 07.11.2024.
-//
-
 #ifndef ILLUMINATION_H
 #define ILLUMINATION_H
-#include <vector>
 
 #include "Camera.h"
 #include "Renderable.h"
 #include "../../math/headers/Point3D.h"
 
+#include <vector>
 
 class Illumination
 {

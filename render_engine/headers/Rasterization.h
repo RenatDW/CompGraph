@@ -1,11 +1,7 @@
-//
-// Created by Ренат Асланов on 07.11.2024.
-//
-
 #ifndef RASTERIZATION_H
 #define RASTERIZATION_H
-#include "Renderable.h"
 
+#include "Renderable.h"
 
 class Rasterization
 {
@@ -24,6 +20,5 @@ public:
 
     ~Rasterization() = default;
 };
-
 
 #endif //RASTERIZATION_H

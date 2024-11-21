@@ -11,5 +11,4 @@ public:
         : std::runtime_error(message + " at line " + std::to_string(lineInd)) {}
 };
 
-
 #endif //OBJREADEREXCEPTION_H

@@ -70,6 +70,6 @@ TEST(Vector2DTest, LengthVector2D)
 TEST(Vector2DTest, NormalizationVector2D)
 {
     const Vector2D v(4.0f, -3.0f);
-    EXPECT_FLOAT_EQ(v.normalization().getX(), 0.8f);
-    EXPECT_FLOAT_EQ(v.normalization().getY(), -0.6f);
+    EXPECT_FLOAT_EQ(v.normalize().getX(), 0.8f);
+    EXPECT_FLOAT_EQ(v.normalize().getY(), -0.6f);
 }

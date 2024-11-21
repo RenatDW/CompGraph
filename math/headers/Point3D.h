@@ -34,7 +34,6 @@ public:
 
     Point3D operator - (const Point3D & point_3d) const;
 
-    static Point3D vector_to_point(Vector3D a);
     [[nodiscard]] Point3D normalize() const;
 
 private:

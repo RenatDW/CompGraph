@@ -1,7 +1,3 @@
-//
-// Created by Ренат Асланов on 03.11.2024.
-//
-
 #include "../headers/DepthBuffer.h"
 
 float DepthBuffer::get(const int x, const int y) const

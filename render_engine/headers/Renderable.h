@@ -1,14 +1,10 @@
-//
-// Created by Ренат Асланов on 07.11.2024.
-//
-
 #ifndef RENDERABLE_H
 #define RENDERABLE_H
+
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Matrix4D.h"
 #include "../../math/headers/Point3D.h"
 #include "../../math/headers/Point2D.h"
-
 
 class Renderable
 {

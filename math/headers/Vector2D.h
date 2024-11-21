@@ -26,7 +26,7 @@ public:
 
 	[[nodiscard]] float length() const;
 
-	[[nodiscard]] Vector2D normalization() const;
+	[[nodiscard]] Vector2D normalize() const;
 
 	friend bool operator == (const Vector2D& lhs, const Vector2D& rhs)
 	{

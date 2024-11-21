@@ -1,10 +1,5 @@
-//
-// Created by Ренат Асланов on 03.11.2024.
-//
-
 #ifndef DEPTHBUFFER_H
 #define DEPTHBUFFER_H
-
 
 #include <vector>
 #include <limits>
@@ -14,14 +9,14 @@ public:
     DepthBuffer(int width, int height)
         : width(width), height(height), buffer(width * height, std::numeric_limits<float>::infinity()) {}
 
-    float get(int x, int y) const;
+    [[nodiscard]] float get(int x, int y) const;
 
-    int size() const;
+	[[nodiscard]] int size() const;
 
     void set(int x, int y, float depth);
 
-    int getWidth() const;
-    int getHeight() const;
+	[[nodiscard]] int getWidth() const;
+	[[nodiscard]] int getHeight() const;
 
 private:
     int width;
