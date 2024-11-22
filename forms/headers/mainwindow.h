@@ -55,6 +55,11 @@ private slots:
     void on_checkBox_show_mesh_toggled(bool checked);
     void on_checkBox_show_texture_toggled(bool checked);
     void on_checkBox_show_illumination_toggled(bool checked);
+	void slotCustomMenuRequested(QPoint pos);
+	void slotEditRecord();
+	void slotRemoveRecord();
+	void slotUpdateModels();
+
 
 private:
     Ui::MainWindow* ui;

@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 	ui->graphicsView->setScene(scene.get());
+
+
 }
 
 // БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
@@ -106,12 +108,50 @@ void MainWindow::on_actionLoad_Model_triggered()
 	//TODO обдумать как выдать id моделям
 	v.setValue(model_cnt);
 	model_list_item->setData(Qt::UserRole,v);
+	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
+
 	ui->listWidget->addItem(model_list_item);
+	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
+	// Подключаем СЛОТ вызова контекстного меню
+
+
 
 	model_cnt++;
 	update_scene();
 }
 
+void MainWindow::slotCustomMenuRequested(QPoint pos)
+{
+	/* Создаем объект контекстного меню */
+	QMenu * menu = new QMenu(this);
+	/* Создаём действия для контекстного меню */
+	QAction * editDevice = new QAction(tr("Редактировать"), this);
+	QAction * deleteDevice = new QAction(tr("Удалить"), this);
+	/* Подключаем СЛОТы обработчики для действий контекстного меню */
+	connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+	/* Устанавливаем действия в меню */
+	menu->addAction(editDevice);
+	menu->addAction(deleteDevice);
+	/* Вызываем контекстное меню */
+	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
+}
+void MainWindow::slotRemoveRecord()
+{
+	int row = ui->listWidget->selectionModel()->currentIndex().row();
+}
+void MainWindow::slotUpdateModels()
+{
+//	modelDevice->select();
+//	ui->deviceTableView->resizeColumnsToContents();
+}
+void MainWindow::slotEditRecord()
+{
+	int row = ui->listWidget->selectionModel()->currentIndex().row();
+	ui->listWidget->selectedItems()[row]->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
+	//TODO обработка ошибок для элементов с одинаковыми названиями
+}
 void MainWindow::on_actionSave_Model_triggered()
 {
     if (models.empty()) {
