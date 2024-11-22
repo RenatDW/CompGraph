@@ -98,13 +98,19 @@ void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, 
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex), width, height);
         result_points[vertex_in_triangle_ind] = (result_point);
         //Illumination
-        int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
-        Point3D normal_point(mesh.normals[texture_vertex_ind]);
-        normal_vectors[vertex_in_triangle_ind] = (normal_point);
+		if (show_illumination_param)
+		{
+			int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
+			Point3D normal_point(mesh.normals[texture_vertex_ind]);
+			normal_vectors[vertex_in_triangle_ind] = (normal_point);
+		}
         //Texture
-        texture_vertex_ind = mesh.triangles[triangle_ind].get_texture_indices()[vertex_in_triangle_ind];
-        Point2D texture_point = (mesh.textureVertices[texture_vertex_ind]);
-        texture_vectors[vertex_in_triangle_ind] = (texture_point);
+		if (show_texture_param)
+		{
+			int texture_vertex_ind = mesh.triangles[triangle_ind].get_texture_indices()[vertex_in_triangle_ind];
+			Point2D texture_point = (mesh.textureVertices[texture_vertex_ind]);
+			texture_vectors[vertex_in_triangle_ind] = (texture_point);
+		}
     }
 }
 
