@@ -11,6 +11,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -64,6 +65,16 @@ void MainWindow::update_scene()
 		renderEngine.render();
 	}
 
+//	auto m = ui->listWidget->currentItem();
+//	int id = m.value<int>();
+//	for(auto element: m){
+//		QString ans (element ->text());
+//	if(m->isSelected())
+//	{
+//		std::cout << std::to_string(m->data(Qt::UserRole).value<int>() + 1) << std::endl;
+//	}
+//	}
+
 	auto item = std::make_unique<QGraphicsPixmapItem>(pixmap);
 	scene->addItem(item.release());
 	ui->graphicsView->update();
@@ -79,7 +90,6 @@ void MainWindow::on_actionLoad_Model_triggered()
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
-
     //TODO Переделать когда нужно будет делать сценку
     if (models.size() == 1)
 	{
@@ -89,6 +99,16 @@ void MainWindow::on_actionLoad_Model_triggered()
 	{
         models.emplace_back(ObjReader::read(file_name));
     }
+	std::string name =  "Model " + std::to_string(model_cnt);
+	//TODO обработать эту утечку
+	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+	//TODO обдумать как выдать id моделям
+	v.setValue(model_cnt);
+	model_list_item->setData(Qt::UserRole,v);
+	ui->listWidget->addItem(model_list_item);
+
+	model_cnt++;
 	update_scene();
 }
 
@@ -168,7 +188,16 @@ void MainWindow::on_actionTriangulation_changed()
 
 void MainWindow::on_actionRotate_Scale_Translate_triggered()
 {
-    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+	for(auto element: ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::rotate_scale_translate(models[id - 1], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+	}
+
+
 	update_scene();
 }
 

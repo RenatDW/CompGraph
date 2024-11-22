@@ -60,5 +60,6 @@ private:
     Ui::MainWindow* ui;
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
+	int model_cnt = 1;
 };
 #endif
