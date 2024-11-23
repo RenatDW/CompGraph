@@ -12,6 +12,7 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <iostream>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -252,12 +253,60 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-	std::string name = "{100, 0, 0}";
-	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QDialog * dialog1 = new QDialog();
+	dialog1->setWindowModality(Qt::WindowModality::NonModal);
+	dialog1->setMinimumHeight(150);
+	dialog1->setMinimumWidth(150);
+
+	QLabel* label_1 = new QLabel();
+	label_1->setText("Enter vector variables\n(x, y, z):");
+	label_1->setGeometry(10, 10, 150, 50);
+	label_1->setParent(dialog1);
+
+	QTextEdit* x_var = new QTextEdit();
+	x_var->setPlaceholderText("x:");
+	x_var->setGeometry(10, 70, 30, 30);
+	x_var->setParent(dialog1);
+
+	QTextEdit* y_var = new QTextEdit();
+	y_var->setPlaceholderText("y:");
+	y_var->setGeometry(80, 70, 30, 30);
+	y_var->setParent(dialog1);
+
+	QTextEdit* z_var = new QTextEdit();
+	z_var->setPlaceholderText("z:");
+	z_var->setGeometry(150, 70, 30, 30);
+	z_var->setParent(dialog1);
+
+	QPushButton* accept = new QPushButton();
+	accept->setGeometry(10, 100, 50, 30);
+	accept->setText("Add");
+	accept->setParent(dialog1);
+	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, this]()
+	{
+		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText());
+	});
+
+
+//	QPushButton *cancel = new QPushButton();
+//	cancel->setGeometry(100, 100, 30, 30);
+//	accept->setText("Cancel");
+//	cancel->setParent(dialog1);
+//
+	dialog1->show();
+
+
+
+}
+
+void MainWindow::add_camera_to_list(QString x, QString y, QString z)
+{
+	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
+	QListWidgetItem* model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
-	std::array<float, 3> a{100,0,0};
+	std::array<float, 3> a{x.toFloat(), y.toFloat(), z.toFloat()};
 	v.setValue(a);
-	model_list_item->setData(Qt::UserRole,v);
+	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
 }
 
@@ -265,9 +314,10 @@ void MainWindow::on_pushButton_3_clicked()
 {
 
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
-	if(row == -1)
+	if (row == -1)
 	{
 		std::cout << "Камера не выбрана" << std::endl;
+		return;
 	}
 	std::array<float, 3> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 3>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
@@ -280,7 +330,8 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-
+	auto it = ui->listWidget_2->takeItem(ui->listWidget_2->currentRow());
+	delete it;
 }
 
 void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
