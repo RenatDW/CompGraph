@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
 //
 //    for (Model &model: models) {
 //        QColor basic_color = QColor(255, 255, 255);
-//        //При низких значениях rgb, перестает рабоать (цвете 0,0,0 все ломается)
 //        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
 //                                  height, show_mesh, show_texture, show_illumination);
 //        renderEngine.render();
@@ -51,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::update_scene()
 {
+        //При низких значениях rgb, перестает рабоать (цвете 0,0,0 все ломается)
+
 	scene->clear();
 	int width = ui->graphicsView->viewport()->width();
 	int height = ui->graphicsView->viewport()->height();
@@ -247,6 +248,39 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 
 
 	update_scene();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+	std::string name = "{100, 0, 0}";
+	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+	std::array<float, 3> a{100,0,0};
+	v.setValue(a);
+	model_list_item->setData(Qt::UserRole,v);
+	ui->listWidget_2->addItem(model_list_item);
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+
+	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
+	if(row == -1)
+	{
+		std::cout << "Камера не выбрана" << std::endl;
+	}
+	std::array<float, 3> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 3>>();
+	Vector3D a(arr[0], arr[1], arr[2]);
+	camera.setPosition(a);
+
+//	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
+//	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
+//	delete it;
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
 }
 
 void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
