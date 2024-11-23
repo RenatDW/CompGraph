@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 	ui->graphicsView->setScene(scene.get());
+	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
 
 
 }
@@ -99,9 +100,6 @@ void MainWindow::on_actionLoad_Model_triggered()
 	ui->listWidget->addItem(model_list_item);
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
-	// Подключаем СЛОТ вызова контекстного меню
-
-
 
 	model_cnt++;
 	update_scene();
@@ -121,7 +119,7 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 	menu->addAction(editDevice);
 	menu->addAction(deleteDevice);
 	/* Вызываем контекстное меню */
-	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
+	menu->exec(ui->listWidget->viewport()->mapToGlobal(pos));
 }
 void MainWindow::slotRemoveRecord()
 {
@@ -132,14 +130,19 @@ void MainWindow::slotRemoveRecord()
 }
 void MainWindow::slotEditRecord()
 {
-//	int row = ui->listWidget->selectionModel()->currentIndex().row();
-	auto elems = ui->listWidget->selectedItems();
-	elems[0]->setText(QString::fromStdString("blya, kuda tyanum ruchki, eshyo ne gotove"));
-	for (int i = 1; i < elems.length(); i++)
-	{
-		elems[i]->setText(QString::fromStdString("blya, kuda tyanum ruchki, eshyo ne gotove " + std::to_string(i)));
-	}
+	int row = ui->listWidget->selectionModel()->currentIndex().row();
 	//TODO обработка ошибок для элементов с одинаковыми названиями
+
+	for (auto elem : ui->listWidget->findItems("*", Qt::MatchWildcard))
+	{
+		if (elem->text() == "blya, kuda tyanum ruchki, eshyo ne gotove")
+		{
+			std::cout << "Уже есть модель с таким названием" << std::endl;
+			ui->listWidget->item(row)->setText("drugoye nazvaniye, eshyo ne gotovo");
+		}
+	}
+	ui->listWidget->item(row)->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
+
 }
 void MainWindow::on_actionSave_Model_triggered()
 {
