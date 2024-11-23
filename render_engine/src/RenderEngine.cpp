@@ -123,5 +123,4 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
                               triangle_ind);
         universal_render(result_points, normal_vectors, texture_vectors);
     }
-    painter.end();
 }

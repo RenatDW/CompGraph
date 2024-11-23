@@ -57,6 +57,7 @@ private slots:
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();
+	void slotRotateRecord();
 
 
 private:

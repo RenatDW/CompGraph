@@ -111,15 +111,28 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 	QMenu * menu = new QMenu(this);
 	/* Создаём действия для контекстного меню */
 	QAction * editDevice = new QAction(tr("Редактировать"), this);
-	QAction * deleteDevice = new QAction(tr("Удалить"), this);
+	QAction* rotateDevice = new QAction(tr("Преместить"), this);
+	QAction* deleteDevice = new QAction(tr("Удалить"), this);
 	/* Подключаем СЛОТы обработчики для действий контекстного меню */
 	connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(rotateDevice, SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
 	connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+
 	/* Устанавливаем действия в меню */
 	menu->addAction(editDevice);
+	menu->addAction(rotateDevice);
 	menu->addAction(deleteDevice);
 	/* Вызываем контекстное меню */
-	menu->exec(ui->listWidget->viewport()->mapToGlobal(pos));
+	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
+}
+void MainWindow::slotRotateRecord()
+{
+	for (auto element : ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+	}
 }
 void MainWindow::slotRemoveRecord()
 {
@@ -225,7 +238,7 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 	{
 		QVariant v = element->data(Qt::UserRole);
 		int id = v.value<int>();
-		GraphicConveyor::rotate_scale_translate(models[id - 1], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 	}
 
