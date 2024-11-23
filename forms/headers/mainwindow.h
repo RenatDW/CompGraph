@@ -29,8 +29,7 @@ public:
 	void update_scene();
 
     ~MainWindow();
-
-    std::vector<Model> models{};
+	std::map<int, Model> models;
     std::string model_texture_path{};
     QColor fill_model_color;
     Camera camera;
@@ -55,10 +54,16 @@ private slots:
     void on_checkBox_show_mesh_toggled(bool checked);
     void on_checkBox_show_texture_toggled(bool checked);
     void on_checkBox_show_illumination_toggled(bool checked);
+	void slotCustomMenuRequested(QPoint pos);
+	void slotEditRecord();
+	void slotRemoveRecord();
+	void slotRotateRecord();
+
 
 private:
     Ui::MainWindow* ui;
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
+	int model_cnt = 1;
 };
 #endif

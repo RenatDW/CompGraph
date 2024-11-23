@@ -11,6 +11,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -21,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 	ui->graphicsView->setScene(scene.get());
+	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
+
+
 }
 
 // БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
@@ -56,10 +60,10 @@ void MainWindow::update_scene()
 	QPainter painter(&pixmap);
 
 	camera.setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
-	for (Model& model : models)
+	for (std::pair<int, Model> model : models)
 	{
 		QColor basic_color = QColor(255, 255, 255);
-		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
+		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
 				height, show_mesh, show_texture, show_illumination);
 		renderEngine.render();
 	}
@@ -79,19 +83,83 @@ void MainWindow::on_actionLoad_Model_triggered()
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
+	models.emplace(model_cnt, ObjReader::read(file_name));
 
-    //TODO Переделать когда нужно будет делать сценку
-    if (models.size() == 1)
-	{
-        models[0] = (ObjReader::read(file_name));
-    }
-	else
-	{
-        models.emplace_back(ObjReader::read(file_name));
-    }
+	//value and number of loaded model
+	std::map<int, int> m;
+	std::string name =  "Model " + std::to_string(model_cnt);
+	//TODO обработать эту утечку
+	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+
+	v.setValue(model_cnt);
+	model_list_item->setData(Qt::UserRole,v);
+	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
+
+	ui->listWidget->addItem(model_list_item);
+	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
+
+	model_cnt++;
 	update_scene();
 }
 
+void MainWindow::slotCustomMenuRequested(QPoint pos)
+{
+	if (ui->listWidget->count() == 0)
+	{
+		std::cout << "oshibka, net elementov, elki palki" << std::endl;
+		return;
+	}
+	/* Создаем объект контекстного меню */
+	QMenu * menu = new QMenu(this);
+	/* Создаём действия для контекстного меню */
+	QAction * editDevice = new QAction(tr("Редактировать"), this);
+	QAction* rotateDevice = new QAction(tr("Преместить"), this);
+	QAction* deleteDevice = new QAction(tr("Удалить"), this);
+	/* Подключаем СЛОТы обработчики для действий контекстного меню */
+	connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(rotateDevice, SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
+	connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+
+	/* Устанавливаем действия в меню */
+	menu->addAction(editDevice);
+	menu->addAction(rotateDevice);
+	menu->addAction(deleteDevice);
+	/* Вызываем контекстное меню */
+	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
+}
+void MainWindow::slotRotateRecord()
+{
+	for (auto element : ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+	}
+}
+void MainWindow::slotRemoveRecord()
+{
+	int row = ui->listWidget->selectionModel()->currentIndex().row();
+	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
+	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
+	delete it;
+}
+void MainWindow::slotEditRecord()
+{
+	int row = ui->listWidget->selectionModel()->currentIndex().row();
+
+	for (auto elem : ui->listWidget->findItems("*", Qt::MatchWildcard))
+	{
+		if (elem->text() == "blya, kuda tyanum ruchki, eshyo ne gotove")
+		{
+			std::cout << "Уже есть модель с таким названием" << std::endl;
+			return;
+		}
+	}
+	ui->listWidget->item(row)->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
+
+}
 void MainWindow::on_actionSave_Model_triggered()
 {
     if (models.empty()) {
@@ -168,7 +236,16 @@ void MainWindow::on_actionTriangulation_changed()
 
 void MainWindow::on_actionRotate_Scale_Translate_triggered()
 {
-    GraphicConveyor::rotate_scale_translate(models[0], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+	for(auto element: ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+	}
+
+
 	update_scene();
 }
 
