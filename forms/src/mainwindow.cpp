@@ -83,7 +83,6 @@ void MainWindow::on_actionLoad_Model_triggered()
     std::string file_name = QFileDialog::getOpenFileName(this,
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
-    //TODO Переделать когда нужно будет делать сценку
 	models.emplace(model_cnt, ObjReader::read(file_name));
 
 	//value and number of loaded model
@@ -92,7 +91,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	//TODO обработать эту утечку
 	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
-	//TODO обдумать как выдать id моделям
+
 	v.setValue(model_cnt);
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
@@ -107,6 +106,11 @@ void MainWindow::on_actionLoad_Model_triggered()
 
 void MainWindow::slotCustomMenuRequested(QPoint pos)
 {
+	if (ui->listWidget->count() == 0)
+	{
+		std::cout << "oshibka, net elementov, elki palki" << std::endl;
+		return;
+	}
 	/* Создаем объект контекстного меню */
 	QMenu * menu = new QMenu(this);
 	/* Создаём действия для контекстного меню */
@@ -144,14 +148,13 @@ void MainWindow::slotRemoveRecord()
 void MainWindow::slotEditRecord()
 {
 	int row = ui->listWidget->selectionModel()->currentIndex().row();
-	//TODO обработка ошибок для элементов с одинаковыми названиями
 
 	for (auto elem : ui->listWidget->findItems("*", Qt::MatchWildcard))
 	{
 		if (elem->text() == "blya, kuda tyanum ruchki, eshyo ne gotove")
 		{
 			std::cout << "Уже есть модель с таким названием" << std::endl;
-			ui->listWidget->item(row)->setText("drugoye nazvaniye, eshyo ne gotovo");
+			return;
 		}
 	}
 	ui->listWidget->item(row)->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
