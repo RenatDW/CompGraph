@@ -29,8 +29,7 @@ public:
 	void update_scene();
 
     ~MainWindow();
-
-    std::vector<Model> models{};
+	std::map<int, Model> models;
     std::string model_texture_path{};
     QColor fill_model_color;
     Camera camera;
@@ -58,7 +57,6 @@ private slots:
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();
-	void slotUpdateModels();
 
 
 private:

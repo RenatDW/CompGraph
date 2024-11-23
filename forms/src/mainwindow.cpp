@@ -59,23 +59,13 @@ void MainWindow::update_scene()
 	QPainter painter(&pixmap);
 
 	camera.setAspectRatio(static_cast<float>(width) / static_cast<float>(height));
-	for (Model& model : models)
+	for (std::pair<int, Model> model : models)
 	{
 		QColor basic_color = QColor(255, 255, 255);
-		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
+		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
 				height, show_mesh, show_texture, show_illumination);
 		renderEngine.render();
 	}
-
-//	auto m = ui->listWidget->currentItem();
-//	int id = m.value<int>();
-//	for(auto element: m){
-//		QString ans (element ->text());
-//	if(m->isSelected())
-//	{
-//		std::cout << std::to_string(m->data(Qt::UserRole).value<int>() + 1) << std::endl;
-//	}
-//	}
 
 	auto item = std::make_unique<QGraphicsPixmapItem>(pixmap);
 	scene->addItem(item.release());
@@ -93,14 +83,10 @@ void MainWindow::on_actionLoad_Model_triggered()
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
     //TODO Переделать когда нужно будет делать сценку
-    if (models.size() == 1)
-	{
-        models[0] = (ObjReader::read(file_name));
-    }
-	else
-	{
-        models.emplace_back(ObjReader::read(file_name));
-    }
+	models.emplace(model_cnt, ObjReader::read(file_name));
+
+	//value and number of loaded model
+	std::map<int, int> m;
 	std::string name =  "Model " + std::to_string(model_cnt);
 	//TODO обработать эту утечку
 	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
@@ -140,16 +126,19 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 void MainWindow::slotRemoveRecord()
 {
 	int row = ui->listWidget->selectionModel()->currentIndex().row();
-}
-void MainWindow::slotUpdateModels()
-{
-//	modelDevice->select();
-//	ui->deviceTableView->resizeColumnsToContents();
+	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
+	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
+	delete it;
 }
 void MainWindow::slotEditRecord()
 {
-	int row = ui->listWidget->selectionModel()->currentIndex().row();
-	ui->listWidget->selectedItems()[row]->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
+//	int row = ui->listWidget->selectionModel()->currentIndex().row();
+	auto elems = ui->listWidget->selectedItems();
+	elems[0]->setText(QString::fromStdString("blya, kuda tyanum ruchki, eshyo ne gotove"));
+	for (int i = 1; i < elems.length(); i++)
+	{
+		elems[i]->setText(QString::fromStdString("blya, kuda tyanum ruchki, eshyo ne gotove " + std::to_string(i)));
+	}
 	//TODO обработка ошибок для элементов с одинаковыми названиями
 }
 void MainWindow::on_actionSave_Model_triggered()
