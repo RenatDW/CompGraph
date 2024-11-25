@@ -181,11 +181,11 @@ void MainWindow::on_actionUp_triggered()
 {
     camera.movePosition(Vector3D(0, static_cast<float>(TRANSLATION), 0));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
     update_scene();
@@ -195,11 +195,11 @@ void MainWindow::on_actionDown_triggered()
 {
     camera.movePosition(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
 	update_scene();
@@ -209,11 +209,11 @@ void MainWindow::on_actionLeft_triggered()
 {
     camera.movePosition(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
 	update_scene();
@@ -223,11 +223,11 @@ void MainWindow::on_actionRight_triggered()
 {
     camera.movePosition(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
 	update_scene();
@@ -237,11 +237,11 @@ void MainWindow::on_actionForward_triggered()
 {
     camera.movePosition(Vector3D(0, 0, static_cast<float>(-TRANSLATION)));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
 	update_scene();
@@ -251,11 +251,11 @@ void MainWindow::on_actionBack_triggered()
 {
     camera.movePosition(Vector3D(0, 0, static_cast<float>(TRANSLATION)));
 	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
 	QVariant cord;
-	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera_model_id)};
 	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 
 	update_scene();
@@ -301,7 +301,7 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 
 	update_scene();
 }
-
+//Кнопка +
 void MainWindow::on_pushButton_2_clicked()
 {
 	QDialog * dialog1 = new QDialog();
@@ -366,11 +366,15 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
 	//TODO добавить перемещения на координаты
-	models.emplace(model_cnt, md);
 //	std::cout << model_cnt << std::endl;
 
-	model_cnt++;
+	add_model(md);
 
+}
+void MainWindow::add_model(Model& md)
+{
+	models.emplace(model_cnt, md);
+	model_cnt++;
 }
 void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 {
@@ -386,6 +390,8 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 
 }
 
+
+//Кнопка use
 void MainWindow::on_pushButton_3_clicked()
 {
 
@@ -395,26 +401,26 @@ void MainWindow::on_pushButton_3_clicked()
 		std::cout << "Камера не выбрана" << std::endl;
 		return;
 	}
-	//Создание модели действующе камеры
+
+
+//	// Удаление модели выбранной камеры
+	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
+//
+//	//Создание модели действующе камеры
 	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0,camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ());
-	models.emplace(selected_camera, md);
+	models.emplace(selected_camera_model_id, md);
 
-	// Удаление модели выбранной камеры
-	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
-	selected_camera = row;
 
 	std::array<float, 4> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
 	camera.setPosition(a);
-	//todo удалить прошлую камеру
+	selected_camera_model_id = arr[3];
+	selected_camera_list_id = row;
 
-//	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
-//	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
-//	delete it;
 }
-
+//Кнопка -
 void MainWindow::on_pushButton_4_clicked()
 {
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();

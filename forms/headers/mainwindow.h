@@ -70,8 +70,10 @@ private:
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
 	int model_cnt = 0;
-	int selected_camera = model_cnt;
+	int selected_camera_model_id = model_cnt;
+	int selected_camera_list_id = model_cnt;
 	void add_camera_to_list(QString x, QString y, QString z, QDialog* dialog1);
 	void add_camera_to_list(QString x, QString y, QString z);
+	void add_model(Model& md);
 };
 #endif
