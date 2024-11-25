@@ -24,7 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 	ui->graphicsView->setScene(scene.get());
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
-
+	QString x = "0", y = "0", z = "0";
+	add_camera_to_list(x,y,z);
 
 }
 
@@ -95,6 +96,8 @@ void MainWindow::on_actionLoad_Model_triggered()
 	QVariant v;
 
 	v.setValue(model_cnt);
+//	std::cout << model_cnt << std::endl;
+
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
@@ -177,36 +180,84 @@ void MainWindow::on_actionSave_Model_triggered()
 void MainWindow::on_actionUp_triggered()
 {
     camera.movePosition(Vector3D(0, static_cast<float>(TRANSLATION), 0));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
     update_scene();
 }
 
 void MainWindow::on_actionDown_triggered()
 {
     camera.movePosition(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
 	update_scene();
 }
 
 void MainWindow::on_actionLeft_triggered()
 {
     camera.movePosition(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
 	update_scene();
 }
 
 void MainWindow::on_actionRight_triggered()
 {
     camera.movePosition(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
 	update_scene();
 }
 
 void MainWindow::on_actionForward_triggered()
 {
     camera.movePosition(Vector3D(0, 0, static_cast<float>(-TRANSLATION)));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
 	update_scene();
 }
 
 void MainWindow::on_actionBack_triggered()
 {
     camera.movePosition(Vector3D(0, 0, static_cast<float>(TRANSLATION)));
+	std::string ans = "{" + std::to_string(camera.getPosition().getX()) + ", " + std::to_string(camera.getPosition().getY()) + ", " +  std::to_string(camera.getPosition().getZ()) + "}";
+	ui->listWidget_2->item(selected_camera)->setText(QString::fromStdString(ans));
+	QVariant cord;
+	std::array<float, 4> coord {camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ(), static_cast<float>(selected_camera)};
+	cord.setValue(coord);
+	ui->listWidget_2->item(selected_camera)->setData(Qt::UserRole, cord);
+
+
 	update_scene();
 }
 
@@ -316,7 +367,22 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
 	//TODO добавить перемещения на координаты
 	models.emplace(model_cnt, md);
+//	std::cout << model_cnt << std::endl;
+
 	model_cnt++;
+
+}
+void MainWindow::add_camera_to_list(QString x, QString y, QString z)
+{
+	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
+	QListWidgetItem* model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
+//	std::cout << model_cnt << std::endl;
+	model_cnt++;
+	v.setValue(a);
+	model_list_item->setData(Qt::UserRole, v);
+	ui->listWidget_2->addItem(model_list_item);
 
 }
 
@@ -329,10 +395,20 @@ void MainWindow::on_pushButton_3_clicked()
 		std::cout << "Камера не выбрана" << std::endl;
 		return;
 	}
+	//Создание модели действующе камеры
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
+	Model md = ObjReader::read(file_name);
+	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0,camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ());
+	models.emplace(selected_camera, md);
+
+	// Удаление модели выбранной камеры
+	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
+	selected_camera = row;
 
 	std::array<float, 4> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
 	camera.setPosition(a);
+	//todo удалить прошлую камеру
 
 //	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
 //	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
@@ -342,7 +418,7 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
-	std::cout << models.size() << std::endl;
+//	std::cout << models.size() << std::endl;
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
 	std::cout << models.size() << std::endl;
 	auto it = ui->listWidget_2->takeItem(ui->listWidget_2->currentRow());
