@@ -70,7 +70,6 @@ private:
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
 	int model_cnt = 1;
-	void add_camera_to_list(QString string);
-	void add_camera_to_list(QString x, QString y, QString z);
+	void add_camera_to_list(QString x, QString y, QString z, QDialog* dialog1);
 };
 #endif

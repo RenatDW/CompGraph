@@ -282,9 +282,10 @@ void MainWindow::on_pushButton_2_clicked()
 	accept->setGeometry(10, 100, 50, 30);
 	accept->setText("Add");
 	accept->setParent(dialog1);
-	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, this]()
+	//TODO автозакрытие окна после добавления камеры
+	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, dialog1, this]()
 	{
-		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText());
+		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText(), dialog1);
 	});
 
 
@@ -299,15 +300,24 @@ void MainWindow::on_pushButton_2_clicked()
 
 }
 
-void MainWindow::add_camera_to_list(QString x, QString y, QString z)
+void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *dialog1)
 {
+	dialog1->close();
 	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
 	QListWidgetItem* model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
-	std::array<float, 3> a{x.toFloat(), y.toFloat(), z.toFloat()};
+	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
+
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
+	Model md = ObjReader::read(file_name);
+	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
+	//TODO добавить перемещения на координаты
+	models.emplace(model_cnt, md);
+	model_cnt++;
+
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -319,7 +329,8 @@ void MainWindow::on_pushButton_3_clicked()
 		std::cout << "Камера не выбрана" << std::endl;
 		return;
 	}
-	std::array<float, 3> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 3>>();
+
+	std::array<float, 4> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
 	camera.setPosition(a);
 
@@ -330,6 +341,10 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
+	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
+	std::cout << models.size() << std::endl;
+	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
+	std::cout << models.size() << std::endl;
 	auto it = ui->listWidget_2->takeItem(ui->listWidget_2->currentRow());
 	delete it;
 }
