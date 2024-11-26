@@ -54,6 +54,11 @@ private slots:
     void on_checkBox_show_mesh_toggled(bool checked);
     void on_checkBox_show_texture_toggled(bool checked);
     void on_checkBox_show_illumination_toggled(bool checked);
+	void on_pushButton_2_clicked();
+	void on_pushButton_3_clicked();
+	void on_pushButton_4_clicked();
+
+
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();
@@ -64,6 +69,11 @@ private:
     Ui::MainWindow* ui;
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
-	int model_cnt = 1;
+	int model_cnt = 0;
+	int selected_camera_model_id = model_cnt;
+	int selected_camera_list_id = model_cnt;
+	void add_camera_to_list(QString x, QString y, QString z, QDialog* dialog1);
+	void add_camera_to_list(QString x, QString y, QString z);
+	void add_model(Model& md);
 };
 #endif
