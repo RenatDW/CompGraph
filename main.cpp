@@ -26,7 +26,12 @@ int main(int argc, char *argv[])
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapUpperTeeth.obj");
     // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapFemaleBody.obj");
 //    std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj"); // МОЙ КУБИК :3
-    std::string filename( "/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj"); // А ЭТО МОЙ КУБИК :)
+
+
+/* ЭТОТ КУБИК ТОЖЕ БУДЕТ МОИМ БУГАГА*/
+	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
+
+
     // Model ans(ObjReader::read(filename));
 
     QApplication a(argc, argv);
