@@ -7,6 +7,8 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <memory>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 QT_BEGIN_NAMESPACE
 
@@ -57,13 +59,12 @@ private slots:
 	void on_pushButton_2_clicked();
 	void on_pushButton_3_clicked();
 	void on_pushButton_4_clicked();
-
-
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();
 	void slotRotateRecord();
 
+	void wheelEvent(QWheelEvent* event);
 
 private:
     Ui::MainWindow* ui;
@@ -76,4 +77,5 @@ private:
 	void add_camera_to_list(QString x, QString y, QString z);
 	void add_model(Model& md);
 };
+
 #endif

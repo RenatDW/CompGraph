@@ -54,6 +54,7 @@ private:
     float fov;
     float aspectRatio;
 
+
 };
 
 #endif

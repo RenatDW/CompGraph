@@ -13,6 +13,7 @@
 #include <QGraphicsPixmapItem>
 #include <iostream>
 #include <QLabel>
+#include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -28,27 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 	add_camera_to_list(x,y,z);
 
 }
-
-// БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
-
-//void MainWindow::paintEvent(QPaintEvent *event)
-//{
-//    Q_UNUSED(event);
-//    QMainWindow::paintEvent(event);
-//
-//    QPainter painter(this); // Создаем объект QPainter
-//
-//    camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
-//    int width = this->width();
-//    int height = this->height();
-//
-//    for (Model &model: models) {
-//        QColor basic_color = QColor(255, 255, 255);
-//        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
-//                                  height, show_mesh, show_texture, show_illumination);
-//        renderEngine.render();
-//    }
-//}
 
 void MainWindow::update_scene()
 {
@@ -243,7 +223,6 @@ void MainWindow::on_actionForward_triggered()
 	cord.setValue(coord);
 	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
-
 	update_scene();
 }
 
@@ -346,16 +325,13 @@ void MainWindow::on_pushButton_2_clicked()
 //	cancel->setParent(dialog1);
 //
 	dialog1->show();
-
-
-
 }
 
 void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *dialog1)
 {
 	dialog1->close();
 	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
-	QListWidgetItem* model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	auto* model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 	v.setValue(a);
@@ -387,7 +363,6 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
-
 }
 
 
@@ -455,3 +430,32 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
     
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
+
+void MainWindow::wheelEvent(QWheelEvent *event) {
+	int delta = event->angleDelta().y();
+	const float zoom_speed = 0.1f;
+	camera.movePosition(Vector3D(0, 0, static_cast<float>(delta) * zoom_speed * (-1)));
+	update_scene();
+}
+
+
+// БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
+
+//void MainWindow::paintEvent(QPaintEvent *event)
+//{
+//    Q_UNUSED(event);
+//    QMainWindow::paintEvent(event);
+//
+//    QPainter painter(this); // Создаем объект QPainter
+//
+//    camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
+//    int width = this->width();
+//    int height = this->height();
+//
+//    for (Model &model: models) {
+//        QColor basic_color = QColor(255, 255, 255);
+//        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
+//                                  height, show_mesh, show_texture, show_illumination);
+//        renderEngine.render();
+//    }
+//}
