@@ -47,8 +47,6 @@ private slots:
     void on_actionDown_triggered();
     void on_actionLeft_triggered();
     void on_actionRight_triggered();
-    void on_actionForward_triggered();
-    void on_actionBack_triggered();
     void on_actionLoad_Texture_triggered();
     void on_actionChose_Color_triggered();
     void on_actionTriangulation_changed();
