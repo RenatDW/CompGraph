@@ -22,19 +22,19 @@ class Camera
     }
 
 public:
-    void setPosition(const Vector3D &position);
+    void set_position(const Vector3D &position);
 
-    void setTarget(const Vector3D &target);
+    void set_target(const Vector3D &target);
 
-    void setAspectRatio(const float &aspectRatio);
+    void set_aspect_ratio(const float &aspectRatio);
 
-    Vector3D getPosition();
+    Vector3D get_position();
 
-    Vector3D getTarget();
+    Vector3D get_target();
 
-    void movePosition(const Vector3D &translation);
+    void move_position(const Vector3D &translation);
 
-    void moveTarget(const Vector3D &translation);
+    void move_target(const Vector3D &translation);
 
     Matrix4D get_view_matrix();
 

@@ -12,7 +12,7 @@ TEST(CameraTest, set_position_test)
 {
     Camera cam(Vector3D(1,1,1),Vector3D(1,1,1),10, 10, 10, 10);
     Camera cam2(Vector3D(2,2,2),Vector3D(1,1,1),10, 10, 10, 10);
-    cam.movePosition(Vector3D(1,1,1));
+	cam.move_position(Vector3D(1, 1, 1));
     EXPECT_EQ(cam == cam2, true);
 }
 
@@ -20,7 +20,7 @@ TEST(CameraTest, move_target_test)
 {
     Camera cam(Vector3D(1,1,1),Vector3D(1,1,1),10, 10, 10, 10);
     Camera cam2(Vector3D(1,1,1),Vector3D(2,2,2),10, 10, 10, 10);
-    cam.moveTarget(Vector3D(1,1,1));
+	cam.move_target(Vector3D(1, 1, 1));
     EXPECT_EQ(cam == cam2, true);
 
 }
