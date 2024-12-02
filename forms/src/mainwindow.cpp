@@ -29,27 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-// БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
-
-//void MainWindow::paintEvent(QPaintEvent *event)
-//{
-//    Q_UNUSED(event);
-//    QMainWindow::paintEvent(event);
-//
-//    QPainter painter(this); // Создаем объект QPainter
-//
-//    camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
-//    int width = this->width();
-//    int height = this->height();
-//
-//    for (Model &model: models) {
-//        QColor basic_color = QColor(255, 255, 255);
-//        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
-//                                  height, show_mesh, show_texture, show_illumination);
-//        renderEngine.render();
-//    }
-//}
-
 void MainWindow::update_scene()
 {
         //При низких значениях rgb, перестает рабоать (цвете 0,0,0 все ломается)
@@ -455,3 +434,24 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
     
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
+
+// БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
+
+//void MainWindow::paintEvent(QPaintEvent *event)
+//{
+//    Q_UNUSED(event);
+//    QMainWindow::paintEvent(event);
+//
+//    QPainter painter(this); // Создаем объект QPainter
+//
+//    camera.setAspectRatio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
+//    int width = this->width();
+//    int height = this->height();
+//
+//    for (Model &model: models) {
+//        QColor basic_color = QColor(255, 255, 255);
+//        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
+//                                  height, show_mesh, show_texture, show_illumination);
+//        renderEngine.render();
+//    }
+//}
