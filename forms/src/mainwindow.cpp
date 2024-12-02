@@ -1,8 +1,8 @@
 #include "../headers/mainwindow.h"
 #include "../ui_MainWindow.h"
 #include "../../render_engine/headers/RenderEngine.h"
-#include "../../objreader/headers/ObjReader.h"
-#include "../../objwriter/headers/ObjWriter.h"
+#include "../../obj_utils/objreader/headers/ObjReader.h"
+#include "../../obj_utils/objwriter/headers/ObjWriter.h"
 #include "../../render_engine/headers/GraphicConveyor.h"
 
 #include <QMessageBox>

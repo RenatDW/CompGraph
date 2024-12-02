@@ -34,15 +34,15 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         forms/src/mainwindow.cpp
         forms/mainwindow.ui
         forms/headers/mainwindow.h
-        objreader/src/ObjReader.cpp
-        objreader/headers/ObjReader.h
-        objwriter/src/ObjWriter.cpp
-        objreader/headers/ObjReaderException.h
+        obj_utils/objreader/src/ObjReader.cpp
+        obj_utils/objreader/headers/ObjReader.h
+        obj_utils/objwriter/src/ObjWriter.cpp
+        obj_utils/objreader/headers/ObjReaderException.h
         math/src/Matrix3D.cpp
         math/src/Point2D.cpp
         model/src/Triangle.cpp
         model/headers/Triangle.h
-        objwriter/headers/ObjWriter.h
+        obj_utils/objwriter/headers/ObjWriter.h
         render_engine/headers/Camera.h
         model/headers/Model.h
         math/headers/Matrix3D.h

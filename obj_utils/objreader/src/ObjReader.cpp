@@ -1,7 +1,7 @@
 #include "../headers/ObjReader.h"
-#include "../../model/headers/Model.h"
-#include "../../model/headers/Polygon.h"
-#include "../../math/headers/Vector3D.h"
+#include "../../../model/headers/Model.h"
+#include "../../../model/headers/Polygon.h"
+#include "../../../math/headers/Vector3D.h"
 #include "../headers/ObjReaderException.h"
 
 #include <fstream>

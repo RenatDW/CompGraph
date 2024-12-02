@@ -1,9 +1,9 @@
 #ifndef OBJREADER_H
 #define OBJREADER_H
 
-#include "../../model/headers/Model.h"
-#include "../../math/headers/Vector3D.h"
-#include "../../math/headers/Vector2D.h"
+#include "../../../model/headers/Model.h"
+#include "../../../math/headers/Vector3D.h"
+#include "../../../math/headers/Vector2D.h"
 
 #include <vector>
 #include <string>
