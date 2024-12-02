@@ -36,8 +36,11 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     MainWindow w;
+	w.setWindowTitle("Toster");
+	w.setWindowIcon(QIcon(":/toster.png"));
 //    w.models.emplace_back(ObjReader::read(filename));
     // w.models.emplace_back(ans);
+	w.setWindowFlags(Qt::FramelessWindowHint);
     w.showFullScreen();
 
     return a.exec();

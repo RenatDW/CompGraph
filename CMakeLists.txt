@@ -9,6 +9,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64/lib/cmake")
 #set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fopenmp")
+
 file(GLOB
         CPPS "*.cpp"
         HPP "*.h")
@@ -19,9 +20,8 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-
-
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
+        resources/resources.qrc
         render_engine/src/RenderEngine.cpp
         render_engine/src/Camera.cpp
         model/src/Polygon.cpp
