@@ -424,25 +424,3 @@ void MainWindow::wheelEvent(QWheelEvent *event) {
 
 	update_scene();
 }
-
-
-// БЕСПОНТОВЫЙ МЕТОД, ОСТАВЛЮ ЕГО ТРУП НА ВСЯКИЙ СЛУЧАЙ
-
-//void MainWindow::paintEvent(QPaintEvent *event)
-//{
-//    Q_UNUSED(event);
-//    QMainWindow::paintEvent(event);
-//
-//    QPainter painter(this); // Создаем объект QPainter
-//
-//    camera.set_aspect_ratio(static_cast<float>(this->width()) / static_cast<float>(this->height()));
-//    int width = this->width();
-//    int height = this->height();
-//
-//    for (Model &model: models) {
-//        QColor basic_color = QColor(255, 255, 255);
-//        RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model, width,
-//                                  height, show_mesh, show_texture, show_illumination);
-//        renderEngine.render();
-//    }
-//}
