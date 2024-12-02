@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     MainWindow w;
 //    w.models.emplace_back(ObjReader::read(filename));
     // w.models.emplace_back(ans);
-    w.show();
+    w.showFullScreen();
 
     return a.exec();
 }
