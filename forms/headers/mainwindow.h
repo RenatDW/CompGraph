@@ -64,7 +64,6 @@ private slots:
 	void slotRemoveRecord();
 	void slotRotateRecord();
 
-
 private:
     Ui::MainWindow* ui;
     bool triangulation = true;

@@ -5,6 +5,9 @@
 #include "../../math/headers/Matrix4D.h"
 #include "../../model/headers/Model.h"
 
+#include <unordered_map>
+#include <array>
+
 class GraphicConveyor
 {
 public:
@@ -25,6 +28,16 @@ public:
                                 const float &aspect_ratio,
                                 const float &near_plane,
                                 const float &far_plane);
+private:
+	static Matrix4D scale_matrix_cached;
+	static Matrix4D rotate_matrix_cached;
+	static Matrix4D translate_matrix_cached;
+
+	static Matrix4D get_rotate_matrix(float phi, float psi, float theta);
+
+	static Matrix4D get_scale_matrix(float sx, float sy, float sz);
+
+	static Matrix4D get_translate_matrix(float tx, float ty, float tz);
 };
 
 #endif
