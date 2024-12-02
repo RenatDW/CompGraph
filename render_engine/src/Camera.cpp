@@ -17,40 +17,41 @@ Camera::Camera(
     this->farPlane = farPlane;
 };
 
-void Camera::setPosition(const Vector3D &position)
+void Camera::set_position(const Vector3D &position)
 {
     this->position = position;
 }
 
-void Camera::setTarget(const Vector3D &target)
+void Camera::set_target(const Vector3D &target)
 
 {
     this->target = position;
 }
 
-void Camera::setAspectRatio(const float &aspectRatio)
+void Camera::set_aspect_ratio(const float &aspectRatio)
 {
     this->aspectRatio = aspectRatio;
 };
 
-Vector3D Camera::getPosition()
+Vector3D Camera::get_position()
 {
     return this->position;
 }
 
-Vector3D Camera::getTarget()
+Vector3D Camera::get_target()
 {
     return this->target;
 }
 
-void Camera::movePosition(const Vector3D &translation)
+void Camera::move_position(const Vector3D &translation)
 {
-    this->setPosition({
-        position.getX() + translation.getX(), position.getY() + translation.getY(), position.getZ() + translation.getZ()
-    });
+	this->set_position({
+			position.getX() + translation.getX(), position.getY() + translation.getY(),
+			position.getZ() + translation.getZ()
+	});
 }
 
-void Camera::moveTarget(const Vector3D &translation)
+void Camera::move_target(const Vector3D &translation)
 {
     this->target = target + translation;
 }

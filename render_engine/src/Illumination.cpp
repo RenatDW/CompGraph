@@ -39,7 +39,7 @@ void Illumination::illumination(const std::array<Point3D, 3> &normal_vectors, co
 float Illumination::calculate_parametr_of_illumination(const std::array<Point3D, 3> &normal_vectors, Camera &camera,
     const Point3D &P, const float weightA, const float weightB, const float weightC)
 {
-    Vector3D cam{camera.getPosition().getX(), camera.getPosition().getY(), camera.getPosition().getZ()};
+    Vector3D cam{ camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ()};
     Vector3D normal_A = MathCast::to_Vector3D(normal_vectors[0]).normalize();
     Vector3D normal_B = MathCast::to_Vector3D(normal_vectors[1]).normalize();
     Vector3D normal_C = MathCast::to_Vector3D(normal_vectors[2]).normalize();
