@@ -72,7 +72,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	std::map<int, int> m;
 	std::string name =  "Model " + std::to_string(model_cnt);
 	//TODO обработать эту утечку
-	QListWidgetItem *model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
 	QVariant v;
 
 	v.setValue(model_cnt);
@@ -81,7 +81,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
-	ui->listWidget->addItem(model_list_item);
+	ui->listWidget->addItem(model_list_item.get());
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
 
@@ -97,20 +97,20 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 		return;
 	}
 	/* Создаем объект контекстного меню */
-	QMenu * menu = new QMenu(this);
+	auto menu = std::make_unique<QMenu>(this);
 	/* Создаём действия для контекстного меню */
-	QAction * editDevice = new QAction(tr("Редактировать"), this);
-	QAction* rotateDevice = new QAction(tr("Преместить"), this);
-	QAction* deleteDevice = new QAction(tr("Удалить"), this);
+	auto editDevice = std::make_unique<QAction>(tr("Редактировать"), this);
+	auto rotateDevice = std::make_unique<QAction>(tr("Преместить"), this);
+	auto deleteDevice = std::make_unique<QAction>(tr("Удалить"), this);
 	/* Подключаем СЛОТы обработчики для действий контекстного меню */
-	connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
-	connect(rotateDevice, SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
-	connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+	connect(editDevice.get(), SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(rotateDevice.get(), SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
+	connect(deleteDevice.get(), SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
 
 	/* Устанавливаем действия в меню */
-	menu->addAction(editDevice);
-	menu->addAction(rotateDevice);
-	menu->addAction(deleteDevice);
+	menu->addAction(editDevice.get());
+	menu->addAction(rotateDevice.get());
+	menu->addAction(deleteDevice.get());
 	/* Вызываем контекстное меню */
 	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
 }
@@ -260,39 +260,39 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 //Кнопка +
 void MainWindow::on_pushButton_2_clicked()
 {
-	QDialog * dialog1 = new QDialog();
+	auto dialog1 = std::make_unique<QDialog>();
 	dialog1->setWindowModality(Qt::WindowModality::NonModal);
 	dialog1->setMinimumHeight(150);
 	dialog1->setMinimumWidth(150);
 
-	QLabel* label_1 = new QLabel();
+	auto label_1 = std::make_unique<QLabel>();
 	label_1->setText("Enter vector variables\n(x, y, z):");
 	label_1->setGeometry(10, 10, 150, 50);
-	label_1->setParent(dialog1);
+	label_1->setParent(dialog1.get());
 
-	QTextEdit* x_var = new QTextEdit();
+	auto x_var = std::make_unique<QTextEdit>();
 	x_var->setPlaceholderText("x:");
 	x_var->setGeometry(10, 70, 30, 30);
-	x_var->setParent(dialog1);
+	x_var->setParent(dialog1.get());
 
-	QTextEdit* y_var = new QTextEdit();
+	auto y_var = std::make_unique<QTextEdit>();
 	y_var->setPlaceholderText("y:");
 	y_var->setGeometry(80, 70, 30, 30);
-	y_var->setParent(dialog1);
+	y_var->setParent(dialog1.get());
 
-	QTextEdit* z_var = new QTextEdit();
+	auto z_var = std::make_unique<QTextEdit>();
 	z_var->setPlaceholderText("z:");
 	z_var->setGeometry(150, 70, 30, 30);
-	z_var->setParent(dialog1);
+	z_var->setParent(dialog1.get());
 
-	QPushButton* accept = new QPushButton();
+	auto accept = std::make_unique<QPushButton>();
 	accept->setGeometry(10, 100, 50, 30);
 	accept->setText("Add");
-	accept->setParent(dialog1);
+	accept->setParent(dialog1.get());
 	//TODO автозакрытие окна после добавления камеры
-	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, dialog1, this]()
+	connect(accept.get(), &QPushButton::clicked, [x = x_var.get(), y = y_var.get(), z = z_var.get(), dialog = dialog1.get(), this]()
 	{
-		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText(), dialog1);
+		add_camera_to_list(x->toPlainText(), y->toPlainText(), z->toPlainText(), dialog);
 	});
 
 
@@ -308,12 +308,12 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 {
 	dialog1->close();
 	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
-	auto* model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
 	QVariant v;
 	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item);
+	ui->listWidget_2->addItem(model_list_item.get());
 
 	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
 	Model md = ObjReader::read(file_name);
@@ -331,15 +331,15 @@ void MainWindow::add_model(Model& md)
 }
 void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 {
-	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
-	QListWidgetItem* model_list_item = new QListWidgetItem(QString::fromStdString(name));
+	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat()) + " , " + std::to_string(z.toFloat()) + "}\n";
+	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
 	QVariant v;
-	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
+	std::array<float, 4> a{ x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 //	std::cout << model_cnt << std::endl;
 	model_cnt++;
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item);
+	ui->listWidget_2->addItem(model_list_item.get());
 }
 
 
@@ -366,7 +366,7 @@ void MainWindow::on_pushButton_3_clicked()
 	models.emplace(selected_camera_model_id, md);
 
 
-	std::array<float, 4> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
+	auto arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
 	camera.set_position(a);
 	selected_camera_model_id = arr[3];

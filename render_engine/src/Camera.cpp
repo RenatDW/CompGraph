@@ -17,20 +17,20 @@ Camera::Camera(
     this->farPlane = farPlane;
 };
 
-void Camera::set_position(const Vector3D &position)
+void Camera::set_position(const Vector3D& t_position)
 {
-    this->position = position;
+    this->position = t_position;
 }
 
-void Camera::set_target(const Vector3D &target)
+void Camera::set_target(const Vector3D& t_target)
 
 {
-    this->target = position;
+    this->target = t_target;
 }
 
-void Camera::set_aspect_ratio(const float &aspectRatio)
+void Camera::set_aspect_ratio(const float& t_aspectRatio)
 {
-    this->aspectRatio = aspectRatio;
+    this->aspectRatio = t_aspectRatio;
 };
 
 Vector3D Camera::get_position()
@@ -43,7 +43,7 @@ Vector3D Camera::get_target()
     return this->target;
 }
 
-void Camera::move_position(const Vector3D &translation)
+void Camera::move_position(const Vector3D& translation)
 {
 	this->set_position({
 			position.getX() + translation.getX(), position.getY() + translation.getY(),

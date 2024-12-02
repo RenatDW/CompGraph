@@ -62,7 +62,7 @@ private slots:
 	void slotRemoveRecord();
 	void slotRotateRecord();
 
-	void wheelEvent(QWheelEvent* event);
+	void wheelEvent(QWheelEvent* event) override;
 
 private:
     Ui::MainWindow* ui;
@@ -72,7 +72,7 @@ private:
 	int selected_camera_model_id = model_cnt;
 	int selected_camera_list_id = model_cnt;
 	void add_camera_to_list(QString x, QString y, QString z, QDialog* dialog1);
-	void add_camera_to_list(QString x, QString y, QString z);
+	void add_camera_to_list(QString t_x, QString t_y, QString t_z);
 	void add_model(Model& md);
 };
 

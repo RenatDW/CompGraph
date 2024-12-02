@@ -28,7 +28,7 @@ public:
 
     static float calculate_parametr_of_illumination(const std::array<Point3D, 3> &normal_vectors, Camera &camera,
                                              const Point3D &P,
-                                             const float weightA, const float weightB, const float weightC);
+                                             float weight_A, float weight_B, float weight_C);
 };
 
 #endif //ILLUMINATION_H

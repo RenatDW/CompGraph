@@ -22,11 +22,11 @@ class Camera
     }
 
 public:
-    void set_position(const Vector3D &position);
+    void set_position(const Vector3D& t_position);
 
-    void set_target(const Vector3D &target);
+    void set_target(const Vector3D& t_target);
 
-    void set_aspect_ratio(const float &aspectRatio);
+    void set_aspect_ratio(const float& t_aspectRatio);
 
     Vector3D get_position();
 

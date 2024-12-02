@@ -16,17 +16,17 @@ float Vector4D::getX() const
 float Vector4D::getY() const
 {
 	return y;
-};
+}
 
 float Vector4D::getZ() const
 {
 	return z;
-};
+}
 
 float Vector4D::getW() const
 {
 	return w;
-};
+}
 
 void Vector4D::setX(const float x)
 {
