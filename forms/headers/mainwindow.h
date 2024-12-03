@@ -4,6 +4,8 @@
 #include "../../render_engine/headers/Camera.h"
 #include "../../model/headers/Model.h"
 
+#include <QElapsedTimer>
+#include <QTimer>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <memory>
@@ -65,7 +67,11 @@ private slots:
 	void wheelEvent(QWheelEvent* event) override;
 
 private:
-    Ui::MainWindow* ui;
+	QTimer frameTimer;         // Timer for frame updates
+	QElapsedTimer fpsTimer;    // Timer to measure frame duration
+	int frameCount;            // Count frames for FPS calculation
+	float fps;
+	Ui::MainWindow* ui;
     bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
 	int model_cnt = 0;
@@ -74,6 +80,7 @@ private:
 	void add_camera_to_list(QString x, QString y, QString z, QDialog* dialog1);
 	void add_camera_to_list(QString t_x, QString t_y, QString t_z);
 	void add_model(Model& md);
+	void onFrameUpdate();
 };
 
 #endif

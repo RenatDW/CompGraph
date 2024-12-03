@@ -12,8 +12,14 @@
 
 class PixelBuffer
 {
+public:
+	PixelBuffer();
+	void add_element(Point2D point, QColor color);
+	void parse_colors();
+	std::unordered_map<QColor, std::vector<Point2D>,MyHashFunction> color_pixel_relationship;
+
 private:
-	std::unordered_map<QColor, std::vector<Point2D>> pixel_buffer;
+	std::unordered_map<Point2D, QColor,MyHashFunction> pixel_buffer;
 };
 
 

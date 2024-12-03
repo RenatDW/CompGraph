@@ -67,6 +67,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         math/headers/MathOperations.h
         math/src/MathOperations.cpp
         math/src/MathOperations.cpp
+        math/headers/PixelBuffer.h
+        math/src/PixelBuffer.cpp
 )
 
 target_link_libraries(CompGraph

@@ -21,6 +21,7 @@ add_executable(Google_Tests_run
         math_tests/MathCastTest.cpp
         render_engine/RasterMethods.cpp
         render_engine/GraphicConveyorTest.cpp
+        math_tests/PixelBufferTest.cpp
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)

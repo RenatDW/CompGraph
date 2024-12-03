@@ -9,6 +9,7 @@
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
+#include "../../math/headers/PixelBuffer.h"
 
 
 #include "../../math/headers/DepthBuffer.h"
@@ -29,7 +30,7 @@ public:
 
 private:
     DepthBuffer depth_buffer;
-    QPainter &painter;
+	QPainter& painter;
     Model &mesh;
     Camera &camera;
     std::string &filename;
@@ -46,7 +47,7 @@ private:
 
 
     void universal_render(const std::array<Point3D, 3> &result_points, const std::array<Point3D, 3> &normal_vectors,
-                          const std::array<Point2D, 3> &texture_vectors);
+                          const std::array<Point2D, 3> &texture_vectors, PixelBuffer& pixels);
 
     void get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors,
                                std::array<Point2D, 3> &texture_vectors, const
