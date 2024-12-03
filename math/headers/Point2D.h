@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <QColor>
+#include <iostream>
 #include "Vector3D.h"
 #include "Vector2D.h"
 
@@ -66,10 +67,13 @@ public:
 	}
 
 	size_t operator()(const QColor& color) const {
-		return std::hash<int>()(color.red()) ^
-			(std::hash<int>()(color.green()) << 2) ^
-			(std::hash<int>()(color.blue()) << 4) ^
-			(std::hash<int>()(color.alpha()) << 6);
+		auto a = std::hash<int>()(color.red()) ^
+			(std::hash<int>()(color.green()) << 8) ^
+			(std::hash<int>()(color.blue()) << 16) ^
+			(std::hash<int>()(color.alpha()) << 24);
+//		std::cout << color.red() << " " << color.green() << " " << color.blue() << " " << color.alpha() << " " << a<< std::endl;
+
+		return a;
 	}
 };
 #endif

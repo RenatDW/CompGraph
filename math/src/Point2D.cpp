@@ -34,10 +34,7 @@ void Point2D::set(float x, float y)
     this->x = x;
     this->y = y;
 }
-int Point2D::generate_key()
-{
-	return x*100000 + y;
-}
+
 
 
 

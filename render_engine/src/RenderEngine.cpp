@@ -85,10 +85,10 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-//			pixels.add_element(Point2D(x, y), QColor(r, g, b));
-            painter.setPen(QColor(r, g, b));
+			pixels.add_element(Point2D(x, y), QColor(r, g, b));
+//            painter.setPen(QColor(r, g, b));
             depth_buffer.set(x, y, z);
-            painter.drawPoint(x, y);
+//            painter.drawPoint(x, y);
         }
     }
 }
