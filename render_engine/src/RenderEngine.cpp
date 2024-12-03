@@ -130,8 +130,8 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
                               triangle_ind);
 		universal_render(result_points, normal_vectors, texture_vectors, pixels);
     }
-	pixels.parse_colors();
-	for (auto [key, val] : pixels.color_pixel_relationship)
+	//УДАЛИТЬ СТРОКУ - pixels.parse_colors();
+	for (const auto& [key, val] : pixels.color_pixel_relationship)
 	{
 		painter.setPen(key);
 		for(auto elem: val){
