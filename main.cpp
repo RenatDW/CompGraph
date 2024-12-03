@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
 /* ЭТОТ КУБИК ТОЖЕ БУДЕТ МОИМ БУГАГА*/
 	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
 
-
     // Model ans(ObjReader::read(filename));
 
     QApplication a(argc, argv);

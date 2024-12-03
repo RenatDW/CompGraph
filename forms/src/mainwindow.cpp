@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
 	QString x = "0", y = "0", z = "0";
 	add_camera_to_list(x,y,z);
-
 }
 
 void MainWindow::update_scene()
@@ -81,7 +80,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
-	ui->listWidget->addItem(model_list_item.get());
+	ui->listWidget->addItem(model_list_item.release());
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
 
@@ -103,14 +102,14 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 	auto rotateDevice = std::make_unique<QAction>(tr("Преместить"), this);
 	auto deleteDevice = std::make_unique<QAction>(tr("Удалить"), this);
 	/* Подключаем СЛОТы обработчики для действий контекстного меню */
-	connect(editDevice.get(), SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
-	connect(rotateDevice.get(), SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
-	connect(deleteDevice.get(), SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+	connect(editDevice.release(), SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(rotateDevice.release(), SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
+	connect(deleteDevice.release(), SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
 
 	/* Устанавливаем действия в меню */
-	menu->addAction(editDevice.get());
-	menu->addAction(rotateDevice.get());
-	menu->addAction(deleteDevice.get());
+	menu->addAction(editDevice.release());
+	menu->addAction(rotateDevice.release());
+	menu->addAction(deleteDevice.release());
 	/* Вызываем контекстное меню */
 	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
 }
@@ -198,7 +197,6 @@ void MainWindow::on_actionLeft_triggered()
 	cord.setValue(coord);
 	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
-
 	update_scene();
 }
 
@@ -260,39 +258,39 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 //Кнопка +
 void MainWindow::on_pushButton_2_clicked()
 {
-	auto dialog1 = std::make_unique<QDialog>();
+	auto dialog1 = new QDialog();
 	dialog1->setWindowModality(Qt::WindowModality::NonModal);
 	dialog1->setMinimumHeight(150);
 	dialog1->setMinimumWidth(150);
 
-	auto label_1 = std::make_unique<QLabel>();
+	auto label_1 = new QLabel();
 	label_1->setText("Enter vector variables\n(x, y, z):");
 	label_1->setGeometry(10, 10, 150, 50);
-	label_1->setParent(dialog1.get());
+	label_1->setParent(dialog1);
 
-	auto x_var = std::make_unique<QTextEdit>();
+	auto x_var = new QTextEdit();
 	x_var->setPlaceholderText("x:");
 	x_var->setGeometry(10, 70, 30, 30);
-	x_var->setParent(dialog1.get());
+	x_var->setParent(dialog1);
 
-	auto y_var = std::make_unique<QTextEdit>();
+	auto y_var = new QTextEdit();
 	y_var->setPlaceholderText("y:");
 	y_var->setGeometry(80, 70, 30, 30);
-	y_var->setParent(dialog1.get());
+	y_var->setParent(dialog1);
 
-	auto z_var = std::make_unique<QTextEdit>();
+	auto z_var = new QTextEdit();
 	z_var->setPlaceholderText("z:");
 	z_var->setGeometry(150, 70, 30, 30);
-	z_var->setParent(dialog1.get());
+	z_var->setParent(dialog1);
 
-	auto accept = std::make_unique<QPushButton>();
+	auto accept = new QPushButton();
 	accept->setGeometry(10, 100, 50, 30);
 	accept->setText("Add");
-	accept->setParent(dialog1.get());
+	accept->setParent(dialog1);
 	//TODO автозакрытие окна после добавления камеры
-	connect(accept.get(), &QPushButton::clicked, [x = x_var.get(), y = y_var.get(), z = z_var.get(), dialog = dialog1.get(), this]()
+	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, dialog1, this]()
 	{
-		add_camera_to_list(x->toPlainText(), y->toPlainText(), z->toPlainText(), dialog);
+		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText(), dialog1);
 	});
 
 
@@ -313,9 +311,9 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item.get());
+	ui->listWidget_2->addItem(model_list_item.release());
 
-	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
+	std::string file_name = "C:/Users/Пользователь/CLionProjects/3DModels/untitled.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
 	//TODO добавить перемещения на координаты
@@ -339,7 +337,7 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 	model_cnt++;
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item.get());
+	ui->listWidget_2->addItem(model_list_item.release());
 }
 
 
