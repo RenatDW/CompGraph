@@ -73,6 +73,15 @@ void MainWindow::update_scene()
 		renderEngine.render();
 	}
 
+	QColor oldval = QColor(1,1,1);
+	for (auto [key, val] : pb.data)
+	{
+		if(oldval != val){
+			painter.setPen(val);
+		}
+		painter.drawPoint(key.getX(),key.getY());
+	}
+
 	auto item = std::make_unique<QGraphicsPixmapItem>(pixmap);
 	scene->addItem(item.release());
 	ui->graphicsView->update();

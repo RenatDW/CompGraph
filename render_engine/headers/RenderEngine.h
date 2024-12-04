@@ -31,7 +31,7 @@ public:
 		bool show_texture_param,
 		bool show_illumination_param,
 		DepthBuffer& depth_buffer,
-		PixelBuffer & pixels);
+		PixelBuffer& pixels);
 
 
     ~RenderEngine() = default;
@@ -41,7 +41,7 @@ private:
 	QPainter& painter;
     Model &mesh;
     Camera &camera;
-	PixelBuffer pixels;
+	PixelBuffer& pixels;
     std::string &filename;
     int width;
     int height;

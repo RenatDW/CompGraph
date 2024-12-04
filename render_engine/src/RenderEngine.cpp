@@ -138,14 +138,13 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
                               triangle_ind);
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
-//	pixels.parse_colors();
-	//TODO Сделать 1 проход в самом конце
-	QColor oldval = QColor(1,1,1);
-	for (auto [key, val] : pixels.data)
-	{
-		if(oldval != val){
-			painter.setPen(val);
-		}
-		painter.drawPoint(key.getX(),key.getY());
-	}
+
+//	QColor oldval = QColor(1,1,1);
+//	for (auto [key, val] : pixels.data)
+//	{
+//		if(oldval != val){
+//			painter.setPen(val);
+//		}
+//		painter.drawPoint(key.getX(),key.getY());
+//	}
 }
