@@ -1,7 +1,7 @@
 #ifndef OBJWRITER_H
 #define OBJWRITER_H
 
-#include "../../../model/headers/Model.h"
+#include "../../model/headers/Model.h"
 
 #include <string>
 #include <fstream>

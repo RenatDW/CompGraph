@@ -1,4 +1,4 @@
-#include "../../math/headers/Matrix3D.h"
+#include "../headers/Matrix3D.h"
 
 #include <iostream>
 #include <vector>

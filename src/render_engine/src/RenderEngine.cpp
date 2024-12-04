@@ -3,7 +3,7 @@
 #include <iostream>
 #include <omp.h>
 #include "../headers/GraphicConveyor.h"
-#include "../../forms/headers/mainwindow.h"
+#include "../../forms/mainwindow.h"
 #include "../../math/headers/DepthBuffer.h"
 #include "../../math/headers/Point2D.h"
 #include "../headers/Illumination.h"
