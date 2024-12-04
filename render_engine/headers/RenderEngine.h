@@ -9,6 +9,7 @@
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
+#include "../../math/headers/PixelBuffer.h"
 
 
 #include "../../math/headers/DepthBuffer.h"
@@ -19,19 +20,28 @@ class RenderEngine
 public:
     void render();
 
-
-    RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color, Model &model,
-                 int width,
-                 int height, bool show_mesh_param, bool show_texture_param, bool show_illumination_param);
+	RenderEngine(QPainter& painter,
+		Camera& camera,
+		std::string& string,
+		QColor& color,
+		Model& model,
+		int width,
+		int height,
+		bool show_mesh_param,
+		bool show_texture_param,
+		bool show_illumination_param,
+		DepthBuffer& depth_buffer,
+		PixelBuffer& pixels);
 
 
     ~RenderEngine() = default;
 
 private:
-    DepthBuffer depth_buffer;
-    QPainter &painter;
+	DepthBuffer& depth_buffer;
+	QPainter& painter;
     Model &mesh;
     Camera &camera;
+	PixelBuffer& pixels;
     std::string &filename;
     int width;
     int height;
@@ -45,8 +55,9 @@ private:
                                   int &y_down, int &y_up) const;
 
 
-    void universal_render(const std::array<Point3D, 3> &result_points, const std::array<Point3D, 3> &normal_vectors,
-                          const std::array<Point2D, 3> &texture_vectors);
+    void universal_render(const std::array<Point3D, 3>& result_points,
+		const std::array<Point3D, 3>& normal_vectors,
+		const std::array<Point2D, 3>& texture_vectors);
 
     void get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors,
                                std::array<Point2D, 3> &texture_vectors, const
