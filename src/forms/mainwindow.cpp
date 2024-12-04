@@ -16,17 +16,39 @@
 #include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),
-      camera(Vector3D(0, 0, 100), Vector3D(0, 0, 0),
-             1.0f, 1, 0.01f, 100),
-      ui(new Ui::MainWindow), scene(std::make_unique<QGraphicsScene>(this))
+	: QMainWindow(parent),
+	  camera(Vector3D(0, 0, 100), Vector3D(0, 0, 0),
+		  1.0f, 1, 0.01f, 100),
+	  ui(new Ui::MainWindow), scene(std::make_unique<QGraphicsScene>(this)),
+	  frameCount(0), fps(0.0f)
 {
     ui->setupUi(this);
-
 	ui->graphicsView->setScene(scene.get());
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
 	QString x = "0", y = "0", z = "0";
 	add_camera_to_list(x,y,z);
+
+	fpsTimer.start(); // Start FPS timer
+	frameTimer.setInterval(16); // Approx. 60 FPS (1000ms / 16ms ~ 60 FPS)
+	connect(&frameTimer, &QTimer::timeout, this, &MainWindow::onFrameUpdate);
+	frameTimer.start();
+}
+
+void MainWindow::onFrameUpdate()
+{
+	// Update the scene
+	update_scene();
+	// Calculate FPS
+	frameCount++;
+	qint64 elapsed = fpsTimer.elapsed(); // Time since last reset
+	if (elapsed > 1000) // Update FPS every second
+	{
+		fps = frameCount / (elapsed / 1000.0f); // Frames per second
+		frameCount = 0;
+		fpsTimer.restart();
+		// Update FPS in UI (e.g., status bar or label)
+		ui->statusbar->showMessage(QString("FPS: %1").arg(fps, 0, 'f', 2));
+	}
 }
 
 void MainWindow::update_scene()
@@ -40,14 +62,24 @@ void MainWindow::update_scene()
 	QPixmap pixmap(width, height);
 	pixmap.fill(QColor(45, 45, 45));
 	QPainter painter(&pixmap);
-
+	DepthBuffer db(width,height);
+	PixelBuffer pb;
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
 	for (std::pair<int, Model> model : models)
 	{
 		QColor basic_color = QColor(255, 255, 255);
 		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination);
+			height, show_mesh, show_texture, show_illumination, db, pb);
 		renderEngine.render();
+	}
+
+	QColor oldval = QColor(1,1,1);
+	for (auto [key, val] : pb.data)
+	{
+		if(oldval != val){
+			painter.setPen(val);
+		}
+		painter.drawPoint(key.getX(),key.getY());
 	}
 
 	auto item = std::make_unique<QGraphicsPixmapItem>(pixmap);
@@ -313,7 +345,7 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item.release());
 
-	std::string file_name = "C:/Users/Пользователь/CLionProjects/3DModels/untitled.obj";
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
 	//TODO добавить перемещения на координаты
@@ -357,7 +389,7 @@ void MainWindow::on_pushButton_3_clicked()
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
 //
 //	//Создание модели действующе камеры
-	std::string file_name = "/Users/renat/CLionProjects/3DModels/untitled.obj";
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0, camera.get_position().getX(), camera.get_position().getY(),
 			camera.get_position().getZ());
