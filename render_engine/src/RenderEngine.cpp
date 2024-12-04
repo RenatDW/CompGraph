@@ -25,15 +25,25 @@ void RenderEngine::render()
     render_triangles(model_view_projection_matrix, mesh.triangles.size());
 }
 
-RenderEngine::RenderEngine(QPainter &painter, Camera &camera, std::string &string, QColor &color,
-                           Model &model, int width, int height, bool show_mesh_param, bool show_texture_param,
-                           bool show_illumination_param): depth_buffer(width, height), painter(painter),
-                                                          mesh(model), camera(camera), filename(string),
-                                                          width(width), height(height),
-                                                          show_texture_param(show_texture_param),
-                                                          show_mesh_param(show_mesh_param),
-                                                          show_illumination_param(show_illumination_param),
-														  fill_model_color(color)
+RenderEngine::RenderEngine(QPainter& painter,
+	Camera& camera,
+	std::string& string,
+	QColor& color,
+	Model& model,
+	int width,
+	int height,
+	bool show_mesh_param,
+	bool show_texture_param,
+	bool show_illumination_param,
+	DepthBuffer& depth_buffer,
+	PixelBuffer& pixels)
+	: depth_buffer(depth_buffer), painter(painter),
+	  mesh(model), camera(camera), filename(string),
+	  width(width), height(height),
+	  show_texture_param(show_texture_param),
+	  show_mesh_param(show_mesh_param),
+	  show_illumination_param(show_illumination_param),
+	  fill_model_color(color), pixels(pixels)
 {
 
 }
@@ -55,23 +65,25 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
 }
 
 
-void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
-                                    const std::array<Point3D, 3> &normal_vectors,
-	const std::array<Point2D, 3>& texture_vectors,
-	PixelBuffer& pixels)
+void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
+	const std::array<Point3D, 3>& normal_vectors,
+	const std::array<Point2D, 3>& texture_vectors)
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
-    auto [A, B, C] = result_points;
+	Point3D A =result_points[0];
+	Point3D B =result_points[1];
+	Point3D C =result_points[2];
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
-
     for (int y = y_down; y < y_up + 1; y++) {
         for (int x = x_left; x < x_right + 1; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
-            auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A, B, C, P, show_mesh_param);
+			float ABP = Rasterization::get_triangle_area_float(A, B, P);
+			float BCP = Rasterization::get_triangle_area_float(B, C, P);
+			float CAP = Rasterization::get_triangle_area_float(C, A, P);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
@@ -85,10 +97,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3> &result_points,
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-			pixels.add_element(Point2D(x, y), QColor(r, g, b));
-//            painter.setPen(QColor(r, g, b));
-            depth_buffer.set(x, y, z);
-//            painter.drawPoint(x, y);
+			pixels.add(Point2D(x, y), QColor(r, g, b));
+			depth_buffer.set(x, y, z);
         }
     }
 }
@@ -122,14 +132,14 @@ void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, 
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {
-	PixelBuffer pixels;
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
         std::array<Point3D, 3> result_points, normal_vectors;
         std::array<Point2D, 3> texture_vectors;
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
                               triangle_ind);
-		universal_render(result_points, normal_vectors, texture_vectors, pixels);
+		universal_render(result_points, normal_vectors, texture_vectors);
     }
+<<<<<<< HEAD
 	//УДАЛИТЬ СТРОКУ - pixels.parse_colors();
 	for (const auto& [key, val] : pixels.color_pixel_relationship)
 	{
@@ -138,4 +148,15 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 			painter.drawPoint(elem.getX(),elem.getY());
 		}
 	}
+=======
+
+//	QColor oldval = QColor(1,1,1);
+//	for (auto [key, val] : pixels.data)
+//	{
+//		if(oldval != val){
+//			painter.setPen(val);
+//		}
+//		painter.drawPoint(key.getX(),key.getY());
+//	}
+>>>>>>> 607ffe4d9b18c9eabbd928b165c0e01cfa1602ab
 }
