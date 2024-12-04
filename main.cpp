@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QPushButton>
+#include <omp.h>
 
 int main(int argc, char *argv[])
 {
@@ -32,7 +33,7 @@ int main(int argc, char *argv[])
 	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
 
     // Model ans(ObjReader::read(filename));
-
+	omp_set_dynamic(1); // Enable dynamic adjustment
     QApplication a(argc, argv);
     MainWindow w;
 	w.setWindowTitle("Toster");

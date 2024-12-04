@@ -70,17 +70,20 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point2D, 3>& texture_vectors)
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
-    auto [A, B, C] = result_points;
+	Point3D A =result_points[0];
+	Point3D B =result_points[1];
+	Point3D C =result_points[2];
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
-
     for (int y = y_down; y < y_up + 1; y++) {
         for (int x = x_left; x < x_right + 1; x++) {
             if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
             Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
-            auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A, B, C, P, show_mesh_param);
+			float ABP = Rasterization::get_triangle_area_float(A, B, P);
+			float BCP = Rasterization::get_triangle_area_float(B, C, P);
+			float CAP = Rasterization::get_triangle_area_float(C, A, P);
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
@@ -95,9 +98,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
 			pixels.add(Point2D(x, y), QColor(r, g, b));
-//			painter.setPen(QColor(r, g, b));
-            depth_buffer.set(x, y, z);
-//			painter.drawPoint(x, y);
+			depth_buffer.set(x, y, z);
         }
     }
 }
