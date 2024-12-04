@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "../../render_engine/headers/Camera.h"
-#include "../../model/headers/Model.h"
+#include "../render_engine/headers/Camera.h"
+#include "../model/headers/Model.h"
 
 #include <QMainWindow>
 #include <QGraphicsScene>

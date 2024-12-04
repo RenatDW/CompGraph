@@ -1,6 +1,6 @@
-#include "math/headers/Vector2D.h"
-#include "forms/headers/mainwindow.h"
-#include "obj_utils/objreader/headers/ObjReader.h"
+#include "src/math/headers/Vector2D.h"
+#include "src/forms/mainwindow.h"
+#include "src/obj_utils/objreader/ObjReader.h"
 
 #include <iostream>
 #include <QApplication>

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
-#include "../../math/src/Point3D.cpp"
-#include "../../math/headers/Vector3D.h"
-#include "../../math/headers/MathCast.h"
+#include "../../src/math/src/Point3D.cpp"
+#include "../../src/math/headers/Vector3D.h"
+#include "../../src/math/headers/MathCast.h"
 
 TEST(Point3DTest, GettersPoint3D)
 {
