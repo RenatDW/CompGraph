@@ -3,22 +3,15 @@
 //
 
 #include "../headers/PixelBuffer.h"
-void PixelBuffer::add_element(Point2D point, QColor color)
-{
-	pixel_buffer[point] = color;
+
+void PixelBuffer::add(Point2D point, QColor color) {
+	data[point] = color; // Insert or update color at point
 }
-void PixelBuffer::parse_colors()
-{
-	for (auto [key, val] : pixel_buffer)
-	{
-		if(color_pixel_relationship.contains(val))
-		{
-			color_pixel_relationship[val].emplace_back(key);
-		}else{
-			color_pixel_relationship[val] = {};
-		}
+
+QColor PixelBuffer::getColor(Point2D point) const {
+	auto it = data.find(point);
+	if (it != data.end()) {
+		return it->second; // Return the color if the point exists
 	}
-}
-PixelBuffer::PixelBuffer()
-{
+	return QColor(); // Return a default color (black) if not found
 }

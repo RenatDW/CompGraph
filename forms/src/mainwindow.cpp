@@ -62,13 +62,14 @@ void MainWindow::update_scene()
 	QPixmap pixmap(width, height);
 	pixmap.fill(QColor(45, 45, 45));
 	QPainter painter(&pixmap);
-
+	DepthBuffer db(width,height);
+	PixelBuffer pb;
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
 	for (std::pair<int, Model> model : models)
 	{
 		QColor basic_color = QColor(255, 255, 255);
 		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination);
+			height, show_mesh, show_texture, show_illumination, db, pb);
 		renderEngine.render();
 	}
 

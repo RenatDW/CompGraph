@@ -56,24 +56,10 @@ private:
     float y;
 
 };
-class MyHashFunction {
-public:
-	//TODOЕсли какие-то баги в первуб очередь что-то сделать с этим хешем
 
-	size_t operator()(const Point2D& p) const
-	{
-		return (std::hash<std::string>()(std::to_string(p.getX()))) ^
-			(std::hash<std::string>()(std::to_string(p.getY())));
-	}
-
-	size_t operator()(const QColor& color) const {
-		auto a = std::hash<int>()(color.red()) ^
-			(std::hash<int>()(color.green()) << 8) ^
-			(std::hash<int>()(color.blue()) << 16) ^
-			(std::hash<int>()(color.alpha()) << 24);
-//		std::cout << color.red() << " " << color.green() << " " << color.blue() << " " << color.alpha() << " " << a<< std::endl;
-
-		return a;
+struct Point2DHash {
+	size_t operator()(const Point2D& point) const {
+		return std::hash<float>()(point.getX()) ^ (std::hash<float>()(point.getY()) << 1);
 	}
 };
 #endif
