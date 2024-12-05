@@ -1,4 +1,4 @@
-#include "../headers/ObjWriter.h"
+#include "ObjWriter.h"
 
 #include <fstream>
 #include <string>

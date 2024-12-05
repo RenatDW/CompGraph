@@ -1,9 +1,9 @@
-#include "../headers/mainwindow.h"
-#include "../ui_MainWindow.h"
-#include "../../render_engine/headers/RenderEngine.h"
-#include "../../obj_utils/objreader/headers/ObjReader.h"
-#include "../../obj_utils/objwriter/headers/ObjWriter.h"
-#include "../../render_engine/headers/GraphicConveyor.h"
+#include "mainwindow.h"
+#include "../../cmake-build-debug/CompGraph_autogen/ui_MainWindow.h"
+#include "../render_engine/headers/RenderEngine.h"
+#include "../obj_utils/objreader/ObjReader.h"
+#include "../obj_utils/objwriter/ObjWriter.h"
+#include "../render_engine/headers/GraphicConveyor.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
