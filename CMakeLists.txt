@@ -10,9 +10,7 @@ set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64/lib/cmake")
 #set(CMAKE_PREFIX_PATH "/Applications/QT/6.8.0/macos/lib/cmake")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fopenmp")
 
-file(GLOB
-        CPPS "*.cpp"
-        HPP "*.h")
+
 
 find_package(Qt6 COMPONENTS
         Core
@@ -20,78 +18,38 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
-        src/forms/mainwindow.cpp
-        src/math/src/DepthBuffer.cpp
-        src/math/src/MathCast.cpp
-        src/math/src/MathOperations.cpp
-        src/math/src/Matrix3D.cpp
-        src/math/src/Matrix4D.cpp
-        src/math/src/PixelBuffer.cpp
-        src/math/src/Point2D.cpp
-        src/math/src/Point3D.cpp
-        src/math/src/Vector2D.cpp
-        src/math/src/Vector3D.cpp
-        src/math/src/Vector4D.cpp
-        src/model/src/Polygon.cpp
-        src/model/src/Triangle.cpp
-        src/obj_utils/objreader/ObjReader.cpp
-        src/obj_utils/objwriter/ObjWriter.cpp
-        src/render_engine/src/GraphicConveyor.cpp
-        src/render_engine/src/Camera.cpp
-        src/render_engine/src/Illumination.cpp
-        src/render_engine/src/Mesh.cpp
-        src/render_engine/src/Rasterization.cpp
-        src/render_engine/src/RenderEngine.cpp
-        src/render_engine/src/Texturezation.cpp
-        #        resources/resources.qrc
-#        src/render_engine/src/RenderEngine.cpp
-#        src/render_engine/src/Camera.cpp
-#        src/model/src/Polygon.cpp
+
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+
+add_executable(CompGraph ${SRC_FILES}
+main.cpp)
+
+
+#add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
+#        src/forms/mainwindow.cpp
+#        src/math/src/DepthBuffer.cpp
+#        src/math/src/MathCast.cpp
+#        src/math/src/MathOperations.cpp
+#        src/math/src/Matrix3D.cpp
+#        src/math/src/Matrix4D.cpp
+#        src/math/src/PixelBuffer.cpp
+#        src/math/src/Point2D.cpp
+#        src/math/src/Point3D.cpp
 #        src/math/src/Vector2D.cpp
 #        src/math/src/Vector3D.cpp
 #        src/math/src/Vector4D.cpp
-#        src/render_engine/src/GraphicConveyor.cpp
-#        src/math/src/Matrix4D.cpp
-#        src/math/src/Matrix4D.cpp
-#        src/forms/mainwindow.cpp
-#        src/forms/mainwindow.ui
-#        src/forms/mainwindow.h
-#        src/obj_utils/objreader/ObjReader.cpp
-#        src/obj_utils/objreader/ObjReader.h
-#        src/obj_utils/objwriter/ObjWriter.cpp
-#        src/obj_utils/objwriter/ObjWriter.h
-#        src/obj_utils/objreader/ObjReaderException.h
-#        src/math/src/Matrix3D.cpp
-#        src/math/src/Point2D.cpp
+#        src/model/src/Polygon.cpp
 #        src/model/src/Triangle.cpp
-#        src/model/headers/Triangle.h
-#        src/obj_utils/objwriter/headers/ObjWriter.h
-#        src/render_engine/headers/Camera.h
-#        src/model/headers/Model.h
-#        src/math/headers/Matrix3D.h
-#        src/math/headers/Matrix4D.h
-#        src/math/headers/Point2D.h
-#        src/math/headers/Vector3D.h
-#        src/math/headers/Vector4D.h
-#        src/math/src/Point3D.cpp
-#        src/math/src/DepthBuffer.cpp
-#        src/math/headers/DepthBuffer.h
-#        src/render_engine/headers/TypeOfRender.h
-#        src/render_engine/headers/Renderable.h
+#        src/obj_utils/objreader/ObjReader.cpp
+#        src/obj_utils/objwriter/ObjWriter.cpp
+#        src/render_engine/src/GraphicConveyor.cpp
+#        src/render_engine/src/Camera.cpp
 #        src/render_engine/src/Illumination.cpp
-#        src/render_engine/src/Illumination.cpp
-#        src/render_engine/src/Texturezation.cpp
-#        src/render_engine/headers/Texturezation.h
-#        src/render_engine/src/Rasterization.cpp
-#        src/render_engine/headers/Rasterization.h
-#        src/math/headers/MathCast.h
-#        src/math/src/MathCast.cpp
 #        src/render_engine/src/Mesh.cpp
-#        src/math/headers/MathOperations.h
-#        src/math/src/MathOperations.cpp
-#        src/math/src/MathOperations.cpp
-)
+#        src/render_engine/src/Rasterization.cpp
+#        src/render_engine/src/RenderEngine.cpp
+#        src/render_engine/src/Texturezation.cpp
+#)
 
 target_link_libraries(CompGraph
         Qt6::Core
