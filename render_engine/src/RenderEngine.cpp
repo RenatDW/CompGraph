@@ -78,12 +78,25 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
     for (int y = y_down; y < y_up + 1; y++) {
-        for (int x = x_left; x < x_right + 1; x++) {
-            if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
-            Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
-			float ABP = Rasterization::get_triangle_area_float(A, B, P);
-			float BCP = Rasterization::get_triangle_area_float(B, C, P);
-			float CAP = Rasterization::get_triangle_area_float(C, A, P);
+		for (int x = x_left; x < x_right + 1; x++)
+		{
+			if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
+			Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
+			float ABP;
+			float BCP;
+			float CAP;
+			if (show_mesh_param && !show_texture_param && !show_illumination_param)
+			{
+				ABP = Rasterization::get_triangle_area_round(A, B, P);
+				BCP = Rasterization::get_triangle_area_round(B, C, P);
+				CAP = Rasterization::get_triangle_area_round(C, A, P);
+			}
+			else
+			{
+				ABP = Rasterization::get_triangle_area_float(A, B, P);
+				BCP = Rasterization::get_triangle_area_float(B, C, P);
+				CAP = Rasterization::get_triangle_area_float(C, A, P);
+			}
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
