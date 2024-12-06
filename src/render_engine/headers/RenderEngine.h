@@ -18,7 +18,10 @@
 class RenderEngine
 {
 public:
-    void render();
+
+	void render();
+	void render_with_selection(int x, int y);
+
 
 	RenderEngine(QPainter& painter,
 		Camera& camera,
@@ -47,7 +50,10 @@ private:
     int height;
     bool show_texture_param;
     bool show_mesh_param;
-    bool show_illumination_param;
+	bool show_illumination_param;
+	bool selection = false;
+	int posX = 0;
+	int posY = 0;
     QColor &fill_model_color;
 
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,

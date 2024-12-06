@@ -25,6 +25,16 @@ void RenderEngine::render()
     render_triangles(model_view_projection_matrix, mesh.triangles.size());
 }
 
+void RenderEngine::render_with_selection(int x, int y)
+{
+	posX = x;
+	posY = y;
+	selection = true;
+	render();
+}
+
+
+
 RenderEngine::RenderEngine(QPainter& painter,
 	Camera& camera,
 	std::string& string,
@@ -75,6 +85,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	Point3D C =result_points[2];
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
+
+
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
     for (int y = y_down; y < y_up + 1; y++) {
@@ -106,10 +118,25 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
             if (show_mesh_param)
                 if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
+			if (show_mesh_param && selection)
+			{
+			}
             if (show_illumination_param)
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
+			if (selection)
+			{
+				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
+				{
+					r = 255;
+					g = 215;
+					b = 50;
+				}
+
+			}
+			pixels.add(Point2D(x, y), QColor(r, g, b));
+			depth_buffer.set(x, y, z);
 			pixels.add(Point2D(x, y), QColor(r, g, b));
 			depth_buffer.set(x, y, z);
         }
