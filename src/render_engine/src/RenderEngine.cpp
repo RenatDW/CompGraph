@@ -20,7 +20,7 @@ void RenderEngine::render()
     const Matrix4D projection_matrix = camera.get_projection_matrix();
 
     Matrix4D model_view_projection_matrix(model_matrix);
-    model_view_projection_matrix = model_view_projection_matrix * view_matrix * projection_matrix;
+    model_view_projection_matrix = projection_matrix * view_matrix * model_view_projection_matrix;
 
     render_triangles(model_view_projection_matrix, mesh.triangles.size());
 }
