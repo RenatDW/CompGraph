@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <QPainter>
+#include <cfloat>
 
 #include "Camera.h"
 #include "Renderable.h"
@@ -52,6 +53,9 @@ private:
     bool show_mesh_param;
 	bool show_illumination_param;
 	bool selection = false;
+	int сurrent_triangle;
+	int nearest_vertex;
+	float nearest_vertex_radius = FLT_MAX;
 	int posX = 0;
 	int posY = 0;
     QColor &fill_model_color;

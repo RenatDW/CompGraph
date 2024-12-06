@@ -81,8 +81,27 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
 	Point3D A =result_points[0];
+	float radius = (A.getX() - posX)*(A.getX() - posX) + (A.getY() - posY)*(A.getY() - posY);
+	if(radius < nearest_vertex_radius){
+		nearest_vertex = 0;
+		nearest_vertex_radius = radius;
+	}
 	Point3D B =result_points[1];
+	 radius = (B.getX() - posX)*(B.getX() - posX) + (B.getY() - posY)*(B.getY() - posY);
+
+	if(radius < nearest_vertex_radius){
+		nearest_vertex = 1;
+		nearest_vertex_radius = radius;
+	}
 	Point3D C =result_points[2];
+	radius = (C.getX() - posX)*(C.getX() - posX) + (C.getY() - posY)*(C.getY() - posY);
+
+	if(radius < nearest_vertex_radius){
+		nearest_vertex = 2;
+		nearest_vertex_radius = radius;
+	}
+	std::cout << nearest_vertex;
+
     int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
 
@@ -177,7 +196,9 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
         std::array<Point2D, 3> texture_vectors;
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
                               triangle_ind);
+		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
+
 
 }
