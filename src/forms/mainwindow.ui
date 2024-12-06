@@ -239,7 +239,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </rect>
     </property>
     <property name="text">
-     <string>Normal mode</string>
+     <string>Delet mode</string>
     </property>
    </widget>
    <action name="actionTriangulation">
