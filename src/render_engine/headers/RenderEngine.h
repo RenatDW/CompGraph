@@ -55,6 +55,7 @@ private:
 	bool selection = false;
 	int сurrent_triangle;
 	int nearest_vertex;
+	int nearest_triangle;
 	float nearest_vertex_radius = FLT_MAX;
 	int posX = 0;
 	int posY = 0;
@@ -76,6 +77,10 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
+	void universal_render_1(const std::array<Point3D, 3>& result_points,
+		const std::array<Point3D, 3>& normal_vectors,
+		const std::array<Point2D, 3>& texture_vectors);
+	void get_nearest_point(const Point3D& B, int vertex_pox);
 };
 
 #endif //RENDERENGINE_H

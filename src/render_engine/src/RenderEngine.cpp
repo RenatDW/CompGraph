@@ -81,28 +81,16 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
 	Point3D A =result_points[0];
-	float radius = (A.getX() - posX)*(A.getX() - posX) + (A.getY() - posY)*(A.getY() - posY);
-	if(radius < nearest_vertex_radius){
-		nearest_vertex = 0;
-		nearest_vertex_radius = radius;
-	}
+	get_nearest_point(A, 0);
+
 	Point3D B =result_points[1];
-	 radius = (B.getX() - posX)*(B.getX() - posX) + (B.getY() - posY)*(B.getY() - posY);
+	get_nearest_point(B, 1);
 
-	if(radius < nearest_vertex_radius){
-		nearest_vertex = 1;
-		nearest_vertex_radius = radius;
-	}
 	Point3D C =result_points[2];
-	radius = (C.getX() - posX)*(C.getX() - posX) + (C.getY() - posY)*(C.getY() - posY);
+	get_nearest_point(C, 1);
 
-	if(radius < nearest_vertex_radius){
-		nearest_vertex = 2;
-		nearest_vertex_radius = radius;
-	}
-	std::cout << nearest_vertex;
 
-    int x_left, x_right, y_down, y_up;
+	int x_left, x_right, y_down, y_up;
     initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
 
 
@@ -137,29 +125,39 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
             if (show_mesh_param)
                 if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
-			if (show_mesh_param && selection)
-			{
-			}
             if (show_illumination_param)
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-			if (selection)
-			{
-				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
-				{
-					r = 255;
-					g = 215;
-					b = 50;
-				}
-
-			}
+//			if (selection)
+//			{
+//				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
+//				{
+//					r = 255;
+//					g = 215;
+//					b = 50;
+//				}
+//
+//			}
 			pixels.add(Point2D(x, y), QColor(r, g, b));
 			depth_buffer.set(x, y, z);
 			pixels.add(Point2D(x, y), QColor(r, g, b));
 			depth_buffer.set(x, y, z);
         }
     }
+}
+void RenderEngine::get_nearest_point(const Point3D& B, int vertex_pox)
+{
+	float radius = (B.getX() - posX)*(B.getX() - posX) + (B.getY() - posY)*(B.getY() - posY);
+
+	if(radius < nearest_vertex_radius){
+		//Set nearest vertex
+		nearest_vertex = vertex_pox;
+		//Set nearest disctance between mouse and vertex
+		nearest_vertex_radius = radius;
+		//Set nearest triangle
+		nearest_triangle = сurrent_triangle;
+	}
 }
 
 void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors,
@@ -199,6 +197,4 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
-
-
 }
