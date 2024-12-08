@@ -4,6 +4,7 @@
 #include "../obj_utils/objreader/ObjReader.h"
 #include "../obj_utils/objwriter/ObjWriter.h"
 #include "../render_engine/headers/GraphicConveyor.h"
+#include "../render_engine/headers/Scene.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -66,6 +67,13 @@ void MainWindow::update_scene()
 	DepthBuffer db(width,height);
 	PixelBuffer pb;
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
+//	std::vector<Model> md;
+//	for (std::pair<int, Model> model : models)
+//	{
+//		md.push_back(model.second);
+//	}
+//	Scene sc(md);
+
 	if(ui->pushButton_6->isEnabled())
 	{
 		for (std::pair<int, Model> model : models)

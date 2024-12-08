@@ -73,7 +73,37 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     }));
     y_up = static_cast<int>(std::max({A.getY() + 1, B.getY() + 1, C.getY() + 1, 0.0f}));
 }
+bool RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C)
+{
+	float total_area = (A.getX() * (B.getY() - C.getY()) +
+		B.getX() * (C.getY() - A.getY()) +
+		C.getX() * (A.getY() - B.getY()));
 
+	float w_a = (B.getX() * (C.getY() - P.getY()) + C.getX() * (P.getY() - B.getY()) + P.getX() * (B.getY() - C.getY()))
+		/ total_area;
+	float w_b = (C.getX() * (A.getY() - P.getY()) + A.getX() * (P.getY() - C.getY()) + P.getX() * (C.getY() - A.getY()))
+		/ total_area;
+	float w_c = (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()))
+		/ total_area;
+	float minimal_value = std::min(std::min(w_a, w_b), w_c);
+	if(w_a >= 0 && w_b >= 0 && w_c >= 0)
+	{
+		if (minimal_value == w_a)
+		{
+			nearest_vertex = 0;
+		}
+		if (minimal_value == w_b)
+		{
+			nearest_vertex = 1;
+		}
+		if (minimal_value == w_c)
+		{
+			nearest_vertex = 2;
+		}
+		return true;
+	}
+	return false;
+}
 
 void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point3D, 3>& normal_vectors,
@@ -81,13 +111,10 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 {
     QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
 	Point3D A =result_points[0];
-	get_nearest_point(A, 0);
 
 	Point3D B =result_points[1];
-	get_nearest_point(B, 1);
 
 	Point3D C =result_points[2];
-	get_nearest_point(C, 1);
 
 
 	int x_left, x_right, y_down, y_up;
@@ -96,6 +123,11 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
+
+	if (is_point_in_triangle(Point2D(posX, posY), A, B, C))
+	{
+		nearest_triangle = сurrent_triangle;
+	};
     for (int y = y_down; y < y_up + 1; y++) {
 		for (int x = x_left; x < x_right + 1; x++)
 		{
@@ -119,7 +151,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
-            if (depth_buffer.get(x, y) <= z) continue;
+			if (depth_buffer.get(x, y) < z) continue;
 
             int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
 
@@ -129,37 +161,67 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-//			if (selection)
-//			{
-//				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
-//				{
-//					r = 255;
-//					g = 215;
-//					b = 50;
-//				}
-//
-//			}
-			pixels.add(Point2D(x, y), QColor(r, g, b));
-			depth_buffer.set(x, y, z);
+			if (selection)
+			{
+				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
+				{
+					r = 255;
+					g = 215;
+					b = 50;
+				}
+
+			}
+
 			pixels.add(Point2D(x, y), QColor(r, g, b));
 			depth_buffer.set(x, y, z);
         }
     }
-}
-void RenderEngine::get_nearest_point(const Point3D& B, int vertex_pox)
-{
-	float radius = (B.getX() - posX)*(B.getX() - posX) + (B.getY() - posY)*(B.getY() - posY);
 
-	if(radius < nearest_vertex_radius){
-		//Set nearest vertex
-		nearest_vertex = vertex_pox;
-		//Set nearest disctance between mouse and vertex
-		nearest_vertex_radius = radius;
-		//Set nearest triangle
-		nearest_triangle = сurrent_triangle;
+}
+
+void RenderEngine::universal_render_1(const std::array<Point3D, 3>& result_points,
+	const std::array<Point3D, 3>& normal_vectors,
+	const std::array<Point2D, 3>& texture_vectors)
+{
+	QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
+	Point3D A = result_points[0];
+	Point3D B = result_points[1];
+	Point3D C = result_points[2];
+
+	int x_left, x_right, y_down, y_up;
+	initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
+
+
+	float ABC;
+	ABC = Rasterization::get_triangle_area_float(A, B, C);
+	for (int y = y_down; y < y_up + 1; y++)
+	{
+		for (int x = x_left; x < x_right + 1; x++)
+		{
+			if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
+			Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
+			float ABP;
+			float BCP;
+			float CAP;
+			if (show_mesh_param && !show_texture_param && !show_illumination_param)
+			{
+				ABP = Rasterization::get_triangle_area_round(A, B, P);
+				BCP = Rasterization::get_triangle_area_round(B, C, P);
+				CAP = Rasterization::get_triangle_area_round(C, A, P);
+			}
+			else
+			{
+				ABP = Rasterization::get_triangle_area_float(A, B, P);
+				BCP = Rasterization::get_triangle_area_float(B, C, P);
+				CAP = Rasterization::get_triangle_area_float(C, A, P);
+			}
+			if (ABP < 0 || BCP < 0 || CAP < 0) continue;
+
+
+			pixels.add(Point2D(x, y), QColor(255, 215, 50));
+		}
 	}
 }
-
 void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors,
                                          std::array<Point2D, 3> &texture_vectors,
                                          const Matrix4D &model_view_projection_matrix, int triangle_ind) const
@@ -197,4 +259,13 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
+	if (nearest_triangle != -1)
+	{
+		std::array<Point3D, 3> result_points, normal_vectors;
+		std::array<Point2D, 3> texture_vectors;
+		get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
+			nearest_triangle);
+		universal_render_1(result_points, normal_vectors, texture_vectors);
+		std::cout << nearest_triangle << ") vertex: " << nearest_vertex << std::endl;
+	}
 }

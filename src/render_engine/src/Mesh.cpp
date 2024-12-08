@@ -21,7 +21,7 @@ bool Mesh::show_mesh(float weight_a, float weight_b, float weight_c, int &r, int
 
 bool Mesh::show_selection(float weight_a, float weight_b, float weight_c, int cursorX, int cursorY, int pixelX, int pixelY)
 {
-	int epsi = 5;
+	int epsi = 4;
 //	std::cout << cursorX - pixelX << ", " << cursorY- pixelY << std::endl;
 
 	if ((abs(cursorX - pixelX)*abs(cursorX - pixelX) + abs(cursorY- pixelY)*abs(cursorY- pixelY) < epsi*epsi)) {

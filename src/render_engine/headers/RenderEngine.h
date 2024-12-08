@@ -54,9 +54,8 @@ private:
 	bool show_illumination_param;
 	bool selection = false;
 	int сurrent_triangle;
-	int nearest_vertex;
-	int nearest_triangle;
-	float nearest_vertex_radius = FLT_MAX;
+	int nearest_vertex = -1;
+	int nearest_triangle = -1;
 	int posX = 0;
 	int posY = 0;
     QColor &fill_model_color;
@@ -64,7 +63,6 @@ private:
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,
                                   int &x_right,
                                   int &y_down, int &y_up) const;
-
 
     void universal_render(const std::array<Point3D, 3>& result_points,
 		const std::array<Point3D, 3>& normal_vectors,
@@ -81,6 +79,7 @@ private:
 		const std::array<Point3D, 3>& normal_vectors,
 		const std::array<Point2D, 3>& texture_vectors);
 	void get_nearest_point(const Point3D& B, int vertex_pox);
+	bool is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
 };
 
 #endif //RENDERENGINE_H
