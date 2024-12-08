@@ -75,11 +75,9 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
-	void universal_render_1(const std::array<Point3D, 3>& result_points,
-		const std::array<Point3D, 3>& normal_vectors,
-		const std::array<Point2D, 3>& texture_vectors);
-	void get_nearest_point(const Point3D& B, int vertex_pox);
+
 	bool is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
+	void highlight_triangle(const std::array<Point3D, 3>& result_points);
 };
 
 #endif //RENDERENGINE_H

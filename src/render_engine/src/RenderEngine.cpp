@@ -88,6 +88,8 @@ bool RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D
 	float minimal_value = std::min(std::min(w_a, w_b), w_c);
 	if(w_a >= 0 && w_b >= 0 && w_c >= 0)
 	{
+		nearest_triangle = сurrent_triangle;
+
 		if (minimal_value == w_a)
 		{
 			nearest_vertex = 0;
@@ -124,10 +126,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
 
-	if (is_point_in_triangle(Point2D(posX, posY), A, B, C))
-	{
-		nearest_triangle = сurrent_triangle;
-	};
+	is_point_in_triangle(Point2D(posX, posY), A, B, C);
+	
     for (int y = y_down; y < y_up + 1; y++) {
 		for (int x = x_left; x < x_right + 1; x++)
 		{
@@ -161,16 +161,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
                 Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
             if (show_texture_param)
                 Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-			if (selection)
-			{
-				if (Mesh::show_selection(weight_a, weight_b, weight_c, posX, posY, x, y))
-				{
-					r = 255;
-					g = 215;
-					b = 50;
-				}
-
-			}
 
 			pixels.add(Point2D(x, y), QColor(r, g, b));
 			depth_buffer.set(x, y, z);
@@ -179,9 +169,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
 }
 
-void RenderEngine::universal_render_1(const std::array<Point3D, 3>& result_points,
-	const std::array<Point3D, 3>& normal_vectors,
-	const std::array<Point2D, 3>& texture_vectors)
+void RenderEngine::highlight_triangle(const std::array<Point3D, 3>& result_points)
 {
 	QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
 	Point3D A = result_points[0];
@@ -265,7 +253,6 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 		std::array<Point2D, 3> texture_vectors;
 		get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
 			nearest_triangle);
-		universal_render_1(result_points, normal_vectors, texture_vectors);
-		std::cout << nearest_triangle << ") vertex: " << nearest_vertex << std::endl;
+		highlight_triangle(result_points);
 	}
 }
