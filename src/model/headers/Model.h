@@ -8,13 +8,17 @@
 
 #include <vector>
 
-struct Model
+class Model
 {
+public:
     std::vector<Vector3D> vertices;
     std::vector<Vector2D> textureVertices;
     std::vector<Vector3D> normals;
     std::vector<Polygon> polygons;
     std::vector<Triangle> triangles;
+
+	void deleteVertice(int vertex);
 };
+
 
 #endif

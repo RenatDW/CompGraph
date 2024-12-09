@@ -4,6 +4,7 @@
 #include "../obj_utils/objreader/ObjReader.h"
 #include "../obj_utils/objwriter/ObjWriter.h"
 #include "../render_engine/headers/GraphicConveyor.h"
+#include "../render_engine/headers/Scene.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -32,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 	frameTimer.setInterval(16); // Approx. 60 FPS (1000ms / 16ms ~ 60 FPS)
 	connect(&frameTimer, &QTimer::timeout, this, &MainWindow::onFrameUpdate);
 	frameTimer.start();
+	on_pushButton_6_clicked();
 }
 
 void MainWindow::onFrameUpdate()
@@ -65,12 +67,34 @@ void MainWindow::update_scene()
 	DepthBuffer db(width,height);
 	PixelBuffer pb;
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
-	for (std::pair<int, Model> model : models)
+//	std::vector<Model> md;
+//	for (std::pair<int, Model> model : models)
+//	{
+//		md.push_back(model.second);
+//	}
+//	Scene sc(md);
+
+	if(ui->pushButton_6->isEnabled())
 	{
-		QColor basic_color = QColor(255, 255, 255);
-		RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-			height, show_mesh, show_texture, show_illumination, db, pb);
-		renderEngine.render();
+		for (std::pair<int, Model> model : models)
+		{
+			QColor basic_color = QColor(255, 255, 255);
+			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
+				height, show_mesh, show_texture, show_illumination, db, pb);
+			renderEngine.render();
+		}
+	}else{
+		for (std::pair<int, Model> model : models)
+		{
+			QColor basic_color = QColor(255, 255, 255);
+			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
+				height, show_mesh, show_texture, show_illumination, db, pb);
+			QPoint globalPos = QCursor::pos();
+			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
+			int x = localPos.x();
+			int y = localPos.y();
+			renderEngine.render_with_selection(x, y);
+		}
 	}
 
 	QColor oldval = QColor(1,1,1);
@@ -453,4 +477,24 @@ void MainWindow::wheelEvent(QWheelEvent *event) {
 	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
 
 	update_scene();
+}
+void MainWindow::on_pushButton_5_clicked()
+{
+	if(ui->pushButton_5->isEnabled())
+	{
+		std::cout << "delete mode" << std::endl;
+		ui->pushButton_5->setEnabled(false);
+		ui->pushButton_6->setEnabled(true);
+
+	}
+
+}
+void MainWindow::on_pushButton_6_clicked()
+{
+	if(ui->pushButton_6->isEnabled())
+	{
+		std::cout << "normal mode" << std::endl;
+		ui->pushButton_6->setEnabled(false);
+		ui->pushButton_5->setEnabled(true);
+	}
 }

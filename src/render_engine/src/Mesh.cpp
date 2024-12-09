@@ -6,6 +6,7 @@
 
 #include <cmath>
 #include <QPainter>
+#include <iostream>
 
 #include "../../math/headers/Point3D.h"
 
@@ -16,6 +17,18 @@ bool Mesh::show_mesh(float weight_a, float weight_b, float weight_c, int &r, int
         return false;
     }
     return true;
+}
+
+bool Mesh::show_selection(float weight_a, float weight_b, float weight_c, int cursorX, int cursorY, int pixelX, int pixelY)
+{
+	int epsi = 4;
+//	std::cout << cursorX - pixelX << ", " << cursorY- pixelY << std::endl;
+
+	if ((abs(cursorX - pixelX)*abs(cursorX - pixelX) + abs(cursorY- pixelY)*abs(cursorY- pixelY) < epsi*epsi)) {
+		return true;
+	}
+
+	return false;
 }
 
 void Mesh::show_mesh_by_points(QPainter &painter,Point3D A,Point3D B)
