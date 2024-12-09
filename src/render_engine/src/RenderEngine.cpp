@@ -86,25 +86,26 @@ void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D
 		/ total_area;
 
 //	nearest_vertex = -1;
-	if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
-	{
-		nearest_vertex_point = Point2D(A.getX(), A.getY());
-		nearest_vertex = 0;
-	}
-	else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
-	{
-		nearest_vertex_point = Point2D(B.getX(), B.getY());
-		nearest_vertex = 1;
-	}
-	else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
-	{
-		nearest_vertex_point = Point2D(C.getX(), C.getY());
-		nearest_vertex = 2;
-	}
-
 	if (w_a > 0 && w_b > 0 && w_c > 0)
 	{
 		nearest_triangle = сurrent_triangle;
+
+		if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
+		{
+			nearest_vertex_point = Point2D(A.getX(), A.getY());
+			nearest_vertex = 0;
+		}
+		else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
+		{
+			nearest_vertex_point = Point2D(B.getX(), B.getY());
+			nearest_vertex = 1;
+		}
+		else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
+		{
+			nearest_vertex_point = Point2D(C.getX(), C.getY());
+			nearest_vertex = 2;
+		}
+
 	}
 }
 
@@ -172,7 +173,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
 void RenderEngine::highlight_triangle(const std::array<Point3D, 3>& result_points)
 {
-	QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
 	Point3D A = result_points[0];
 	Point3D B = result_points[1];
 	Point3D C = result_points[2];
@@ -181,8 +181,6 @@ void RenderEngine::highlight_triangle(const std::array<Point3D, 3>& result_point
 	initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
 
 
-	float ABC;
-	ABC = Rasterization::get_triangle_area_float(A, B, C);
 	for (int y = y_down; y < y_up + 1; y++)
 	{
 		for (int x = x_left; x < x_right + 1; x++)
@@ -248,7 +246,6 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
-	std::cout << nearest_vertex << std::endl;
 
 	if (nearest_vertex != -1)
 	{
