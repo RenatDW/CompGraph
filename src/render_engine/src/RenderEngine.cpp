@@ -73,38 +73,39 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     }));
     y_up = static_cast<int>(std::max({A.getY() + 1, B.getY() + 1, C.getY() + 1, 0.0f}));
 }
-bool RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C)
+void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C)
 {
 	float total_area = (A.getX() * (B.getY() - C.getY()) +
 		B.getX() * (C.getY() - A.getY()) +
 		C.getX() * (A.getY() - B.getY()));
-
 	float w_a = (B.getX() * (C.getY() - P.getY()) + C.getX() * (P.getY() - B.getY()) + P.getX() * (B.getY() - C.getY()))
 		/ total_area;
 	float w_b = (C.getX() * (A.getY() - P.getY()) + A.getX() * (P.getY() - C.getY()) + P.getX() * (C.getY() - A.getY()))
 		/ total_area;
 	float w_c = (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()))
 		/ total_area;
-	float minimal_value = std::min(std::min(w_a, w_b), w_c);
-	if(w_a >= 0 && w_b >= 0 && w_c >= 0)
+
+//	nearest_vertex = -1;
+	if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
+	{
+		nearest_vertex_point = Point2D(A.getX(), A.getY());
+		nearest_vertex = 0;
+	}
+	else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
+	{
+		nearest_vertex_point = Point2D(B.getX(), B.getY());
+		nearest_vertex = 1;
+	}
+	else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
+	{
+		nearest_vertex_point = Point2D(C.getX(), C.getY());
+		nearest_vertex = 2;
+	}
+
+	if (w_a > 0 && w_b > 0 && w_c > 0)
 	{
 		nearest_triangle = сurrent_triangle;
-
-		if (minimal_value == w_a)
-		{
-			nearest_vertex = 0;
-		}
-		if (minimal_value == w_b)
-		{
-			nearest_vertex = 1;
-		}
-		if (minimal_value == w_c)
-		{
-			nearest_vertex = 2;
-		}
-		return true;
 	}
-	return false;
 }
 
 void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
@@ -247,12 +248,35 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
-	if (nearest_triangle != -1)
+	std::cout << nearest_vertex << std::endl;
+
+	if (nearest_vertex != -1)
 	{
+//		std::cout << "vertex " << nearest_vertex_point.getX() << ", " << nearest_vertex_point.getY() << std::endl;
+		int radius = 10;
+		painter.setPen(QColor(255, 215, 50));
+		for (int x = 0; x <= radius; x++)
+		{
+			for (int y = 0; y <= radius; y++)
+			{
+				if ((x) * (x) + (y) * (y) < radius * radius)
+				{
+					painter.drawPoint(x + nearest_vertex_point.getX(), y + nearest_vertex_point.getY());
+					painter.drawPoint(x + nearest_vertex_point.getX(), -y + nearest_vertex_point.getY());
+					painter.drawPoint(-x + nearest_vertex_point.getX(), y + nearest_vertex_point.getY());
+					painter.drawPoint(-x + nearest_vertex_point.getX(), -y + nearest_vertex_point.getY());
+				}
+			}
+		}
+	}
+	else if (nearest_triangle != -1)
+	{
+
 		std::array<Point3D, 3> result_points, normal_vectors;
 		std::array<Point2D, 3> texture_vectors;
 		get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
 			nearest_triangle);
 		highlight_triangle(result_points);
 	}
+
 }

@@ -55,6 +55,7 @@ private:
 	bool selection = false;
 	int сurrent_triangle;
 	int nearest_vertex = -1;
+	Point2D nearest_vertex_point;
 	int nearest_triangle = -1;
 	int posX = 0;
 	int posY = 0;
@@ -76,7 +77,7 @@ private:
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
 
-	bool is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
+	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
 	void highlight_triangle(const std::array<Point3D, 3>& result_points);
 };
 
