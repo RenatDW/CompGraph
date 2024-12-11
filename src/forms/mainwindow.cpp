@@ -73,6 +73,7 @@ void MainWindow::update_scene()
 //		md.push_back(model.second);
 //	}
 //	Scene sc(md);
+	Point2D vertex;
 
 	if(ui->pushButton_6->isEnabled())
 	{
@@ -93,7 +94,7 @@ void MainWindow::update_scene()
 			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
 			int x = localPos.x();
 			int y = localPos.y();
-			renderEngine.render_with_selection(x, y);
+			vertex = renderEngine.render_with_selection(x, y);
 		}
 	}
 
@@ -105,6 +106,26 @@ void MainWindow::update_scene()
 		}
 		painter.drawPoint(key.getX(),key.getY());
 	}
+
+	if(vertex != Point2D())
+	{
+		int radius = 10;
+		painter.setPen(QColor(255, 215, 50));
+		for (int x = 0; x <= radius; x++)
+		{
+			for (int y = 0; y <= radius; y++)
+			{
+				if ((x) * (x) + (y) * (y) < radius * radius)
+				{
+					painter.drawPoint(x + vertex.getX(), y + vertex.getY());
+					painter.drawPoint(x + vertex.getX(), -y + vertex.getY());
+					painter.drawPoint(-x + vertex.getX(), y + vertex.getY());
+					painter.drawPoint(-x + vertex.getX(), -y + vertex.getY());
+				}
+			}
+		}
+	}
+
 
 	auto item = std::make_unique<QGraphicsPixmapItem>(pixmap);
 	scene->addItem(item.release());

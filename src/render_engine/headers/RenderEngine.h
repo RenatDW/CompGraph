@@ -21,7 +21,7 @@ class RenderEngine
 public:
 
 	void render();
-	void render_with_selection(int x, int y);
+	Point2D render_with_selection(int x, int y);
 
 
 	RenderEngine(QPainter& painter,
@@ -59,6 +59,7 @@ private:
 	int nearest_triangle = -1;
 	int posX = 0;
 	int posY = 0;
+	float posZ = -999999999.0f;
     QColor &fill_model_color;
 
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,

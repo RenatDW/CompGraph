@@ -25,12 +25,13 @@ void RenderEngine::render()
     render_triangles(model_view_projection_matrix, mesh.triangles.size());
 }
 
-void RenderEngine::render_with_selection(int x, int y)
+Point2D RenderEngine::render_with_selection(int x, int y)
 {
 	posX = x;
 	posY = y;
 	selection = true;
 	render();
+	return nearest_vertex_point;
 }
 
 
@@ -84,28 +85,32 @@ void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D
 		/ total_area;
 	float w_c = (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()))
 		/ total_area;
+	float z = (A.getZ() * w_a + B.getZ() * w_b + C.getZ() * w_c);
 
 //	nearest_vertex = -1;
 	if (w_a > 0 && w_b > 0 && w_c > 0)
 	{
-		nearest_triangle = сurrent_triangle;
+		if (nearest_triangle == -1 || z < posZ) // Сравниваем текущую глубину с минимальной
+		{
+			posZ = z;
+			nearest_triangle = сurrent_triangle;
 
-		if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
-		{
-			nearest_vertex_point = Point2D(A.getX(), A.getY());
-			nearest_vertex = 0;
+			if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
+			{
+				nearest_vertex_point = Point2D(A.getX(), A.getY());
+				nearest_vertex = 0;
+			}
+			else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
+			{
+				nearest_vertex_point = Point2D(B.getX(), B.getY());
+				nearest_vertex = 1;
+			}
+			else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
+			{
+				nearest_vertex_point = Point2D(C.getX(), C.getY());
+				nearest_vertex = 2;
+			}
 		}
-		else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
-		{
-			nearest_vertex_point = Point2D(B.getX(), B.getY());
-			nearest_vertex = 1;
-		}
-		else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
-		{
-			nearest_vertex_point = Point2D(C.getX(), C.getY());
-			nearest_vertex = 2;
-		}
-
 	}
 }
 
@@ -127,7 +132,6 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 
     float ABC;
     ABC = Rasterization::get_triangle_area_float(A, B, C);
-
 	is_point_in_triangle(Point2D(posX, posY), A, B, C);
 	
     for (int y = y_down; y < y_up + 1; y++) {
@@ -249,25 +253,11 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 
 	if (nearest_vertex != -1)
 	{
-//		std::cout << "vertex " << nearest_vertex_point.getX() << ", " << nearest_vertex_point.getY() << std::endl;
-		int radius = 10;
-		painter.setPen(QColor(255, 215, 50));
-		for (int x = 0; x <= radius; x++)
-		{
-			for (int y = 0; y <= radius; y++)
-			{
-				if ((x) * (x) + (y) * (y) < radius * radius)
-				{
-					painter.drawPoint(x + nearest_vertex_point.getX(), y + nearest_vertex_point.getY());
-					painter.drawPoint(x + nearest_vertex_point.getX(), -y + nearest_vertex_point.getY());
-					painter.drawPoint(-x + nearest_vertex_point.getX(), y + nearest_vertex_point.getY());
-					painter.drawPoint(-x + nearest_vertex_point.getX(), -y + nearest_vertex_point.getY());
-				}
-			}
-		}
+		return;
 	}
 	else if (nearest_triangle != -1)
 	{
+//		std::cout << "traingle " << nearest_triangle << std::endl;
 
 		std::array<Point3D, 3> result_points, normal_vectors;
 		std::array<Point2D, 3> texture_vectors;
