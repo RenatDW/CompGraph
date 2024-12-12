@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../math/src/MathCast.cpp"
+#include "../../../src/math/src/MathCast.cpp"
 
 TEST(MathCastTest, Vector3DtoPoint2D)
 {

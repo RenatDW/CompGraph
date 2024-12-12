@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
-#include "../../objreader/src/ObjReader.cpp"
-#include "../../model/src/Polygon.cpp"
-#include "../../model/src/Triangle.cpp"
+#include "../../../src/obj_utils/objreader/ObjReader.cpp"
+#include "../../../src/model/src/Polygon.cpp"
+#include "../../../src/model/src/Triangle.cpp"
 
 TEST(ObjReader, parse_vertex)
 {

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../math/src/Matrix3D.cpp"
+#include "../../../src/math/src/Matrix3D.cpp"
 
 TEST(Matrix3DTest, GetterMatrix3D)
 {

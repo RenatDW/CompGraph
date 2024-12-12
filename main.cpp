@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 
 
 /* ЭТОТ КУБИК ТОЖЕ БУДЕТ МОИМ БУГАГА*/
-	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
+//	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
+	std::string filename( "/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
 
     // Model ans(ObjReader::read(filename));
 	omp_set_dynamic(1); // Enable dynamic adjustment
@@ -38,7 +39,8 @@ int main(int argc, char *argv[])
     MainWindow w;
 	w.setWindowTitle("Toster");
 	w.setWindowIcon(QIcon(":/toster.png"));
-//    w.models.emplace_back(ObjReader::read(filename));
+	w.models[0] = ObjReader::read(filename);
+//    w.models.emplace_back();
     // w.models.emplace_back(ans);
 	w.setWindowFlags(Qt::FramelessWindowHint);
     w.showFullScreen();

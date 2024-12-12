@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../render_engine/headers/GraphicConveyor.h"
+#include "../../../src/render_engine/headers/GraphicConveyor.h"
 
 TEST(GraphicConveyorTest, rotateScaleTranslateTest)
 {

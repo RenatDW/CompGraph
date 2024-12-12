@@ -68,15 +68,12 @@ void Matrix4D::set(const int row, const int col, const float value)
 
 Vector3D Matrix4D::multiply_matrix4d_by_vector3d(const Matrix4D &matrix, const Vector3D &vertex)
 {
-    const float x = vertex.getX() * matrix.get(0, 0) + vertex.getY() * matrix.get(1, 0) + vertex.getZ() * matrix.
-                    get(2, 0) + matrix.get(3, 0);
-    const float y = vertex.getX() * matrix.get(0, 1) + vertex.getY() * matrix.get(1, 1) + vertex.getZ() * matrix.
-                    get(2, 1) + matrix.get(3, 1);
-    const float z = vertex.getX() * matrix.get(0, 2) + vertex.getY() * matrix.get(1, 2) + vertex.getZ() * matrix.
-                    get(2, 2) + matrix.get(3, 2);
-    const float w = vertex.getX() * matrix.get(0, 3) + vertex.getY() * matrix.get(1, 3) + vertex.getZ() * matrix.
-                    get(2, 3) + matrix.get(3, 3);
-    return {x / w, y / w, z / w};
+	const float x = vertex.getX() * matrix.get(0, 0) + vertex.getY() * matrix.get(0, 1) + vertex.getZ() * matrix.get(0, 2) + matrix.get(0, 3);
+	const float y = vertex.getX() * matrix.get(1, 0) + vertex.getY() * matrix.get(1, 1) + vertex.getZ() * matrix.get(1, 2) + matrix.get(1, 3);
+	const float z = vertex.getX() * matrix.get(2, 0) + vertex.getY() * matrix.get(2, 1) + vertex.getZ() * matrix.get(2, 2) + matrix.get(2, 3);
+	const float w = vertex.getX() * matrix.get(3, 0) + vertex.getY() * matrix.get(3, 1) + vertex.getZ() * matrix.get(3, 2) + matrix.get(3, 3);
+	return {x / w, y / w, z / w};
+
 }
 
 
@@ -188,4 +185,12 @@ Matrix4D Matrix4D::max_value()
     float mx = std::numeric_limits<float>::max();
     std::vector<std::vector<float>> f{{mx,mx,mx,mx},{mx,mx,mx,mx},{mx,mx,mx,mx},{mx,mx,mx,mx}};
     return {f};
+}
+
+std::ostream& operator<<(std::ostream& os, const Matrix4D& d)
+{
+	for(auto line : d.matrix){
+		os << " " << line[0]<< " " << line[1]<< " " << line[2]<< " " << line[3]<< std::endl;
+	}
+	return os;
 }

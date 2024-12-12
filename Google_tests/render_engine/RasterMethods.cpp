@@ -1,7 +1,7 @@
 //
 // Created by Ренат Асланов on 19.11.2024.
 //
-#include "../../render_engine/src/Rasterization.cpp"
+#include "../../../src/render_engine/src/Rasterization.cpp"
 
 #include <gtest/gtest.h>
 TEST(AreaTests, calculate_area)

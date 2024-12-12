@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <QColor>
 #include <iostream>
 #include "Vector3D.h"
 #include "Vector2D.h"

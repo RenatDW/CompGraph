@@ -1,8 +1,8 @@
 #ifndef PIXELBUFFER_H
 #define PIXELBUFFER_H
 
-#include <unordered_map>
 #include <QColor>
+#include <unordered_map>
 #include "Point2D.h"
 
 class PixelBuffer {
