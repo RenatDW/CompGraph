@@ -12,6 +12,7 @@
 #include "../../math/headers/MathCast.h"
 #include "../../math/headers/PixelBuffer.h"
 #include "../headers/Rasterization.h"
+#include "../headers/Material.h"
 
 void RenderEngine::render()
 {
@@ -47,14 +48,15 @@ RenderEngine::RenderEngine(QPainter& painter,
 	bool show_texture_param,
 	bool show_illumination_param,
 	DepthBuffer& depth_buffer,
-	PixelBuffer& pixels)
+	PixelBuffer& pixels,
+	Material mt)
 	: depth_buffer(depth_buffer), painter(painter),
 	  mesh(model), camera(camera), filename(string),
 	  width(width), height(height),
 	  show_texture_param(show_texture_param),
 	  show_mesh_param(show_mesh_param),
 	  show_illumination_param(show_illumination_param),
-	  fill_model_color(color), pixels(pixels)
+	  fill_model_color(color), pixels(pixels), mt(mt)
 {
 
 }
@@ -118,7 +120,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point3D, 3>& normal_vectors,
 	const std::array<Point2D, 3>& texture_vectors)
 {
-    QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
+	QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
+
 	Point3D A =result_points[0];
 
 	Point3D B =result_points[1];
@@ -159,16 +162,13 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
 			if (depth_buffer.get(x, y) < z) continue;
 
-            int r = fill_model_color.red(), g = fill_model_color.green(), b = fill_model_color.blue();
+			mt.set_cam(camera);
 
-            if (show_mesh_param)
-                if (Mesh::show_mesh(weight_a, weight_b, weight_c, r, g, b)) continue;
-            if (show_illumination_param)
-                Illumination::illumination(normal_vectors, P, camera, weight_a, weight_b, weight_c, r, g, b);
-            if (show_texture_param)
-                Texturezation::texturation(texture_vectors, image, weight_a, weight_b, weight_c, r, g, b);
-
-			pixels.add(Point2D(x, y), QColor(r, g, b));
+			pixels.add(Point2D(x, y), mt.use_material(weight_a,
+				weight_b,
+				weight_c,
+				texture_vectors,
+				normal_vectors,P));
 			depth_buffer.set(x, y, z);
         }
     }
@@ -242,6 +242,7 @@ void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, 
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {
+
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
         std::array<Point3D, 3> result_points, normal_vectors;
         std::array<Point2D, 3> texture_vectors;

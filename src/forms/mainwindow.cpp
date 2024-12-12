@@ -5,6 +5,7 @@
 #include "../obj_utils/objwriter/ObjWriter.h"
 #include "../render_engine/headers/GraphicConveyor.h"
 #include "../render_engine/headers/Scene.h"
+#include "../render_engine/src//Material.cpp"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -75,13 +76,17 @@ void MainWindow::update_scene()
 //	Scene sc(md);
 	Point2D vertex;
 
+	QImage image = (!model_texture_path.empty()) ? QImage(model_texture_path.data()) : QImage();
+	Material mt(show_mesh,show_illumination,show_texture);
+
 	if(ui->pushButton_6->isEnabled())
 	{
 		for (std::pair<int, Model> model : models)
 		{
 			QColor basic_color = QColor(255, 255, 255);
+
 			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination, db, pb);
+				height, show_mesh, show_texture, show_illumination, db, pb, mt);
 			renderEngine.render();
 		}
 	}else{
@@ -89,7 +94,7 @@ void MainWindow::update_scene()
 		{
 			QColor basic_color = QColor(255, 255, 255);
 			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination, db, pb);
+				height, show_mesh, show_texture, show_illumination, db, pb, mt);
 			QPoint globalPos = QCursor::pos();
 			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
 			int x = localPos.x();

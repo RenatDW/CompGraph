@@ -13,10 +13,10 @@
 bool Mesh::show_mesh(float weight_a, float weight_b, float weight_c, int &r, int &g, int &b)
 {
     if (weight_a <= 0.02f || weight_b <= 0.02f || weight_c <= 0.02f) {
-        r = 1, g = 1, b = 1;
-        return false;
+        r = 255, g = 255, b = 255;
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool Mesh::show_selection(float weight_a, float weight_b, float weight_c, int cursorX, int cursorY, int pixelX, int pixelY)

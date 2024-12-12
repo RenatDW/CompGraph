@@ -14,6 +14,7 @@
 
 
 #include "../../math/headers/DepthBuffer.h"
+#include "Material.h"
 
 
 class RenderEngine
@@ -35,7 +36,8 @@ public:
 		bool show_texture_param,
 		bool show_illumination_param,
 		DepthBuffer& depth_buffer,
-		PixelBuffer& pixels);
+		PixelBuffer& pixels,
+		Material mt);
 
 
     ~RenderEngine() = default;
@@ -61,6 +63,7 @@ private:
 	int posY = 0;
 	float posZ = -999999999.0f;
     QColor &fill_model_color;
+	Material mt;
 
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,
                                   int &x_right,
