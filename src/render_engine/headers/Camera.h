@@ -6,7 +6,7 @@
 
 class Camera
 {
-    friend bool operator==(const Camera &lhs, const Camera &rhs)
+	friend bool operator==(const Camera &lhs, const Camera &rhs)
     {
         return lhs.position == rhs.position
                && lhs.target == rhs.target
@@ -48,6 +48,7 @@ public:
            float farPlane);
     float nearPlane;
     float farPlane;
+	Camera();
 private:
     Vector3D position;
     Vector3D target;

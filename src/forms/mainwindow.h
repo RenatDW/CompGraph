@@ -37,7 +37,7 @@ public:
     std::string model_texture_path{};
     QColor fill_model_color;
     Camera camera;
-    bool show_mesh = true;
+    bool show_mesh = false;
     bool show_texture = false;
     bool show_illumination = false;
     const int TRANSLATION = 5;
@@ -59,6 +59,8 @@ private slots:
 	void on_pushButton_2_clicked();
 	void on_pushButton_3_clicked();
 	void on_pushButton_4_clicked();
+	void on_pushButton_5_clicked();
+	void on_pushButton_6_clicked();
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();

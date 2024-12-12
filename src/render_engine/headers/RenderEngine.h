@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <QPainter>
+#include <cfloat>
 
 #include "Camera.h"
 #include "Renderable.h"
@@ -13,47 +14,49 @@
 
 
 #include "../../math/headers/DepthBuffer.h"
+#include "Material.h"
 
 
 class RenderEngine
 {
 public:
-    void render();
 
-	RenderEngine(QPainter& painter,
-		Camera& camera,
-		std::string& string,
-		QColor& color,
+	void render();
+	Point2D render_with_selection(int x, int y);
+
+	RenderEngine(Camera& camera,
 		Model& model,
 		int width,
 		int height,
-		bool show_mesh_param,
-		bool show_texture_param,
-		bool show_illumination_param,
 		DepthBuffer& depth_buffer,
-		PixelBuffer& pixels);
-
+		PixelBuffer& pixels,
+		Material & mt);
 
     ~RenderEngine() = default;
 
 private:
 	DepthBuffer& depth_buffer;
-	QPainter& painter;
     Model &mesh;
     Camera &camera;
 	PixelBuffer& pixels;
-    std::string &filename;
     int width;
     int height;
-    bool show_texture_param;
-    bool show_mesh_param;
-    bool show_illumination_param;
-    QColor &fill_model_color;
+	bool show_mesh;
+	bool show_texture;
+	bool show_illumination;
+	bool selection = false;
+	int сurrent_triangle;
+	int nearest_vertex = -1;
+	Point2D nearest_vertex_point;
+	int nearest_triangle = -1;
+	int posX = 0;
+	int posY = 0;
+	float posZ = std::numeric_limits<float>::min();
+	Material mt;
 
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,
                                   int &x_right,
                                   int &y_down, int &y_up) const;
-
 
     void universal_render(const std::array<Point3D, 3>& result_points,
 		const std::array<Point3D, 3>& normal_vectors,
@@ -66,6 +69,8 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
+	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
+	void highlight_triangle(const std::array<Point3D, 3>& result_points);
 };
 
 #endif //RENDERENGINE_H
