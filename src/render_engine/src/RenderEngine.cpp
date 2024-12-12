@@ -35,30 +35,20 @@ Point2D RenderEngine::render_with_selection(int x, int y)
 	return nearest_vertex_point;
 }
 
-
-
-RenderEngine::RenderEngine(QPainter& painter,
-	Camera& camera,
-	std::string& string,
-	QColor& color,
+RenderEngine::RenderEngine(Camera& camera,
 	Model& model,
 	int width,
 	int height,
-	bool show_mesh_param,
-	bool show_texture_param,
-	bool show_illumination_param,
 	DepthBuffer& depth_buffer,
 	PixelBuffer& pixels,
-	Material mt)
-	: depth_buffer(depth_buffer), painter(painter),
-	  mesh(model), camera(camera), filename(string),
-	  width(width), height(height),
-	  show_texture_param(show_texture_param),
-	  show_mesh_param(show_mesh_param),
-	  show_illumination_param(show_illumination_param),
-	  fill_model_color(color), pixels(pixels), mt(mt)
+	Material& mt)
+	: depth_buffer(depth_buffer),
+	  mesh(model), camera(camera),
+	  width(width), height(height), pixels(pixels), mt(mt)
 {
-
+	show_mesh = mt.is_show_mesh();
+	show_texture = mt.is_show_texture();
+	show_illumination = mt.is_show_illumination();
 }
 
 
@@ -120,12 +110,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point3D, 3>& normal_vectors,
 	const std::array<Point2D, 3>& texture_vectors)
 {
-	QImage image = (!filename.empty()) ? QImage(filename.data()) : QImage();
-
 	Point3D A =result_points[0];
-
 	Point3D B =result_points[1];
-
 	Point3D C =result_points[2];
 
 
@@ -145,7 +131,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 			float ABP;
 			float BCP;
 			float CAP;
-			if (show_mesh_param && !show_texture_param && !show_illumination_param)
+			if (show_mesh && !show_texture && !show_illumination)
 			{
 				ABP = Rasterization::get_triangle_area_round(A, B, P);
 				BCP = Rasterization::get_triangle_area_round(B, C, P);
@@ -194,7 +180,7 @@ void RenderEngine::highlight_triangle(const std::array<Point3D, 3>& result_point
 			float ABP;
 			float BCP;
 			float CAP;
-			if (show_mesh_param && !show_texture_param && !show_illumination_param)
+			if (show_mesh && !show_texture && !show_illumination)
 			{
 				ABP = Rasterization::get_triangle_area_round(A, B, P);
 				BCP = Rasterization::get_triangle_area_round(B, C, P);
@@ -224,14 +210,14 @@ void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, 
             Matrix4D::multiply_matrix4d_by_vector3d(model_view_projection_matrix, vertex), width, height);
         result_points[vertex_in_triangle_ind] = (result_point);
         //Illumination
-		if (show_illumination_param)
+		if (show_illumination)
 		{
 			int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
 			Point3D normal_point(mesh.normals[texture_vertex_ind]);
 			normal_vectors[vertex_in_triangle_ind] = (normal_point);
 		}
         //Texture
-		if (show_texture_param)
+		if (show_texture)
 		{
 			int texture_vertex_ind = mesh.triangles[triangle_ind].get_texture_indices()[vertex_in_triangle_ind];
 			Point2D texture_point = (mesh.textureVertices[texture_vertex_ind]);
@@ -258,7 +244,6 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 	}
 	else if (nearest_triangle != -1)
 	{
-//		std::cout << "traingle " << nearest_triangle << std::endl;
 
 		std::array<Point3D, 3> result_points, normal_vectors;
 		std::array<Point2D, 3> texture_vectors;

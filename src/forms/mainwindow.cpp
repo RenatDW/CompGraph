@@ -85,16 +85,16 @@ void MainWindow::update_scene()
 		{
 			QColor basic_color = QColor(255, 255, 255);
 
-			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination, db, pb, mt);
+			RenderEngine renderEngine(camera, model.second, width,
+				height, db, pb, mt);
 			renderEngine.render();
 		}
 	}else{
 		for (std::pair<int, Model> model : models)
 		{
 			QColor basic_color = QColor(255, 255, 255);
-			RenderEngine renderEngine(painter, camera, model_texture_path, basic_color, model.second, width,
-				height, show_mesh, show_texture, show_illumination, db, pb, mt);
+			RenderEngine renderEngine(camera, model.second, width,
+				height, db, pb, mt);
 			QPoint globalPos = QCursor::pos();
 			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
 			int x = localPos.x();

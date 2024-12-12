@@ -31,6 +31,9 @@ public:
 		Point3D P);
 	const Camera& get_cam();
 	void set_cam(Camera& cam);
+	bool is_show_mesh() const;
+	bool is_show_texture() const;
+	bool is_show_illumination() const;
 	QImage& get_texture();
 	void set_texture(QImage& texture);
 };

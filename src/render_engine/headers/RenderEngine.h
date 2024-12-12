@@ -24,36 +24,26 @@ public:
 	void render();
 	Point2D render_with_selection(int x, int y);
 
-
-	RenderEngine(QPainter& painter,
-		Camera& camera,
-		std::string& string,
-		QColor& color,
+	RenderEngine(Camera& camera,
 		Model& model,
 		int width,
 		int height,
-		bool show_mesh_param,
-		bool show_texture_param,
-		bool show_illumination_param,
 		DepthBuffer& depth_buffer,
 		PixelBuffer& pixels,
-		Material mt);
-
+		Material & mt);
 
     ~RenderEngine() = default;
 
 private:
 	DepthBuffer& depth_buffer;
-	QPainter& painter;
     Model &mesh;
     Camera &camera;
 	PixelBuffer& pixels;
-    std::string &filename;
     int width;
     int height;
-    bool show_texture_param;
-    bool show_mesh_param;
-	bool show_illumination_param;
+	bool show_mesh;
+	bool show_texture;
+	bool show_illumination;
 	bool selection = false;
 	int сurrent_triangle;
 	int nearest_vertex = -1;
@@ -61,8 +51,7 @@ private:
 	int nearest_triangle = -1;
 	int posX = 0;
 	int posY = 0;
-	float posZ = -999999999.0f;
-    QColor &fill_model_color;
+	float posZ = std::numeric_limits<float>::min();
 	Material mt;
 
     void initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C, int &x_left,
@@ -79,7 +68,6 @@ private:
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
-
 
 	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
 	void highlight_triangle(const std::array<Point3D, 3>& result_points);

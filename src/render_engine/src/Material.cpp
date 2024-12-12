@@ -5,8 +5,8 @@
 Material::Material(bool show_mesh, bool show_illumination, bool show_texture)
 	: show_texture(show_texture), show_illumination(show_illumination), show_mesh(show_mesh)
 {
-	show_texture = !texture.isNull();
-	show_illumination = cam != Camera();
+	this->show_texture = !texture.isNull();
+	this->show_illumination = cam != Camera();
 }
 QColor Material::use_material(float w_a,
 	float w_b,
@@ -53,4 +53,16 @@ QImage& Material::get_texture()
 void Material::set_texture(QImage& texture)
 {
 	Material::texture = texture;
+}
+bool Material::is_show_mesh() const
+{
+	return show_mesh;
+}
+bool Material::is_show_texture() const
+{
+	return show_texture;
+}
+bool Material::is_show_illumination() const
+{
+	return show_illumination;
 }
