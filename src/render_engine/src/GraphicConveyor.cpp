@@ -146,12 +146,12 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
 
 
     std::vector<std::vector<float> > matrix = {
-        {resultX.getX(), resultY.getX(), resultZ.getX(), 0},
-        {resultX.getY(), resultY.getY(), resultZ.getY(), 0},
-        {resultX.getZ(), resultY.getZ(), resultZ.getZ(), 0},
-        {-(resultX * eye), -(resultY * eye), -(resultZ * eye), 1}
+        {resultX.getX(), resultX.getY(), resultX.getZ(), -(resultX * eye)},
+        {resultY.getX(), resultY.getY(), resultY.getZ(), -(resultY * eye)},
+        {resultZ.getX(), resultZ.getY(), resultZ.getZ(), -(resultZ * eye)},
+        {0, 0, 0, 1}
     };
-    return Matrix4D(matrix);
+    return {matrix};
 }
 
 Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_ratio, const float &near_plane,
@@ -162,8 +162,8 @@ Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_rati
     result.set(0, 0, tangent_minus_on_degree / aspect_ratio);
     result.set(1, 1, tangent_minus_on_degree);
     result.set(2, 2, (far_plane + near_plane) / (far_plane - near_plane));
-    result.set(2, 3, 1.0f);
-    result.set(3, 2, 2 * (near_plane * far_plane) / (near_plane - far_plane));
+    result.set(2, 3, 2 * (near_plane * far_plane) / (near_plane - far_plane));
+    result.set(3, 2, 1.0f);
     return result;
 }
 

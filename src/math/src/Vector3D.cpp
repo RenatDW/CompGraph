@@ -51,13 +51,8 @@ Vector3D Vector3D::operator -(const Vector3D &v) const
 
 Vector3D Vector3D::cross(const Vector3D &v1, const Vector3D &v2)
 {
-    float x = v1.y * v2.z - v1.z * v2.y;
-    float y = v2.x * v1.z - v2.z * v1.x;
-    float z = v1.x * v2.y - v1.y * v2.x;
-
-    return {x, y, z};
+	return Vector3D(v1.getY() * v2.getZ() - v1.getZ() * v2.getY(), -(v1.getX() * v2.getZ() - v1.getZ() * v2.getX()), v1.getX() * v2.getY() -v1.getY() * v2.getX());
 }
-
 
 float Vector3D::operator *(const Vector3D &v) const
 {

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "../../math/src/Vector4D.cpp"
+#include "../../../src/math/src/Vector4D.cpp"
 
 TEST(Vector4DTest, DefaultConstructorVector4D)
 {

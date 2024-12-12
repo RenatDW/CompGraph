@@ -40,8 +40,10 @@ int main(int argc, char *argv[])
     MainWindow w;
 	w.setWindowTitle("Toster");
 	w.setWindowIcon(QIcon(":/toster.png"));
-//    w.models.emplace_back(ObjReader::read(filename));
-     w.models[0] = ans;
+
+	w.models[0] = ObjReader::read(filename);
+//    w.models.emplace_back();
+    // w.models.emplace_back(ans);
 	w.setWindowFlags(Qt::FramelessWindowHint);
     w.showFullScreen();
 
