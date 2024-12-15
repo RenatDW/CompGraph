@@ -7,6 +7,9 @@
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QMainWindow>
+
+#include <QtGui>
+#include <QGraphicsScene>
 #include <QGraphicsScene>
 #include <memory>
 #include <QMouseEvent>
@@ -65,8 +68,6 @@ private slots:
 	void slotEditRecord();
 	void slotRemoveRecord();
 	void slotRotateRecord();
-
-	void wheelEvent(QWheelEvent* event) override;
 
 private:
 	QTimer frameTimer;         // Timer for frame updates

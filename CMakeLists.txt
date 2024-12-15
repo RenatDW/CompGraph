@@ -20,7 +20,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
+
 add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
+        src/forms/CustomView.h
+        src/forms/CustomView.cpp
         src/forms/mainwindow.cpp
         src/math/src/DepthBuffer.cpp
         src/math/src/MathCast.cpp
