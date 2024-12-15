@@ -491,7 +491,7 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
 
-//void MainWindow::wheelEvent(QWheelEvent *event) {
+//void MainWindow::wheelEvent(QWheelEvent *event) { ТРУП КОЛЕСИКА МЫШИ ХАПХВАХПХАВХВХАПАВХАХП
 //	int delta = event->angleDelta().y();
 //	const float zoom_speed = 0.1f;
 //	camera.move_position(Vector3D(0, 0, static_cast<float>(delta) * zoom_speed * (-1)));
