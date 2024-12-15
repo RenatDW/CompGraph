@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 /* ЭТОТ КУБИК ТОЖЕ БУДЕТ МОИМ БУГАГА*/
 //	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
 //МОЖЕТ ТЫ ВСЕ ТАКИ БУДЕШЬ КОПИРОВАТЬ КУБИК, А ПОТОМ ЕГО РЕДАКТИРОВАТЬ, А НЕ ИЗМЕНЯТЬ УЖЕ СУЩЕСТВУЮЩИЙ!??!?!?!?!!?
-	std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
+	std::string filename("/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
 
      Model ans(ObjReader::read(filename));
 	omp_set_dynamic(1); // Enable dynamic adjustment
