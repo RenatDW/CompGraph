@@ -525,3 +525,43 @@ void MainWindow::on_pushButton_6_clicked()
 		ui->pushButton_5->setEnabled(true);
 	}
 }
+
+void MainWindow::on_pushButton_7_clicked()
+{
+	auto dialog1 = new QDialog();
+	dialog1->setWindowModality(Qt::WindowModality::NonModal);
+	dialog1->setMinimumHeight(150);
+	dialog1->setMinimumWidth(150);
+
+	auto label_1 = new QLabel();
+	label_1->setText("phi, psi, theta:");
+	label_1->setGeometry(10, 10, 150, 50);
+	label_1->setParent(dialog1);
+
+	auto phi = new QTextEdit();
+	phi->setPlaceholderText("x:");
+	phi->setGeometry(10, 70, 30, 30);
+	phi->setParent(dialog1);
+
+	auto psi = new QTextEdit();
+	psi->setPlaceholderText("y:");
+	psi->setGeometry(80, 70, 30, 30);
+	psi->setParent(dialog1);
+
+	auto theta = new QTextEdit();
+	theta->setPlaceholderText("z:");
+	theta->setGeometry(150, 70, 30, 30);
+	theta->setParent(dialog1);
+
+	auto accept = new QPushButton();
+	accept->setGeometry(10, 100, 50, 30);
+	accept->setText("Add");
+	accept->setParent(dialog1);
+
+	connect(accept, &QPushButton::clicked, [phi, psi, theta, dialog1, this]()
+	{
+		GraphicConveyor::rotate(models[0], phi, psi, theta);
+	});
+
+	dialog1->show();
+}
