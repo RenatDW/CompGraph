@@ -48,10 +48,10 @@ public:
 private slots:
     void on_actionLoad_Model_triggered();
     void on_actionSave_Model_triggered();
-    void on_actionUp_triggered();
-    void on_actionDown_triggered();
-    void on_actionLeft_triggered();
-    void on_actionRight_triggered();
+    //void on_actionUp_triggered();
+    //void on_actionDown_triggered();
+    //void on_actionLeft_triggered();
+    //void on_actionRight_triggered();
     void on_actionLoad_Texture_triggered();
     void on_actionChose_Color_triggered();
     void on_actionTriangulation_changed();

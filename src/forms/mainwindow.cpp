@@ -240,64 +240,64 @@ void MainWindow::on_actionSave_Model_triggered()
     ObjWriter::write(models[0], file_name);
 }
 
-void MainWindow::on_actionUp_triggered()
-{
-	camera.move_position(Vector3D(0, static_cast<float>(TRANSLATION), 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//void MainWindow::on_actionUp_triggered()
+//{
+//	camera.move_position(Vector3D(0, static_cast<float>(TRANSLATION), 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//    update_scene();
+//}
 
+//void MainWindow::on_actionDown_triggered()
+//{
+//	camera.move_position(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//	update_scene();
+//}
 
-    update_scene();
-}
+//void MainWindow::on_actionLeft_triggered()
+//{
+//	camera.move_position(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//	update_scene();
+//}
 
-void MainWindow::on_actionDown_triggered()
-{
-	camera.move_position(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-
-	update_scene();
-}
-
-void MainWindow::on_actionLeft_triggered()
-{
-	camera.move_position(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-	update_scene();
-}
-
-void MainWindow::on_actionRight_triggered()
-{
-	camera.move_position(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-
-	update_scene();
-}
+//void MainWindow::on_actionRight_triggered()
+//{
+//	camera.move_position(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//	update_scene();
+//}
 
 void MainWindow::on_actionLoad_Texture_triggered()
 {
@@ -332,8 +332,7 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 	{
 		QVariant v = element->data(Qt::UserRole);
 		int id = v.value<int>();
-		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
-
+		GraphicConveyor::rotate_scale_translate(models[id], 1000, 1, 1, 1, 1, 1, 1, 1, 1);
 	}
 
 
