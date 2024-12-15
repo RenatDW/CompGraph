@@ -1,8 +1,11 @@
 #include "CustomView.h"
 #include "mainwindow.h"
 
+#include <QDebug>
+
 CustomView::CustomView(QWidget* parent) : QGraphicsView(parent)
 {
+	setMouseTracking(true);
 }
 
 void CustomView::wheelEvent(QWheelEvent* event)
@@ -25,4 +28,32 @@ void CustomView::wheelEvent(QWheelEvent* event)
 void CustomView::set_main_window_pointer(MainWindow* t_mainWindow)
 {
 	this->mainWindow = t_mainWindow;
+}
+
+void CustomView::mouseMoveEvent(QMouseEvent* event)
+{
+	QPointF scenePos = mapToScene(event->pos());
+	//qDebug() << "Mouse move at:" << scenePos;
+
+	mainWindow->update_scene();
+}
+
+void CustomView::mousePressEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		QPointF scenePos = mapToScene(event->pos());
+		qDebug() << "Mouse PRESS at:" << scenePos;
+	}
+
+	mainWindow->update_scene();
+}
+
+void CustomView::mouseReleaseEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		QPointF scenePos = mapToScene(event->pos());
+		qDebug() << "Mouse Release at:" << scenePos;
+	}
 }
