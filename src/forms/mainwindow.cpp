@@ -75,8 +75,7 @@ void MainWindow::update_scene()
 //	Scene sc(md);
 	Point2D vertex;
 
-	QImage image = (!model_texture_path.empty()) ? QImage(model_texture_path.data()) : QImage();
-	Material mt(show_mesh,show_illumination,show_texture);
+//	Material mt(show_mesh,show_illumination,show_texture);
 
 	if(ui->pushButton_6->isEnabled())
 	{
@@ -85,7 +84,7 @@ void MainWindow::update_scene()
 			QColor basic_color = QColor(255, 255, 255);
 
 			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, mt);
+				height, db, pb, materials.at(model.first));
 			renderEngine.render();
 		}
 	}else{
@@ -93,7 +92,7 @@ void MainWindow::update_scene()
 		{
 			QColor basic_color = QColor(255, 255, 255);
 			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, mt);
+				height, db, pb, materials.at(model.first));
 			QPoint globalPos = QCursor::pos();
 			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
 			int x = localPos.x();
@@ -147,6 +146,7 @@ void MainWindow::on_actionLoad_Model_triggered()
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
 	models.emplace(model_cnt, ObjReader::read(file_name));
+	materials.emplace(model_cnt, Material(false, false, false));
 
 	//value and number of loaded model
 	std::map<int, int> m;
@@ -156,15 +156,15 @@ void MainWindow::on_actionLoad_Model_triggered()
 	QVariant v;
 
 	v.setValue(model_cnt);
-//	std::cout << model_cnt << std::endl;
 
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
 	ui->listWidget->addItem(model_list_item.release());
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotEditRecord()));
-
+	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(onListClicked()));
+//	QObject::connect(ui->listWidget, SIGNAL(activated()), this, SLOT());
+	selected_model = model_cnt;
 	model_cnt++;
 	update_scene();
 }
@@ -206,7 +206,9 @@ void MainWindow::slotRotateRecord()
 void MainWindow::slotRemoveRecord()
 {
 	int row = ui->listWidget->selectionModel()->currentIndex().row();
-	models.erase(ui->listWidget->item(row)->data(Qt::UserRole).value<int>());
+	int model_id = ui->listWidget->item(row)->data(Qt::UserRole).value<int>();
+	models.erase(model_id);
+	materials.erase(model_id);
 	auto it = ui->listWidget->takeItem(ui->listWidget->currentRow());
 	delete it;
 }
@@ -302,7 +304,16 @@ void MainWindow::on_actionLoad_Texture_triggered()
                                                          tr("Open Texture"), ":/",
                                                          tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
     //TODO Переделать когда нужно будет делать сценку
-    model_texture_path = file_name;
+	QImage texture = QImage(file_name.data());
+	if(!texture.isNull())
+	{
+		materials[selected_model].set_texture(texture);
+		ui->checkBox_show_texture->setChecked(true);
+		show_texture = true;
+	}else{
+		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
+	}
+	update_scene();
 }
 
 void MainWindow::on_actionChose_Color_triggered()
@@ -313,7 +324,6 @@ void MainWindow::on_actionChose_Color_triggered()
     // if (!color.isValid()) {
     // Cancel
     // }
-    // QMessageBox::information(this, "Choose Color", "Cooming soon...");
 }
 
 void MainWindow::on_actionTriangulation_changed()
@@ -406,6 +416,7 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 void MainWindow::add_model(Model& md)
 {
 	models.emplace(model_cnt, md);
+	materials[model_cnt] = { false, false, false };
 	model_cnt++;
 }
 void MainWindow::add_camera_to_list(QString x, QString y, QString z)
@@ -458,32 +469,66 @@ void MainWindow::on_pushButton_4_clicked()
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
 //	std::cout << models.size() << std::endl;
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
-	std::cout << models.size() << std::endl;
+//	std::cout << models.size() << std::endl;
 	auto it = ui->listWidget_2->takeItem(ui->listWidget_2->currentRow());
 	delete it;
 }
 
 void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
 {
-    show_mesh = !show_mesh;
+	if (selected_model)
+	{
+		int model_id = selected_model;
+		materials[model_id].set_show_mesh(!show_mesh);
+//			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
+		show_mesh = !show_mesh;
+	}
 	update_scene();
+
     // QMessageBox::information(this, "Save model", "Today is monday");
 }
 
 void MainWindow::on_checkBox_show_texture_toggled(bool checked)
 {
-    if(model_texture_path.empty() ) {
-        QMessageBox::information(this, "OSHIBKA", "Elki palki, shachalo model' zagruzi, yo, 52");
-        // ui->checkBox_show_texture->toggled(false);
-    }
-    show_texture = !show_texture;
-	update_scene();
+	if (selected_model)
+	{
+
+		int model_id = selected_model;
+		if (materials[model_id].get_texture().isNull())
+		{
+			ui->checkBox_show_texture->blockSignals(true);
+			QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
+			show_texture = false;
+			ui->checkBox_show_texture->setChecked(false);
+			ui->checkBox_show_texture->blockSignals(false);
+
+			return;
+		}else
+		{
+			materials[model_id].set_show_texture(!show_texture);
+
+			show_texture = !show_texture;
+		}
+		update_scene();
+	}
+	// QMessageBox::information(this, "Save model", "Today is monday");
+
+
 }
 
 void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
 {
-    show_illumination = !show_illumination;
-	update_scene();
+	if (selected_model)
+	{
+
+		int model_id = selected_model;
+//			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
+
+		materials[model_id].set_show_illumination(!show_illumination);
+		show_illumination = !show_illumination;
+
+		update_scene();
+	}
     
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
@@ -522,4 +567,22 @@ void MainWindow::on_pushButton_6_clicked()
 		ui->pushButton_6->setEnabled(false);
 		ui->pushButton_5->setEnabled(true);
 	}
+}
+void MainWindow::onListClicked()
+{
+	ui->checkBox_show_illumination->blockSignals(true);
+	ui->checkBox_show_texture->blockSignals(true);
+	ui->checkBox_show_mesh->blockSignals(true);
+	for (auto elem : ui->listWidget->selectedItems())
+	{
+		auto model_id = elem->data(Qt::UserRole).value<int>();
+		selected_model = model_id;
+		ui->checkBox_show_illumination->setChecked(materials[model_id].is_show_illumination());
+		ui->checkBox_show_texture->setChecked(materials[model_id].is_show_texture());
+		ui->checkBox_show_mesh->setChecked(materials[model_id].is_show_mesh());
+	}
+	ui->checkBox_show_illumination->blockSignals(false);
+	ui->checkBox_show_texture->blockSignals(false);
+	ui->checkBox_show_mesh->blockSignals(false);
+	update_scene();
 }
