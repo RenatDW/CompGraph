@@ -327,15 +327,12 @@ void MainWindow::on_actionTriangulation_changed()
 
 void MainWindow::on_actionRotate_Scale_Translate_triggered()
 {
-
 	for(auto element: ui->listWidget->selectedItems())
 	{
 		QVariant v = element->data(Qt::UserRole);
 		int id = v.value<int>();
 		GraphicConveyor::rotate_scale_translate(models[id], 1000, 1, 1, 1, 1, 1, 1, 1, 1);
 	}
-
-
 	update_scene();
 }
 //Кнопка +
@@ -525,43 +522,62 @@ void MainWindow::on_pushButton_6_clicked()
 		ui->pushButton_5->setEnabled(true);
 	}
 }
+//
+//void MainWindow::on_pushButton_7_clicked()
+//{
+//	auto dialog1 = new QDialog(this); // Указываем родительский виджет
+//	dialog1->setWindowModality(Qt::WindowModality::NonModal);
+//	dialog1->setMinimumSize(200, 150); // Удобнее установить минимальный размер
+//
+//	// Создаём Layout для диалога
+//	auto layout = new QVBoxLayout(dialog1);
+//
+//	// Добавляем описание
+//	auto label_1 = new QLabel("phi, psi, theta:", dialog1);
+//	layout->addWidget(label_1);
+//
+//	// Поля ввода
+//	auto phi = new QLineEdit(dialog1);
+//	phi->setPlaceholderText("phi (x):");
+//	layout->addWidget(phi);
+//
+//	auto psi = new QLineEdit(dialog1);
+//	psi->setPlaceholderText("psi (y):");
+//	layout->addWidget(psi);
+//
+//	auto theta = new QLineEdit(dialog1);
+//	theta->setPlaceholderText("theta (z):");
+//	layout->addWidget(theta);
+//
+//	// Кнопка подтверждения
+//	auto accept = new QPushButton("Add", dialog1);
+//	layout->addWidget(accept);
+//
+//	// Обработка нажатия кнопки
+//	connect(accept, &QPushButton::clicked, [phi, psi, theta, dialog1, this]() {
+//		// Проверяем введённые значения
+//		bool phiOk, psiOk, thetaOk;
+//		float phiValue = phi->text().toFloat(&phiOk);
+//		float psiValue = psi->text().toFloat(&psiOk);
+//		float thetaValue = theta->text().toFloat(&thetaOk);
+//
+//		if (!phiOk || !psiOk || !thetaOk) {
+//			QMessageBox::warning(dialog1, "Invalid Input", "Please enter valid numbers for phi, psi, and theta.");
+//			return;
+//		}
+//
+//		// Обрабатываем выбранные элементы
+//		for (auto element : ui->listWidget->selectedItems()) {
+//			QVariant v = element->data(Qt::UserRole);
+//			int id = v.toInt();
+//			GraphicConveyor::scale(models[id], phiValue, psiValue, thetaValue);
+//		}
+//		ui->graphicsView->update();
+//		dialog1->accept(); // Закрываем диалог
+//	});
+//
+//	dialog1->setLayout(layout);
+//	dialog1->exec(); // Модальное окно
+//	ui->graphicsView->update();
+//}
 
-void MainWindow::on_pushButton_7_clicked()
-{
-	auto dialog1 = new QDialog();
-	dialog1->setWindowModality(Qt::WindowModality::NonModal);
-	dialog1->setMinimumHeight(150);
-	dialog1->setMinimumWidth(150);
-
-	auto label_1 = new QLabel();
-	label_1->setText("phi, psi, theta:");
-	label_1->setGeometry(10, 10, 150, 50);
-	label_1->setParent(dialog1);
-
-	auto phi = new QTextEdit();
-	phi->setPlaceholderText("x:");
-	phi->setGeometry(10, 70, 30, 30);
-	phi->setParent(dialog1);
-
-	auto psi = new QTextEdit();
-	psi->setPlaceholderText("y:");
-	psi->setGeometry(80, 70, 30, 30);
-	psi->setParent(dialog1);
-
-	auto theta = new QTextEdit();
-	theta->setPlaceholderText("z:");
-	theta->setGeometry(150, 70, 30, 30);
-	theta->setParent(dialog1);
-
-	auto accept = new QPushButton();
-	accept->setGeometry(10, 100, 50, 30);
-	accept->setText("Add");
-	accept->setParent(dialog1);
-
-	connect(accept, &QPushButton::clicked, [phi, psi, theta, dialog1, this]()
-	{
-		GraphicConveyor::rotate(models[0], phi, psi, theta);
-	});
-
-	dialog1->show();
-}
