@@ -5,8 +5,6 @@
 Material::Material(bool show_mesh, bool show_illumination, bool show_texture)
 	: show_texture(show_texture), show_illumination(show_illumination), show_mesh(show_mesh)
 {
-	this->show_texture = !texture.isNull();
-	this->show_illumination = cam != Camera();
 }
 QColor Material::use_material(float w_a,
 	float w_b,
@@ -30,10 +28,11 @@ QColor Material::use_material(float w_a,
 			r = background.red(), g = background.green(), b = background.blue();
 		}
 	}else{
-		if (show_illumination)
-			Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
 		if (show_texture)
 			Texturezation::texturation(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+		if (show_illumination)
+			Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
+
 	}
 
 	return QColor(r, g, b);
@@ -52,7 +51,8 @@ QImage& Material::get_texture()
 }
 void Material::set_texture(QImage& texture)
 {
-	Material::texture = texture;
+	this->texture = texture;
+	this->show_texture = !texture.isNull();
 }
 bool Material::is_show_mesh() const
 {
@@ -65,4 +65,22 @@ bool Material::is_show_texture() const
 bool Material::is_show_illumination() const
 {
 	return show_illumination;
+}
+Material::Material()
+{
+	show_illumination = false;
+	show_texture = false;
+	show_mesh = false;
+}
+void Material::set_show_mesh(bool showMesh)
+{
+	show_mesh = showMesh;
+}
+void Material::set_show_texture(bool showTexture)
+{
+	show_texture = showTexture;
+}
+void Material::set_show_illumination(bool showIllumination)
+{
+	show_illumination = showIllumination;
 }

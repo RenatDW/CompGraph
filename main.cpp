@@ -41,7 +41,8 @@ int main(int argc, char *argv[])
 	w.setWindowTitle("Toster");
 	w.setWindowIcon(QIcon(":/toster.png"));
 
-	w.models[0] = ObjReader::read(filename);
+//	w.models[0] = ObjReader::read(filename);
+//	w.materials[0] = Material(0,0,0);
 //    w.models.emplace_back();
     // w.models.emplace_back(ans);
 	w.setWindowFlags(Qt::FramelessWindowHint);
