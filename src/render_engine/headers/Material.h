@@ -13,6 +13,7 @@
 class Material
 {
 public:
+	Material();
 	Material(bool show_mesh, bool show_illumination, bool show_texture);
 private:
 	bool show_mesh;
@@ -36,6 +37,9 @@ public:
 	bool is_show_illumination() const;
 	QImage& get_texture();
 	void set_texture(QImage& texture);
+	void set_show_mesh(bool showMesh);
+	void set_show_texture(bool showTexture);
+	void set_show_illumination(bool showIllumination);
 };
 
 #endif //MATERIAL_H

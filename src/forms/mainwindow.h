@@ -3,6 +3,7 @@
 
 #include "../render_engine/headers/Camera.h"
 #include "../model/headers/Model.h"
+#include "../render_engine/headers/Material.h"
 
 #include <QElapsedTimer>
 #include <QTimer>
@@ -14,6 +15,7 @@
 #include <memory>
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QListWidgetItem>
 
 QT_BEGIN_NAMESPACE
 
@@ -37,6 +39,7 @@ public:
 
     ~MainWindow();
 	std::map<int, Model> models;
+	std::map<int, Material> materials;
     std::string model_texture_path{};
     QColor fill_model_color;
     Camera camera;
@@ -44,6 +47,7 @@ public:
     bool show_texture = false;
     bool show_illumination = false;
     const int TRANSLATION = 5;
+	int selected_model;
 
 private slots:
     void on_actionLoad_Model_triggered();
@@ -64,9 +68,13 @@ private slots:
 	void on_pushButton_4_clicked();
 	void on_pushButton_5_clicked();
 	void on_pushButton_6_clicked();
+
 	//void on_pushButton_7_clicked();
 	//void on_pushButton_8_clicked();
 	//void on_pushButton_9_clicked();
+
+	void onListClicked();
+
 	void slotCustomMenuRequested(QPoint pos);
 	void slotEditRecord();
 	void slotRemoveRecord();
