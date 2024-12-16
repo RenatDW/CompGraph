@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "customview.h"
 #include "../../cmake-build-debug/CompGraph_autogen/ui_MainWindow.h"
 #include "../render_engine/headers/RenderEngine.h"
 #include "../obj_utils/objreader/ObjReader.h"
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 	ui->graphicsView->setScene(scene.get());
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
+	ui->graphicsView->set_main_window_pointer(this);
 	QString x = "0", y = "0", z = "0";
 	add_camera_to_list(x,y,z);
 
@@ -239,64 +241,64 @@ void MainWindow::on_actionSave_Model_triggered()
     ObjWriter::write(models[0], file_name);
 }
 
-void MainWindow::on_actionUp_triggered()
-{
-	camera.move_position(Vector3D(0, static_cast<float>(TRANSLATION), 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//void MainWindow::on_actionUp_triggered()
+//{
+//	camera.move_position(Vector3D(0, static_cast<float>(TRANSLATION), 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//    update_scene();
+//}
 
+//void MainWindow::on_actionDown_triggered()
+//{
+//	camera.move_position(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//	update_scene();
+//}
 
-    update_scene();
-}
+//void MainWindow::on_actionLeft_triggered()
+//{
+//	camera.move_position(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//	update_scene();
+//}
 
-void MainWindow::on_actionDown_triggered()
-{
-	camera.move_position(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-
-	update_scene();
-}
-
-void MainWindow::on_actionLeft_triggered()
-{
-	camera.move_position(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-	update_scene();
-}
-
-void MainWindow::on_actionRight_triggered()
-{
-	camera.move_position(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-
-	update_scene();
-}
+//void MainWindow::on_actionRight_triggered()
+//{
+//	camera.move_position(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//
+//	update_scene();
+//}
 
 void MainWindow::on_actionLoad_Texture_triggered()
 {
@@ -334,16 +336,12 @@ void MainWindow::on_actionTriangulation_changed()
 
 void MainWindow::on_actionRotate_Scale_Translate_triggered()
 {
-
 	for(auto element: ui->listWidget->selectedItems())
 	{
 		QVariant v = element->data(Qt::UserRole);
 		int id = v.value<int>();
-		GraphicConveyor::rotate_scale_translate(models[id], 1, 1, 1, 1, 1, 1, 1, 1, 1);
-
+		GraphicConveyor::rotate_scale_translate(models[id], 1000, 1, 1, 1, 1, 1, 1, 1, 1);
 	}
-
-
 	update_scene();
 }
 //Кнопка +
@@ -533,21 +531,21 @@ void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
 
-void MainWindow::wheelEvent(QWheelEvent *event) {
-	int delta = event->angleDelta().y();
-	const float zoom_speed = 0.1f;
-	camera.move_position(Vector3D(0, 0, static_cast<float>(delta) * zoom_speed * (-1)));
-
-	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-			camera.get_position().getZ()) + "}";
-	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-	QVariant cord;
-	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-	cord.setValue(coord);
-	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-
-	update_scene();
-}
+//void MainWindow::wheelEvent(QWheelEvent *event) { ТРУП КОЛЕСИКА МЫШИ ХАПХВАХПХАВХВХАПАВХАХП
+//	int delta = event->angleDelta().y();
+//	const float zoom_speed = 0.1f;
+//	camera.move_position(Vector3D(0, 0, static_cast<float>(delta) * zoom_speed * (-1)));
+//
+//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
+//			camera.get_position().getZ()) + "}";
+//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
+//	QVariant cord;
+//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
+//	cord.setValue(coord);
+//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
+//
+//	update_scene();
+//}
 void MainWindow::on_pushButton_5_clicked()
 {
 	if(ui->pushButton_5->isEnabled())
@@ -568,6 +566,67 @@ void MainWindow::on_pushButton_6_clicked()
 		ui->pushButton_5->setEnabled(true);
 	}
 }
+
+//
+//void MainWindow::on_pushButton_7_clicked()
+//{
+//	auto dialog1 = new QDialog(this); // Указываем родительский виджет
+//	dialog1->setWindowModality(Qt::WindowModality::NonModal);
+//	dialog1->setMinimumSize(200, 150); // Удобнее установить минимальный размер
+//
+//	// Создаём Layout для диалога
+//	auto layout = new QVBoxLayout(dialog1);
+//
+//	// Добавляем описание
+//	auto label_1 = new QLabel("phi, psi, theta:", dialog1);
+//	layout->addWidget(label_1);
+//
+//	// Поля ввода
+//	auto phi = new QLineEdit(dialog1);
+//	phi->setPlaceholderText("phi (x):");
+//	layout->addWidget(phi);
+//
+//	auto psi = new QLineEdit(dialog1);
+//	psi->setPlaceholderText("psi (y):");
+//	layout->addWidget(psi);
+//
+//	auto theta = new QLineEdit(dialog1);
+//	theta->setPlaceholderText("theta (z):");
+//	layout->addWidget(theta);
+//
+//	// Кнопка подтверждения
+//	auto accept = new QPushButton("Add", dialog1);
+//	layout->addWidget(accept);
+//
+//	// Обработка нажатия кнопки
+//	connect(accept, &QPushButton::clicked, [phi, psi, theta, dialog1, this]() {
+//		// Проверяем введённые значения
+//		bool phiOk, psiOk, thetaOk;
+//		float phiValue = phi->text().toFloat(&phiOk);
+//		float psiValue = psi->text().toFloat(&psiOk);
+//		float thetaValue = theta->text().toFloat(&thetaOk);
+//
+//		if (!phiOk || !psiOk || !thetaOk) {
+//			QMessageBox::warning(dialog1, "Invalid Input", "Please enter valid numbers for phi, psi, and theta.");
+//			return;
+//		}
+//
+//		// Обрабатываем выбранные элементы
+//		for (auto element : ui->listWidget->selectedItems()) {
+//			QVariant v = element->data(Qt::UserRole);
+//			int id = v.toInt();
+//			GraphicConveyor::scale(models[id], phiValue, psiValue, thetaValue);
+//		}
+//		ui->graphicsView->update();
+//		dialog1->accept(); // Закрываем диалог
+//	});
+//
+//	dialog1->setLayout(layout);
+//	dialog1->exec(); // Модальное окно
+//	ui->graphicsView->update();
+//}
+
+
 void MainWindow::onListClicked()
 {
 	ui->checkBox_show_illumination->blockSignals(true);
@@ -586,3 +645,4 @@ void MainWindow::onListClicked()
 	ui->checkBox_show_mesh->blockSignals(false);
 	update_scene();
 }
+
