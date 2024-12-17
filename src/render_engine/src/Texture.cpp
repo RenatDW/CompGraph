@@ -2,9 +2,9 @@
 // Created by Ренат Асланов on 07.11.2024.
 //
 
-#include "../headers/Texturezation.h"
+#include "../headers/Texture.h"
 
-void Texturezation::add_vertex(Model &mesh, Matrix4D &model_view_projection_matrix, int triangle_ind,
+void Texture::add_vertex(Model &mesh, Matrix4D &model_view_projection_matrix, int triangle_ind,
                                int n_vertices_in_triangle, int width, int height)
 {
     std::vector<Point2D> texture_vectors;
@@ -18,8 +18,8 @@ void Texturezation::add_vertex(Model &mesh, Matrix4D &model_view_projection_matr
     this->texture_vectors = texture_vectors;
 }
 
-void Texturezation::texturation(const std::array<Point2D, 3> &texture_vectors, const QImage &image, const float weight_a,
-    const float weight_b, const float weight_c, int &r, int &g, int &b)
+void Texture::texturing(const std::array<Point2D, 3> &texture_vectors, const QImage &image, float weight_a,
+    float weight_b, float weight_c, int &r, int &g, int &b)
 {
     if (texture_vectors.empty() || image.isNull()) {
         return;
@@ -28,7 +28,7 @@ void Texturezation::texturation(const std::array<Point2D, 3> &texture_vectors, c
     r = texColor.red(), g = texColor.green(), b = texColor.blue();
 }
 
-QColor Texturezation::get_suitable_pixel(const std::array<Point2D, 3> &texture_vectors, const QImage &image,
+QColor Texture::get_suitable_pixel(const std::array<Point2D, 3> &texture_vectors, const QImage &image,
     const float weight_a, const float weight_b, const float weight_c)
 {
     float u = weight_a * texture_vectors[0].getX() + weight_b * texture_vectors[1].getX() + weight_c * texture_vectors[2].
