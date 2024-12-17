@@ -220,13 +220,13 @@ void MainWindow::slotEditRecord()
 
 	for (auto elem : ui->listWidget->findItems("*", Qt::MatchWildcard))
 	{
-		if (elem->text() == "blya, kuda tyanum ruchki, eshyo ne gotove")
+		if (elem->text() == "eshyo ne gotove")
 		{
 			std::cout << "Уже есть модель с таким названием" << std::endl;
 			return;
 		}
 	}
-	ui->listWidget->item(row)->setText("blya, kuda tyanum ruchki, eshyo ne gotove");
+	ui->listWidget->item(row)->setText("eshyo ne gotove");
 
 }
 void MainWindow::on_actionSave_Model_triggered()
