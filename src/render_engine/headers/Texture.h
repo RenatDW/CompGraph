@@ -1,5 +1,5 @@
-#ifndef TEXTUREZATION_H
-#define TEXTUREZATION_H
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #include <QImage>
 #include <vector>
@@ -27,4 +27,4 @@ public:
                                      float weight_b, float weight_c);
 };
 
-#endif //TEXTUREZATION_H
+#endif //TEXTURE_H
