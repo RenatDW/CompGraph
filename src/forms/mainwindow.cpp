@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 	  ui(new Ui::MainWindow), scene(std::make_unique<QGraphicsScene>(this)),
 	  frameCount(0), fps(0.0f)
 {
+
     ui->setupUi(this);
 	ui->graphicsView->setScene(scene.get());
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));

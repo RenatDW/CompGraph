@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
 	omp_set_dynamic(1); // Enable dynamic adjustment
     QApplication a(argc, argv);
     MainWindow w;
+	w.setMinimumSize(800, 600);
+	w.setMaximumSize(1920, 1080);
 	w.setWindowTitle("Toster");
 	w.setWindowIcon(QIcon(":/toster.png"));
 
