@@ -47,7 +47,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/render_engine/src/Mesh.cpp
         src/render_engine/src/Rasterization.cpp
         src/render_engine/src/RenderEngine.cpp
-        src/render_engine/src/Texturezation.cpp
+        src/render_engine/src/Texture.cpp
         resources/resources.qrc
         src/render_engine/src/RenderEngine.cpp
         src/render_engine/src/Camera.cpp
@@ -84,8 +84,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/render_engine/headers/Renderable.h
         src/render_engine/src/Illumination.cpp
         src/render_engine/src/Illumination.cpp
-        src/render_engine/src/Texturezation.cpp
-        src/render_engine/headers/Texturezation.h
+        src/render_engine/src/Texture.cpp
+        src/render_engine/headers/Texture.h
         src/render_engine/src/Rasterization.cpp
         src/render_engine/headers/Rasterization.h
         src/math/headers/MathCast.h

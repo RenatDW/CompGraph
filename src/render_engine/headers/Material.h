@@ -9,7 +9,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Illumination.h"
-#include "Texturezation.h"
+#include "Texture.h"
 class Material
 {
 public:

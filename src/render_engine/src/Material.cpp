@@ -23,13 +23,13 @@ QColor Material::use_material(float w_a,
 			if (show_illumination)
 				Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
 			if (show_texture)
-				Texturezation::texturation(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+				Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		}else{
 			r = background.red(), g = background.green(), b = background.blue();
 		}
 	}else{
 		if (show_texture)
-			Texturezation::texturation(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+			Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		if (show_illumination)
 			Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
 
