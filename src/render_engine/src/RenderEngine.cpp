@@ -131,18 +131,18 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 			float ABP;
 			float BCP;
 			float CAP;
-			if (show_mesh && !show_texture && !show_illumination)
-			{
-				ABP = Rasterization::get_triangle_area_round(A, B, P);
-				BCP = Rasterization::get_triangle_area_round(B, C, P);
-				CAP = Rasterization::get_triangle_area_round(C, A, P);
-			}
-			else
-			{
+//			if (show_mesh && !show_texture && !show_illumination)
+//			{
+//				ABP = Rasterization::get_triangle_area_round(A, B, P);
+//				BCP = Rasterization::get_triangle_area_round(B, C, P);
+//				CAP = Rasterization::get_triangle_area_round(C, A, P);
+//			}
+//			else
+//			{
 				ABP = Rasterization::get_triangle_area_float(A, B, P);
 				BCP = Rasterization::get_triangle_area_float(B, C, P);
 				CAP = Rasterization::get_triangle_area_float(C, A, P);
-			}
+//			}
             if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
             auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);

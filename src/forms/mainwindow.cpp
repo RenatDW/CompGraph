@@ -69,15 +69,7 @@ void MainWindow::update_scene()
 	DepthBuffer db(width,height);
 	PixelBuffer pb;
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
-//	std::vector<Model> md;
-//	for (std::pair<int, Model> model : models)
-//	{
-//		md.push_back(model.second);
-//	}
-//	Scene sc(md);
 	Point2D vertex;
-
-//	Material mt(show_mesh,show_illumination,show_texture);
 
 	if(ui->pushButton_6->isEnabled())
 	{
@@ -108,6 +100,7 @@ void MainWindow::update_scene()
 	{
 		if(oldval != val){
 			painter.setPen(val);
+			oldval = val;
 		}
 		painter.drawPoint(key.getX(),key.getY());
 	}
