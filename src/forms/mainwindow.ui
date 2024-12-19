@@ -73,7 +73,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="2,12,1,2,12,1">
+         <layout class="QVBoxLayout" name="verticalLayout" stretch="2,12,1,2,12">
           <item>
            <widget class="QTextEdit" name="textEdit">
             <property name="sizePolicy">
@@ -176,16 +176,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <item>
            <widget class="QListWidget" name="listWidget_2"/>
           </item>
-          <item>
-           <widget class="QStatusBar" name="statusbar">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>
@@ -286,6 +276,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </layout>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QStatusBar" name="statusbar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
    </layout>
    <action name="actionTriangulation">
