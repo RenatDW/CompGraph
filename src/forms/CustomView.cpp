@@ -91,9 +91,10 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 	{
 		QPointF scenePos = mapToScene(event->pos());
 		//qDebug() << "Mouse PRESS at:" << scenePos;
+		mainWindow->update_scene();
 	}
 
-	mainWindow->update_scene();
+
 }
 
 void CustomView::mouseReleaseEvent(QMouseEvent* event)
