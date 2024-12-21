@@ -615,3 +615,39 @@ void MainWindow::onListClicked()
 	update_scene();
 }
 
+void MainWindow::on_rotate_clicked()
+{
+	for (auto element : ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::rotate(models[id], 100, 10, 10);
+	}
+
+	update_scene();
+}
+
+void MainWindow::on_scale_clicked()
+{
+	for (auto element : ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::scale(models[id], 10, 10, 10);
+	}
+
+	update_scene();
+}
+
+void MainWindow::on_translate_clicked()
+{
+	for (auto element : ui->listWidget->selectedItems())
+	{
+		QVariant v = element->data(Qt::UserRole);
+		int id = v.value<int>();
+		GraphicConveyor::translate(models[id], 10, 10, 10);
+	}
+
+	update_scene();
+}
+

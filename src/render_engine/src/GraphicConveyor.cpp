@@ -36,9 +36,11 @@ Matrix4D GraphicConveyor::get_rotate_matrix(float phi, float psi, float theta)
 			{0, -std::sin(theta), std::cos(theta), 0},
 			{0, 0, 0, 1}
 	};
-
-
-	return rotate_matrix_cached;
+	Matrix4D rz(rz_matrix);
+	Matrix4D ry(ry_matrix);
+	Matrix4D rx(rx_matrix);
+	Matrix4D r = rz * ry * rx;
+	return r;
 }
 
 Matrix4D GraphicConveyor::get_scale_matrix(float sx, float sy, float sz)
