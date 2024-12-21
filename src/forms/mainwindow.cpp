@@ -52,6 +52,7 @@ void MainWindow::onFrameUpdate()
 		frameCount = 0;
 		fpsTimer.restart();
 		// Update FPS in UI (e.g., status bar or label)
+		ui->statusbar->setStyleSheet("QStatusBar { color: green; }");
 		ui->statusbar->showMessage(QString("FPS: %1").arg(fps, 0, 'f', 2));
 	}
 }
@@ -310,16 +311,6 @@ void MainWindow::on_actionLoad_Texture_triggered()
 		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
 	}
 	update_scene();
-}
-
-void MainWindow::on_actionChose_Color_triggered()
-{
-    QColor color = QColorDialog::getColor(QColor(255, 100, 200, 255));
-    fill_model_color = color;
-	update_scene();
-    // if (!color.isValid()) {
-    // Cancel
-    // }
 }
 
 void MainWindow::on_actionTriangulation_changed()
