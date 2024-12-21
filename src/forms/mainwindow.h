@@ -4,7 +4,6 @@
 #include "../render_engine/headers/Camera.h"
 #include "../model/headers/Model.h"
 #include "../render_engine/headers/Material.h"
-
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QMainWindow>

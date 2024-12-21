@@ -151,7 +151,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 
 	ui->listWidget->addItem(model_list_item.release());
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(onListClicked()));
+	connect(ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(onListClicked()));
 //	QObject::connect(ui->listWidget, SIGNAL(activated()), this, SLOT());
 	selected_model = model_cnt;
 	model_cnt++;
@@ -389,7 +389,7 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *di
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item.release());
 
-	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
+	std::string file_name = "resources/camera_model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
 	//TODO добавить перемещения на координаты
@@ -434,7 +434,7 @@ void MainWindow::on_pushButton_3_clicked()
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
 //
 //	//Создание модели действующе камеры
-	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
+	std::string file_name = "resources/camera_model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0, camera.get_position().getX(), camera.get_position().getY(),
 			camera.get_position().getZ());
