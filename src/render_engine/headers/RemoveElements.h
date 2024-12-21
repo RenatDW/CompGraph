@@ -5,7 +5,7 @@
 #ifndef REMOVEELEMENTS_H
 #define REMOVEELEMENTS_H
 
-
+#include "../model/headers/Model.h"
 class RemoveElements
 {
 

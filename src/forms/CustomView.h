@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QtWidgets>
 #include <QWidget>
+#include "../render_engine/headers/RemoveElements"
 
 class MainWindow;
 

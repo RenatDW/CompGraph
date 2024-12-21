@@ -89,6 +89,8 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
+		std::cout << mainWindow->triangle_id <<", " << mainWindow->vertex_id << std::endl;
+		RemoveElements::remove;
 		QPointF scenePos = mapToScene(event->pos());
 		//qDebug() << "Mouse PRESS at:" << scenePos;
 	}

@@ -48,6 +48,8 @@ public:
     bool show_illumination = false;
     const int TRANSLATION = 5;
 	int selected_model;
+	int triangle_id = -1;
+	int vertex_id = -1;
 
 private slots:
     void on_actionLoad_Model_triggered();

@@ -72,27 +72,20 @@ void MainWindow::update_scene()
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
 	Point2D vertex;
 
-	if(ui->pushButton_6->isEnabled())
+	for (std::pair<int, Model> model : models)
 	{
-		for (std::pair<int, Model> model : models)
+		RenderEngine renderEngine(camera, model.second, width,
+			height, db, pb, materials.at(model.first));
+		if (ui->pushButton_6->isEnabled() || selected_model != model.first)
 		{
-			QColor basic_color = QColor(255, 255, 255);
-
-			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, materials.at(model.first));
 			renderEngine.render();
-		}
-	}else{
-		for (std::pair<int, Model> model : models)
-		{
-			QColor basic_color = QColor(255, 255, 255);
-			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, materials.at(model.first));
-			QPoint globalPos = QCursor::pos();
-			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
-			int x = localPos.x();
-			int y = localPos.y();
-			vertex = renderEngine.render_with_selection(x, y);
+		}else{
+			QPoint localPos = ui->graphicsView->mapFromGlobal(QCursor::pos());
+//			vertex = renderEngine.render_with_selection(localPos.x(), localPos.y());
+			TriangleCoordinates ans = renderEngine.render_with_selection(localPos.x(), localPos.y());
+			this->vertex_id = ans.vertex_id;
+			this->triangle_id = ans.triangle_id;
+			vertex = ans.vertex;
 		}
 	}
 
@@ -106,7 +99,7 @@ void MainWindow::update_scene()
 		painter.drawPoint(key.getX(),key.getY());
 	}
 
-	if(vertex != Point2D())
+	if(vertex_id != -1)
 	{
 		int radius = 10;
 		painter.setPen(QColor(255, 215, 50));

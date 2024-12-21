@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Renderable.h"
+#include "../headers/TriangleCoord.h"
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
@@ -22,7 +23,7 @@ class RenderEngine
 public:
 
 	void render();
-	Point2D render_with_selection(int x, int y);
+	TriangleCoordinates render_with_selection(int x, int y);
 
 	RenderEngine(Camera& camera,
 		Model& model,
