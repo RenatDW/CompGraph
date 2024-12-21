@@ -5,7 +5,6 @@
 #include "../obj_utils/objreader/ObjReader.h"
 #include "../obj_utils/objwriter/ObjWriter.h"
 #include "../render_engine/headers/GraphicConveyor.h"
-#include "../render_engine/headers/Scene.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
