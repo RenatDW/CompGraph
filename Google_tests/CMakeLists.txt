@@ -22,6 +22,8 @@ add_executable(Google_Tests_run
         render_engine/RasterMethods.cpp
         render_engine/GraphicConveyorTest.cpp
         render_engine/RemoveElementsTests.cpp
+        ../../src/obj_utils/objwriter/ObjWriter.cpp
+
 )
 
 target_link_libraries(Google_Tests_run gtest gtest_main)
