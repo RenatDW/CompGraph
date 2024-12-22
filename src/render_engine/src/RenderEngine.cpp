@@ -112,18 +112,44 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point3D, 3>& normal_vectors,
 	const std::array<Point2D, 3>& texture_vectors)
 {
-	Point3D A =result_points[0];
-	Point3D B =result_points[1];
-	Point3D C =result_points[2];
+	Point3D A;
+	Point3D B;
+	Point3D C;
+	Vector3D edge1 = MathCast::to_Vector3D(result_points[1] - result_points[0]);
+	Vector3D edge2 = MathCast::to_Vector3D(result_points[2] - result_points[0]);
+	Vector3D faceNormal = Vector3D::cross(edge1, edge2);
+	if (faceNormal * camera.get_direction() >= 0)
+	{
+		A = result_points[0];
+		B = result_points[1];
+		C = result_points[2];
+	}
+	else
+	{
+		A = result_points[2];
+		B = result_points[1];
+		C = result_points[0];
+	}
 
-	int x_left, x_right, y_down, y_up;
-    initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
-
-    float ABC;
-    ABC = Rasterization::get_triangle_area_float(A, B, C);
 	is_point_in_triangle(Point2D(posX, posY), A, B, C);
-	
-    for (int y = y_down; y < y_up + 1; y++) {
+
+	render_triangle(normal_vectors, texture_vectors, A, B, C);
+
+}
+void RenderEngine::render_triangle(const std::array<Point3D, 3>& normal_vectors,
+	const std::array<Point2D, 3>& texture_vectors,
+	Point3D& A,
+	Point3D& B,
+	Point3D& C)
+{
+	float ABC;
+	ABC = Rasterization::get_triangle_area_float(A, B, C);
+	int x_left, x_right, y_down, y_up;
+	initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
+	is_point_in_triangle(Point2D(posX, posY), A, B, C);
+
+	for (int y = y_down; y < y_up + 1; y++)
+	{
 		for (int x = x_left; x < x_right + 1; x++)
 		{
 			if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
@@ -134,9 +160,10 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 			ABP = Rasterization::get_triangle_area_float(A, B, P);
 			BCP = Rasterization::get_triangle_area_float(B, C, P);
 			CAP = Rasterization::get_triangle_area_float(C, A, P);
-            if (ABP < 0 || BCP < 0 || CAP < 0) continue;
+			if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-            auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
+			auto [weight_a, weight_b, weight_c, z] =
+				Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
 			if (depth_buffer.get(x, y) < z) continue;
 
 			mt.set_cam(camera);
@@ -147,9 +174,8 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 				texture_vectors,
 				normal_vectors,P));
 			depth_buffer.set(x, y, z);
-        }
-    }
-
+		}
+	}
 }
 
 void RenderEngine::highlight_triangle(const std::array<Point3D, 3>& result_points)

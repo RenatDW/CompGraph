@@ -68,5 +68,9 @@ Matrix4D Camera::get_projection_matrix() const
 Camera::Camera()
 {
 
+}
+Vector3D Camera::get_direction()
+{
+	return this->target- this->position;
 };
 

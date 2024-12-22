@@ -55,7 +55,7 @@ void RemoveElements::delete_vertex(int vertex, Model& mt)
 	}
 
 
-	delete_redundant_texture_vertex(mt);
+//	delete_redundant_texture_vertex(mt);
 
 	mt.normals.clear();
 

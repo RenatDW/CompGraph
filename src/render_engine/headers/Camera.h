@@ -30,7 +30,8 @@ public:
 
     Vector3D get_position();
 
-    Vector3D get_target();
+	Vector3D get_target();
+	Vector3D get_direction();
 
     void move_position(const Vector3D &translation);
 

@@ -72,6 +72,11 @@ private:
 
 	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
 	void highlight_triangle(const std::array<Point3D, 3>& result_points);
+	void render_triangle(const std::array<Point3D, 3>& normal_vectors,
+		const std::array<Point2D, 3>& texture_vectors,
+		Point3D& A,
+		Point3D& B,
+		Point3D& C);
 };
 
 #endif //RENDERENGINE_H
