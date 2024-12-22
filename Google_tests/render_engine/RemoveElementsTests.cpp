@@ -8,6 +8,6 @@ TEST(DeleteVertex, delete_vertex)
 	std::string filepath = "/Users/renat/CLionProjects/CompGraph/resources/camera_model.obj";
 	std::string filepath2 = "/Users/renat/CLionProjects/CompGraph/resources/camera_model2.obj";
 	Model mt(ObjReader::read(filepath));
-	RemoveElements::deleteVertice(1, mt);
+	RemoveElements::delete_vertex(1, mt);
 	ObjWriter::write(mt, filepath2);
 }
