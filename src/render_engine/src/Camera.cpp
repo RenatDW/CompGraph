@@ -71,6 +71,6 @@ Camera::Camera()
 }
 Vector3D Camera::get_direction()
 {
-	return this->target- this->position;
+	return this->position - this->target;
 };
 

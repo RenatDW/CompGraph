@@ -118,7 +118,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 	Vector3D edge1 = MathCast::to_Vector3D(result_points[1] - result_points[0]);
 	Vector3D edge2 = MathCast::to_Vector3D(result_points[2] - result_points[0]);
 	Vector3D faceNormal = Vector3D::cross(edge1, edge2);
-	if (faceNormal * camera.get_direction() >= 0)
+	if (faceNormal * Vector3D(1,1,1)>= 0)
 	{
 		A = result_points[0];
 		B = result_points[1];
@@ -130,6 +130,7 @@ void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
 		B = result_points[1];
 		C = result_points[0];
 	}
+	std::cout << faceNormal * camera.get_direction() << std::endl;
 
 	is_point_in_triangle(Point2D(posX, posY), A, B, C);
 
