@@ -46,7 +46,6 @@
        <addaction name="actionLoad_Texture"/>
        <addaction name="actionChose_Color"/>
        <addaction name="actionSave_Model"/>
-       <addaction name="actionTriangulation"/>
        <addaction name="actionRotate_Scale_Translate"/>
        <addaction name="actiondsad"/>
       </widget>

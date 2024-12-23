@@ -50,8 +50,6 @@ private slots:
     void on_actionLoad_Model_triggered();
     void on_actionSave_Model_triggered();
     void on_actionLoad_Texture_triggered();
-    void on_actionTriangulation_changed();
-    void on_actionRotate_Scale_Translate_triggered();
     void on_checkBox_show_mesh_toggled(bool checked);
     void on_checkBox_show_texture_toggled(bool checked);
     void on_checkBox_show_illumination_toggled(bool checked);
@@ -73,13 +71,9 @@ private slots:
 	void slotRotateRecord();
 
 private:
-	QTimer frameTimer;
-	QElapsedTimer fpsTimer;
-	int frameCount;
-	float fps;
 	Ui::MainWindow* ui;
-    bool triangulation = true;
 	std::unique_ptr<QGraphicsScene> scene;
+
 	int model_cnt = 0;
 	int selected_camera_model_id = model_cnt;
 	int selected_camera_list_id = model_cnt;
@@ -87,6 +81,15 @@ private:
 	void add_camera_to_list(QString t_x, QString t_y, QString t_z);
 	void add_model(Model& md);
 	void onFrameUpdate();
+
+private:
+
+
+private:
+	QTimer frameTimer;
+	QElapsedTimer fpsTimer;
+	int frameCount;
+	float fps;
 };
 
 #endif

@@ -312,22 +312,6 @@ void MainWindow::on_actionLoad_Texture_triggered()
 	update_scene();
 }
 
-void MainWindow::on_actionTriangulation_changed()
-{
-    triangulation = !triangulation;
-	update_scene();
-}
-
-void MainWindow::on_actionRotate_Scale_Translate_triggered()
-{
-	for(auto element: ui->listWidget->selectedItems())
-	{
-		QVariant v = element->data(Qt::UserRole);
-		int id = v.value<int>();
-		GraphicConveyor::rotate_scale_translate(models[id], 1000, 1, 1, 1, 1, 1, 1, 1, 1);
-	}
-	update_scene();
-}
 //Кнопка +
 void MainWindow::on_pushButton_2_clicked()
 {
