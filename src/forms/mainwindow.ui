@@ -240,16 +240,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QPushButton" name="scale">
+         <widget class="QPushButton" name="rotate">
           <property name="text">
-           <string>Scale</string>
+           <string>Rotate</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="on_rotate_clicked">
+         <widget class="QPushButton" name="scale">
           <property name="text">
-           <string>Rotate</string>
+           <string>Scale</string>
           </property>
          </widget>
         </item>

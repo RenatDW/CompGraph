@@ -73,9 +73,9 @@ private slots:
 	void slotRotateRecord();
 
 private:
-	QTimer frameTimer;         // Timer for frame updates
-	QElapsedTimer fpsTimer;    // Timer to measure frame duration
-	int frameCount;            // Count frames for FPS calculation
+	QTimer frameTimer;
+	QElapsedTimer fpsTimer;
+	int frameCount;
 	float fps;
 	Ui::MainWindow* ui;
     bool triangulation = true;
