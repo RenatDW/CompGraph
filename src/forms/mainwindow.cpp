@@ -331,64 +331,69 @@ void MainWindow::on_actionRotate_Scale_Translate_triggered()
 //Кнопка +
 void MainWindow::on_pushButton_2_clicked()
 {
-	auto dialog1 = new QDialog();
-	dialog1->setWindowModality(Qt::WindowModality::NonModal);
-	dialog1->setMinimumHeight(150);
-	dialog1->setMinimumWidth(150);
+	QDialog dialog;
+	dialog.setWindowTitle("Добавление камеры");
 
-	auto label_1 = new QLabel();
-	label_1->setText("Enter vector variables\n(x, y, z):");
-	label_1->setGeometry(10, 10, 150, 50);
-	label_1->setParent(dialog1);
+	auto* main_layout = new QVBoxLayout(&dialog);
 
-	auto x_var = new QTextEdit();
-	x_var->setPlaceholderText("x:");
-	x_var->setGeometry(10, 70, 30, 30);
-	x_var->setParent(dialog1);
+	auto* label_x = new QLabel("Координата камеры по X:");
+	auto* x_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(x_input);
 
-	auto y_var = new QTextEdit();
-	y_var->setPlaceholderText("y:");
-	y_var->setGeometry(80, 70, 30, 30);
-	y_var->setParent(dialog1);
+	auto* label_y = new QLabel("Координата камеры по Y:");
+	auto* y_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(y_input);
 
-	auto z_var = new QTextEdit();
-	z_var->setPlaceholderText("z:");
-	z_var->setGeometry(150, 70, 30, 30);
-	z_var->setParent(dialog1);
+	auto* label_z = new QLabel("Координата камеры по Z:");
+	auto* z_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(z_input);
 
-	auto accept = new QPushButton();
-	accept->setGeometry(10, 100, 50, 30);
-	accept->setText("Add");
-	accept->setParent(dialog1);
-	//TODO автозакрытие окна после добавления камеры
-	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, dialog1, this]()
+	auto* button_layout = new QHBoxLayout();
+	auto* apply_button = new QPushButton("Применить");
+	auto* cancel_button = new QPushButton("Отмена");
+	button_layout->addWidget(apply_button);
+	button_layout->addWidget(cancel_button);
+	main_layout->addLayout(button_layout);
+
+	connect(apply_button, &QPushButton::clicked, [&]()
 	{
-		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText(), dialog1);
+		bool okX, okY, okZ;
+		float x = x_input->text().toFloat(&okX);
+		float y = y_input->text().toFloat(&okY);
+		float z = z_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ)
+		{
+			add_camera_to_list(x, y, z);
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!");
+		}
 	});
 
+	connect(cancel_button, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
 
-//	QPushButton *cancel = new QPushButton();
-//	cancel->setGeometry(100, 100, 30, 30);
-//	accept->setText("Cancel");
-//	cancel->setParent(dialog1);
-//
-	dialog1->show();
+	dialog.exec();
 }
 
-void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *dialog1)
+void MainWindow::add_camera_to_list(float x, float y, float z)
 {
-	dialog1->close();
-	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
+	std::string name = "{" + std::to_string(x) + ", " + std::to_string(y)  + " , " + std::to_string(z)  + "}\n";
 	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
-	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
+	std::array<float, 4> a{x, y, z, static_cast<float>(model_cnt)};
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
 
 	std::string file_name = "/Users/Пользователь/CLionProjects/CompGraph/resources/camera_model.obj";
 	Model md = ObjReader::read(file_name);
-	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
+	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x,y,z);
 	//TODO добавить перемещения на координаты
 //	std::cout << model_cnt << std::endl;
 
