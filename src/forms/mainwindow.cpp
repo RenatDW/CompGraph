@@ -313,7 +313,7 @@ void MainWindow::on_actionLoad_Texture_triggered()
 }
 
 //Кнопка +
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_addCamera_clicked()
 {
 	QDialog dialog;
 	dialog.setWindowTitle("Добавление камеры");
@@ -405,7 +405,7 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 
 
 //Кнопка use
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_useCamera_clicked()
 {
 
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
@@ -435,7 +435,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 }
 //Кнопка -
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_deleteCamera_clicked()
 {
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
 //	std::cout << models.size() << std::endl;
@@ -450,13 +450,9 @@ void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
 	if (selected_model)
 	{
 		int model_id = selected_model;
-		materials[model_id].set_show_mesh(!show_mesh);
-//			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
-		show_mesh = !show_mesh;
+		materials[model_id].set_show_mesh(checked);
 	}
 	update_scene();
-
-    // QMessageBox::information(this, "Save model", "Today is monday");
 }
 
 void MainWindow::on_checkBox_show_texture_toggled(bool checked)
@@ -476,31 +472,21 @@ void MainWindow::on_checkBox_show_texture_toggled(bool checked)
 			return;
 		}else
 		{
-			materials[model_id].set_show_texture(!show_texture);
-
-			show_texture = !show_texture;
+			materials[model_id].set_show_texture(checked);
 		}
 		update_scene();
 	}
-	// QMessageBox::information(this, "Save model", "Today is monday");
-
 
 }
 
 void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
 {
-	if (selected_model)
-	{
-
-		int model_id = selected_model;
+	int model_id = selected_model;
 //			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
 
-		materials[model_id].set_show_illumination(!show_illumination);
-		show_illumination = !show_illumination;
+	materials[model_id].set_show_illumination(checked);
+	update_scene();
 
-		update_scene();
-	}
-    
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
 
