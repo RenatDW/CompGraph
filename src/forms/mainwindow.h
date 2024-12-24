@@ -4,6 +4,7 @@
 #include "../render_engine/headers/Camera.h"
 #include "../model/headers/Model.h"
 #include "../render_engine/headers/Material.h"
+#include "../render_engine/headers/Light.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QMainWindow>
@@ -40,6 +41,7 @@ public:
 
 	std::map<int, Model> models;
 	std::map<int, Material> materials;
+	std::map<int, Light> light;
     std::string model_texture_path{};
     Camera camera;
     bool show_mesh = false;
@@ -90,6 +92,7 @@ private:
 
 private:
 	int model_cnt = 0;
+	int light_cnt = 0;
 	int selected_camera_model_id = 0;
 	int selected_camera_list_id = 0;
 

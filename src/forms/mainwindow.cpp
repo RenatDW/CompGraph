@@ -763,6 +763,21 @@ void MainWindow::on_btnAddTexture_clicked()
 }
 void MainWindow::on_btnAddLight_clicked()
 {
+	QColor color = QColorDialog::getColor(QColor(255,255,255,255));
+	if (!color.isValid()) {
+		QMessageBox::information(this, "Erroe", "Incorrect color");
+	}
+	//Сюда диалоговое окно нужно;
+	Vector3D pos;
+	//И сюда нужно записать число
+	light[light_cnt] = Light(color, pos);
+	auto light_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+	v.setValue(light_cnt);
+	light_list_item->setData(Qt::UserRole,v);
+	ui->listLightSource->addItem(light_list_item);
+	light_cnt++;
+
 
 }
 void MainWindow::on_btnRemoveLight_clicked()
