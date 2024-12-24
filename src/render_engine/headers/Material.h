@@ -20,9 +20,12 @@ private:
 	bool show_texture;
 	bool show_illumination;
 	QImage texture;
+public:
+	void set_basic_color(const QColor& basicColor);
+private:
 	QColor basic_color = QColor(255, 255, 255);
 	QColor highlight_color = QColor(255, 215, 50);
-	QColor main_color = QColor(255, 255, 255);
+	QColor main_color = basic_color;
 	QColor background = QColor(45,45,45);
 public:
 	Camera cam;
@@ -44,7 +47,7 @@ public:
 	void set_show_illumination(bool showIllumination);
 	void select_highlightcolor();
 	const QColor& get_highlightcolor() const;
-	void select_maincolor();
+	void select_basic_color();
 };
 
 #endif //MATERIAL_H

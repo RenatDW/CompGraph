@@ -88,11 +88,16 @@ void Material::select_highlightcolor()
 {
 	this->main_color = highlight_color;
 }
-void Material::select_maincolor()
+void Material::select_basic_color()
 {
 	this->main_color = basic_color;
 }
 const QColor& Material::get_highlightcolor() const
 {
 	return highlight_color;
+}
+void Material::set_basic_color(const QColor& basicColor)
+{
+	this->basic_color = basicColor;
+
 }

@@ -52,7 +52,7 @@ public:
 private slots:
     void on_actionLoad_Model_triggered();
     void on_actionSave_Model_triggered();
-    void on_actionLoad_Texture_triggered();
+//    void on_actionLoad_Texture_triggered();
 
 private slots:
     void on_checkBox_show_mesh_toggled(bool checked);
@@ -68,7 +68,11 @@ private slots:
 
 	void on_pushButton_5_clicked();
 	void on_pushButton_6_clicked();
-
+	void on_btnSelectColor_clicked();
+	void on_btnAddTexture_clicked();
+	void on_btnAddLight_clicked();
+	void on_btnRemoveLight_clicked();
+v
 	void on_rotate_clicked();
 	void on_scale_clicked();
 	void on_translate_clicked();

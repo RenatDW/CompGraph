@@ -285,23 +285,10 @@ void MainWindow::on_actionSave_Model_triggered()
 //	update_scene();
 //}
 
-void MainWindow::on_actionLoad_Texture_triggered()
-{
-    std::string file_name = QFileDialog::getOpenFileName(this,
-                                                         tr("Open Texture"), ":/",
-                                                         tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
-    //TODO Переделать когда нужно будет делать сценку
-	QImage texture = QImage(file_name.data());
-	if(!texture.isNull())
-	{
-		materials[selected_model].set_texture(texture);
-		ui->checkBox_show_texture->setChecked(true);
-		show_texture = true;
-	}else{
-		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
-	}
-	update_scene();
-}
+//void MainWindow::on_actionLoad_Texture_triggered()
+//{
+//
+//}
 
 //Кнопка +
 void MainWindow::on_addCamera_clicked()
@@ -387,7 +374,6 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 	std::array<float, 4> a{ x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
-//	std::cout << model_cnt << std::endl;
 	model_cnt++;
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
@@ -747,5 +733,40 @@ void MainWindow::on_translate_clicked()
 	dialog.exec();
 
 	update_scene();
+}
+void MainWindow::on_btnSelectColor_clicked()
+{
+	QColor color = QColorDialog::getColor(QColor(255,255,255,255));
+	if (!color.isValid()) {
+		QMessageBox::information(this, "Erroe", "Incorrect color");
+	}
+	materials[selected_model].set_basic_color(color);
+	materials[selected_model].select_basic_color();
+	update_scene();
+
+}
+void MainWindow::on_btnAddTexture_clicked()
+{
+	std::string file_name = QFileDialog::getOpenFileName(this,
+		tr("Open Texture"), ":/",
+		tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
+	QImage texture = QImage(file_name.data());
+	if(!texture.isNull())
+	{
+		materials[selected_model].set_texture(texture);
+		ui->checkBox_show_texture->setChecked(true);
+		show_texture = true;
+	}else{
+		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
+	}
+	update_scene();
+}
+void MainWindow::on_btnAddLight_clicked()
+{
+
+}
+void MainWindow::on_btnRemoveLight_clicked()
+{
+
 }
 

@@ -211,10 +211,12 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 	}
 	else if (nearest_triangle != -1)
 	{
-
+		mt.set_show_illumination(false);
+		mt.set_show_texture(false);
 		get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
 			nearest_triangle);
-		universal_render(result_points, normal_vectors, texture_vectors);
-
+		render_triangle(normal_vectors, texture_vectors, result_points[0], result_points[1], result_points[2]);
+		mt.set_show_illumination(show_illumination);
+		mt.set_show_texture(show_texture) ;
 	}
 }
