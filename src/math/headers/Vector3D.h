@@ -36,10 +36,6 @@ public:
 
 	[[nodiscard]] Vector3D normalize() const;
 
-	// Vector3D round_normalize() const;
-
-	//static Vector3D transition(const Vector4D& v);
-
 	~Vector3D();
 
 private:

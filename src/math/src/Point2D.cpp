@@ -19,20 +19,20 @@ float Point2D::getY() const
 }
 
 
-void Point2D::setX(float x)
+void Point2D::setX(float new_x)
 {
-    this->x = x;
+    this->x = new_x;
 }
 
-void Point2D::setY(float y)
+void Point2D::setY(float new_y)
 {
-    this->y = y;
+    this->y = new_y;
 }
 
-void Point2D::set(float x, float y)
+void Point2D::set(float new_x, float new_y)
 {
-    this->x = x;
-    this->y = y;
+    this->x = new_x;
+    this->y = new_y;
 }
 
 

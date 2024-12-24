@@ -28,7 +28,6 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/forms/mainwindow.cpp
         src/math/src/DepthBuffer.cpp
         src/math/src/MathCast.cpp
-        src/math/src/MathOperations.cpp
         src/math/src/Matrix3D.cpp
         src/math/src/Matrix4D.cpp
         src/math/src/PixelBuffer.cpp
@@ -91,9 +90,6 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/math/headers/MathCast.h
         src/math/src/MathCast.cpp
         src/render_engine/src/Mesh.cpp
-        src/math/headers/MathOperations.h
-        src/math/src/MathOperations.cpp
-        src/math/src/MathOperations.cpp
         src/render_engine/headers/Material.h
         src/render_engine/src/Material.cpp
         src/render_engine/src/RemoveElements.cpp

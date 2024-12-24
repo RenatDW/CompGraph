@@ -34,6 +34,14 @@ QColor Material::use_material(float w_a,
 
 	return QColor(r, g, b);
 }
+
+
+
+void Material::set_cam(Camera& cam)
+{
+	Material::cam = cam;
+}
+
 QImage& Material::get_texture()
 {
 	return texture;

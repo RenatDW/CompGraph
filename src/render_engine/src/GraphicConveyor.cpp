@@ -1,17 +1,14 @@
 #include "../headers/GraphicConveyor.h"
-#include "../../math/headers/Vector3D.h"
-#include "../../math/headers/Matrix4D.h"
 #include "../../math/headers/Matrix3D.h"
-#include "../../math/headers/Vector4D.h"
 #include "../../math/headers/MathCast.h"
 
 #include <cmath>
 
 Matrix4D GraphicConveyor::get_rotate_matrix(float phi_degree, float psi_degree, float theta_degree)
 {
-	float phi_rad = phi_degree * static_cast<float>(M_PI / 180);
-	float psi_rad = psi_degree * static_cast<float>(M_PI / 180);
-	float theta_rad = theta_degree * static_cast<float>(M_PI / 180);
+	float phi_rad = (phi_degree == 0) ? 0.0f : phi_degree * static_cast<float>(M_PI) / 180.0f;
+	float psi_rad = (phi_degree == 0) ? 0.0f : psi_degree * static_cast<float>(M_PI) / 180.0f;
+	float theta_rad = (phi_degree == 0) ? 0.0f : theta_degree * static_cast<float>(M_PI) / 180.0f;
 
 	const std::vector<std::vector<float>> rz_matrix = {
 			{std::cos(phi_rad), std::sin(phi_rad), 0, 0},
@@ -37,7 +34,7 @@ Matrix4D GraphicConveyor::get_rotate_matrix(float phi_degree, float psi_degree, 
 	Matrix4D rz(rz_matrix);
 	Matrix4D ry(ry_matrix);
 	Matrix4D rx(rx_matrix);
-	Matrix4D r = rz * ry * rx;
+	Matrix4D r = rx * ry * rz;
 	return r;
 }
 

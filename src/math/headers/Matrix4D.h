@@ -28,7 +28,6 @@ public:
     static Vector3D multiply_matrix4d_by_vector3d(const Matrix4D& matrix, const Vector3D& vertex);
 
 	Matrix4D operator * (const Matrix4D& m) const;
-	static Matrix4D transporation(const Matrix4D& m);
 
     Vector4D operator * (const Vector4D& v) const;
 
@@ -37,12 +36,6 @@ public:
     Matrix4D operator - (const Matrix4D& m) const;
 
     [[nodiscard]] Matrix4D transposition() const;
-
-    void print_matrix() const;
-
-    Matrix4D mul(const Matrix4D &m);
-
-    static Matrix4D max_value();
 
     friend bool operator==(const Matrix4D &lhs, const Matrix4D &rhs)
     {

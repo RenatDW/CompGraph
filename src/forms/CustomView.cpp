@@ -5,7 +5,7 @@
 
 #include <QDebug>
 
-QPoint CustomView::last_mouse_position;
+
 
 CustomView::CustomView(QWidget* parent) : QGraphicsView(parent)
 {
@@ -23,35 +23,34 @@ void CustomView::mouseMoveEvent(QMouseEvent* event)
 	{
 		QPoint current_mouse_position = event->pos();
 
-		auto deltaX = static_cast<float>(current_mouse_position.x() - last_mouse_position.x());
-		auto deltaY = static_cast<float>(current_mouse_position.y() - last_mouse_position.y());
+		float deltaX = static_cast<float>(current_mouse_position.x() - last_mouse_position.x());
+		float deltaY = static_cast<float>(current_mouse_position.y() - last_mouse_position.y());
 
-		static float theta = 0.0f;
-		static float phi = 90.0f;
-		const float RADIUS = this->mainWindow->camera.get_position().length();
+		constexpr float ROTATION_SPEED = 0.1f;
+		constexpr float EPSILON = 1e-2f;
+		constexpr float DEG_TO_RAD = static_cast<float>(M_PI) / 180.0f;
 
-		theta -= deltaX * 0.01f;
-		phi -= deltaY * 0.01f;
+		theta -= deltaX * ROTATION_SPEED;
+		phi = std::clamp(phi - deltaY * ROTATION_SPEED, EPSILON, 180.0f - EPSILON);
 
-		const float EPSILON = 1e-2f;
-		phi = std::clamp(phi, EPSILON, 180.0f - EPSILON);
+		float theta_rad = theta * DEG_TO_RAD;
+		float phi_rad = phi * DEG_TO_RAD;
 
-		float theta_rad = theta * static_cast<float>(M_PI) / 180.0f;
-		float phi_rad = phi * static_cast<float>(M_PI) / 180.0f;
+		float radius = mainWindow->camera.get_position().length();
 
-		Vector3D new_position;
-		new_position.setX(RADIUS * std::sin(phi_rad) * std::cos(theta_rad));
-		new_position.setY(RADIUS * std::cos(phi_rad));
-		new_position.setZ(RADIUS * std::sin(phi_rad) * std::sin(theta_rad));
+		Vector3D new_position(
+				radius * std::sin(phi_rad) * std::cos(theta_rad),
+				radius * std::cos(phi_rad),
+				radius * std::sin(phi_rad) * std::sin(theta_rad)
+		);
 
 		mainWindow->camera.set_position(new_position);
 		mainWindow->camera.set_target(Vector3D(0.0f, 0.0f, 0.0f));
-	}
-	else
-	{
-		last_mouse_position = event->pos();
+
+		last_mouse_position = current_mouse_position;
 	}
 }
+
 
 void CustomView::wheelEvent(QWheelEvent* event)
 {
@@ -96,6 +95,17 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 	}
 
 
+	last_mouse_position = event->pos();
+
+	Vector3D camera_position = mainWindow->camera.get_position();
+	float radius = camera_position.length();
+
+	if (radius > 1e-5f)
+	{
+		constexpr float RAD_TO_DEG = 180.0f / static_cast<float>(M_PI);
+		theta = std::atan2(camera_position.getZ(), camera_position.getX()) * RAD_TO_DEG;
+		phi = std::acos(camera_position.getY() / radius) * RAD_TO_DEG;
+	}
 }
 
 void CustomView::mouseReleaseEvent(QMouseEvent* event)

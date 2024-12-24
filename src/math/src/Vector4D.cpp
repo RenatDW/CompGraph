@@ -28,12 +28,12 @@ float Vector4D::getW() const
 	return w;
 }
 
-void Vector4D::setX(const float x)
+void Vector4D::setX(float x)
 {
 	this->x = x;
 }
 
-void Vector4D::setY(const float y)
+void Vector4D::setY(float y)
 {
 	this->y = y;
 }

@@ -1,9 +1,7 @@
-//
-// Created by Ренат Асланов on 07.11.2024. Я СЛЕЖУ ЗА ТОБОЙ
-//
 #include "../headers/Illumination.h"
 #include "../../math//headers/MathCast.h"
 #include <array>
+
 
 void Illumination::render()
 {
