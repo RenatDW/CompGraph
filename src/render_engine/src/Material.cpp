@@ -92,3 +92,7 @@ void Material::select_maincolor()
 {
 	this->main_color = basic_color;
 }
+const QColor& Material::get_highlightcolor() const
+{
+	return highlight_color;
+}

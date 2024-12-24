@@ -16,6 +16,8 @@
 #include <QWheelEvent>
 #include <QListWidgetItem>
 
+static const int VERTEX_RADIUS = 10;
+
 QT_BEGIN_NAMESPACE
 
 namespace Ui

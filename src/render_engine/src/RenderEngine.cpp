@@ -196,16 +196,15 @@ void RenderEngine::get_triangles_vectors(std::array<Point3D, 3> &result_points, 
 
 void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix, int n_triangles)
 {
-
+	std::array<Point3D, 3> result_points, normal_vectors;
+	std::array<Point2D, 3> texture_vectors;
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
-        std::array<Point3D, 3> result_points, normal_vectors;
-        std::array<Point2D, 3> texture_vectors;
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
                               triangle_ind);
 		сurrent_triangle = triangle_ind;
 		universal_render(result_points, normal_vectors, texture_vectors);
     }
-
+	mt.select_highlightcolor();
 	if (nearest_vertex != -1)
 	{
 		return;
@@ -215,7 +214,6 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
 
 		get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
 			nearest_triangle);
-		mt.select_highlightcolor();
 		universal_render(result_points, normal_vectors, texture_vectors);
 
 	}

@@ -43,6 +43,7 @@ public:
 	void set_show_texture(bool showTexture);
 	void set_show_illumination(bool showIllumination);
 	void select_highlightcolor();
+	const QColor& get_highlightcolor() const;
 	void select_maincolor();
 };
 

@@ -81,7 +81,6 @@ void MainWindow::update_scene()
 			renderEngine.render();
 		}else{
 			QPoint localPos = ui->graphicsView->mapFromGlobal(QCursor::pos());
-//			vertex = renderEngine.render_with_selection(localPos.x(), localPos.y());
 			TriangleCoordinates ans = renderEngine.render_with_selection(localPos.x(), localPos.y());
 			this->vertex_id = ans.vertex_id;
 			this->triangle_id = ans.triangle_id;
@@ -101,13 +100,12 @@ void MainWindow::update_scene()
 
 	if(vertex_id != -1)
 	{
-		int radius = 10;
 		painter.setPen(QColor(255, 215, 50));
-		for (int x = 0; x <= radius; x++)
+		for (int x = 0; x <= VERTEX_RADIUS; x++)
 		{
-			for (int y = 0; y <= radius; y++)
+			for (int y = 0; y <= VERTEX_RADIUS; y++)
 			{
-				if ((x) * (x) + (y) * (y) < radius * radius)
+				if ((x) * (x) + (y) * (y) < VERTEX_RADIUS * VERTEX_RADIUS)
 				{
 					painter.drawPoint(x + vertex.getX(), y + vertex.getY());
 					painter.drawPoint(x + vertex.getX(), -y + vertex.getY());
