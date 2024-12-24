@@ -142,6 +142,7 @@ void MainWindow::on_actionLoad_Model_triggered()
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
 	models.emplace(model_cnt, ObjReader::read(file_name));
+	original_models.emplace(model_cnt, ObjReader::read(file_name));
 	materials.emplace(model_cnt, Material(false, false, false));
 
 	//value and number of loaded model
@@ -221,18 +222,31 @@ void MainWindow::slotEditRecord()
 		}
 	}
 	ui->listWidget->item(row)->setText("eshyo ne gotove");
-
 }
+
 void MainWindow::on_actionSave_Model_triggered()
 {
-    if (models.empty()) {
-        QMessageBox::information(this, "Save model", "You haven't selected a model");
-        return;
-    }
-    std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
-                                                         ":/",
-                                                         tr("Objects (*.obj)")).toUtf8().constData();
-    ObjWriter::write(models[0], file_name);
+	if (models.empty()) {
+		QMessageBox::information(this, "Save model", "You haven't selected a model");
+		return;
+	}
+
+	QMessageBox msgBox;
+	msgBox.setText("Выберите тип модели для сохранения:");
+	msgBox.setInformativeText("Сохранить оригинальную модель или преобразованную?");
+	msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+	QPushButton* saveOriginal = msgBox.addButton("Оригинальная", QMessageBox::ActionRole);
+	QPushButton* saveTransformed = msgBox.addButton("Преобразованная", QMessageBox::ActionRole);
+	msgBox.exec();
+
+	std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
+			":/",
+			tr("Objects (*.obj)")).toUtf8().constData();
+	if (msgBox.clickedButton() == saveOriginal) {
+		ObjWriter::write(original_models[selected_model], file_name);
+	} else if (msgBox.clickedButton() == saveTransformed) {
+		ObjWriter::write(models[selected_model], file_name);
+	}
 }
 
 void MainWindow::on_actionLoad_Texture_triggered()
