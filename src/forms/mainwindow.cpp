@@ -63,6 +63,15 @@ void MainWindow::update_scene()
 	scene->clear();
 	int width = ui->graphicsView->viewport()->width();
 	int height = ui->graphicsView->viewport()->height();
+	std::vector<Light> lt;
+	lt.emplace_back(QColor(255,255,255), camera.get_position());
+	for(std::pair<int, Light> elem : light){
+		lt.emplace_back(elem.second);
+	}
+	for (auto& elem : materials)
+	{
+		elem.second.set_lights(lt);
+	}
 
 	QPixmap pixmap(width, height);
 	pixmap.fill(QColor(45, 45, 45));
@@ -827,7 +836,6 @@ void MainWindow::add_light_list(const QColor& color, Vector3D& pos)
 	QVariant v;
 	v.setValue(light_cnt);
 	light_list_item->setData(Qt::UserRole,v);
-//	light_list_item->setValue();
 	ui->listLightSource->addItem(light_list_item);
 	light_cnt++;
 }

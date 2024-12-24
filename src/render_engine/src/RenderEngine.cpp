@@ -24,7 +24,6 @@ void RenderEngine::render()
 	model_view_projection_matrix = model_view_projection_matrix * projection_matrix * view_matrix;
 
     render_triangles(model_view_projection_matrix, mesh.triangles.size());
-	mt.set_cam(camera);
 
 }
 

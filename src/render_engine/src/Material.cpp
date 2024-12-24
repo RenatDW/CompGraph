@@ -1,6 +1,3 @@
-//
-// Created by Ренат Асланов on 11.12.2024.
-//
 #include "../headers/Material.h"
 Material::Material(bool show_mesh, bool show_illumination, bool show_texture)
 	: show_texture(show_texture), show_illumination(show_illumination), show_mesh(show_mesh)
@@ -21,7 +18,7 @@ QColor Material::use_material(float w_a,
 		if (Mesh::show_mesh(w_a, w_b, w_c, r, g, b))
 		{
 			if (show_illumination)
-				Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
+				Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 			if (show_texture)
 				Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		}else{
@@ -31,19 +28,11 @@ QColor Material::use_material(float w_a,
 		if (show_texture)
 			Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		if (show_illumination)
-			Illumination::illumination(normal_vectors, P, cam, w_a, w_b, w_c, r, g, b);
+			Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 
 	}
 
 	return QColor(r, g, b);
-}
-const Camera& Material::get_cam()
-{
-	return cam;
-}
-void Material::set_cam(Camera& cam)
-{
-	Material::cam = cam;
 }
 QImage& Material::get_texture()
 {
@@ -100,4 +89,12 @@ void Material::set_basic_color(const QColor& basicColor)
 {
 	this->basic_color = basicColor;
 
+}
+const std::vector<Light>& Material::get_lights() const
+{
+	return lights;
+}
+void Material::set_lights(std::vector<Light> t_lights)
+{
+	this->lights = t_lights;
 }

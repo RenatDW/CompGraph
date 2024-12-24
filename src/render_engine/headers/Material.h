@@ -28,15 +28,15 @@ private:
 	QColor main_color = basic_color;
 	QColor background = QColor(45,45,45);
 public:
-	Camera cam;
+	std::vector<Light> lights;
 	QColor use_material(float w_a,
 		float w_b,
 		float w_c,
 		std::array<Point2D, 3> texture_vectors,
 		std::array<Point3D, 3> normal_vectors,
 		Point3D P);
-	const Camera& get_cam();
-	void set_cam(Camera& cam);
+	[[nodiscard]] const std::vector<Light>& get_lights() const;
+	void set_lights( std::vector<Light> lights);
 	bool is_show_mesh() const;
 	bool is_show_texture() const;
 	bool is_show_illumination() const;
