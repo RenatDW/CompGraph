@@ -4,15 +4,11 @@
 
 #include <cmath>
 
-bool isAlmostEqual(float a, float b, float epsilon = 1e-5f) {
-	return std::fabs(a - b) < epsilon;
-}
-
-Matrix4D GraphicConveyor::get_rotate_matrix(float phi_rad, float psi_rad, float theta_rad)
+Matrix4D GraphicConveyor::get_rotate_matrix(float phi_degree, float psi_degree, float theta_degree)
 {
-//	float phi_rad = phi_degree * static_cast<float>(M_PI) / 180.0f;
-//	float psi_rad = psi_degree * static_cast<float>(M_PI) / 180.0f;
-//	float theta_rad = theta_degree * static_cast<float>(M_PI) / 180.0f;
+	float phi_rad = (phi_degree == 0) ? 0.0f : phi_degree * static_cast<float>(M_PI) / 180.0f;
+	float psi_rad = (phi_degree == 0) ? 0.0f : psi_degree * static_cast<float>(M_PI) / 180.0f;
+	float theta_rad = (phi_degree == 0) ? 0.0f : theta_degree * static_cast<float>(M_PI) / 180.0f;
 
 	const std::vector<std::vector<float>> rz_matrix = {
 			{std::cos(phi_rad), std::sin(phi_rad), 0, 0},
