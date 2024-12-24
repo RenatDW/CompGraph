@@ -92,6 +92,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/render_engine/src/Mesh.cpp
         src/render_engine/headers/Material.h
         src/render_engine/src/Material.cpp
+        src/render_engine/src/RemoveElements.cpp
 )
 
 target_link_libraries(CompGraph

@@ -5,7 +5,7 @@
 
 #include <QDebug>
 
-
+QPoint CustomView::last_mouse_position;
 
 CustomView::CustomView(QWidget* parent) : QGraphicsView(parent)
 {
@@ -49,6 +49,10 @@ void CustomView::mouseMoveEvent(QMouseEvent* event)
 
 		last_mouse_position = current_mouse_position;
 	}
+	else
+	{
+		last_mouse_position = event->pos();
+	}
 }
 
 
@@ -86,10 +90,12 @@ void CustomView::wheelEvent(QWheelEvent* event)
 
 void CustomView::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && mainWindow->vertex_id != -1)
 	{
-		QPointF scenePos = mapToScene(event->pos());
-		//qDebug() << "Mouse PRESS at:" << scenePos;
+		RemoveElements::delete_vertex(mainWindow->models[mainWindow->selected_model].triangles[mainWindow->triangle_id]
+			.get_vertex_indices()[mainWindow->vertex_id], mainWindow->models[mainWindow->selected_model]);
+	}else if(mainWindow->triangle_id != -1){
+		RemoveElements::delete_triangle(mainWindow->triangle_id, mainWindow->models[mainWindow->selected_model]);
 	}
 
 	last_mouse_position = event->pos();
@@ -103,6 +109,7 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 		theta = std::atan2(camera_position.getZ(), camera_position.getX()) * RAD_TO_DEG;
 		phi = std::acos(camera_position.getY() / radius) * RAD_TO_DEG;
 	}
+
 }
 
 void CustomView::mouseReleaseEvent(QMouseEvent* event)

@@ -20,18 +20,23 @@ private:
 	bool show_texture;
 	bool show_illumination;
 	QImage texture;
+public:
+	void set_basic_color(const QColor& basicColor);
+private:
 	QColor basic_color = QColor(255, 255, 255);
+	QColor highlight_color = QColor(255, 215, 50);
+	QColor main_color = basic_color;
 	QColor background = QColor(45,45,45);
 public:
-	Camera cam;
+	std::vector<Light> lights;
 	QColor use_material(float w_a,
 		float w_b,
 		float w_c,
 		std::array<Point2D, 3> texture_vectors,
 		std::array<Point3D, 3> normal_vectors,
 		Point3D P);
-	const Camera& get_cam();
-	void set_cam(Camera& cam);
+	[[nodiscard]] const std::vector<Light>& get_lights() const;
+	void set_lights( std::vector<Light> lights);
 	bool is_show_mesh() const;
 	bool is_show_texture() const;
 	bool is_show_illumination() const;
@@ -40,6 +45,9 @@ public:
 	void set_show_mesh(bool showMesh);
 	void set_show_texture(bool showTexture);
 	void set_show_illumination(bool showIllumination);
+	void select_highlightcolor();
+	const QColor& get_highlightcolor() const;
+	void select_basic_color();
 };
 
 #endif //MATERIAL_H

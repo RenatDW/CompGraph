@@ -63,6 +63,15 @@ void MainWindow::update_scene()
 	scene->clear();
 	int width = ui->graphicsView->viewport()->width();
 	int height = ui->graphicsView->viewport()->height();
+	std::vector<Light> lt;
+	lt.emplace_back(QColor(255,255,255), camera.get_position());
+	for(std::pair<int, Light> elem : light){
+		lt.emplace_back(elem.second);
+	}
+	for (auto& elem : materials)
+	{
+		elem.second.set_lights(lt);
+	}
 
 	QPixmap pixmap(width, height);
 	pixmap.fill(QColor(45, 45, 45));
@@ -72,27 +81,19 @@ void MainWindow::update_scene()
 	camera.set_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
 	Point2D vertex;
 
-	if(ui->pushButton_6->isEnabled())
+	for (std::pair<int, Model> model : models)
 	{
-		for (std::pair<int, Model> model : models)
+		RenderEngine renderEngine(camera, model.second, width,
+			height, db, pb, materials.at(model.first));
+		if (ui->pushButton_6->isEnabled() || selected_model != model.first)
 		{
-			QColor basic_color = QColor(255, 255, 255);
-
-			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, materials.at(model.first));
 			renderEngine.render();
-		}
-	}else{
-		for (std::pair<int, Model> model : models)
-		{
-			QColor basic_color = QColor(255, 255, 255);
-			RenderEngine renderEngine(camera, model.second, width,
-				height, db, pb, materials.at(model.first));
-			QPoint globalPos = QCursor::pos();
-			QPoint localPos = ui->graphicsView->mapFromGlobal(globalPos);
-			int x = localPos.x();
-			int y = localPos.y();
-			vertex = renderEngine.render_with_selection(x, y);
+		}else{
+			QPoint localPos = ui->graphicsView->mapFromGlobal(QCursor::pos());
+			TriangleCoordinates ans = renderEngine.render_with_selection(localPos.x(), localPos.y());
+			this->vertex_id = ans.vertex_id;
+			this->triangle_id = ans.triangle_id;
+			vertex = ans.vertex;
 		}
 	}
 
@@ -106,15 +107,14 @@ void MainWindow::update_scene()
 		painter.drawPoint(key.getX(),key.getY());
 	}
 
-	if(vertex != Point2D())
+	if(vertex_id != -1)
 	{
-		int radius = 10;
 		painter.setPen(QColor(255, 215, 50));
-		for (int x = 0; x <= radius; x++)
+		for (int x = 0; x <= VERTEX_RADIUS; x++)
 		{
-			for (int y = 0; y <= radius; y++)
+			for (int y = 0; y <= VERTEX_RADIUS; y++)
 			{
-				if ((x) * (x) + (y) * (y) < radius * radius)
+				if ((x) * (x) + (y) * (y) < VERTEX_RADIUS * VERTEX_RADIUS)
 				{
 					painter.drawPoint(x + vertex.getX(), y + vertex.getY());
 					painter.drawPoint(x + vertex.getX(), -y + vertex.getY());
@@ -159,7 +159,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 
 	ui->listWidget->addItem(model_list_item);
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(onListClicked()));
+	connect(ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(onListClicked()));
 //	QObject::connect(ui->listWidget, SIGNAL(activated()), this, SLOT());
 	selected_model = model_cnt;
 	model_cnt++;
@@ -352,7 +352,6 @@ void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 	std::array<float, 4> a{ x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
-//	std::cout << model_cnt << std::endl;
 	model_cnt++;
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
@@ -649,5 +648,110 @@ void MainWindow::on_translate_clicked()
 	dialog.exec();
 
 	update_scene();
+}
+void MainWindow::on_btnSelectColor_clicked()
+{
+	QColor color = QColorDialog::getColor(QColor(255,255,255,255));
+	if (!color.isValid()) {
+		QMessageBox::information(this, "Erroe", "Incorrect color");
+	}
+	materials[selected_model].set_basic_color(color);
+	materials[selected_model].select_basic_color();
+	update_scene();
+
+}
+void MainWindow::on_btnAddTexture_clicked()
+{
+	std::string file_name = QFileDialog::getOpenFileName(this,
+		tr("Open Texture"), ":/",
+		tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
+	QImage texture = QImage(file_name.data());
+	if(!texture.isNull())
+	{
+		materials[selected_model].set_texture(texture);
+		ui->checkBox_show_texture->setChecked(true);
+		show_texture = true;
+	}else{
+		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
+	}
+	update_scene();
+}
+void MainWindow::on_btnAddLight_clicked()
+{
+	QColor color = QColorDialog::getColor(QColor(255,255,255,255));
+	if (!color.isValid()) {
+		QMessageBox::information(this, "Erroe", "Incorrect color");
+	}
+	QDialog dialog;
+	dialog.setWindowTitle("Добавление камеры");
+
+	auto* main_layout = new QVBoxLayout(&dialog);
+
+	auto* label_x = new QLabel("Координата камеры по X:");
+	auto* x_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(x_input);
+
+	auto* label_y = new QLabel("Координата камеры по Y:");
+	auto* y_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(y_input);
+
+	auto* label_z = new QLabel("Координата камеры по Z:");
+	auto* z_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(z_input);
+
+	auto* button_layout = new QHBoxLayout();
+	auto* apply_button = new QPushButton("Применить");
+	auto* cancel_button = new QPushButton("Отмена");
+	button_layout->addWidget(apply_button);
+	button_layout->addWidget(cancel_button);
+	main_layout->addLayout(button_layout);
+
+	connect(apply_button, &QPushButton::clicked, [&]()
+	{
+		bool okX, okY, okZ;
+		float x = x_input->text().toFloat(&okX);
+		float y = y_input->text().toFloat(&okY);
+		float z = z_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ)
+		{
+			Vector3D pos(x, y, z);
+			add_light_list(color, pos);
+
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!");
+		}
+	});
+	connect(cancel_button, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
+
+	dialog.exec();
+
+}
+void MainWindow::add_light_list(const QColor& color, Vector3D& pos)
+{//Сюда диалоговое окно нужно;
+	//И сюда нужно записать число
+	std::string name = "{" + std::to_string(pos.getX()) + ", " + std::to_string(pos.getY()) + ", " + std::to_string(pos.getZ()) + "}";
+	light[light_cnt] = Light(color, pos);
+	auto light_list_item = new QListWidgetItem(QString::fromStdString(name));
+	QVariant v;
+	v.setValue(light_cnt);
+	light_list_item->setData(Qt::UserRole,v);
+	ui->listLightSource->addItem(light_list_item);
+	light_cnt++;
+}
+void MainWindow::on_btnRemoveLight_clicked()
+{
+	int row = ui->listLightSource->selectionModel()->currentIndex().row();
+	int light_id = ui->listLightSource->item(row)->data(Qt::UserRole).value<int>();
+	models.erase(light_id);
+	auto it = ui->listLightSource->takeItem(ui->listLightSource->currentRow());
+	delete it;
+
 }
 
