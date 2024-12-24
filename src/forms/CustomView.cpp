@@ -86,11 +86,14 @@ void CustomView::wheelEvent(QWheelEvent* event)
 
 void CustomView::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && mainWindow->vertex_id != -1)
 	{
-		QPointF scenePos = mapToScene(event->pos());
-		//qDebug() << "Mouse PRESS at:" << scenePos;
+		RemoveElements::delete_vertex(mainWindow->models[mainWindow->selected_model].triangles[mainWindow->triangle_id]
+			.get_vertex_indices()[mainWindow->vertex_id], mainWindow->models[mainWindow->selected_model]);
+	}else if(mainWindow->triangle_id != -1){
+		RemoveElements::delete_triangle(mainWindow->triangle_id, mainWindow->models[mainWindow->selected_model]);
 	}
+
 
 	last_mouse_position = event->pos();
 

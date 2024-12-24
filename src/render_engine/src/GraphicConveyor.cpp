@@ -120,15 +120,12 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
 
     resultZ = (target - eye).normalize();
 
-    //TODO это типо фикс только если смотреть перемещать по оY модель разворачивает во все стороны
     Vector3D adjustedUp = up;
     if (std::abs(resultZ * up) > 0.99f) {
-        // Если вектор up слишком близок по направлению к resultZ, используем другой вектор для up
         adjustedUp = (resultZ.getX() ==  0.0f) ? Vector3D(0, 0, 1): Vector3D(1, 0, 0);
     }
     resultX = Vector3D::cross(adjustedUp, resultZ).normalize();
     resultY = Vector3D::cross(resultZ, resultX).normalize();
-
 
     std::vector<std::vector<float> > matrix = {
         {resultX.getX(), resultX.getY(), resultX.getZ(), -(resultX * eye)},

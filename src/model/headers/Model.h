@@ -8,7 +8,7 @@
 
 #include <vector>
 
-class Model
+struct Model
 {
 public:
     std::vector<Vector3D> vertices;
@@ -16,8 +16,6 @@ public:
     std::vector<Vector3D> normals;
     std::vector<Polygon> polygons;
     std::vector<Triangle> triangles;
-
-	void deleteVertice(int vertex);
 };
 
 

@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 
 	//Model ans(ObjReader::read(filename));
 	omp_set_dynamic(1); // Enable dynamic adjustment
+	std::cout << std::filesystem::current_path();
     QApplication a(argc, argv);
     MainWindow w;
 	w.setMinimumSize(800, 600);

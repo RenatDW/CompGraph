@@ -4,7 +4,7 @@
 #include "../render_engine/headers/Camera.h"
 #include "../model/headers/Model.h"
 #include "../render_engine/headers/Material.h"
-
+#include "../render_engine/headers/Light.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QMainWindow>
@@ -16,6 +16,8 @@
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QListWidgetItem>
+
+static const int VERTEX_RADIUS = 10;
 
 QT_BEGIN_NAMESPACE
 
@@ -41,17 +43,20 @@ public:
 	std::map<int, Model> original_models;
 
 	std::map<int, Material> materials;
+	std::map<int, Light> light;
     std::string model_texture_path{};
     Camera camera;
     bool show_mesh = false;
     bool show_texture = false;
     bool show_illumination = false;
 	int selected_model;
+	int triangle_id = -1;
+	int vertex_id = -1;
 
 private slots:
     void on_actionLoad_Model_triggered();
     void on_actionSave_Model_triggered();
-    void on_actionLoad_Texture_triggered();
+//    void on_actionLoad_Texture_triggered();
 
 private slots:
     void on_checkBox_show_mesh_toggled(bool checked);
@@ -67,6 +72,10 @@ private slots:
 
 	void on_pushButton_5_clicked();
 	void on_pushButton_6_clicked();
+	void on_btnSelectColor_clicked();
+	void on_btnAddTexture_clicked();
+	void on_btnAddLight_clicked();
+	void on_btnRemoveLight_clicked();
 
 	void on_rotate_clicked();
 	void on_scale_clicked();
@@ -85,6 +94,7 @@ private:
 
 private:
 	int model_cnt = 0;
+	int light_cnt = 0;
 	int selected_camera_model_id = 0;
 	int selected_camera_list_id = 0;
 
@@ -99,6 +109,7 @@ private:
 	int frameCount;
 	float fps;
 	void onFrameUpdate();
+	void add_light_list(const QColor& color, Vector3D& pos);
 };
 
 #endif

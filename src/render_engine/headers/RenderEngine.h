@@ -1,25 +1,29 @@
 #ifndef RENDERENGINE_H
 #define RENDERENGINE_H
 
+#include <iosfwd>
+#include <QPainter>
+#include <cfloat>
+
 #include "Camera.h"
 #include "Renderable.h"
-#include "Material.h"
+#include "../headers/TriangleCoord.h"
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
 #include "../../math/headers/Point3D.h"
 #include "../../math/headers/PixelBuffer.h"
-#include "../../math/headers/DepthBuffer.h"
 
-#include <iosfwd>
-#include <QPainter>
-#include <cfloat>
+
+#include "../../math/headers/DepthBuffer.h"
+#include "Material.h"
+
 
 class RenderEngine
 {
 public:
 
 	void render();
-	Point2D render_with_selection(int x, int y);
+	TriangleCoordinates render_with_selection(int x, int y);
 
 	RenderEngine(Camera& camera,
 		Model& model,
@@ -68,6 +72,11 @@ private:
 
 	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
 	void highlight_triangle(const std::array<Point3D, 3>& result_points);
+	void render_triangle(const std::array<Point3D, 3>& normal_vectors,
+		const std::array<Point2D, 3>& texture_vectors,
+		Point3D& A,
+		Point3D& B,
+		Point3D& C);
 };
 
 #endif //RENDERENGINE_H
