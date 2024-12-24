@@ -11,6 +11,7 @@ class RemoveElements
 {
 public:
 	static void delete_vertex(int vertex, Model& mt);
+	static void delete_triangle(int triangle_id, Model& mt);
 	static void delete_redundant_texture_vertex(Model& mt);
 };
 

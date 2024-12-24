@@ -7,12 +7,7 @@
 void RemoveElements::delete_vertex(int vertex, Model& mt)
 {
 	//TODO Добавить удаление висячих текстур
-	//Удалить вершину из списка вершин
 	mt.vertices.erase(mt.vertices.begin() + vertex);
-	//Удалить вершину из полигонов
-	//Тут мы проходимся по всем полигонам, получаем
-	// в каждом полигоне массив векторов, и если удаленный
-	// вектор находится в этом списке, то мы удаляем полигон
 	for (int i = 0; i < mt.polygons.size();)
 	{ // Используем `i++` только при необходимости
 		bool polygonRemoved = false;
@@ -108,4 +103,8 @@ void RemoveElements::delete_redundant_texture_vertex(Model& mt)
 			}
 		}
 	}
+}
+void RemoveElements::delete_triangle(int triangle_id, Model& mt)
+{
+	mt.triangles.erase(mt.triangles.begin() + triangle_id);
 };

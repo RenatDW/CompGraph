@@ -13,9 +13,9 @@ QColor Material::use_material(float w_a,
 	std::array<Point3D, 3> normal_vectors,
 	Point3D P)
 {
-	int r = basic_color.red();
-	int g = basic_color.green();
-	int b = basic_color.blue();
+	int r = main_color.red();
+	int g = main_color.green();
+	int b = main_color.blue();
 	if (show_mesh)
 	{
 		if (Mesh::show_mesh(w_a, w_b, w_c, r, g, b))
@@ -83,4 +83,12 @@ void Material::set_show_texture(bool showTexture)
 void Material::set_show_illumination(bool showIllumination)
 {
 	show_illumination = showIllumination;
+}
+void Material::select_highlightcolor()
+{
+	this->main_color = highlight_color;
+}
+void Material::select_maincolor()
+{
+	this->main_color = basic_color;
 }
