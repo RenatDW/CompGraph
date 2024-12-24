@@ -38,6 +38,8 @@ public:
     ~MainWindow() override;
 
 	std::map<int, Model> models;
+	std::map<int, Model> original_models;
+
 	std::map<int, Material> materials;
     std::string model_texture_path{};
     Camera camera;

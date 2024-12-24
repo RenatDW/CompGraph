@@ -9,11 +9,7 @@
 
 class Point2D
 {
-	struct Point2DHash {
-		size_t operator()(const Point2D& point) const {
-			return std::hash<int>()(point.x) ^ (std::hash<int>()(point.y) << 1);
-		}
-	};
+
 public:
     Point2D();
 
@@ -25,14 +21,11 @@ public:
 
     [[nodiscard]] float getY() const;
 
+    void setX(float new_x);
 
-    void setX(float x);
+    void setY(float new_y);
 
-    void setY(float y);
-
-    void set(float x, float y);
-
-    //static Point2D vertex_to_point(Vector2D vertex, int width, int height);
+    void set(float new_x, float new_y);
 
     friend bool operator==(const Point2D &lhs, const Point2D &rhs)
     {
@@ -48,7 +41,6 @@ public:
     {
         return (x < other.x) || (x == other.x && y < other.y);
     }
-	int generate_key();
 
 private:
     float x;

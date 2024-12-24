@@ -28,17 +28,17 @@ float Point3D::getZ() const
     return z;
 }
 
-void Point3D::setX(const float x)
+void Point3D::setX(float x)
 {
     this->x = x;
 }
 
-void Point3D::setY(const float y)
+void Point3D::setY(float y)
 {
     this->y = y;
 }
 
-void Point3D::setZ(const float z)
+void Point3D::setZ(float z)
 {
     this->z = z;
 }

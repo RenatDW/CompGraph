@@ -3,7 +3,6 @@
 
 #include <cmath>
 
-#include "../headers/MathOperations.h"
 
 Vector3D::Vector3D() : x(0.0f), y(0.0f), z(0.0f) {}
 
@@ -76,18 +75,5 @@ Vector3D Vector3D::normalize() const
     len = 1 / len;
     return {this->x *len, this->y *len, this->z *len};
 }
-
-//Vector3D Vector3D::round_normalize() const
-//{
-//    float len = this->length();
-//    if (len == 0) return {0, 0, 0};
-//    len = MathOperations::calculate_reverse_square(len);
-//    return {this->x * len, this->y * len, this->z * len};
-//}
-
-// Vector3D Vector3D::transition(const Vector4D& v)
-// {
-// 	return {v.getX()/v.getW(), v.getY()/v.getW(), v.getZ()/v.getW()};
-// }
 
 Vector3D::~Vector3D() = default;

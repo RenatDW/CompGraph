@@ -1,9 +1,6 @@
 #include "../headers/Point2D.h"
 #include "../headers/Point3D.h"
-#include "../headers/Vector3D.h"
 #include "../headers/Vector4D.h"
-#include "../headers/Matrix3D.h"
-#include "../headers/Matrix4D.h"
 #include "../headers/MathCast.h"
 
 Point2D MathCast::to_Point2D(const Vector3D &vertex, const int width, const int height)

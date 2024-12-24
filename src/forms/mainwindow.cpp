@@ -142,6 +142,7 @@ void MainWindow::on_actionLoad_Model_triggered()
                                                          tr("Open Object"), ":/",
                                                          tr("Object Files (*.obj)")).toUtf8().constData();
 	models.emplace(model_cnt, ObjReader::read(file_name));
+	original_models.emplace(model_cnt, ObjReader::read(file_name));
 	materials.emplace(model_cnt, Material(false, false, false));
 
 	//value and number of loaded model
@@ -221,78 +222,32 @@ void MainWindow::slotEditRecord()
 		}
 	}
 	ui->listWidget->item(row)->setText("eshyo ne gotove");
-
 }
+
 void MainWindow::on_actionSave_Model_triggered()
 {
-    if (models.empty()) {
-        QMessageBox::information(this, "Save model", "You haven't selected a model");
-        return;
-    }
-    std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
-                                                         ":/",
-                                                         tr("Objects (*.obj)")).toUtf8().constData();
-    ObjWriter::write(models[0], file_name);
+	if (models.empty()) {
+		QMessageBox::information(this, "Save model", "You haven't selected a model");
+		return;
+	}
+
+	QMessageBox msgBox;
+	msgBox.setText("Выберите тип модели для сохранения:");
+	msgBox.setInformativeText("Сохранить оригинальную модель или преобразованную?");
+	msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+	QPushButton* saveOriginal = msgBox.addButton("Оригинальная", QMessageBox::ActionRole);
+	QPushButton* saveTransformed = msgBox.addButton("Преобразованная", QMessageBox::ActionRole);
+	msgBox.exec();
+
+	std::string file_name = QFileDialog::getSaveFileName(this, tr("Save Object"),
+			":/",
+			tr("Objects (*.obj)")).toUtf8().constData();
+	if (msgBox.clickedButton() == saveOriginal) {
+		ObjWriter::write(original_models[selected_model], file_name);
+	} else if (msgBox.clickedButton() == saveTransformed) {
+		ObjWriter::write(models[selected_model], file_name);
+	}
 }
-
-//void MainWindow::on_actionUp_triggered()
-//{
-//	camera.move_position(Vector3D(0, static_cast<float>(TRANSLATION), 0));
-//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-//			camera.get_position().getZ()) + "}";
-//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-//	QVariant cord;
-//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-//	cord.setValue(coord);
-//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-//
-//
-//    update_scene();
-//}
-
-//void MainWindow::on_actionDown_triggered()
-//{
-//	camera.move_position(Vector3D(0, static_cast<float>(-TRANSLATION), 0));
-//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-//			camera.get_position().getZ()) + "}";
-//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-//	QVariant cord;
-//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-//	cord.setValue(coord);
-//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-//
-//
-//	update_scene();
-//}
-
-//void MainWindow::on_actionLeft_triggered()
-//{
-//	camera.move_position(Vector3D(static_cast<float>(TRANSLATION), 0, 0));
-//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-//			camera.get_position().getZ()) + "}";
-//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-//	QVariant cord;
-//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-//	cord.setValue(coord);
-//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-//
-//	update_scene();
-//}
-
-//void MainWindow::on_actionRight_triggered()
-//{
-//	camera.move_position(Vector3D(static_cast<float>(-TRANSLATION), 0, 0));
-//	std::string ans = "{" + std::to_string(camera.get_position().getX()) + ", " + std::to_string(camera.get_position().getY()) + ", " + std::to_string(
-//			camera.get_position().getZ()) + "}";
-//	ui->listWidget_2->item(selected_camera_list_id)->setText(QString::fromStdString(ans));
-//	QVariant cord;
-//	std::array<float, 4> coord { camera.get_position().getX(), camera.get_position().getY(), camera.get_position().getZ(), static_cast<float>(selected_camera_model_id)};
-//	cord.setValue(coord);
-//	ui->listWidget_2->item(selected_camera_list_id)->setData(Qt::UserRole, cord);
-//
-//
-//	update_scene();
-//}
 
 void MainWindow::on_actionLoad_Texture_triggered()
 {
@@ -510,66 +465,6 @@ void MainWindow::on_pushButton_6_clicked()
 		ui->pushButton_5->setEnabled(true);
 	}
 }
-
-//
-//void MainWindow::on_pushButton_7_clicked()
-//{
-//	auto dialog1 = new QDialog(this); // Указываем родительский виджет
-//	dialog1->setWindowModality(Qt::WindowModality::NonModal);
-//	dialog1->setMinimumSize(200, 150); // Удобнее установить минимальный размер
-//
-//	// Создаём Layout для диалога
-//	auto layout = new QVBoxLayout(dialog1);
-//
-//	// Добавляем описание
-//	auto label_1 = new QLabel("phi, psi, theta:", dialog1);
-//	layout->addWidget(label_1);
-//
-//	// Поля ввода
-//	auto phi = new QLineEdit(dialog1);
-//	phi->setPlaceholderText("phi (x):");
-//	layout->addWidget(phi);
-//
-//	auto psi = new QLineEdit(dialog1);
-//	psi->setPlaceholderText("psi (y):");
-//	layout->addWidget(psi);
-//
-//	auto theta = new QLineEdit(dialog1);
-//	theta->setPlaceholderText("theta (z):");
-//	layout->addWidget(theta);
-//
-//	// Кнопка подтверждения
-//	auto accept = new QPushButton("Add", dialog1);
-//	layout->addWidget(accept);
-//
-//	// Обработка нажатия кнопки
-//	connect(accept, &QPushButton::clicked, [phi, psi, theta, dialog1, this]() {
-//		// Проверяем введённые значения
-//		bool phiOk, psiOk, thetaOk;
-//		float phiValue = phi->text().toFloat(&phiOk);
-//		float psiValue = psi->text().toFloat(&psiOk);
-//		float thetaValue = theta->text().toFloat(&thetaOk);
-//
-//		if (!phiOk || !psiOk || !thetaOk) {
-//			QMessageBox::warning(dialog1, "Invalid Input", "Please enter valid numbers for phi, psi, and theta.");
-//			return;
-//		}
-//
-//		// Обрабатываем выбранные элементы
-//		for (auto element : ui->listWidget->selectedItems()) {
-//			QVariant v = element->data(Qt::UserRole);
-//			int id = v.toInt();
-//			GraphicConveyor::scale(models[id], phiValue, psiValue, thetaValue);
-//		}
-//		ui->graphicsView->update();
-//		dialog1->accept(); // Закрываем диалог
-//	});
-//
-//	dialog1->setLayout(layout);
-//	dialog1->exec(); // Модальное окно
-//	ui->graphicsView->update();
-//}
-
 
 void MainWindow::onListClicked()
 {
