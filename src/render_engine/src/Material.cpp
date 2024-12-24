@@ -1,6 +1,3 @@
-//
-// Created by Ренат Асланов on 11.12.2024.
-//
 #include "../headers/Material.h"
 Material::Material(bool show_mesh, bool show_illumination, bool show_texture)
 	: show_texture(show_texture), show_illumination(show_illumination), show_mesh(show_mesh)
@@ -37,10 +34,7 @@ QColor Material::use_material(float w_a,
 
 	return QColor(r, g, b);
 }
-const Camera& Material::get_cam()
-{
-	return cam;
-}
+
 void Material::set_cam(Camera& cam)
 {
 	Material::cam = cam;

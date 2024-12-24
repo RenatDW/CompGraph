@@ -330,7 +330,8 @@ void MainWindow::add_camera_to_list(float x, float y, float z)
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
 
-	std::string file_name = "/Users/Пользователь/CLionProjects/CompGraph/resources/camera_model.obj";
+	std::string file_name = (QCoreApplication::applicationDirPath() + "../../resources/camera_model.obj").toStdString();
+
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x,y,z);
 	//TODO добавить перемещения на координаты
@@ -373,16 +374,13 @@ void MainWindow::on_useCamera_clicked()
 
 //	// Удаление модели выбранной камеры
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
-//
-//	//Создание модели действующе камеры
+
 	std::string file_name = "/Users/Пользователь/CLionProjects/CompGraph/resources/camera_model.obj";
 	Model md = ObjReader::read(file_name);
-	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0, camera.get_position().getX(), camera.get_position().getY(),
-			camera.get_position().getZ());
+
 	models.emplace(selected_camera_model_id, md);
 
-
-	auto arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
+	std::array<float, 4> arr = ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float, 4>>();
 	Vector3D a(arr[0], arr[1], arr[2]);
 	camera.set_position(a);
 	selected_camera_model_id = arr[3];

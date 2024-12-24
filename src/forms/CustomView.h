@@ -23,7 +23,11 @@ protected:
 
 private:
 	MainWindow* mainWindow;
-	static QPoint last_mouse_position;
+	QPoint last_mouse_position;
+
+private:
+	float theta;
+	float phi;
 };
 
 #endif //CUSTOMVIEW_H

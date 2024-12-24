@@ -1,29 +1,6 @@
-//
-// Created by Ренат Асланов on 07.11.2024. Я СЛЕЖУ ЗА ТОБОЙ
-//
 #include "../headers/Illumination.h"
 #include "../../math//headers/MathCast.h"
 #include <array>
-
-void Illumination::render()
-{
-    // this->illumination();
-}
-
-void Illumination::add_vertex(Model &mesh, const Matrix4D &model_view_projection_matrix, int triangle_ind,
-                              int n_vertices_in_triangle, int width, int height)
-{
-    std::vector<Point3D> normal_points;
-    for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_triangle; ++vertex_in_triangle_ind) {
-        int texture_vertex_ind = mesh.triangles[triangle_ind].get_normal_indices()[vertex_in_triangle_ind];
-        Point3D result_point = {
-            mesh.normals[texture_vertex_ind].getX(), mesh.normals[texture_vertex_ind].getY(),
-            mesh.normals[texture_vertex_ind].getZ()
-        };
-        normal_points.emplace_back(result_point);
-    }
-    this->normal_points = normal_points;
-}
 
 void Illumination::illumination(const std::array<Point3D, 3> &normal_vectors, const Point3D &P, Camera &camera, const float weight_a,
                                 const float weight_b, const float weight_c, int &r, int &g, int &b)
