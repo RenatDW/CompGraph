@@ -5,8 +5,6 @@
 
 #include <QDebug>
 
-QPoint CustomView::last_mouse_position;
-
 CustomView::CustomView(QWidget* parent) : QGraphicsView(parent)
 {
 	setMouseTracking(true);
