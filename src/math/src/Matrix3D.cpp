@@ -140,17 +140,3 @@ Matrix3D Matrix3D::transposition() const
 	    }
 	return {ans};
 }
-
-
-void Matrix3D::print_matrix() const 
-{
-    for (const auto& row : matrix) 
-    {
-        std::cout << "[ ";
-        for (const auto& element : row) 
-        {
-            std::cout << element << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-}

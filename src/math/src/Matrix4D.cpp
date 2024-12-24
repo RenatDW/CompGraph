@@ -153,39 +153,6 @@ Matrix4D Matrix4D::transposition() const
     return {ans};
 }
 
-void Matrix4D::print_matrix() const
-{
-    for (const auto &row: matrix) {
-        std::cout << "[ ";
-        for (const auto &element: row) {
-            std::cout << element << " ";
-        }
-        std::cout << "]" << std::endl;
-    }
-}
-
-Matrix4D Matrix4D::mul(const Matrix4D &m)
-{
-    const int N = static_cast<int>(this->matrix.size());
-
-    std::vector<std::vector<float> > result(N, std::vector<float>(N, 0.0f));
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            for (int k = 0; k < N; ++k) {
-                result[i][j] += this->matrix[i][k] * m.matrix[k][j];
-            }
-        }
-    }
-
-    return result;
-}
-
-Matrix4D Matrix4D::max_value()
-{
-    float mx = std::numeric_limits<float>::max();
-    std::vector<std::vector<float>> f{{mx,mx,mx,mx},{mx,mx,mx,mx},{mx,mx,mx,mx},{mx,mx,mx,mx}};
-    return {f};
-}
 
 std::ostream& operator<<(std::ostream& os, const Matrix4D& d)
 {

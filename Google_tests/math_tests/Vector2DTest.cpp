@@ -73,3 +73,23 @@ TEST(Vector2DTest, NormalizationVector2D)
     EXPECT_FLOAT_EQ(v.normalize().getX(), 0.8f);
     EXPECT_FLOAT_EQ(v.normalize().getY(), -0.6f);
 }
+
+TEST(Vector2DTest, EqualityOperator)
+{
+	Vector2D v1(1.0, 2.0);
+	Vector2D v2(1.0, 2.0);
+	Vector2D v3(2.0, 3.0);
+
+	EXPECT_TRUE(v1 == v2);
+	EXPECT_FALSE(v1 == v3);
+}
+
+TEST(Vector2DTest, InequalityOperator)
+{
+	Vector2D v1(1.0, 2.0);
+	Vector2D v2(1.0, 2.0);
+	Vector2D v3(1.0, 3.0);
+
+	EXPECT_FALSE(v1 != v2);
+	EXPECT_TRUE(v1 != v3);
+}
