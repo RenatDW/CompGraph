@@ -34,10 +34,6 @@ public:
 	static Matrix4D get_scale_matrix(float sx, float sy, float sz);
 
 	static Matrix4D get_translate_matrix(float tx, float ty, float tz);
-private:
-	static Matrix4D scale_matrix_cached;
-	static Matrix4D rotate_matrix_cached;
-	static Matrix4D translate_matrix_cached;
 };
 
 #endif

@@ -5,7 +5,6 @@
 #include "../obj_utils/objreader/ObjReader.h"
 #include "../obj_utils/objwriter/ObjWriter.h"
 #include "../render_engine/headers/GraphicConveyor.h"
-#include "../render_engine/headers/Scene.h"
 
 #include <QMessageBox>
 #include <QFileDialog>
@@ -52,6 +51,7 @@ void MainWindow::onFrameUpdate()
 		frameCount = 0;
 		fpsTimer.restart();
 		// Update FPS in UI (e.g., status bar or label)
+		ui->statusbar->setStyleSheet("QStatusBar { color: green; }");
 		ui->statusbar->showMessage(QString("FPS: %1").arg(fps, 0, 'f', 2));
 	}
 }
@@ -139,7 +139,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	std::map<int, int> m;
 	std::string name =  "Model " + std::to_string(model_cnt);
 	//TODO обработать эту утечку
-	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
+	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 
 	v.setValue(model_cnt);
@@ -147,7 +147,7 @@ void MainWindow::on_actionLoad_Model_triggered()
 	model_list_item->setData(Qt::UserRole,v);
 	connect(ui->listWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(slotCustomMenuRequested(QPoint)));
 
-	ui->listWidget->addItem(model_list_item.release());
+	ui->listWidget->addItem(model_list_item);
 	ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(onListClicked()));
 //	QObject::connect(ui->listWidget, SIGNAL(activated()), this, SLOT());
@@ -164,20 +164,20 @@ void MainWindow::slotCustomMenuRequested(QPoint pos)
 		return;
 	}
 	/* Создаем объект контекстного меню */
-	auto menu = std::make_unique<QMenu>(this);
+	auto menu = new QMenu(this);
 	/* Создаём действия для контекстного меню */
-	auto editDevice = std::make_unique<QAction>(tr("Редактировать"), this);
-	auto rotateDevice = std::make_unique<QAction>(tr("Преместить"), this);
-	auto deleteDevice = std::make_unique<QAction>(tr("Удалить"), this);
+	auto editDevice = new QAction(tr("Редактировать"), this);
+	auto rotateDevice = new QAction(tr("Преместить"), this);
+	auto deleteDevice = new QAction(tr("Удалить"), this);
 	/* Подключаем СЛОТы обработчики для действий контекстного меню */
-	connect(editDevice.release(), SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
-	connect(rotateDevice.release(), SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
-	connect(deleteDevice.release(), SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
+	connect(editDevice, SIGNAL(triggered()), this, SLOT(slotEditRecord()));     // Обработчик вызова диалога редактирования
+	connect(rotateDevice, SIGNAL(triggered()), this, SLOT(slotRotateRecord())); // Обработчик удаления записи
+	connect(deleteDevice, SIGNAL(triggered()), this, SLOT(slotRemoveRecord())); // Обработчик удаления записи
 
 	/* Устанавливаем действия в меню */
-	menu->addAction(editDevice.release());
-	menu->addAction(rotateDevice.release());
-	menu->addAction(deleteDevice.release());
+	menu->addAction(editDevice);
+	menu->addAction(rotateDevice);
+	menu->addAction(deleteDevice);
 	/* Вызываем контекстное меню */
 	menu->popup(ui->listWidget->viewport()->mapToGlobal(pos));
 }
@@ -303,93 +303,72 @@ void MainWindow::on_actionLoad_Texture_triggered()
 	update_scene();
 }
 
-void MainWindow::on_actionChose_Color_triggered()
-{
-    QColor color = QColorDialog::getColor(QColor(255, 100, 200, 255));
-    fill_model_color = color;
-	update_scene();
-    // if (!color.isValid()) {
-    // Cancel
-    // }
-}
-
-void MainWindow::on_actionTriangulation_changed()
-{
-    triangulation = !triangulation;
-	update_scene();
-}
-
-void MainWindow::on_actionRotate_Scale_Translate_triggered()
-{
-	for(auto element: ui->listWidget->selectedItems())
-	{
-		QVariant v = element->data(Qt::UserRole);
-		int id = v.value<int>();
-		GraphicConveyor::rotate_scale_translate(models[id], 1000, 1, 1, 1, 1, 1, 1, 1, 1);
-	}
-	update_scene();
-}
 //Кнопка +
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_addCamera_clicked()
 {
-	auto dialog1 = new QDialog();
-	dialog1->setWindowModality(Qt::WindowModality::NonModal);
-	dialog1->setMinimumHeight(150);
-	dialog1->setMinimumWidth(150);
+	QDialog dialog;
+	dialog.setWindowTitle("Добавление камеры");
 
-	auto label_1 = new QLabel();
-	label_1->setText("Enter vector variables\n(x, y, z):");
-	label_1->setGeometry(10, 10, 150, 50);
-	label_1->setParent(dialog1);
+	auto* main_layout = new QVBoxLayout(&dialog);
 
-	auto x_var = new QTextEdit();
-	x_var->setPlaceholderText("x:");
-	x_var->setGeometry(10, 70, 30, 30);
-	x_var->setParent(dialog1);
+	auto* label_x = new QLabel("Координата камеры по X:");
+	auto* x_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(x_input);
 
-	auto y_var = new QTextEdit();
-	y_var->setPlaceholderText("y:");
-	y_var->setGeometry(80, 70, 30, 30);
-	y_var->setParent(dialog1);
+	auto* label_y = new QLabel("Координата камеры по Y:");
+	auto* y_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(y_input);
 
-	auto z_var = new QTextEdit();
-	z_var->setPlaceholderText("z:");
-	z_var->setGeometry(150, 70, 30, 30);
-	z_var->setParent(dialog1);
+	auto* label_z = new QLabel("Координата камеры по Z:");
+	auto* z_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(z_input);
 
-	auto accept = new QPushButton();
-	accept->setGeometry(10, 100, 50, 30);
-	accept->setText("Add");
-	accept->setParent(dialog1);
-	//TODO автозакрытие окна после добавления камеры
-	connect(accept, &QPushButton::clicked, [x_var, y_var, z_var, dialog1, this]()
+	auto* button_layout = new QHBoxLayout();
+	auto* apply_button = new QPushButton("Применить");
+	auto* cancel_button = new QPushButton("Отмена");
+	button_layout->addWidget(apply_button);
+	button_layout->addWidget(cancel_button);
+	main_layout->addLayout(button_layout);
+
+	connect(apply_button, &QPushButton::clicked, [&]()
 	{
-		add_camera_to_list(x_var->toPlainText(), y_var->toPlainText(), z_var->toPlainText(), dialog1);
+		bool okX, okY, okZ;
+		float x = x_input->text().toFloat(&okX);
+		float y = y_input->text().toFloat(&okY);
+		float z = z_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ)
+		{
+			add_camera_to_list(x, y, z);
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!");
+		}
 	});
 
+	connect(cancel_button, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
 
-//	QPushButton *cancel = new QPushButton();
-//	cancel->setGeometry(100, 100, 30, 30);
-//	accept->setText("Cancel");
-//	cancel->setParent(dialog1);
-//
-	dialog1->show();
+	dialog.exec();
 }
 
-void MainWindow::add_camera_to_list(QString x, QString y, QString z, QDialog *dialog1)
+void MainWindow::add_camera_to_list(float x, float y, float z)
 {
-	dialog1->close();
-	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat())  + " , " + std::to_string(z.toFloat())  + "}\n";
-	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
+	std::string name = "{" + std::to_string(x) + ", " + std::to_string(y)  + " , " + std::to_string(z)  + "}\n";
+	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
-	std::array<float, 4> a{x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
+	std::array<float, 4> a{x, y, z, static_cast<float>(model_cnt)};
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item.release());
+	ui->listWidget_2->addItem(model_list_item);
 
-	std::string file_name = "resources/camera_model.obj";
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
 	Model md = ObjReader::read(file_name);
-	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x.toFloat(),y.toFloat(),z.toFloat());
+	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x,y,z);
 	//TODO добавить перемещения на координаты
 //	std::cout << model_cnt << std::endl;
 
@@ -405,19 +384,19 @@ void MainWindow::add_model(Model& md)
 void MainWindow::add_camera_to_list(QString x, QString y, QString z)
 {
 	std::string name = "{" + std::to_string(x.toFloat()) + ", " + std::to_string(y.toFloat()) + " , " + std::to_string(z.toFloat()) + "}\n";
-	auto model_list_item = std::make_unique<QListWidgetItem>(QString::fromStdString(name));
+	auto model_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 	std::array<float, 4> a{ x.toFloat(), y.toFloat(), z.toFloat(), static_cast<float>(model_cnt)};
 //	std::cout << model_cnt << std::endl;
 	model_cnt++;
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
-	ui->listWidget_2->addItem(model_list_item.release());
+	ui->listWidget_2->addItem(model_list_item);
 }
 
 
 //Кнопка use
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_useCamera_clicked()
 {
 
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
@@ -432,7 +411,7 @@ void MainWindow::on_pushButton_3_clicked()
 	models.erase(ui->listWidget_2->item(row)->data(Qt::UserRole).value<std::array<float,4>>()[3]);
 //
 //	//Создание модели действующе камеры
-	std::string file_name = "resources/camera_model.obj";
+	std::string file_name = "/Users/renat/CLionProjects/3DModels/camera model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md,1,1,1,0,0,0, camera.get_position().getX(), camera.get_position().getY(),
 			camera.get_position().getZ());
@@ -447,7 +426,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 }
 //Кнопка -
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_deleteCamera_clicked()
 {
 	int row = ui->listWidget_2->selectionModel()->currentIndex().row();
 //	std::cout << models.size() << std::endl;
@@ -462,13 +441,9 @@ void MainWindow::on_checkBox_show_mesh_toggled(bool checked)
 	if (selected_model)
 	{
 		int model_id = selected_model;
-		materials[model_id].set_show_mesh(!show_mesh);
-//			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
-		show_mesh = !show_mesh;
+		materials[model_id].set_show_mesh(checked);
 	}
 	update_scene();
-
-    // QMessageBox::information(this, "Save model", "Today is monday");
 }
 
 void MainWindow::on_checkBox_show_texture_toggled(bool checked)
@@ -488,31 +463,21 @@ void MainWindow::on_checkBox_show_texture_toggled(bool checked)
 			return;
 		}else
 		{
-			materials[model_id].set_show_texture(!show_texture);
-
-			show_texture = !show_texture;
+			materials[model_id].set_show_texture(checked);
 		}
 		update_scene();
 	}
-	// QMessageBox::information(this, "Save model", "Today is monday");
-
 
 }
 
 void MainWindow::on_checkBox_show_illumination_toggled(bool checked)
 {
-	if (selected_model)
-	{
-
-		int model_id = selected_model;
+	int model_id = selected_model;
 //			std::cout << materials[model_id].is_show_mesh() <<", " << materials[model_id].is_show_texture() << ", " << materials[model_id].is_show_illumination() << std::endl;
 
-		materials[model_id].set_show_illumination(!show_illumination);
-		show_illumination = !show_illumination;
+	materials[model_id].set_show_illumination(checked);
+	update_scene();
 
-		update_scene();
-	}
-    
     // QMessageBox::information(this, "Save model", "Today is tuesday");
 }
 
@@ -613,6 +578,174 @@ void MainWindow::onListClicked()
 	ui->checkBox_show_illumination->blockSignals(false);
 	ui->checkBox_show_texture->blockSignals(false);
 	ui->checkBox_show_mesh->blockSignals(false);
+	update_scene();
+}
+
+void MainWindow::on_rotate_clicked()
+{
+	QDialog dialog;
+	dialog.setWindowTitle("Поворот модели");
+	dialog.setWindowIcon(QIcon(":/toster.png"));
+
+	auto* main_layout = new QVBoxLayout(&dialog);
+
+	auto* label_x = new QLabel("Угол поворота вокруг оси X (в градусах):");
+	auto* angle_x_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(angle_x_input);
+
+	auto* label_y = new QLabel("Угол поворота вокруг оси Y (в градусах):");
+	auto* angle_y_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(angle_y_input);
+
+	auto* label_z = new QLabel("Угол поворота вокруг оси Z (в градусах):");
+	auto* angle_z_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(angle_z_input);
+
+	auto* button_layout = new QHBoxLayout();
+	auto* applyButton = new QPushButton("Применить");
+	auto* cancelButton = new QPushButton("Отмена");
+	button_layout->addWidget(applyButton);
+	button_layout->addWidget(cancelButton);
+	main_layout->addLayout(button_layout);
+
+	connect(applyButton, &QPushButton::clicked, [&]() {
+		bool okX, okY, okZ;
+		float angleX = angle_x_input->text().toFloat(&okX);
+		float angleY = angle_y_input->text().toFloat(&okY);
+		float angleZ = angle_z_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ) {
+			for (auto element : ui->listWidget->selectedItems()) {
+				QVariant v = element->data(Qt::UserRole);
+				int id = v.value<int>();
+				GraphicConveyor::rotate(models[id], angleX, angleY, angleZ);
+			}
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!\nПример правильного ввода: 90\nПример неправильного: Гойда");
+		}
+	});
+
+	connect(cancelButton, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
+	dialog.exec();
+
+	update_scene();
+}
+
+void MainWindow::on_scale_clicked()
+{
+	QDialog dialog;
+	dialog.setWindowTitle("Масштабирование модели");
+	dialog.setWindowIcon(QIcon(":/toster.png"));
+
+	auto* main_layout = new QVBoxLayout(&dialog);
+
+	auto* label_x = new QLabel("Масштабирование модели вдоль оси X:");
+	auto* sx_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(sx_input);
+
+	auto* label_y = new QLabel("Масштабирование модели вдоль оси Y:");
+	auto* sy_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(sy_input);
+
+	auto* label_z = new QLabel("Масштабирование модели вдоль оси Z:");
+	auto* sz_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(sz_input);
+
+	auto* button_layout = new QHBoxLayout();
+	auto* applyButton = new QPushButton("Применить");
+	auto* cancelButton = new QPushButton("Отмена");
+	button_layout->addWidget(applyButton);
+	button_layout->addWidget(cancelButton);
+	main_layout->addLayout(button_layout);
+
+	connect(applyButton, &QPushButton::clicked, [&]() {
+		bool okX, okY, okZ;
+		float sx = sx_input->text().toFloat(&okX);
+		float sy = sy_input->text().toFloat(&okY);
+		float sz = sz_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ) {
+			for (auto element : ui->listWidget->selectedItems()) {
+				QVariant v = element->data(Qt::UserRole);
+				int id = v.value<int>();
+				GraphicConveyor::scale(models[id], sx, sy, sz);
+			}
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!\nПример правильного ввода: 90\nПример неправильного: Гойда");
+		}
+	});
+
+	connect(cancelButton, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
+	dialog.exec();
+
+	update_scene();
+}
+
+void MainWindow::on_translate_clicked()
+{
+	QDialog dialog;
+	dialog.setWindowTitle("Перемещение модели");
+	dialog.setWindowIcon(QIcon(":/toster.png"));
+
+	auto* main_layout = new QVBoxLayout(&dialog);
+
+	auto* label_x = new QLabel("Перемещение модели вдоль оси X:");
+	auto* tx_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(tx_input);
+
+	auto* label_y = new QLabel("Перемещение модели вдоль оси Y:");
+	auto* ty_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(ty_input);
+
+	auto* label_z = new QLabel("Перемещение модели вдоль оси Z:");
+	auto* tz_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(tz_input);
+
+	auto* button_layout = new QHBoxLayout();
+	auto* applyButton = new QPushButton("Применить");
+	auto* cancelButton = new QPushButton("Отмена");
+	button_layout->addWidget(applyButton);
+	button_layout->addWidget(cancelButton);
+	main_layout->addLayout(button_layout);
+
+	connect(applyButton, &QPushButton::clicked, [&]() {
+		bool okX, okY, okZ;
+		float tx = tx_input->text().toFloat(&okX);
+		float ty = ty_input->text().toFloat(&okY);
+		float tz = tz_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ) {
+			for (auto element : ui->listWidget->selectedItems()) {
+				QVariant v = element->data(Qt::UserRole);
+				int id = v.value<int>();
+				GraphicConveyor::translate(models[id], tx, ty, tz);
+			}
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!\nПример правильного ввода: 90\nПример неправильного: Гойда");
+		}
+	});
+
+	connect(cancelButton, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
+	dialog.exec();
+
 	update_scene();
 }
 

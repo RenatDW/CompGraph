@@ -7,68 +7,56 @@
 
 #include <cmath>
 
-Matrix4D GraphicConveyor::rotate_matrix_cached = Matrix4D::create_identity_matrix();
-Matrix4D GraphicConveyor::scale_matrix_cached = Matrix4D::create_identity_matrix();
-Matrix4D GraphicConveyor::translate_matrix_cached = Matrix4D::create_identity_matrix();
-
-//TODO доделать
-Matrix4D GraphicConveyor::get_rotate_matrix(float phi, float psi, float theta)
+Matrix4D GraphicConveyor::get_rotate_matrix(float phi_degree, float psi_degree, float theta_degree)
 {
-	//TODO нужно сделать универсальную r
+	float phi_rad = phi_degree * static_cast<float>(M_PI / 180);
+	float psi_rad = psi_degree * static_cast<float>(M_PI / 180);
+	float theta_rad = theta_degree * static_cast<float>(M_PI / 180);
 
 	const std::vector<std::vector<float>> rz_matrix = {
-			{std::cos(phi), std::sin(phi), 0, 0},
-			{-std::sin(phi), std::cos(phi), 0, 0},
+			{std::cos(phi_rad), std::sin(phi_rad), 0, 0},
+			{-std::sin(phi_rad), std::cos(phi_rad), 0, 0},
 			{0, 0, 1, 0},
 			{0, 0, 0, 1}
 	};
 
 	const std::vector<std::vector<float>> ry_matrix = {
-			{std::cos(psi), 0, std::sin(psi), 0},
+			{std::cos(psi_rad), 0, std::sin(psi_rad), 0},
 			{0, 1, 0, 0},
-			{-std::sin(psi), 0, std::cos(psi), 0},
+			{-std::sin(psi_rad), 0, std::cos(psi_rad), 0},
 			{0, 0, 0, 1}
 	};
 
 	const std::vector<std::vector<float>> rx_matrix = {
 			{1, 0, 0, 0},
-			{0, std::cos(theta), std::sin(theta), 0},
-			{0, -std::sin(theta), std::cos(theta), 0},
+			{0, std::cos(theta_rad), std::sin(theta_rad), 0},
+			{0, -std::sin(theta_rad), std::cos(theta_rad), 0},
 			{0, 0, 0, 1}
 	};
 
-
-	return rotate_matrix_cached;
+	Matrix4D rz(rz_matrix);
+	Matrix4D ry(ry_matrix);
+	Matrix4D rx(rx_matrix);
+	Matrix4D r = rz * ry * rx;
+	return r;
 }
 
 Matrix4D GraphicConveyor::get_scale_matrix(float sx, float sy, float sz)
 {
-	if (scale_matrix_cached.get(0, 0) == sx &&
-		scale_matrix_cached.get(1, 1) == sy &&
-		scale_matrix_cached.get(2, 2) == sz)
-	{
-		return scale_matrix_cached;
-	}
-
-	scale_matrix_cached.set(0, 0, sx);
-	scale_matrix_cached.set(1, 1, sy);
-	scale_matrix_cached.set(2, 2, sz);
-	return scale_matrix_cached;
+	Matrix4D s = Matrix4D::create_identity_matrix();
+	s.set(0, 0, sx);
+	s.set(1, 1, sy);
+	s.set(2, 2, sz);
+	return s;
 }
 
 Matrix4D GraphicConveyor::get_translate_matrix(float tx, float ty, float tz)
 {
-	if (translate_matrix_cached.get(0, 3) == tx &&
-		translate_matrix_cached.get(1, 3) == ty &&
-		translate_matrix_cached.get(2, 3) == tz)
-	{
-		return translate_matrix_cached;
-	}
-
-	translate_matrix_cached.set(0, 3, tx);
-	translate_matrix_cached.set(1, 3, ty);
-	translate_matrix_cached.set(2, 3, tz);
-	return translate_matrix_cached;
+	Matrix4D t = Matrix4D::create_identity_matrix();
+	t.set(0, 3, tx);
+	t.set(1, 3, ty);
+	t.set(2, 3, tz);
+	return t;
 }
 
 void GraphicConveyor::rotate_scale_translate(Model &mesh, const float sx, const float sy, const float sz,
@@ -86,9 +74,9 @@ void GraphicConveyor::rotate_scale_translate(Model &mesh, const float sx, const 
     }
 }
 
-void GraphicConveyor::rotate(Model& mesh, float phi, float psi, float theta)
+void GraphicConveyor::rotate(Model& mesh, float phi_degree, float psi_degree, float theta_degree)
 {
-	const Matrix4D r = get_rotate_matrix(phi, psi, theta);
+	const Matrix4D r = get_rotate_matrix(phi_degree, psi_degree, theta_degree);
 
 	for (auto& vertex : mesh.vertices)
 	{
