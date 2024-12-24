@@ -65,8 +65,5 @@ Matrix4D Camera::get_projection_matrix() const
 {
     return GraphicConveyor::perspective(fov, aspectRatio, nearPlane, farPlane);
 }
-Camera::Camera()
-{
-
-};
+Camera::Camera() = default;
 
