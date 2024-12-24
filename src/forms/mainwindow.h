@@ -74,7 +74,7 @@ private slots:
 	void on_btnAddTexture_clicked();
 	void on_btnAddLight_clicked();
 	void on_btnRemoveLight_clicked();
-v
+
 	void on_rotate_clicked();
 	void on_scale_clicked();
 	void on_translate_clicked();
@@ -107,6 +107,7 @@ private:
 	int frameCount;
 	float fps;
 	void onFrameUpdate();
+	void add_light_list(const QColor& color, Vector3D& pos);
 };
 
 #endif

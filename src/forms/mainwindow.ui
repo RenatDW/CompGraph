@@ -280,7 +280,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QListView" name="listLightSource">
+         <widget class="QListWidget" name="listLightSource">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
             <horstretch>0</horstretch>

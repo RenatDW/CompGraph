@@ -767,21 +767,77 @@ void MainWindow::on_btnAddLight_clicked()
 	if (!color.isValid()) {
 		QMessageBox::information(this, "Erroe", "Incorrect color");
 	}
-	//Сюда диалоговое окно нужно;
-	Vector3D pos;
+	QDialog dialog;
+	dialog.setWindowTitle("Добавление камеры");
+
+	auto* main_layout = new QVBoxLayout(&dialog);
+
+	auto* label_x = new QLabel("Координата камеры по X:");
+	auto* x_input = new QLineEdit();
+	main_layout->addWidget(label_x);
+	main_layout->addWidget(x_input);
+
+	auto* label_y = new QLabel("Координата камеры по Y:");
+	auto* y_input = new QLineEdit();
+	main_layout->addWidget(label_y);
+	main_layout->addWidget(y_input);
+
+	auto* label_z = new QLabel("Координата камеры по Z:");
+	auto* z_input = new QLineEdit();
+	main_layout->addWidget(label_z);
+	main_layout->addWidget(z_input);
+
+	auto* button_layout = new QHBoxLayout();
+	auto* apply_button = new QPushButton("Применить");
+	auto* cancel_button = new QPushButton("Отмена");
+	button_layout->addWidget(apply_button);
+	button_layout->addWidget(cancel_button);
+	main_layout->addLayout(button_layout);
+
+	connect(apply_button, &QPushButton::clicked, [&]()
+	{
+		bool okX, okY, okZ;
+		float x = x_input->text().toFloat(&okX);
+		float y = y_input->text().toFloat(&okY);
+		float z = z_input->text().toFloat(&okZ);
+
+		if (okX && okY && okZ)
+		{
+			Vector3D pos(x, y, z);
+			add_light_list(color, pos);
+
+			dialog.accept();
+		} else {
+			QMessageBox::warning(&dialog, "Ошибка", "Введите корректные значения!");
+		}
+	});
+	connect(cancel_button, &QPushButton::clicked, [&]() {
+		dialog.reject();
+	});
+
+	dialog.exec();
+
+}
+void MainWindow::add_light_list(const QColor& color, Vector3D& pos)
+{//Сюда диалоговое окно нужно;
 	//И сюда нужно записать число
+	std::string name = "{" + std::to_string(pos.getX()) + ", " + std::to_string(pos.getY()) + ", " + std::to_string(pos.getZ()) + "}";
 	light[light_cnt] = Light(color, pos);
 	auto light_list_item = new QListWidgetItem(QString::fromStdString(name));
 	QVariant v;
 	v.setValue(light_cnt);
 	light_list_item->setData(Qt::UserRole,v);
+//	light_list_item->setValue();
 	ui->listLightSource->addItem(light_list_item);
 	light_cnt++;
-
-
 }
 void MainWindow::on_btnRemoveLight_clicked()
 {
+	int row = ui->listLightSource->selectionModel()->currentIndex().row();
+	int light_id = ui->listLightSource->item(row)->data(Qt::UserRole).value<int>();
+	models.erase(light_id);
+	auto it = ui->listLightSource->takeItem(ui->listLightSource->currentRow());
+	delete it;
 
 }
 
