@@ -251,7 +251,20 @@ void MainWindow::on_actionSave_Model_triggered()
 
 //void MainWindow::on_actionLoad_Texture_triggered()
 //{
-//
+//    std::string file_name = QFileDialog::getOpenFileName(this,
+//                                                         tr("Open Texture"), ":/",
+//                                                         tr("Object Image (*.png *.jpg *.bmp)")).toUtf8().constData();
+//    //TODO Переделать когда нужно будет делать сценку
+//	QImage texture = QImage(file_name.data());
+//	if(!texture.isNull())
+//	{
+//		materials[selected_model].set_texture(texture);
+//		ui->checkBox_show_texture->setChecked(true);
+//		show_texture = true;
+//	}else{
+//		QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
+//	}
+//	update_scene();
 //}
 
 //Кнопка +

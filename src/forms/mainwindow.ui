@@ -110,20 +110,6 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
             <item>
-             <widget class="QPushButton" name="pushButton_3">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>91</width>
-                <height>17</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="useCamera">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Ignored">
@@ -150,13 +136,6 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_4">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
              <widget class="QPushButton" name="deleteCamera">
               <property name="text">
                <string>-</string>

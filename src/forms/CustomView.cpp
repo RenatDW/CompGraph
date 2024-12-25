@@ -5,8 +5,6 @@
 
 #include <QDebug>
 
-
-
 CustomView::CustomView(QWidget* parent) : QGraphicsView(parent)
 {
 	setMouseTracking(true);
@@ -48,6 +46,10 @@ void CustomView::mouseMoveEvent(QMouseEvent* event)
 		mainWindow->camera.set_target(Vector3D(0.0f, 0.0f, 0.0f));
 
 		last_mouse_position = current_mouse_position;
+	}
+	else
+	{
+		last_mouse_position = event->pos();
 	}
 }
 
@@ -94,7 +96,6 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 		RemoveElements::delete_triangle(mainWindow->triangle_id, mainWindow->models[mainWindow->selected_model]);
 	}
 
-
 	last_mouse_position = event->pos();
 
 	Vector3D camera_position = mainWindow->camera.get_position();
@@ -106,6 +107,7 @@ void CustomView::mousePressEvent(QMouseEvent* event)
 		theta = std::atan2(camera_position.getZ(), camera_position.getX()) * RAD_TO_DEG;
 		phi = std::acos(camera_position.getY() / radius) * RAD_TO_DEG;
 	}
+
 }
 
 void CustomView::mouseReleaseEvent(QMouseEvent* event)
