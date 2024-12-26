@@ -1,37 +1,27 @@
-#ifndef CAMERS_H
-#define CAMERS_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include "../../math/headers/Vector3D.h"
 #include "../../math/headers/Matrix4D.h"
 
 class Camera
 {
-	friend bool operator==(const Camera &lhs, const Camera &rhs)
-    {
-        return lhs.position == rhs.position
-               && lhs.target == rhs.target
-               && lhs.fov == rhs.fov
-               && lhs.aspectRatio == rhs.aspectRatio
-               && lhs.nearPlane == rhs.nearPlane
-               && lhs.farPlane == rhs.farPlane;
-    }
-
-    friend bool operator!=(const Camera &lhs, const Camera &rhs)
-    {
-        return !(lhs == rhs);
-    }
-
 public:
+	Camera(const Vector3D &position,
+			const Vector3D &target,
+			float fov,
+			float aspectRatio,
+			float nearPlane,
+			float farPlane);
+
+
+	Camera();
+
     void set_position(const Vector3D& t_position);
 
     void set_target(const Vector3D& t_target);
 
     void set_aspect_ratio(const float& t_aspectRatio);
-
-    Vector3D get_position();
-
-	Vector3D get_target();
-	Vector3D get_direction();
 
     void move_position(const Vector3D &translation);
 
@@ -39,24 +29,21 @@ public:
 
     Matrix4D get_view_matrix();
 
-    [[nodiscard]] Matrix4D get_projection_matrix() const;
+	Vector3D& get_position();
 
-    Camera(const Vector3D &position,
-           const Vector3D &target,
-           float fov,
-           float aspectRatio,
-           float nearPlane,
-           float farPlane);
-    float nearPlane;
-    float farPlane;
-	Camera();
+	Vector3D& get_target();
+
+    [[nodiscard]] Matrix4D get_projection_matrix();
+
+public:
+	float nearPlane;
+	float farPlane;
+
 private:
     Vector3D position;
     Vector3D target;
     float fov;
     float aspectRatio;
-
-
 };
 
 #endif

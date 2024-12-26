@@ -7,8 +7,8 @@
 Matrix4D GraphicConveyor::get_rotate_matrix(float phi_degree, float psi_degree, float theta_degree)
 {
 	float phi_rad = (phi_degree == 0) ? 0.0f : phi_degree * static_cast<float>(M_PI) / 180.0f;
-	float psi_rad = (phi_degree == 0) ? 0.0f : psi_degree * static_cast<float>(M_PI) / 180.0f;
-	float theta_rad = (phi_degree == 0) ? 0.0f : theta_degree * static_cast<float>(M_PI) / 180.0f;
+	float psi_rad = (psi_degree == 0) ? 0.0f : psi_degree * static_cast<float>(M_PI) / 180.0f;
+	float theta_rad = (theta_degree == 0) ? 0.0f : theta_degree * static_cast<float>(M_PI) / 180.0f;
 
 	const std::vector<std::vector<float>> rz_matrix = {
 			{std::cos(phi_rad), std::sin(phi_rad), 0, 0},
@@ -136,8 +136,8 @@ Matrix4D GraphicConveyor::look_at(const Vector3D &eye, const Vector3D &target, c
     return {matrix};
 }
 
-Matrix4D GraphicConveyor::perspective(const float &fov, const float &aspect_ratio, const float &near_plane,
-                                      const float &far_plane)
+Matrix4D GraphicConveyor::perspective(const float fov, const float aspect_ratio, const float near_plane,
+                                      const float far_plane)
 {
     Matrix4D result;
     const auto tangent_minus_on_degree = (1.0f / (std::tan(fov * 0.5f)));

@@ -20,14 +20,19 @@ public:
 
 	static void translate(Model& mesh, float tx, float ty, float tz);
 
-    static Matrix4D look_at(const Vector3D &eye, const Vector3D &target);
+public:
+    static Matrix4D look_at(const Vector3D& eye, const Vector3D& target);
 
-    static Matrix4D look_at(const Vector3D &eye, const Vector3D &target, const Vector3D &up);
+    static Matrix4D look_at(const Vector3D& eye, const Vector3D& target, const Vector3D& up);
 
-    static Matrix4D perspective(const float &fov,
-                                const float &aspect_ratio,
-                                const float &near_plane,
-                                const float &far_plane);
+    static Matrix4D perspective(float fov, float aspect_ratio, float near_plane, float far_plane);
+
+private:
+	Matrix4D rotate_matrix;
+
+	Matrix4D scale_matrix;
+
+	Matrix4D translate_matrix;
 
 	static Matrix4D get_rotate_matrix(float phi, float psi, float theta);
 
