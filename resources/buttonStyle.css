@@ -1,0 +1,47 @@
+QPushButton {
+    background-color: #121e2f;
+    color: #ffffff;
+    border: 2px solid #1c2b43;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+QPushButton:hover {
+    background-color: #1c2b43; /* Светлее при наведении */
+    border-color: #2e4967;     /* Бордюр становится светлее */
+    color: #d4e3f1;            /* Текст становится светлее */
+}
+
+QPushButton:focus {
+    background-color: #0d141f; /* Ещё более тёмный цвет при нажатии */
+    border-color: #1a2739;     /* Тёмно-синий бордюр */
+    color: #b0c5db;
+}
+
+QPushButton:disabled {
+    background-color: #2a3b50;
+    color: #6b7b8c;
+    border-color: #3a4f66;
+}
+
+QCheckBox {
+    color: #d4e3f1;
+    font-size: 14px;
+}
+
+QCheckBox::indicator {
+    width: 0px;
+    height: 0px;
+}
+
+QCheckBox:checked {
+    background-color: #223347;
+}
+
+QCheckBox:unchecked {
+    border: 1px solid #1c2b43;
+    padding: 2px;
+}
