@@ -12,6 +12,8 @@ public:
 
     Matrix3D(const std::vector<std::vector<float>>& matrix);
 
+	void clear();
+
     static Matrix3D create_identity_matrix();
 
     [[nodiscard]] const std::vector<std::vector<float>>& get_matrix() const;

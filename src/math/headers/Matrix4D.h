@@ -11,9 +11,12 @@ class Matrix4D
 {
 public:
     Matrix4D();
+
 	friend std::ostream& operator<<(std::ostream& os, const Matrix4D& d);
 
 	Matrix4D(const std::vector<std::vector<float>>& matrix);
+
+	void clear();
 
     static Matrix4D create_identity_matrix();
 

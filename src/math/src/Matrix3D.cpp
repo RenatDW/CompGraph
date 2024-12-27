@@ -15,6 +15,17 @@ Matrix3D::Matrix3D()
 Matrix3D::Matrix3D(const std::vector<std::vector<float>>& matrix)
 : matrix(matrix) {}
 
+void Matrix3D::clear()
+{
+	const std::vector<std::vector<float>> zero_matrix = {
+			{0, 0, 0},
+			{0, 0, 0},
+			{0, 0, 0}
+	};
+	
+	this->set(zero_matrix);
+}
+
 Matrix3D Matrix3D::create_identity_matrix()
 {
     const std::vector<std::vector<float>> identity_matrix = {
