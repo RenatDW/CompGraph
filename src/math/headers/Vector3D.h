@@ -24,7 +24,7 @@ public:
 
 	Vector3D operator - (const Vector3D& v) const;
 
-	bool operator == (const Vector3D & position) const = default;
+	bool operator == (const Vector3D& position) const = default;
 
 	static Vector3D cross(const Vector3D& v1, const Vector3D& v2);
 

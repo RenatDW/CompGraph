@@ -5,8 +5,9 @@
 
 Vector4D::Vector4D() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
 
-Vector4D::Vector4D(const float x, const float y, const float z, const float w) :
-	x(x), y(y), z(z), w(w) {};
+Vector4D::Vector4D(const float x, const float y,
+					const float z, const float w)
+					: x(x), y(y), z(z), w(w) {};
 
 float Vector4D::getX() const
 {
@@ -28,22 +29,22 @@ float Vector4D::getW() const
 	return w;
 }
 
-void Vector4D::setX(float x)
+void Vector4D::setX(const float x)
 {
 	this->x = x;
 }
 
-void Vector4D::setY(float y)
+void Vector4D::setY(const float y)
 {
 	this->y = y;
 }
 
-void Vector4D::setZ(float z)
+void Vector4D::setZ(const float z)
 {
 	this->z = z;
 }
 
-void Vector4D::setW(float w)
+void Vector4D::setW(const float w)
 {
 	this->w = w;
 }
