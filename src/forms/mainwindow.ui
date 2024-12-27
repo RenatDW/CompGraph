@@ -47,19 +47,7 @@
        <addaction name="actionChose_Color"/>
        <addaction name="actionSave_Model"/>
       </widget>
-      <widget class="QMenu" name="moveMenu">
-       <property name="title">
-        <string>Move</string>
-       </property>
-       <addaction name="actionUp"/>
-       <addaction name="actionDown"/>
-       <addaction name="actionLeft"/>
-       <addaction name="actionRight"/>
-       <addaction name="actionBack"/>
-       <addaction name="actionForward"/>
-      </widget>
       <addaction name="fileMenu"/>
-      <addaction name="moveMenu"/>
      </widget>
     </item>
     <item>

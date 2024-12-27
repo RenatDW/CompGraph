@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->graphicsView->setScene(scene.get());
 	ui->graphicsView->setBackgroundBrush(QColor(45,45,45));
 	ui->graphicsView->set_main_window_pointer(this);
+	ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	QString x = "0", y = "0", z = "0";
 	add_camera_to_list(x,y,z);
 

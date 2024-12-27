@@ -10,14 +10,14 @@ QPushButton {
 }
 
 QPushButton:hover {
-    background-color: #1c2b43; /* Светлее при наведении */
-    border-color: #2e4967;     /* Бордюр становится светлее */
-    color: #d4e3f1;            /* Текст становится светлее */
+    background-color: #1c2b43;
+    border-color: #2e4967;
+    color: #d4e3f1;
 }
 
 QPushButton:focus {
-    background-color: #0d141f; /* Ещё более тёмный цвет при нажатии */
-    border-color: #1a2739;     /* Тёмно-синий бордюр */
+    background-color: #0d141f;
+    border-color: #1a2739;
     color: #b0c5db;
 }
 
@@ -44,4 +44,108 @@ QCheckBox:checked {
 QCheckBox:unchecked {
     border: 1px solid #1c2b43;
     padding: 2px;
+}
+
+QWidget {
+    background-color: #121417;
+    color: #b0b0b0;
+    font-size: 14px;
+}
+
+QGraphicsView {
+    background-color: #1a1e22;
+    border: 1px solid #2c3035;
+    border-radius: 6px;
+}
+
+QScrollArea {
+    background-color: #1a1e22;
+    border: 1px solid #2c3035;
+    border-radius: 6px;
+}
+
+QScrollBar:horizontal, QScrollBar:vertical {
+    background-color: #1a1e22;
+    border: none;
+    width: 12px;
+    height: 12px;
+}
+
+QScrollBar::handle {
+    background-color: #3a4045;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:hover {
+    background-color: #4a4e54;
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: none;
+}
+
+QMenu {
+    background-color: #23272b;
+    color: #b0b0b0;
+    border: 1px solid #2c3035;
+    padding: 4px;
+}
+
+QMenu::item {
+    padding: 4px 12px;
+    background-color: transparent;
+}
+
+QMenu::item:selected {
+    background-color: #2c3035;
+    color: #d0d0d0;
+}
+
+QTabWidget::pane {
+    border: 1px solid #2c3035;
+    background-color: #1a1e22;
+    border-radius: 6px;
+}
+
+QTabBar::tab {
+    background-color: #23272b;
+    color: #b0b0b0;
+    padding: 6px 12px;
+    border: 1px solid #2c3035;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+}
+
+QTabBar::tab:selected {
+    background-color: #2c3035;
+    border-color: #3a4045;
+    color: #d0d0d0;
+}
+
+QTabBar::tab:hover {
+    background-color: #3c4146;
+}
+
+QToolBar {
+    background-color: #1a1e22;
+    border: 1px solid #2c3035;
+    padding: 4px;
+}
+
+QToolButton {
+    background-color: #23272b;
+    color: #b0b0b0;
+    border: 1px solid #2c3035;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+QToolButton:hover {
+    background-color: #2c3035;
+    border-color: #3a4045;
+}
+
+QToolButton:pressed {
+    background-color: #1c2024;
+    border-color: #2c3035;
 }
