@@ -14,7 +14,8 @@ Matrix4D::Matrix4D()
     };
 }
 
-Matrix4D::Matrix4D(const std::vector<std::vector<float> > &matrix) : matrix(matrix) {}
+Matrix4D::Matrix4D(const std::vector<std::vector<float> > &matrix)
+	: matrix(matrix) {}
 
 Matrix4D Matrix4D::create_identity_matrix()
 {
@@ -28,7 +29,7 @@ Matrix4D Matrix4D::create_identity_matrix()
     return {identity_matrix};
 }
 
-std::vector<std::vector<float> > Matrix4D::get_matrix() const
+const std::vector<std::vector<float>>& Matrix4D::get_matrix() const
 {
     return matrix;
 }
@@ -44,17 +45,16 @@ float Matrix4D::get(const int row, const int col) const
     return -1;
 }
 
-void Matrix4D::set(const std::vector<std::vector<float> > &matrix)
+void Matrix4D::set(const std::vector<std::vector<float>>& matrix)
 {
-    if (matrix.size() != 4 &&
-        matrix[0].size() != 4 &&
-        matrix[1].size() != 4 &&
-        matrix[2].size() != 4 &&
-        matrix[3].size() != 4) {
-        return;
+    if (matrix.size() == 4 &&
+        matrix[0].size() == 4 &&
+        matrix[1].size() == 4 &&
+        matrix[2].size() == 4 &&
+        matrix[3].size() == 4)
+	{
+		this->matrix = matrix;
     }
-
-    this->matrix = matrix;
 }
 
 void Matrix4D::set(const int row, const int col, const float value)
