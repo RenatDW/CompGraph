@@ -9,36 +9,17 @@
 
 int main(int argc, char *argv[])
 {
-    //std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
-    // std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
-    // std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
-    //std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapBody.obj");
-
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
-    //std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHand.obj");
-
-    // std::string filename("/Users/renat/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapBody.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapHead.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapLowerTeeth.obj");
-    // std::string filename("C:/Users/Пользователь/CLionProjects/3DModels/Faceform/WrapSkull.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapSkull.obj");
-    //std::string filename("/Users/renat/CLionProjects/3DModels/SimpleModelsForReaderTests/NonManifold2.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapUpperTeeth.obj");
-    // std::string filename("/Users/renat/CLionProjects/3DModels/Faceform/WrapFemaleBody.obj");
-//    std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj"); // МОЙ КУБИК :3
-
-
-/* ЭТОТ КУБИК ТОЖЕ БУДЕТ МОИМ БУГАГА*/
-//	std::string filename( "/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
-//МОЖЕТ ТЫ ВСЕ ТАКИ БУДЕШЬ КОПИРОВАТЬ КУБИК, А ПОТОМ ЕГО РЕДАКТИРОВАТЬ, А НЕ ИЗМЕНЯТЬ УЖЕ СУЩЕСТВУЮЩИЙ!??!?!?!?!!?
-	//std::string filename("/Users/Пользователь/CLionProjects/3DModels/CaracalCube/caracal_cube.obj");
-	//std::string filename("/Users/Пользователь/CLionProjects/3DModels/SimpleModelsForReaderTests/Teapot.obj");
-
 	//Model ans(ObjReader::read(filename));
 	omp_set_dynamic(1); // Enable dynamic adjustment
 	std::cout << std::filesystem::current_path();
     QApplication a(argc, argv);
+
+	QFile file(":/buttonStyle.css");
+	if (file.open(QFile::ReadOnly)) {
+		QString styleSheet = QTextStream(&file).readAll();
+		a.setStyleSheet(styleSheet);
+		file.close();
+	}
     MainWindow w;
 	w.setMinimumSize(800, 600);
 	w.setMaximumSize(1920, 1080);

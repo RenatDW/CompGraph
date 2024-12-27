@@ -28,11 +28,11 @@ public:
 
     Point3D operator * (float a) const;
 
-    float operator * (const Point3D & cam) const;
+    float operator * (const Point3D& point) const;
 
-    Point3D operator + (const Point3D &v2) const;
+    Point3D operator + (const Point3D& point) const;
 
-    Point3D operator - (const Point3D & point_3d) const;
+    Point3D operator - (const Point3D& point) const;
 
     [[nodiscard]] Point3D normalize() const;
 

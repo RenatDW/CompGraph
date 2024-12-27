@@ -1,8 +1,6 @@
 ﻿#include "../headers/Vector3D.h"
-#include "../headers/Vector4D.h"
 
 #include <cmath>
-
 
 Vector3D::Vector3D() : x(0.0f), y(0.0f), z(0.0f) {}
 

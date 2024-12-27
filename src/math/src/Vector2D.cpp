@@ -4,7 +4,8 @@
 
 Vector2D::Vector2D() : x(0.0f), y(0.0f) {}
 
-Vector2D::Vector2D(const float x, const float y) : x(x), y(y) {};
+Vector2D::Vector2D(const float x, const float y)
+	: x(x), y(y) {};
 
 float Vector2D::getX() const
 {
@@ -26,22 +27,22 @@ void Vector2D::setY(const float y)
     this->y = y;
 }
 
-Vector2D Vector2D::operator +(const Vector2D &v) const
+Vector2D Vector2D::operator + (const Vector2D &vector) const
 {
-    return {this->x + v.getX(), this->y + v.getY()};
+    return { this->x + vector.getX(), this->y + vector.getY()};
 }
 
-Vector2D Vector2D::operator -(const Vector2D &v) const
+Vector2D Vector2D::operator - (const Vector2D &vector) const
 {
-    return {this->x - v.getX(), this->y - v.getY()};
+    return { this->x - vector.getX(), this->y - vector.getY()};
 }
 
-float Vector2D::operator *(const Vector2D &v) const
+float Vector2D::operator * (const Vector2D &vector) const
 {
-    return this->x * v.getX() + this->y * v.getY();
+    return this->x * vector.getX() + this->y * vector.getY();
 }
 
-Vector2D Vector2D::operator *(const float k) const
+Vector2D Vector2D::operator * (const float k) const
 {
     return {this->x * k, this->y * k};
 }

@@ -16,11 +16,11 @@ public:
 
 	void setY(float y);
 
-	Vector2D operator + (const Vector2D& v) const;
+	Vector2D operator + (const Vector2D& vector) const;
 
-	Vector2D operator - (const Vector2D& v) const;
+	Vector2D operator - (const Vector2D& vector) const;
 
-	float operator * (const Vector2D& v) const;
+	float operator * (const Vector2D& vector) const;
 
 	Vector2D operator * (float k) const;
 

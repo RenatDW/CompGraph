@@ -3,5 +3,8 @@
     <qresource>
         <file>toster.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>buttonStyle.css</file>
+    </qresource>
 </RCC>
    

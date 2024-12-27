@@ -12,7 +12,19 @@ Matrix3D::Matrix3D()
     };
 }
 
-Matrix3D::Matrix3D(const std::vector<std::vector<float>>& matrix) : matrix(matrix) {}
+Matrix3D::Matrix3D(const std::vector<std::vector<float>>& matrix)
+: matrix(matrix) {}
+
+void Matrix3D::clear()
+{
+	const std::vector<std::vector<float>> zero_matrix = {
+			{0, 0, 0},
+			{0, 0, 0},
+			{0, 0, 0}
+	};
+	
+	this->set(zero_matrix);
+}
 
 Matrix3D Matrix3D::create_identity_matrix()
 {
@@ -25,7 +37,7 @@ Matrix3D Matrix3D::create_identity_matrix()
     return {identity_matrix};
 }
 
-std::vector<std::vector<float>> Matrix3D::get_matrix() const
+const std::vector<std::vector<float>>& Matrix3D::get_matrix() const
 {
     return matrix;
 }
@@ -44,15 +56,13 @@ float Matrix3D::get(const int row, const int col) const
 
 void Matrix3D::set(const std::vector<std::vector<float>>& matrix)
 {
-    /*if (matrix.size() != 3 &&
-        matrix[0].size() != 3 &&
-        matrix[1].size() != 3 &&
-        matrix[2].size() != 3)
+    if (matrix.size() == 3 &&
+        matrix[0].size() == 3 &&
+        matrix[1].size() == 3 &&
+        matrix[2].size() == 3)
     {
-        return;
-    }*/
-
-    this->matrix = matrix;
+     	this->matrix = matrix;
+    }
 }
 
 void Matrix3D::set(const int row, const int col, const float value)
