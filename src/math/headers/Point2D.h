@@ -1,11 +1,12 @@
 #ifndef POINT2D_H
 #define POINT2D_H
 
+#include "Vector3D.h"
+#include "Vector2D.h"
+
 #include <vector>
 #include <string>
 #include <iostream>
-#include "Vector3D.h"
-#include "Vector2D.h"
 
 class Point2D
 {
@@ -13,7 +14,7 @@ class Point2D
 public:
     Point2D();
 
-    Point2D(const Vector2D &a);
+    Point2D(const Vector2D& vector);
 
     Point2D(float x, float y);
 
@@ -21,30 +22,31 @@ public:
 
     [[nodiscard]] float getY() const;
 
-    void setX(float new_x);
+    void setX(float x);
 
-    void setY(float new_y);
+    void setY(float y);
 
-    void set(float new_x, float new_y);
-
-    friend bool operator==(const Point2D &lhs, const Point2D &rhs)
-    {
-        return lhs.x == rhs.x
-               && lhs.y == rhs.y;
-    }
-
-    friend bool operator!=(const Point2D &lhs, const Point2D &rhs)
-    {
-        return !(lhs == rhs);
-    }
-    bool operator<(const Point2D& other) const
-    {
-        return (x < other.x) || (x == other.x && y < other.y);
-    }
+    void set(float x, float y);
 
 private:
     float x;
     float y;
+
+public:
+	friend bool operator==(const Point2D& lhs, const Point2D& rhs)
+	{
+		return lhs.x == rhs.x
+			   && lhs.y == rhs.y;
+	}
+
+	friend bool operator!=(const Point2D& lhs, const Point2D& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	bool operator<(const Point2D& other) const
+	{
+		return (x < other.x) || (x == other.x && y < other.y);
+	}
 
 };
 
@@ -53,4 +55,5 @@ struct Point2DHash {
 		return std::hash<float>()(point.getX()) ^ (std::hash<float>()(point.getY()) << 1);
 	}
 };
+
 #endif

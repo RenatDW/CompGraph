@@ -28,17 +28,17 @@ float Point3D::getZ() const
     return z;
 }
 
-void Point3D::setX(float x)
+void Point3D::setX(const float x)
 {
     this->x = x;
 }
 
-void Point3D::setY(float y)
+void Point3D::setY(const float y)
 {
     this->y = y;
 }
 
-void Point3D::setZ(float z)
+void Point3D::setZ(const float z)
 {
     this->z = z;
 }
@@ -55,14 +55,14 @@ Point3D Point3D::operator * (const float a) const
     return {this->x * a, this->y * a, this->z * a};
 }
 
-float Point3D::operator * (const Point3D& cam) const
+float Point3D::operator * (const Point3D& point) const
 {
-    return this->x * cam.getX() + this->y * cam.getY() + this->z * cam.getZ();
+    return this->x * point.getX() + this->y * point.getY() + this->z * point.getZ();
 }
 
-Point3D Point3D::operator + (const Point3D &v2) const
+Point3D Point3D::operator + (const Point3D& point) const
 {
-    return {this->x + v2.x, this->y + v2.y, this->z + v2.z};
+    return {this->x + point.x, this->y + point.y, this->z + point.z};
 }
 
 Point3D Point3D::normalize() const
@@ -72,7 +72,7 @@ Point3D Point3D::normalize() const
     return  {this->x * len, this->y * len, this->z * len};
 }
 
-Point3D Point3D::operator - (const Point3D &point_3d) const
+Point3D Point3D::operator - (const Point3D& point) const
 {
-    return {this->x - point_3d.x, this->y - point_3d.y, this->z - point_3d.z};
+    return {this->x - point.x, this->y - point.y, this->z - point.z};
 }
