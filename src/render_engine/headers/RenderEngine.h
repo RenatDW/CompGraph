@@ -46,7 +46,7 @@ private:
 	bool show_texture;
 	bool show_illumination;
 	bool selection = false;
-	int сurrent_triangle;
+	int current_triangle;
 	int nearest_vertex = -1;
 	Point2D nearest_vertex_point;
 	int nearest_triangle = -1;
@@ -70,13 +70,14 @@ private:
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
-	void is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C);
+	void is_point_in_triangle(Point3D P, Point3D A, Point3D B, Point3D C);
 	void highlight_triangle(const std::array<Point3D, 3>& result_points);
 	void render_triangle(const std::array<Point3D, 3>& normal_vectors,
 		const std::array<Point2D, 3>& texture_vectors,
 		Point3D& A,
 		Point3D& B,
 		Point3D& C);
+	float is_around_vertex(const Point3D& A) const;
 };
 
 #endif //RENDERENGINE_H

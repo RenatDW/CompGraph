@@ -67,18 +67,10 @@ void RenderEngine::initialize_loop_varibles(Point3D &A, Point3D &B, Point3D &C,
     }));
     y_up = static_cast<int>(std::max({A.getY() + 1, B.getY() + 1, C.getY() + 1, 0.0f}));
 }
-void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D C)
+void RenderEngine::is_point_in_triangle(Point3D P, Point3D A, Point3D B, Point3D C)
 {
-	float total_area = (A.getX() * (B.getY() - C.getY()) +
-		B.getX() * (C.getY() - A.getY()) +
-		C.getX() * (A.getY() - B.getY()));
-	float w_a = (B.getX() * (C.getY() - P.getY()) + C.getX() * (P.getY() - B.getY()) + P.getX() * (B.getY() - C.getY()))
-		/ total_area;
-	float w_b = (C.getX() * (A.getY() - P.getY()) + A.getX() * (P.getY() - C.getY()) + P.getX() * (C.getY() - A.getY()))
-		/ total_area;
-	float w_c = (A.getX() * (B.getY() - P.getY()) + B.getX() * (P.getY() - A.getY()) + P.getX() * (A.getY() - B.getY()))
-		/ total_area;
-	float z = (A.getZ() * w_a + B.getZ() * w_b + C.getZ() * w_c);
+	auto [w_a, w_b, w_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, P);
+
 
 //	nearest_vertex = -1;
 	if (w_a > 0 && w_b > 0 && w_c > 0)
@@ -86,25 +78,29 @@ void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D
 		if (nearest_triangle == -1 || z < posZ) // Сравниваем текущую глубину с минимальной
 		{
 			posZ = z;
-			nearest_triangle = сurrent_triangle;
+			nearest_triangle = current_triangle;
 
-			if ((A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY) < 100)
+			if (is_around_vertex(A) < 100)
 			{
 				nearest_vertex_point = Point2D(A.getX(), A.getY());
 				nearest_vertex = 0;
 			}
-			else if ((B.getX() - posX) * (B.getX() - posX) + (B.getY() - posY) * (B.getY() - posY) < 100)
+			else if (is_around_vertex(B) < 100)
 			{
 				nearest_vertex_point = Point2D(B.getX(), B.getY());
 				nearest_vertex = 1;
 			}
-			else if ((C.getX() - posX) * (C.getX() - posX) + (C.getY() - posY) * (C.getY() - posY) < 100)
+			else if (is_around_vertex(C) < 100)
 			{
 				nearest_vertex_point = Point2D(C.getX(), C.getY());
 				nearest_vertex = 2;
 			}
 		}
 	}
+}
+float RenderEngine::is_around_vertex(const Point3D& A) const
+{
+	return (A.getX() - posX) * (A.getX() - posX) + (A.getY() - posY) * (A.getY() - posY);
 }
 
 void RenderEngine::render(const std::array<Point3D, 3>& result_points,
@@ -124,7 +120,7 @@ void RenderEngine::render(const std::array<Point3D, 3>& result_points,
 		C = result_points[0];
 	}
 
-	is_point_in_triangle(Point2D(posX, posY), A, B, C);
+	is_point_in_triangle(Point3D(posX, posY, 0), A, B, C);
 
 	render_triangle(normal_vectors, texture_vectors, A, B, C);
 
@@ -196,7 +192,7 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
     for (int triangle_ind = 0; triangle_ind < n_triangles; ++triangle_ind) {
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
                               triangle_ind);
-		сurrent_triangle = triangle_ind;
+		current_triangle = triangle_ind;
 		render(result_points, normal_vectors, texture_vectors);
     }
 	mt.select_highlightcolor();
