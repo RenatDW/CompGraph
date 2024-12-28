@@ -71,29 +71,21 @@ void RenderEngine::is_point_in_triangle(Point3D P, Point3D A, Point3D B, Point3D
 {
 	auto [w_a, w_b, w_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, P);
 
-
-//	nearest_vertex = -1;
 	if (w_a > 0 && w_b > 0 && w_c > 0)
 	{
-		if (nearest_triangle == -1 || z < posZ) // Сравниваем текущую глубину с минимальной
+		if (nearest_triangle == -1 || z < posZ)
 		{
 			posZ = z;
 			nearest_triangle = current_triangle;
 
-			if (is_around_vertex(A) < 100)
-			{
-				nearest_vertex_point = Point2D(A.getX(), A.getY());
-				nearest_vertex = 0;
-			}
-			else if (is_around_vertex(B) < 100)
-			{
-				nearest_vertex_point = Point2D(B.getX(), B.getY());
-				nearest_vertex = 1;
-			}
-			else if (is_around_vertex(C) < 100)
-			{
-				nearest_vertex_point = Point2D(C.getX(), C.getY());
-				nearest_vertex = 2;
+
+			std::vector<Point3D> triangle_points = {A,B,C};
+			for(int i = 0; i < triangle_points.size(); i++){
+				Point3D current_point = triangle_points[i];
+				if (is_around_vertex(current_point) < VERTEX_SCAN_RADIUS){
+					nearest_vertex_point = Point2D(current_point.getX(), current_point.getY());
+					nearest_vertex = i;
+				}
 			}
 		}
 	}

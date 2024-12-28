@@ -18,6 +18,8 @@
 #include "Material.h"
 
 
+static const int VERTEX_SCAN_RADIUS = 100;
+
 class RenderEngine
 {
 public:
