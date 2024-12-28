@@ -1,24 +1,8 @@
-//
-// Created by Ренат Асланов on 07.11.2024.
-//
-
 #include "../headers/Rasterization.h"
 
 #include <array>
 #include <cmath>
 #include <iostream>
-
-// float Rasterization::edgeFunction(Point3D a, Point3D b, Point3D c) {
-// return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
-// }
-float Rasterization::get_triangle_area_round(Point3D &a, Point3D &b, Point3D &c)
-{
-    {
-        //Это работает для отображения сетки модели
-        return (floor(b.getX()) - floor(a.getX())) * (floor(c.getY()) - floor(a.getY())) - (
-                   floor(b.getY()) - floor(a.getY())) * (floor(c.getX()) - floor(a.getX()));
-    }
-}
 
 float Rasterization::get_triangle_area_float(Point3D &a, Point3D &b, Point3D &c)
 {
@@ -32,19 +16,9 @@ float Rasterization::get_triangle_area_float(Point3D &a, Point3D &b, Point3D &c)
 
 std::array<float, 3> Rasterization::calculate_edge_functions(Point3D &A, Point3D &B, Point3D &C, Point3D &P, bool flag)
 {
-    float ABP, BCP, CAP;
-    // // if (flag) {
-    //     ABP = get_triangle_area_round(A, B, P);
-    //     BCP = get_triangle_area_round(B, C, P);
-    //     CAP = get_triangle_area_round(C, A, P);
-    // std::cout<< ABP <<", " << BCP << ", " << CAP<< "||";
-    // } else {
-    ABP = get_triangle_area_float(A, B, P);
-    BCP = get_triangle_area_float(B, C, P);
-    CAP = get_triangle_area_float(C, A, P);
-    //     // std::cout<< ABP <<", " << BCP << ", " << CAP<< std::endl;
-    // }
-
+	float ABP = get_triangle_area_float(A, B, P);
+	float BCP = get_triangle_area_float(B, C, P);
+	float CAP = get_triangle_area_float(C, A, P);
     return {ABP, BCP, CAP};
 }
 

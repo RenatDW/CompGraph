@@ -79,8 +79,6 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/math/src/Point3D.cpp
         src/math/src/DepthBuffer.cpp
         src/math/headers/DepthBuffer.h
-        src/render_engine/headers/TypeOfRender.h
-        src/render_engine/headers/Renderable.h
         src/render_engine/src/Illumination.cpp
         src/render_engine/src/Illumination.cpp
         src/render_engine/src/Texture.cpp

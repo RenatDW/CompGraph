@@ -2,7 +2,6 @@
 #define ILLUMINATION_H
 
 #include "Camera.h"
-#include "Renderable.h"
 #include "Light.h"
 #include "../../math/headers/Point3D.h"
 

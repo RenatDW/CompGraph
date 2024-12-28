@@ -6,7 +6,6 @@
 #include <cfloat>
 
 #include "Camera.h"
-#include "Renderable.h"
 #include "../headers/TriangleCoord.h"
 #include "../../model/headers/Model.h"
 #include "../../math/headers/Point2D.h"
@@ -73,7 +72,6 @@ private:
         const Matrix4D &model_view_projection_matrix, int n_triangles);
 
 	void is_point_in_triangle(Point3D P, Point3D A, Point3D B, Point3D C);
-	void highlight_triangle(const std::array<Point3D, 3>& result_points);
 	void render_triangle(const std::array<Point3D, 3>& normal_vectors,
 		const std::array<Point2D, 3>& texture_vectors,
 		Point3D& A,

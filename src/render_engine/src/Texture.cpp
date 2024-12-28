@@ -4,20 +4,6 @@
 
 #include "../headers/Texture.h"
 
-void Texture::add_vertex(Model &mesh, Matrix4D &model_view_projection_matrix, int triangle_ind,
-                               int n_vertices_in_triangle, int width, int height)
-{
-    std::vector<Point2D> texture_vectors;
-    for (int vertex_in_triangle_ind = 0; vertex_in_triangle_ind < n_vertices_in_triangle; ++vertex_in_triangle_ind) {
-        int texture_vertex_ind = mesh.triangles[triangle_ind].get_texture_indices()[vertex_in_triangle_ind];
-        Point2D result_point = {
-            mesh.textureVertices[texture_vertex_ind].getX(), mesh.textureVertices[texture_vertex_ind].getY()
-        };
-        texture_vectors.emplace_back(result_point);
-    }
-    this->texture_vectors = texture_vectors;
-}
-
 void Texture::texturing(const std::array<Point2D, 3> &texture_vectors, const QImage &image, float weight_a,
     float weight_b, float weight_c, int &r, int &g, int &b)
 {
