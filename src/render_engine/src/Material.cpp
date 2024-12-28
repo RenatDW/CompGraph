@@ -23,13 +23,13 @@ QColor Material::use_material(float w_a,
 			if (show_illumination)
 				Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 			if (show_texture)
-				Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+				Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		}else{
 			r = background.red(), g = background.green(), b = background.blue();
 		}
 	}else{
 		if (show_texture)
-			Texture::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+			Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
 		if (show_illumination)
 			Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 
@@ -37,14 +37,14 @@ QColor Material::use_material(float w_a,
 
 	return QColor(r, g, b);
 }
-QImage& Material::get_texture()
+Texture& Material::get_texture()
 {
 	return texture;
 }
-void Material::set_texture(QImage& texture)
+void Material::set_texture(Texture& texture)
 {
 	this->texture = texture;
-	this->show_texture = !texture.isNull();
+	this->show_texture = !texture.is_null();
 }
 bool Material::is_show_mesh() const
 {

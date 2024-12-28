@@ -8,7 +8,7 @@
 #include "../../math/headers/Point2D.h"
 #include "../headers/Illumination.h"
 #include "../headers/Mesh.h"
-#include "../headers/Texture.h"
+#include "../headers/Texturing.h"
 #include "../../math/headers/MathCast.h"
 #include "../../math/headers/PixelBuffer.h"
 #include "../headers/Rasterization.h"

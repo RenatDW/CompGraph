@@ -1,26 +1,32 @@
+
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
 #include <QImage>
 #include <vector>
 #include "../../math/headers/Point2D.h"
+#include <QImage>
+#include <QColor>
 
-class Texture
+class Texture {
+private:
+	QImage texture;
+	int width;
+	int height;
 
-{
 public:
-    std::vector<Point2D> texture_vectors;
+	Texture(const QImage& texture);
+	Texture();
 
-    Texture() = default;
+	const Texture& get_texture() const;
+	void set_texture(const QImage& texture);
 
-    virtual ~Texture() = default;
+	bool is_null() const; // Добавлено const
+	int get_width() const;
+	int get_height() const;
 
-	static void texturing(const std::array<Point2D, 3> &texture_vectors, const QImage &image,
-                            float weight_a,
-                            float weight_b, float weight_c, int &r, int &g, int &b);
-    static QColor get_suitable_pixel(const std::array<Point2D, 3> &texture_vectors, const QImage &image,
-                                     float weight_a,
-                                     float weight_b, float weight_c);
+	QColor get_pixel(int x, int y) const; // Добавлено const
 };
+
 
 #endif //TEXTURE_H

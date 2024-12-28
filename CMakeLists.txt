@@ -46,7 +46,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/render_engine/src/Mesh.cpp
         src/render_engine/src/Rasterization.cpp
         src/render_engine/src/RenderEngine.cpp
-        src/render_engine/src/Texture.cpp
+        src/render_engine/src/Texturing.cpp
         resources/resources.qrc
         src/render_engine/src/RenderEngine.cpp
         src/render_engine/src/Camera.cpp
@@ -81,8 +81,7 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/math/headers/DepthBuffer.h
         src/render_engine/src/Illumination.cpp
         src/render_engine/src/Illumination.cpp
-        src/render_engine/src/Texture.cpp
-        src/render_engine/headers/Texture.h
+        src/render_engine/headers/Texturing.h
         src/render_engine/src/Rasterization.cpp
         src/render_engine/headers/Rasterization.h
         src/math/headers/MathCast.h
@@ -91,6 +90,8 @@ add_executable(${PROJECT_NAME} ${CPPS} ${HPP}
         src/render_engine/headers/Material.h
         src/render_engine/src/Material.cpp
         src/render_engine/src/RemoveElements.cpp
+        src/render_engine/src/Texturing.cpp
+        src/render_engine/src/Texture.cpp
 )
 
 target_link_libraries(CompGraph

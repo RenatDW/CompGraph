@@ -417,7 +417,7 @@ void MainWindow::on_checkBox_show_texture_toggled(bool checked)
 	{
 
 		int model_id = selected_model;
-		if (materials[model_id].get_texture().isNull())
+		if (materials[model_id].get_texture().is_null())
 		{
 			ui->checkBox_show_texture->blockSignals(true);
 			QMessageBox::information(this, "Oops...", "The texture hasn't been loaded.");
@@ -672,7 +672,8 @@ void MainWindow::on_btnAddTexture_clicked()
 	QImage texture = QImage(file_name.data());
 	if(!texture.isNull())
 	{
-		materials[selected_model].set_texture(texture);
+		Texture tx(texture);
+		materials[selected_model].set_texture(tx);
 		ui->checkBox_show_texture->setChecked(true);
 		show_texture = true;
 	}else{

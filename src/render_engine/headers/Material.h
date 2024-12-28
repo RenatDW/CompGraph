@@ -9,7 +9,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Illumination.h"
-#include "Texture.h"
+#include "Texturing.h"
 class Material
 {
 public:
@@ -19,7 +19,7 @@ private:
 	bool show_mesh;
 	bool show_texture;
 	bool show_illumination;
-	QImage texture;
+	Texture texture;
 public:
 	void set_basic_color(const QColor& basicColor);
 private:
@@ -40,8 +40,8 @@ public:
 	bool is_show_mesh() const;
 	bool is_show_texture() const;
 	bool is_show_illumination() const;
-	QImage& get_texture();
-	void set_texture(QImage& texture);
+	Texture& get_texture();
+	void set_texture(Texture& texture);
 	void set_show_mesh(bool showMesh);
 	void set_show_texture(bool showTexture);
 	void set_show_illumination(bool showIllumination);
