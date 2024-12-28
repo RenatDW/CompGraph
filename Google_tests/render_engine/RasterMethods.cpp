@@ -51,7 +51,7 @@ TEST(BaricentricCord, calculate_params)
     P = {0.25, 0.25, 0};
     float ABC = Rasterization::get_triangle_area_float(A,B,C);
     auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A,B,C,P, true);
-    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A,B,C,ABC,ABP,BCP,CAP);
+    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, 0, P);
     EXPECT_EQ(weight_a, 0.5);
     EXPECT_EQ(weight_b, 0.25);
     EXPECT_EQ(weight_c, 0.25);
@@ -69,7 +69,7 @@ Point3D A, B, C, P;
     P = {2,0,0};
     float ABC = Rasterization::get_triangle_area_float(A,B,C);
     auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A,B,C,P, true);
-    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A,B,C,ABC,ABP,BCP,CAP);
+    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, 0, P);
     EXPECT_EQ(weight_a, 0.5);
     EXPECT_EQ(weight_b, 0.5);
     EXPECT_EQ(weight_c, 0);
@@ -102,7 +102,7 @@ TEST(BaricentricCord, calculate_params_3){
     P = {2,2,0};
     float ABC = Rasterization::get_triangle_area_float(A,B,C);
     auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A,B,C,P, true);
-    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A,B,C,ABC,ABP,BCP,CAP);
+    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, 0, P);
     EXPECT_EQ(weight_a, 0.333333343f);
     EXPECT_EQ(weight_b, 0.333333343f);
     EXPECT_EQ(weight_c, 0.333333343f);
@@ -119,7 +119,7 @@ TEST(BaricentricCord, calculate_params_4){
     P = {0,0,1};
     float ABC = Rasterization::get_triangle_area_float(A,B,C);
     auto [ABP, BCP, CAP] = Rasterization::calculate_edge_functions(A,B,C,P, true);
-    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A,B,C,ABC,ABP,BCP,CAP);
+    auto[weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, 0, P);
     EXPECT_EQ(weight_a, 1);
     EXPECT_EQ(weight_b, 0);
     EXPECT_EQ(weight_c, 0);

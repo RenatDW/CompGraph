@@ -14,9 +14,10 @@ public:
 
     static std::array<float, 3> calculate_edge_functions(Point3D &A, Point3D &B, Point3D &C, Point3D &P, bool flag);
 
-    static std::array<float, 4> calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC,
-                                                                  float ABP, float BCP,
-                                                                  float CAP);
+    static std::array<float, 4> calculate_baricentric_coeficients(Point3D A,
+		Point3D B,
+		Point3D C,
+		Point3D P);
 
     ~Rasterization() = default;
 };

@@ -59,7 +59,7 @@ private:
                                   int &x_right,
                                   int &y_down, int &y_up) const;
 
-    void universal_render(const std::array<Point3D, 3>& result_points,
+    void render(const std::array<Point3D, 3>& result_points,
 		const std::array<Point3D, 3>& normal_vectors,
 		const std::array<Point2D, 3>& texture_vectors);
 

@@ -48,16 +48,20 @@ std::array<float, 3> Rasterization::calculate_edge_functions(Point3D &A, Point3D
     return {ABP, BCP, CAP};
 }
 
-std::array<float, 4> Rasterization::calculate_baricentric_coeficients(Point3D A, Point3D B, Point3D C, float &ABC,
-                                                                     float ABP, float BCP,
-                                                                     float CAP)
+std::array<float, 4> Rasterization::calculate_baricentric_coeficients(Point3D A,
+	Point3D B,
+	Point3D C,
+	Point3D P)
 {
-    float weight_a, weight_b, weight_c, z;
+	float ABC = get_triangle_area_float(A, B, C);
+	float ABP = get_triangle_area_float(A, B, P);
+	float BCP = get_triangle_area_float(B, C, P);
+	float CAP = get_triangle_area_float(C, A, P);
 
-    weight_a = BCP / ABC;
-    weight_b = CAP / ABC;
-    weight_c = ABP / ABC;
+	float weight_a = BCP / ABC;
+	float weight_b = CAP / ABC;
+	float weight_c = ABP / ABC;
 
-    z = (A.getZ() * weight_a + B.getZ() * weight_b + C.getZ() * weight_c);
+	float z = (A.getZ() * weight_a + B.getZ() * weight_b + C.getZ() * weight_c);
     return {weight_a, weight_b, weight_c, z};
 }

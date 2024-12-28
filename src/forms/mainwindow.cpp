@@ -333,9 +333,9 @@ void MainWindow::add_camera_to_list(float x, float y, float z)
 	v.setValue(a);
 	model_list_item->setData(Qt::UserRole, v);
 	ui->listWidget_2->addItem(model_list_item);
-
-	std::string file_name = (QCoreApplication::applicationDirPath() + "../../resources/camera_model.obj").toStdString();
-
+//todo Переделать
+//	std::string file_name = (QCoreApplication::applicationDirPath() + "../../resources/camera_model.obj").toStdString();
+	std::string file_name = "/Users/renat/CLionProjects/CompGraph/camera_model.obj";
 	Model md = ObjReader::read(file_name);
 	GraphicConveyor::rotate_scale_translate(md, 1,1,1,0,0,0,x,y,z);
 	//TODO добавить перемещения на координаты

@@ -107,7 +107,7 @@ void RenderEngine::is_point_in_triangle(Point2D P, Point3D A, Point3D B, Point3D
 	}
 }
 
-void RenderEngine::universal_render(const std::array<Point3D, 3>& result_points,
+void RenderEngine::render(const std::array<Point3D, 3>& result_points,
 	const std::array<Point3D, 3>& normal_vectors,
 	const std::array<Point2D, 3>& texture_vectors)
 {
@@ -139,7 +139,6 @@ void RenderEngine::render_triangle(const std::array<Point3D, 3>& normal_vectors,
 	ABC = Rasterization::get_triangle_area_float(A, B, C);
 	int x_left, x_right, y_down, y_up;
 	initialize_loop_varibles(A, B, C, x_left, x_right, y_down, y_up);
-	is_point_in_triangle(Point2D(posX, posY), A, B, C);
 
 	for (int y = y_down; y < y_up + 1; y++)
 	{
@@ -147,13 +146,10 @@ void RenderEngine::render_triangle(const std::array<Point3D, 3>& normal_vectors,
 		{
 			if (x < 0 || x > depth_buffer.getWidth() || y > depth_buffer.getHeight() || y < 0) continue;
 			Point3D P(static_cast<float>(x), static_cast<float>(y), 0);
-			float ABP = Rasterization::get_triangle_area_float(A, B, P);
-			float BCP = Rasterization::get_triangle_area_float(B, C, P);
-			float CAP = Rasterization::get_triangle_area_float(C, A, P);
-			if (ABP < 0 || BCP < 0 || CAP < 0) continue;
 
-			auto [weight_a, weight_b, weight_c, z] =
-				Rasterization::calculate_baricentric_coeficients(A, B, C, ABC, ABP, BCP, CAP);
+			auto [weight_a, weight_b, weight_c, z] = Rasterization::calculate_baricentric_coeficients(A, B, C, P);
+			if (weight_a < 0 || weight_b < 0 || weight_c < 0) continue;
+
 			if (depth_buffer.get(x, y) < z) continue;
 
 			pixels.add(Point2D(x, y), mt.use_material(weight_a,
@@ -201,7 +197,7 @@ void RenderEngine::render_triangles(const Matrix4D &model_view_projection_matrix
         get_triangles_vectors(result_points, normal_vectors, texture_vectors, model_view_projection_matrix,
                               triangle_ind);
 		сurrent_triangle = triangle_ind;
-		universal_render(result_points, normal_vectors, texture_vectors);
+		render(result_points, normal_vectors, texture_vectors);
     }
 	mt.select_highlightcolor();
 	if (nearest_vertex != -1)
