@@ -16,24 +16,31 @@ QColor Material::use_material(float w_a,
 	int r = main_color.red();
 	int g = main_color.green();
 	int b = main_color.blue();
+	if (show_texture)
+		Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+	if (show_illumination)
+		Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 	if (show_mesh)
-	{
-		if (Mesh::show_mesh(w_a, w_b, w_c, r, g, b))
-		{
-			if (show_illumination)
-				Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
-			if (show_texture)
-				Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
-		}else{
-			r = background.red(), g = background.green(), b = background.blue();
-		}
-	}else{
-		if (show_texture)
-			Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
-		if (show_illumination)
-			Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
-
-	}
+		Mesh::show_mesh(w_a, w_b, w_c, r, g, b, background);
+//
+//	if (show_mesh)
+//	{
+//		if (Mesh::show_mesh(w_a, w_b, w_c, r, g, b))
+//		{
+//			if (show_illumination)
+//				Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
+//			if (show_texture)
+//				Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+//		}else{
+//			r = background.red(), g = background.green(), b = background.blue();
+//		}
+//	}else{
+//		if (show_texture)
+//			Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
+//		if (show_illumination)
+//			Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
+//
+//	}
 
 	return QColor(r, g, b);
 }
