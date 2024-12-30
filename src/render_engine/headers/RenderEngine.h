@@ -46,7 +46,6 @@ private:
 	bool show_mesh;
 	bool show_texture;
 	bool show_illumination;
-	bool selection = false;
 	int current_triangle;
 	int nearest_vertex = -1;
 	Point2D nearest_vertex_point;

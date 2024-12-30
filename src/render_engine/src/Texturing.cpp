@@ -13,7 +13,7 @@ void Texturing::texturing(const std::array<Point2D, 3> &texture_vectors, Texture
 }
 
 QColor Texturing::get_suitable_pixel(const std::array<Point2D, 3> &texture_vectors, Texture& texture,
-    const float weight_a, const float weight_b, const float weight_c)
+    float weight_a, float weight_b, float weight_c)
 {
     float u = weight_a * texture_vectors[0].getX() + weight_b * texture_vectors[1].getX() + weight_c * texture_vectors[2].
               getX();

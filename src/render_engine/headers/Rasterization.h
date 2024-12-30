@@ -20,4 +20,4 @@ public:
     ~Rasterization() = default;
 };
 
-#endif //RASTERIZATION_H
+#endif

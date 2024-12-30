@@ -31,7 +31,6 @@ TriangleCoordinates RenderEngine::render_with_selection(int x, int y)
 {
 	posX = x;
 	posY = y;
-	selection = true;
 	render();
 	return {nearest_triangle, nearest_vertex, nearest_vertex_point};
 }

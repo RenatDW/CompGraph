@@ -1,6 +1,3 @@
-//
-// Created by Ренат Асланов on 11.12.2024.
-//
 #include "../headers/Material.h"
 Material::Material(bool show_mesh, bool show_illumination, bool show_texture)
 	: show_texture(show_texture), show_illumination(show_illumination), show_mesh(show_mesh)
@@ -22,27 +19,7 @@ QColor Material::use_material(float w_a,
 		Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
 	if (show_mesh)
 		Mesh::show_mesh(w_a, w_b, w_c, r, g, b, background);
-//
-//	if (show_mesh)
-//	{
-//		if (Mesh::show_mesh(w_a, w_b, w_c, r, g, b))
-//		{
-//			if (show_illumination)
-//				Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
-//			if (show_texture)
-//				Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
-//		}else{
-//			r = background.red(), g = background.green(), b = background.blue();
-//		}
-//	}else{
-//		if (show_texture)
-//			Texturing::texturing(texture_vectors, texture, w_a, w_b, w_c, r, g, b);
-//		if (show_illumination)
-//			Illumination::illumination(normal_vectors, P, lights, w_a, w_b, w_c, r, g, b);
-//
-//	}
-
-	return QColor(r, g, b);
+	return {r, g, b};
 }
 Texture& Material::get_texture()
 {
@@ -104,7 +81,7 @@ const std::vector<Light>& Material::get_lights() const
 {
 	return lights;
 }
-void Material::set_lights(std::vector<Light> t_lights)
+void Material::set_lights(std::vector<Light> & lights)
 {
-	this->lights = t_lights;
+	this->lights = lights;
 }

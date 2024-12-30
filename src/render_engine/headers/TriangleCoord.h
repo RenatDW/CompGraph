@@ -8,4 +8,4 @@ struct TriangleCoordinates
 	int vertex_id{};
 	Point2D vertex{};
 };
-#endif //TRIANGLECOORD_H
+#endif

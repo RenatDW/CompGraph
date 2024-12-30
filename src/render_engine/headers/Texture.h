@@ -1,4 +1,3 @@
-
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
@@ -8,7 +7,8 @@
 #include <QImage>
 #include <QColor>
 
-class Texture {
+class Texture
+{
 private:
 	QImage texture;
 	int width;
@@ -21,11 +21,11 @@ public:
 	const Texture& get_texture() const;
 	void set_texture(const QImage& texture);
 
-	bool is_null() const; // Добавлено const
+	bool is_null() const;
 	int get_width() const;
 	int get_height() const;
 
-	QColor get_pixel(int x, int y) const; // Добавлено const
+	QColor get_pixel(int x, int y) const;
 };
 
 

@@ -21,7 +21,7 @@ public:
 
     void set_target(const Vector3D& t_target);
 
-    void set_aspect_ratio(const float& t_aspectRatio);
+    void set_aspect_ratio(float t_aspectRatio);
 
     void move_position(const Vector3D &translation);
 

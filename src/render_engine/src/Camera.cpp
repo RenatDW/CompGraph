@@ -28,7 +28,7 @@ void Camera::set_target(const Vector3D& t_target)
     this->target = t_target;
 }
 
-void Camera::set_aspect_ratio(const float& t_aspectRatio)
+void Camera::set_aspect_ratio(const float t_aspectRatio)
 {
     this->aspectRatio = t_aspectRatio;
 };

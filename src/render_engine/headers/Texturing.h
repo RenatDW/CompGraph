@@ -9,7 +9,7 @@
 class Texturing
 {
 public:
-    std::vector<Point2D> texture_vectors;
+    std::vector<Point2D> texture_vectors{};
 
     Texturing() = default;
 
@@ -19,8 +19,8 @@ public:
                             float weight_a,
                             float weight_b, float weight_c, int &r, int &g, int &b);
     static QColor get_suitable_pixel(const std::array<Point2D, 3> &texture_vectors, Texture& texture,
-                                     const float weight_a,
-                                     const float weight_b, const float weight_c);
+                                     float weight_a,
+                                     float weight_b, float weight_c);
 };
 
-#endif //TEXTURING_H
+#endif
