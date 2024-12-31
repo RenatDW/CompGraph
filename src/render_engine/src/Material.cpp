@@ -8,7 +8,7 @@ QColor Material::use_material(float w_a,
 	float w_c,
 	std::array<Point2D, 3> texture_vectors,
 	std::array<Point3D, 3> normal_vectors,
-	Point3D P)
+	const Point3D& P)
 {
 	int r = main_color.red();
 	int g = main_color.green();

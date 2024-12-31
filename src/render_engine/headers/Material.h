@@ -34,7 +34,7 @@ public:
 		float w_c,
 		std::array<Point2D, 3> texture_vectors,
 		std::array<Point3D, 3> normal_vectors,
-		Point3D P);
+		const Point3D& P);
 	[[nodiscard]] const std::vector<Light>& get_lights() const;
 	void set_lights(std::vector<Light>& lights);
 	[[nodiscard]] bool is_show_mesh() const;

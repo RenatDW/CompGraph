@@ -61,11 +61,15 @@ private:
 
     void render(const std::array<Point3D, 3>& result_points,
 		const std::array<Point3D, 3>& normal_vectors,
-		const std::array<Point2D, 3>& texture_vectors);
+		const std::array<Point2D, 3>& texture_vectors,
+		const std::array<Point3D, 3>& world_points);
 
-    void get_triangles_vectors(std::array<Point3D, 3> &result_points, std::array<Point3D, 3> &normal_vectors,
-                               std::array<Point2D, 3> &texture_vectors, const
-                               Matrix4D &model_view_projection_matrix, int triangle_ind) const;
+    void get_triangles_vectors(std::array<Point3D, 3>& result_points,
+		std::array<Point3D, 3>& normal_vectors,
+		std::array<Point2D, 3>& texture_vectors,
+		const Matrix4D& model_view_projection_matrix,
+		int triangle_ind,
+		std::array<Point3D, 3>& world_points) const;
 
     void render_triangles(
         const Matrix4D &model_view_projection_matrix, int n_triangles);
@@ -75,7 +79,8 @@ private:
 		const std::array<Point2D, 3>& texture_vectors,
 		Point3D& A,
 		Point3D& B,
-		Point3D& C);
+		Point3D& C,
+		const std::array<Point3D, 3>& world_points);
 	float is_around_vertex(const Point3D& A) const;
 };
 
