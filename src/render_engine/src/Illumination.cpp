@@ -19,9 +19,9 @@ void Illumination::illumination(const std::array<Point3D, 3>& normal_vectors,
 	}
 	float k = 0.4;
 	float intensity = 1.0f / lights.size();
-	r = intensity * r * (1 - k);
-	g = intensity * g * (1 - k);
-	b = intensity * b * (1 - k);
+	r *= (1 - k);
+	g *= (1 - k);
+	b *= (1 - k);
 	for (auto elem : lights)
 	{
 		float l = calculate_parametr_of_illumination(normal_vectors, elem.pos, P, weight_a, weight_b, weight_c);
