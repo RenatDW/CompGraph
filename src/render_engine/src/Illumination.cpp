@@ -25,12 +25,11 @@ void Illumination::illumination(const std::array<Point3D, 3>& normal_vectors,
 	for (auto elem : lights)
 	{
 		float l = calculate_parametr_of_illumination(normal_vectors, elem.pos, P, weight_a, weight_b, weight_c);
-		r += intensity * k * l * elem.color.red();
+		r += intensity * k * l * elem.color.red();g
 		g += intensity * k * l * elem.color.green();
 		b += intensity * k * l * elem.color.blue();
 	}
 }
-//TODO сюда передается неправильная точко P(координата на экране, а не мировая(((((((((()
 float Illumination::calculate_parametr_of_illumination(const std::array<Point3D, 3>& normal_vectors,
 	Vector3D& pos,
 	const Point3D& P,
