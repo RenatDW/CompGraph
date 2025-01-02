@@ -2,10 +2,9 @@
 #include "../../math//headers/MathCast.h"
 #include <array>
 
-
 void Illumination::illumination(const std::array<Point3D, 3>& normal_vectors,
 	const Point3D& P,
-	std::vector<Light> lights,
+	const std::vector<Light>& lights,
 	float weight_a,
 	float weight_b,
 	float weight_c,
@@ -18,19 +17,19 @@ void Illumination::illumination(const std::array<Point3D, 3>& normal_vectors,
 		return;
 	}
 	float k = 0.4;
-	float intensity = 1.0f / lights.size();
-	r *= (1 - k);
-	g *= (1 - k);
-	b *= (1 - k);
+	float intensity = 1.0f / static_cast<float>(lights.size());
+	r *= static_cast<int>(1 - k);
+	g *= static_cast<int>(1 - k);
+	b *= static_cast<int>(1 - k);
 	for (auto elem : lights)
 	{
-		float l = calculate_parametr_of_illumination(normal_vectors, elem.pos, P, weight_a, weight_b, weight_c);
-		r += intensity * k * l * elem.color.red();g
-		g += intensity * k * l * elem.color.green();
-		b += intensity * k * l * elem.color.blue();
+		float l = calculate_parameter_of_illumination(normal_vectors, elem.pos, P, weight_a, weight_b, weight_c);
+		r += static_cast<int>(intensity * k * l * static_cast<float>(elem.color.red()));
+		g += static_cast<int>(intensity * k * l * static_cast<float>(elem.color.green()));
+		b += static_cast<int>(intensity * k * l * static_cast<float>(elem.color.blue()));
 	}
 }
-float Illumination::calculate_parametr_of_illumination(const std::array<Point3D, 3>& normal_vectors,
+float Illumination::calculate_parameter_of_illumination(const std::array<Point3D, 3>& normal_vectors,
 	Vector3D& pos,
 	const Point3D& P,
 	const float weight_A,

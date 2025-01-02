@@ -18,7 +18,7 @@ public:
 
 	static void illumination(const std::array<Point3D, 3>& normal_vectors,
 		const Point3D& P,
-		std::vector<Light> lights,
+		const std::vector<Light>& lights,
 		float weight_a,
 		float weight_b,
 		float weight_c,
@@ -26,12 +26,12 @@ public:
 		int& g,
 		int& b);
 
-	static float calculate_parametr_of_illumination(const std::array<Point3D, 3>& normal_vectors,
+	static float calculate_parameter_of_illumination(const std::array<Point3D, 3>& normal_vectors,
 		Vector3D& pos,
 		const Point3D& P,
-		float weight_A,
-		float weight_B,
-		float weight_C);
+		const float weight_A,
+		const float weight_B,
+		const float weight_C);
 };
 
 #endif

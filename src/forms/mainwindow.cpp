@@ -33,28 +33,25 @@ MainWindow::MainWindow(QWidget *parent)
 	QString x = "0", y = "0", z = "0";
 	add_camera_to_list(x,y,z);
 
-
-
-	fpsTimer.start(); // Start FPS timer
-	frameTimer.setInterval(16); // Approx. 60 FPS (1000ms / 16ms ~ 60 FPS)
+	fpsTimer.start();
+	frameTimer.setInterval(16);
 	connect(&frameTimer, &QTimer::timeout, this, &MainWindow::onFrameUpdate);
 	frameTimer.start();
+
 	on_pushButton_6_clicked();
 }
 
 void MainWindow::onFrameUpdate()
 {
-	// Update the scene
 	update_scene();
-	// Calculate FPS
+
 	frameCount++;
-	qint64 elapsed = fpsTimer.elapsed(); // Time since last reset
-	if (elapsed > 1000) // Update FPS every second
+	qint64 elapsed = fpsTimer.elapsed();
+	if (elapsed > 1000)
 	{
-		fps = frameCount / (elapsed / 1000.0f); // Frames per second
+		fps = frameCount / (elapsed / 1000.0f);
 		frameCount = 0;
 		fpsTimer.restart();
-		// Update FPS in UI (e.g., status bar or label)
 		ui->statusbar->setStyleSheet("QStatusBar { color: green; }");
 		ui->statusbar->showMessage(QString("FPS: %1").arg(fps, 0, 'f', 2));
 	}
@@ -62,8 +59,6 @@ void MainWindow::onFrameUpdate()
 
 void MainWindow::update_scene()
 {
-        //При низких значениях rgb, перестает рабоать (цвете 0,0,0 все ломается)
-
 	scene->clear();
 	int width = ui->graphicsView->viewport()->width();
 	int height = ui->graphicsView->viewport()->height();
